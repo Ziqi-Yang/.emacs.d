@@ -33,8 +33,8 @@
 
 (with-temp-message ""
   (require 'init-base)
-  (require 'init-ui)
-  (require 'init-key))
+  (require 'init-key)
+  (require 'init-ui))
 
 ;; remove old version native-compiled files
 (native-compile-prune-cache) 

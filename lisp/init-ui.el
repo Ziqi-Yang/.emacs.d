@@ -1,16 +1,39 @@
 ;;; init-ui.el --- UI settings -*- lexical-binding: t -*-
 ;;; Commentary:
+;; primiary settings are in the early-init.el file, while extended setting like theme and font are here
 ;;; Code:
 
-(setq inhibit-startup-message t)
-(scroll-bar-mode -1)        ; Disable visible scrollbar
-(tool-bar-mode -1)          ; Disable the toolbar
-;; (tooltip-mode -1)           ; Disable tooltips
-(set-fringe-mode 10) ;; leave space for both side
-(menu-bar-mode -1)            ; Disable the menu bar
+;;; theme ===============================
+(use-package doom-themes
+  :config
+  (load-theme 'doom-solarized-light t))
+;;; font settings =======================
+;; Set the font face based on platform
+;; @ default font
+(when (member "BlexMono Nerd Font" (font-family-list))
+  (set-face-attribute 'default nil :font (font-spec :family "BlexMono Nerd Font" :size 13.5)))
+;; @ fixed-pitch font ;; i.e. Monospaced font
+;;(when (member "BlexMono Nerd Font" (font-family-list))
+  ;;(set-face-attribute 'fixed-pitch nil :font (font-spec :family "BlexMono Nerd Font" :size 13.5)))
+(set-face-attribute 'fixed-pitch nil :inherit 'default)
+;; @ variable-pitch font ;; i.e. variable-width font
+(set-face-attribute 'variable-pitch nil :inherit 'default)
+;; @ CJK font 包括中文、日语、韩语中的汉字，但是不包含日语假名
+(when (member "LXGW WenKai" (font-family-list))
+  (set-fontset-font t 'han (font-spec :family "LXGW WenKai" :size 13.5)))
+;; @ Japanese Kana 日语假名
+(when (member "LXGW WenKai" (font-family-list))
+  (set-fontset-font t 'kana (font-spec :family "LXGW WenKai" :size 13.5)))
+;; @ symbol font ('symbol)
+;; @ emoji ('emoji)
+;; 
+;; reference:
+;;   1. http://xahlee.info/emacs/emacs/emacs_set_font_emoji.html
+;;   2. https://emacs-china.org/t/emacs/22193/6
 
-;; Set up the visible bell
-(setq visible-bell t)
+
+
+
 
 
 (provide 'init-ui)

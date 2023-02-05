@@ -17,4 +17,19 @@
    (convert-standard-filename
 	  (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
 
+
+
+;;; UI settings
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+;; (tooltip-mode -1)
+(menu-bar-mode -1)
+(set-fringe-mode 10) ;; leave space for both side
+(column-number-mode)
+(global-display-line-numbers-mode 1)
+
+(setq
+ inhibit-startup-message t
+ visible-bell t)
+
 (provide 'early-init)

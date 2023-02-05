@@ -1,0 +1,9 @@
+#+title: README
+
+* Requirements
+
+* Special Thanks
+- https://github.com/Likhon-baRoy/.emacs.d
+- https://config.daviwil.com/emacs
+- https://github.com/daviwil/emacs-from-scratch
+- https://github.com/wowhxj/emacs-from-scratch
