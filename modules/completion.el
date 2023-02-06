@@ -5,7 +5,7 @@
 ;;; Vertico =================================================
 (use-package vertico
 	:straight (:host github :repo "minad/vertico"
-									 :files ("*.el" "extensions/*.el"))
+									 :files ("*.el" "extensions/vertico-indexed.el"))
 	:bind (:map vertico-map
 				 ("C-j" . vertico-next)
 				 ("C-k" . vertico-previous)
@@ -14,8 +14,11 @@
 				 ("C-w" . backward-kill-word))
   :init
   (vertico-mode)
-  (setq vertico-count 20)
-  (setq vertico-cycle t))
+  (setq vertico-cycle t)
+	(setq vertico-resize t)
+
+	;; can selete entry with M-<number> <ret>
+	(vertico-indexed-mode))
 
 ;; @ save minibuffer history
 ;; such that vertico can make use of
@@ -43,10 +46,12 @@
 
 
 ;; @ posframe
+;; vertico-posframe depends on posframe(thus it is auto-installed)
 (use-package vertico-posframe
 	:after vertico
 	:config
 	(vertico-posframe-mode)
+	(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
 	(setq vertico-posframe-parameters
       '((left-fringe . 8)
         (right-fringe . 8))))
@@ -64,6 +69,21 @@
         completion-category-defaults nil
         completion-category-overrides '((file (styles . (partial-completion))))))
 
+;;; Embark ==================================================
+(use-package embark
+  :bind (("C-." . embark-act))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; @ Interact at Consult 
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;;; Consult =================================================
 (use-package consult)

@@ -75,7 +75,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  ;; evil-surround
  (general-nmap ;; normal
 	 "gcc" #'evilnc-comment-or-uncomment-lines
-
+	 "C-." #'embark-act
 	 ;; @ fold via init-base/evil-vimish-mode
 	 ;; zf(create) -> za/zc/zo(toggle/close/open) -> zd(delete)
 	 )
@@ -93,6 +93,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  ;; leader
  (mk/leader-def 'n
 	 ":" '(eval-expression :which-key "Eval")
+	 "SPC" '(execute-extended-command :which-key "M-x")
 
    ;; @ buffer
    "b"  '(:ignore t :which-key "Buffer & Bookmark")
@@ -122,9 +123,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	 ;; @ search
 	 "s" '(:ignore t :which-key "Search")
-	 "ss" #'consult-line
-	 "sp" #'consult-ripgrep
-	 "sb" #'consult-bookmark
+	 "ss" '(consult-line :which-key "content")
+	 "sp" '(consult-ripgrep :which-key "project content")
+	 "sb" '(consult-bookmark :which-key "bookmark")
+	 "so" '(consult-outline :which-key "outline")
 
    ;; @ toggle
    "t" '(:ignore t :which-key "Toggle")
