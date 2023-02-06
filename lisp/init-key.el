@@ -127,6 +127,21 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "hm" #'describe-mode
 	 "hM" '(woman :which-key "man page")
 
+	 "g" '(:ignore t :which-key "Git")
+	 "gg"  'magit-status
+	 "gs"  'magit-status
+   "gd"  'magit-diff-unstaged
+   "gc"  'magit-branch-or-checkout
+   "gl"  '(:ignore t :which-key "log")
+   "glc" 'magit-log-current
+   "glf" 'magit-log-buffer-file
+   "gb"  'magit-branch
+   "gP"  'magit-push-current
+   "gp"  'magit-pull-branch
+   "gf"  'magit-fetch
+   "gF"  'magit-fetch-all
+   "gr"  'magit-rebase
+
 	 ;; @ search
 	 "s" '(:ignore t :which-key "Search")
 	 "ss" '(consult-line :which-key "content")

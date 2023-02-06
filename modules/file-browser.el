@@ -3,7 +3,6 @@
 ;; including custom for dired
 ;;; Code:
 
-(use-package dirvish
-	:hook (after-init . dirvish-override-dired-mode))
+;; TODO wait for drivish to fix bug.
 
 (provide 'file-browser)
