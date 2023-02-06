@@ -1,6 +1,5 @@
 ;;; init-key.el --- Key Mappings Here -*- lexical-binding: t -*-
 ;;; Commentary:
-;; 
 ;;; Code:
 
 ;; universal-argument conflict with evil mode(c-u, scroll up half screen), so we change it
