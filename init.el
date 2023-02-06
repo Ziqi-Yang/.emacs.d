@@ -39,6 +39,7 @@
   (require 'init-ui)
   (require 'editor)
   (require 'completion)
+	(require 'file-browser)
   (require 'l-general))
 
 ;; remove old version native-compiled files

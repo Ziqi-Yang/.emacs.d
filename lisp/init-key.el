@@ -76,6 +76,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (general-nmap ;; normal
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "C-." #'embark-act
+
 	 ;; @ text-scale via init-base/default-text-scale
 	 ;; C-- and C-= to change font size
 
@@ -97,18 +98,20 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (mk/leader-def 'n
 	 ":" '(eval-expression :which-key "Eval")
 	 "SPC" '(execute-extended-command :which-key "M-x")
+	 "-" '(dired-jump :which-key "dired here")
 
    ;; @ buffer
    "b"  '(:ignore t :which-key "Buffer & Bookmark")
    "bb" '(consult-project-buffer :which-key "switch")
    "bB" '(consult-buffer :which-key "all buffer")
-	 "bk" '(evil-delete-buffer :which-key "delete")
+	 "bd" '(evil-delete-buffer :which-key "delete")
 	 
 	 ;; @ bookmark
 	 "B" '(:ignore t :which-key "Bookmark")
 	 "Bb" '(bookmark-jump :which-key "switch")
 	 "Bc" '(bookmark-set :which-key "create")
 	 "Bd" '(bookmark-delete :which-key "delete")
+	 "Bk" '(bookmark-delete :which-key "delete")
 	 "BD" '(bookmark-delete :which-key "delete all")
 
    ;; @ file
@@ -138,7 +141,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 
    ;; @ window
    "w"  '(:ignore t :which-key "Window")
-   "ww" #'evil-window-next))
+   "ww" #'ace-window
+	 "wv" #'split-window-vertically
+	 "wh" #'split-window-horizontally
+	 "wq" #'evil-window-delete
+	 "wd" #'evil-window-delete)
+ )
 
 
 

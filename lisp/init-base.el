@@ -21,12 +21,25 @@
   :config
   (persp-mode))
 
-;;; text scale change on the fly
-(use-package default-text-scale
+;;; text scale change on the fly ============================
+(use-package default-text-scale 
 	:bind (("C--" . default-text-scale-decrease)
 				 ("C-=" . default-text-scale-increase))
   :defer 1
 	:hook (after-init . default-text-scale-mode))
+
+;;; Window ==================================================
+;; @ jump
+(use-package ace-window
+  :bind (("M-o" . ace-window))
+  :custom
+  (aw-scope 'frame)
+  (aw-keys '(?a ?s ?d ?c ?n ?j ?k ?l ?i))
+  (aw-minibuffer-flag t))
+
+;; @ remember window layout for different scino
+(use-package winner
+	:hook (after-init . winner-mode))
 
 ;;; Recent file =============================================
 (use-package recentf
