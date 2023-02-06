@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-;;; clean directory ======================
+;;; clean directory ==========================================
 (use-package no-littering
 	:init
 	(setq
@@ -16,12 +16,27 @@
 	auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
 	custom-file (no-littering-expand-etc-file-name "custom.el")))
 
-;;; workspace ===========================
+;;; workspace ===============================================
 (use-package persp-mode
   :config
   (persp-mode))
 
-;;; fold ================================
+;;; Recent file =============================================
+(use-package recentf
+  :defer t
+  :hook (after-init . recentf-mode)
+  :custom
+  (recentf-auto-cleanup 'never) ; "05:00am"
+  (recentf-max-saved-items 300)
+  (recentf-max-menu-items 50)
+  :config
+  (add-to-list 'recentf-exclude "/elpa/.*\\'")
+  (add-to-list 'recentf-exclude "/tramp.*\\'")
+  (add-to-list 'recentf-exclude "/\\.git/.*\\'")
+  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
+
+
+;;; fold ====================================================
 (use-package vimish-fold
   :after evil)
 
@@ -29,7 +44,7 @@
   :after vimish-fold
   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
-;;; save file utility ==========
+;;; save file utility =======================================
 ;; when change window, lose focus & idle ...
 (use-package super-save
   :defer t

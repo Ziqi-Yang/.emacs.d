@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-;;; General =============================
+;;; Vertico =================================================
 (use-package vertico
 	:straight (:host github :repo "minad/vertico"
 									 :files ("*.el" "extensions/*.el"))
@@ -41,18 +41,6 @@
         #'command-completion-default-include-p)
   (setq enable-recursive-minibuffers t))
 
-;; @ annotations in completetion
-(use-package marginalia
-  :init
-  (marginalia-mode))
-
-
-;; @ orderless completion
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless basic) ;; orderless, and basic as fallback
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion))))))
 
 ;; @ posframe
 (use-package vertico-posframe
@@ -63,7 +51,25 @@
       '((left-fringe . 8)
         (right-fringe . 8))))
 
-;; In Region Completion =================
+;;; Annotations in completetion =============================
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+
+;;; Orderless completion ====================================
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic) ;; orderless, and basic as fallback
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles . (partial-completion))))))
+
+
+;;; Consult =================================================
+(use-package consult)
+
+
+;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 (use-package corfu
 	:straight (:host github :repo "minad/corfu"
@@ -105,6 +111,8 @@
 	:config
 	(unless (display-graphic-p)
 		(corfu-terminal-mode +1)))
+
+
 
 
 (provide 'completion)

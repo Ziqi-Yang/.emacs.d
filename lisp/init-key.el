@@ -5,19 +5,28 @@
 ;; universal-argument conflict with evil mode(c-u, scroll up half screen), so we change it
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
-;; general: https://github.com/noctuid/general.el
+;;; Key Definers and Definer Macros =========================
 ;; define keybindings with ease
 (use-package general
   ;; :demand t ;; use mapBegin! instead
   :config
   (general-evil-setup)
   (general-create-definer mk/leader-def
-    	:prefix "SPC")
+    :prefix "SPC"
+		:non-normal-prefix "M-SPC")
 
   (general-create-definer mk/local-leader-def
 			  :prefix "SPC m"))
 
-;; evil
+(defmacro mapBegin! (&rest expression)
+  "Used for defining keys. Keys are defined after package 'general' load up, so we
+don't need to add ':demand t' keyword to 'use-package' declearation."
+  `(use-package general
+    :config
+    ,@expression))
+
+
+;;; Evil Collection =========================================
 (use-package evil
   :demand t
   :bind (("<escape>" . keyboard-escape-quit)) ;; <escape> to act like <C-g>
@@ -53,7 +62,7 @@
 (use-package evil-nerd-commenter
 	:general ([remap comment-line] #'evilnc-comment-or-uncomment-lines))
 
-;; which-key
+;;; Which-key ===============================================
 (use-package which-key
   :init (which-key-mode)
   ;; :diminish which-key-mode
@@ -61,21 +70,13 @@
   (setq which-key-idle-delay 0.3)
   (setq which-key-side-window-max-height 0.3))
 
-
-(defmacro mapBegin! (&rest expression)
-  "Used for defining keys. Keys are defined after package 'general' load up, so we
-don't need to add ':demand t' keyword to 'use-package' declearation."
-  `(use-package general
-    :config
-    ,@expression))
-
+;;; Main Key Mapping ========================================
 (mapBegin!
  ;; evil-surround
  (general-nmap ;; normal
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 
-	 ;; @ fold
-	 ;; via init-base/evil-vimish-mode
+	 ;; @ fold via init-base/evil-vimish-mode
 	 ;; zf(create) -> za/zc/zo(toggle/close/open) -> zd(delete)
 	 )
 
@@ -87,33 +88,53 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "C-S-v" #'clipboard-yank)
  (general-omap ;; operation
    "s" #'evil-surround-edit
-   "S" #'evil-Surround-edit))
+   "S" #'evil-Surround-edit)
 
  ;; leader
- (mk/leader-def
-   :states 'n
-   ;; file
-   "f" '(:ignore t :which-key "file")
-   "ff" #'find-file
+ (mk/leader-def 'n
+	 ":" '(eval-expression :which-key "Eval")
+
+   ;; @ buffer
+   "b"  '(:ignore t :which-key "Buffer & Bookmark")
+   "bb" '(consult-project-buffer :which-key "switch")
+   "bB" '(consult-buffer :which-key "all buffer")
+	 "bk" '(evil-delete-buffer :which-key "delete")
 	 
-   ;; window
-   "w"  '(:ignore t :which-key "window")
-   "ww" #'evil-window-next
+	 ;; @ bookmark
+	 "B" '(:ignore t :which-key "Bookmark")
+	 "Bb" '(bookmark-jump :which-key "switch")
+	 "Bc" '(bookmark-set :which-key "create")
+	 "Bd" '(bookmark-delete :which-key "delete")
+	 "BD" '(bookmark-delete :which-key "delete all")
 
-   ;; buffer
-   "b"  '(:ignore t :which-key "buffer")
-   "bb" #'buffer-menu
+   ;; @ file
+   "f" '(:ignore t :which-key "File")
+   "ff" #'find-file
+	 "fr" #'consult-recent-file
 
-   ;; help
-   "h" '(:ignore t :which-key "help")
+   ;; @ help
+   "h" '(:ignore t :which-key "Help")
    "hf" #'describe-function
    "hk" #'describe-key
    "ho" #'describe-symbol
    "hm" #'describe-mode
+	 "hM" '(woman :which-key "man page")
 
-   ;; toggle
-   "t" '(:ignore t :which-key "toggle")
+	 ;; @ search
+	 "s" '(:ignore t :which-key "Search")
+	 "ss" #'consult-line
+	 "sp" #'consult-ripgrep
+	 "sb" #'consult-bookmark
+
+   ;; @ toggle
+   "t" '(:ignore t :which-key "Toggle")
    "tw" 'whitespace-mode
-   "tt" '(counsel-load-theme :which-key "choose theme"))
+   "tt" '(consult-theme :which-key "choose theme")
+	 
+   ;; @ window
+   "w"  '(:ignore t :which-key "Window")
+   "ww" #'evil-window-next))
+
+
 
 (provide 'init-key)

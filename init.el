@@ -1,5 +1,5 @@
 ;;; init.el --- The main init entry for Emacs -*- lexical-binding: t -*-
-;;; Commentary:
+;; Commentary:
 ;;; Code:
 
 ;; Profile emacs startup
