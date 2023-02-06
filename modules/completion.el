@@ -88,7 +88,6 @@
 ;;; Consult =================================================
 (use-package consult)
 
-
 ;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 (use-package corfu

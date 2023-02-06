@@ -99,6 +99,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 ":" '(eval-expression :which-key "Eval")
 	 "SPC" '(execute-extended-command :which-key "M-x")
 	 "-" '(dired-jump :which-key "dired here")
+	 "=" '(project-dired :which-key "project dired")
 
    ;; @ buffer
    "b"  '(:ignore t :which-key "Buffer & Bookmark")
@@ -116,8 +117,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
    ;; @ file
    "f" '(:ignore t :which-key "File")
-   "ff" #'find-file
-	 "fr" #'consult-recent-file
+   "ff" '(find-file :which-key "find")
+	 "fp" '(consult-project-extra-find :which-key "find@project")
+	 "fr" '(consult-recent-file :which-key "recent")
 
    ;; @ help
    "h" '(:ignore t :which-key "Help")
@@ -127,6 +129,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "hm" #'describe-mode
 	 "hM" '(woman :which-key "man page")
 
+	 ;; @ git
 	 "g" '(:ignore t :which-key "Git")
 	 "gg"  'magit-status
 	 "gs"  'magit-status
@@ -148,6 +151,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "sp" '(consult-ripgrep :which-key "project content")
 	 "sb" '(consult-bookmark :which-key "bookmark")
 	 "so" '(consult-outline :which-key "outline")
+
+	 ;; @ project
+	 "p" '(:ignore t :which-key "Project")
 
    ;; @ toggle
    "t" '(:ignore t :which-key "Toggle")

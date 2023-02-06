@@ -28,6 +28,12 @@
   :defer 1
 	:hook (after-init . default-text-scale-mode))
 
+;;; Project Utilities =======================================
+;; use buildin prokect.el for project ability
+;; @ enable consult to find file in project
+(use-package consult-project-extra)
+
+
 ;;; Window ==================================================
 ;; @ jump
 (use-package ace-window
