@@ -29,4 +29,12 @@
   :after vimish-fold
   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
+;;; save file utility ==========
+;; when change window, lose focus & idle ...
+(use-package super-save
+  :defer t
+  :config
+  (super-save-mode +1)
+  (setq super-save-auto-save-when-idle t))
+
 (provide 'init-base)
