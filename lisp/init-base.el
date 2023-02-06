@@ -21,6 +21,13 @@
   :config
   (persp-mode))
 
+;;; text scale change on the fly
+(use-package default-text-scale
+	:bind (("C--" . default-text-scale-decrease)
+				 ("C-=" . default-text-scale-increase))
+  :defer 1
+	:hook (after-init . default-text-scale-mode))
+
 ;;; Recent file =============================================
 (use-package recentf
   :defer t
@@ -48,8 +55,8 @@
 ;; when change window, lose focus & idle ...
 (use-package super-save
   :defer t
+	:hook (after-init . super-save-mode)
   :config
-  (super-save-mode +1)
   (setq super-save-auto-save-when-idle t))
 
 (provide 'init-base)

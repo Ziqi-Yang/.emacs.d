@@ -76,6 +76,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (general-nmap ;; normal
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "C-." #'embark-act
+	 ;; @ text-scale via init-base/default-text-scale
+	 ;; C-- and C-= to change font size
+
 	 ;; @ fold via init-base/evil-vimish-mode
 	 ;; zf(create) -> za/zc/zo(toggle/close/open) -> zd(delete)
 	 )
