@@ -30,11 +30,13 @@
 (straight-use-package 'use-package)
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
+(push (expand-file-name "lisp/languages" user-emacs-directory) load-path)
 
 (with-temp-message ""
   (require 'init-base)
   (require 'init-key)
-  (require 'init-ui))
+  (require 'init-ui)
+	(require 'l-general))
 
 ;; remove old version native-compiled files
 (native-compile-prune-cache) 

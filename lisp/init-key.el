@@ -6,6 +6,18 @@
 ;; universal-argument conflict with evil mode(c-u, scroll up half screen), so we change it
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
+;; general: https://github.com/noctuid/general.el
+;; define keybindings with ease
+(use-package general
+  ;; :demand t ;; use mapBegin! instead
+  :config
+  (general-evil-setup)
+  (general-create-definer mk/leader-def
+    	:prefix "SPC")
+
+  (general-create-definer mk/local-leader-def
+			  :prefix "SPC m"))
+
 ;; evil
 (use-package evil
   :demand t
@@ -39,6 +51,9 @@
 (use-package evil-surround
   :after evil)
 
+(use-package evil-nerd-commenter
+	:general ([remap comment-line] #'evilnc-comment-or-uncomment-lines))
+
 ;; which-key
 (use-package which-key
   :init (which-key-mode)
@@ -47,17 +62,6 @@
   (setq which-key-idle-delay 0.3)
   (setq which-key-side-window-max-height 0.3))
 
-;; general: https://github.com/noctuid/general.el
-;; define keybindings with ease
-(use-package general
-  ;; :demand t ;; use mapBegin! instead
-  :config
-  (general-evil-setup)
-  (general-create-definer mk/leader-def
-    	:prefix "SPC")
-
-  (general-create-definer mk/local-leader-def
-			  :prefix "SPC m"))
 
 (defmacro mapBegin! (&rest expression)
   "Used for defining keys. Keys are defined after package 'general' load up, so we
@@ -68,9 +72,18 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 (mapBegin!
  ;; evil-surround
+ (general-nmap ;; normal
+	 "gcc" #'evilnc-comment-or-uncomment-lines
+
+	 ;; @ fold
+	 ;; via init-base/evil-vimish-mode
+	 ;; zf(create) -> za/zc/zo(toggle/close/open) -> zd(delete)
+	 )
+
  (general-vmap ;; visual
    "S" #'evil-surround-region
-   "C-S-c" #'clipboard-kill-ring-save)
+   "C-S-c" #'clipboard-kill-ring-save
+	 "gc" #'evilnc-comment-or-uncomment-lines)
  (general-imap ;; insert
    "C-S-v" #'clipboard-yank)
  (general-omap ;; operation
@@ -80,15 +93,28 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  ;; leader
  (mk/leader-def
    :states 'n
+	 ;; file
+	 "f" '(:ignore t :which-key "file")
+	 "ff" #'find-file
+	 
    ;; window
+   "w"  '(:ignore t :which-key "window")
    "ww" #'evil-window-next
 
    ;; buffer
+   "b"  '(:ignore t :which-key "buffer")
    "bb" #'buffer-menu
 
    ;; help
+   "h" '(:ignore t :which-key "help")
    "hf" #'describe-function
    "hk" #'describe-key
-   "ho" #'describe-symbol)
+   "ho" #'describe-symbol
+   "hm" #'describe-mode
+
+   ;; toggle
+   "t" '(:ignore t :which-key "toggle")
+   "tw" 'whitespace-mode
+   "tt" '(counsel-load-theme :which-key "choose theme"))
 
 (provide 'init-key)

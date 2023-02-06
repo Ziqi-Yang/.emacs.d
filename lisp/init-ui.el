@@ -4,9 +4,17 @@
 ;;; Code:
 
 ;;; theme ===============================
+;; @ editor theme
 (use-package doom-themes
   :config
   (load-theme 'doom-solarized-light t))
+;; @ icon theme
+(use-package all-the-icons
+  :if (display-graphic-p)
+  :config
+  (when (not (member "all-the-icons" (font-family-list)))
+    (all-the-icons-install-fonts t)))
+
 ;;; font settings =======================
 ;; Set the font face based on platform
 ;; @ default font
@@ -31,10 +39,12 @@
 ;;   1. http://xahlee.info/emacs/emacs/emacs_set_font_emoji.html
 ;;   2. https://emacs-china.org/t/emacs/22193/6
 
+;;; mode line ===========================
+;; @ hide/change pesky minor mode string from mode line
+;; (use-package diminish)
 
-
-
-
+;; @ doom modeline
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
 
 (provide 'init-ui)
-

@@ -1,3 +1,4 @@
 /.local
 /eln-cache
 /test.el
+/parinfer-rust

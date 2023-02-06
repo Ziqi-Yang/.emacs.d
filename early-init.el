@@ -17,7 +17,7 @@
    (convert-standard-filename
 	  (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
 
-
+(set-default-coding-systems 'utf-8)
 
 ;;; UI settings
 (scroll-bar-mode -1)
