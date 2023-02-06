@@ -1,8 +1,8 @@
 ;;; init-key.el --- Basics -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(set-default-coding-systems 'utf-8)
 
+;;; clean directory ======================
 (use-package no-littering
 	:init
 	(setq
@@ -15,5 +15,18 @@
 	(setq
 	auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
 	custom-file (no-littering-expand-etc-file-name "custom.el")))
+
+;;; workspace ===========================
+(use-package persp-mode
+  :config
+  (persp-mode))
+
+;;; fold ================================
+(use-package vimish-fold
+  :after evil)
+
+(use-package evil-vimish-fold
+  :after vimish-fold
+  :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
 (provide 'init-base)

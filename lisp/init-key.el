@@ -93,9 +93,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  ;; leader
  (mk/leader-def
    :states 'n
-	 ;; file
-	 "f" '(:ignore t :which-key "file")
-	 "ff" #'find-file
+   ;; file
+   "f" '(:ignore t :which-key "file")
+   "ff" #'find-file
 	 
    ;; window
    "w"  '(:ignore t :which-key "window")

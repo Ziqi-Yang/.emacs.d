@@ -30,7 +30,7 @@
 (straight-use-package 'use-package)
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
-(push (expand-file-name "lisp/languages" user-emacs-directory) load-path)
+(push (expand-file-name "lisp/modules/languages" user-emacs-directory) load-path)
 
 (with-temp-message ""
   (require 'init-base)
