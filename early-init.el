@@ -24,7 +24,7 @@
 (tool-bar-mode -1)
 ;; (tooltip-mode -1)
 (menu-bar-mode -1)
-(set-fringe-mode 10) ;; leave space for both side
+(set-fringe-mode 3) ;; diff-hl make use of fringe
 (column-number-mode)
 (global-display-line-numbers-mode 1)
 
