@@ -2,21 +2,22 @@
 ;;; Commentary:
 ;;; Code:
 
-;;; package.el
+(set-default-coding-systems 'utf-8)
+
+;;; Disable package.el ======================================
 ;; disable package.el at startup
 (setq package-enable-at-startup nil)
 ;; don't load from package cache
 (setq package-quickstart nil)
 
+
+;;; Performance =============================================
 ;; The default is ~800kB. Now allocating 200 MB.
 (setq gc-cons-threshold (* 200 1024 1024))
+;; increase performance (origin 4096 byte)
+(setq read-process-output-max (* 3 1024 1024))
 
-;; change eln-cache folder place
-(when (fboundp 'startup-redirect-eln-cache)
-  (startup-redirect-eln-cache
-   (convert-standard-filename
-	  (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
-
+;; @ ~benchmark
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -26,9 +27,14 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-(set-default-coding-systems 'utf-8)
 
-;;; UI settings
+;; Change eln-cache folder place ============================
+(when (fboundp 'startup-redirect-eln-cache)
+  (startup-redirect-eln-cache
+   (convert-standard-filename
+	  (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
+
+;;; UI settings =============================================
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
@@ -40,5 +46,6 @@
 (setq
  inhibit-startup-message t
  visible-bell t)
+
 
 (provide 'early-init)

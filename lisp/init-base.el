@@ -2,7 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;;; clean directory ==========================================
+;;; Trivil ==================================================
+(setq select-enable-clipboard nil) ;; make register indepentent from clipboard
+
+;;; clean directory =========================================
 (use-package no-littering
 	:init
 	(setq
@@ -96,6 +99,9 @@
 (use-package treesit-auto
   :demand t
   :config
+	;; currently, emacs lacks normal rust mode, we directly enebl rust-ts-mode
+	(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+
   (global-treesit-auto-mode))
 
 ;;; Lsp =====================================================
@@ -113,6 +119,7 @@
 	(add-hook 'c-ts-mode-hook #'eglot-ensure)
 	(add-hook 'c++-mode-hook #'eglot-ensure)
 	(add-hook 'c++-ts-mode-hook #'eglot-ensure)
+	(add-hook 'rust-ts-mode-hook #'eglot-ensure)
 
 	(with-eval-after-load 'eglot
 		(add-hook 'eglot-managed-mode-hook
@@ -122,7 +129,10 @@
 						(cons #'flymake-eldoc-function
 										(remove #'flymake-eldoc-function eldoc-documentation-functions)))
 		;; Show all eldoc feedback.
-		(setq eldoc-documentation-strategy #'eldoc-documentation-compose))))
+				(setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
+
+		;; to custom language server (like flags), add-to-list 'eglot-server-programs
+		)
 
 	;; corfu/orderless integration
 	(setq completion-category-overrides '((eglot (styles orderless))))
