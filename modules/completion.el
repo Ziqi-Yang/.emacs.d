@@ -86,7 +86,10 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 ;;; Consult =================================================
-(use-package consult)
+(use-package consult
+	:config
+	;; integrated with xref
+	(setq xref-show-xrefs-function #'consult-xref))
 
 ;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)

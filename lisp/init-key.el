@@ -4,19 +4,23 @@
 
 ;; universal-argument conflict with evil mode(c-u, scroll up half screen), so we change it
 (global-set-key (kbd "C-M-u") 'universal-argument)
-
+ 
 ;;; Key Definers and Definer Macros =========================
 ;; define keybindings with ease
 (use-package general
   ;; :demand t ;; use mapBegin! instead
   :config
   (general-evil-setup)
+ 
   (general-create-definer mk/leader-def
     :prefix "SPC"
-		:non-normal-prefix "M-SPC")
-
+		:non-normal-prefix "M-SPC"
+		:keymaps 'override)
+ 
   (general-create-definer mk/local-leader-def
-			  :prefix "SPC m"))
+		:prefix "SPC m"
+		:non-normal-prefix "M-SPC m"
+		:keymaps 'override))
 
 (defmacro mapBegin! (&rest expression)
   "Used for defining keys. Keys are defined after package 'general' load up, so we
@@ -26,7 +30,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ,@expression))
 
 
-;;; Evil Collection =========================================
+;;; Evil Collection ========================================= 
 (use-package evil
   :demand t
   :bind (("<escape>" . keyboard-escape-quit)) ;; <escape> to act like <C-g>
@@ -72,8 +76,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 ;;; Main Key Mapping ========================================
 (mapBegin!
- ;; evil-surround
- (general-nmap ;; normal
+ ;; @ normal map (no leader key
+ (general-nmap
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "C-." #'embark-act
 
@@ -84,18 +88,25 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 ;; zf(create) -> za/zc/zo(toggle/close/open) -> zd(delete)
 	 )
 
+ ;; @ visual map (no leader key
  (general-vmap ;; visual
    "S" #'evil-surround-region
    "C-S-c" #'clipboard-kill-ring-save
 	 "gc" #'evilnc-comment-or-uncomment-lines)
+
+ ;; @ insert map (no leader key
  (general-imap ;; insert
    "C-S-v" #'clipboard-yank)
- (general-omap ;; operation
+
+ ;; @ operation map (no leader key
+ (general-omap
    "s" #'evil-surround-edit
    "S" #'evil-Surround-edit)
 
- ;; leader
- (mk/leader-def 'n
+
+ ;; @ normal anad insert map (leader
+ (mk/leader-def
+	 :states '(normal insert)
 	 ":" '(eval-expression :which-key "Eval")
 	 "SPC" '(execute-extended-command :which-key "M-x")
 	 "-" '(dired-jump :which-key "dired here")
@@ -111,15 +122,20 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 ;; @ bookmark
 	 "B" '(:ignore t :which-key "Bookmark")
 	 "Bb" '(bookmark-jump :which-key "switch")
+	 "BB" '(bookmark-jump :which-key "switch")
 	 "Bc" '(bookmark-set :which-key "create")
 	 "Bd" '(bookmark-delete :which-key "delete")
 	 "Bk" '(bookmark-delete :which-key "delete")
 	 "BD" '(bookmark-delete :which-key "delete all")
 
-
 	 ;; @ Code
 	 "c" '(:ignore t :which-key "Code")
-	 "ce" '(flymake-show-buffer-diagnostics :which-key "errors(b)")
+	 "cr" '(eglot-rename :which-key "rename")
+	 "cf" '(eglot-format-buffer :which-key "format-buffer")
+	 "ce" '(consult-flymake :which-key "errors(b)")
+	 "cd" '(xref-find-definitions :which-key "definitions")
+	 "cr" '(xref-find-references :which-key "references")
+	 "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
 
    ;; @ file
    "f" '(:ignore t :which-key "File")
@@ -154,6 +170,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 ;; @ search
 	 "s" '(:ignore t :which-key "Search")
 	 "ss" '(consult-line :which-key "content")
+	 "si" '(consult-imenu :which-key "imenu")
 	 "sp" '(consult-ripgrep :which-key "project content")
 	 "sb" '(consult-bookmark :which-key "bookmark")
 	 "so" '(consult-outline :which-key "outline")
@@ -175,8 +192,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wv" #'split-window-vertically
 	 "wh" #'split-window-horizontally
 	 "wq" #'evil-window-delete
-	 "wd" #'evil-window-delete))
-
+	 "wd" #'evil-window-delete)
+ )
 
 
 (provide 'init-key)

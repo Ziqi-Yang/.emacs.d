@@ -43,6 +43,10 @@
   (require 'git)
   (require 'l-general))
 
+;; load language
+(with-temp-message ""
+  (require 'l-markdown))
+
 ;; remove old version native-compiled files
 (native-compile-prune-cache) 
 

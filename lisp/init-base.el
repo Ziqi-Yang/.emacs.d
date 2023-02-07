@@ -62,12 +62,13 @@
 
 
 ;;; fold ====================================================
-(use-package vimish-fold
-  :after evil)
+;; @ vimmish-fold
+;; (use-package vimish-fold
+;;   :after evil)
 
-(use-package evil-vimish-fold
-  :after vimish-fold
-  :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
+;; (use-package evil-vimish-fold
+;;   :after vimish-fold
+;;   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
 ;;; save file utility =======================================
 ;; when change window, lose focus & idle ...
@@ -83,5 +84,18 @@
 ;; If you still cannot know it since the corresponding function is byte-compiled,
 ;; go to https://github.com/emacs-mirror/emacs/blob/emacs-29/lisp/progmodes/eglot.el
 ;; to check the value the eglot-server-programs.
+(progn
+	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
+	(customize-set-variable 'eglot-extend-to-xref t)
+
+	(add-hook 'c-mode-hook #'eglot-ensure)
+	(add-hook 'c++-mode-hook #'eglot-ensure)
+
+	;; corfu/orderless integration
+	(setq completion-category-overrides '((eglot (styles orderless))))
+
+	;; NOTE
+	;; install markdown-mode to rich the doc
+	)
 
 (provide 'init-base)
