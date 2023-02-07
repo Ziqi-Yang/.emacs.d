@@ -68,6 +68,14 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 (use-package evil-nerd-commenter
 	:general ([remap comment-line] #'evilnc-comment-or-uncomment-lines))
 
+;; @ textobj
+;; keybindings(incluing other useful function of this package are not here
+(use-package evil-args
+	:config
+	;; bind evil-args text objects
+	(define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+	(define-key evil-outer-text-objects-map "a" 'evil-outer-arg))
+
 ;; @ textobj using tree-sitter
 ;; TODO more hack can be here
 ;; TODO wait for supporting emacs29 buildin tree-sitter
@@ -92,6 +100,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (general-nmap
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "C-." #'embark-act
+	 "L"   #'evil-forward-arg
+	 "H"   #'evil-backward-arg
+	 "C-S-o"   #'evil-jump-out-args
 
 	 ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
 	 "[f" '(treesit-beginning-of-defun :which-key "func begin")
@@ -103,6 +114,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 ;; @ fold via init-base/evil-vimish-mode
 	 ;; zf(create) -> za/zc/zo(toggle/close/open) -> zd(delete)
 	 )
+ (general-mmap
+	 "L" #'evil-forward-arg
+	 "H" #'evil-backward-arg)
 
  ;; @ visual map (no leader key
  (general-vmap ;; visual

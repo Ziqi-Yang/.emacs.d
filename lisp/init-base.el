@@ -5,6 +5,18 @@
 ;;; Trivil ==================================================
 (setq select-enable-clipboard nil) ;; make register indepentent from clipboard
 
+;; @ remember cursor position
+(use-package saveplace
+  :ensure nil
+  :hook (after-init . save-place-mode))
+
+;; @ save minibuffer history
+(use-package savehist
+  :init
+	;; Allow commands in minibuffers, will affect `dired-do-dired-do-find-regexp-and-replace' command:
+  (setq enable-recursive-minibuffers t)
+  (savehist-mode 1))
+
 ;;; clean directory =========================================
 (use-package no-littering
 	:init
@@ -64,16 +76,18 @@
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
 ;;; Enhance Help ============================================
-;; ;; Some symbol cannot be found(like eglot-server-programs) due to the inner
-;; ;; filter of helpful? Currently I cannot stand it. Maybe some days in the future
-;; ;; I will take a look at its source code.
-;; (use-package helpful
-;; 	:bind
-;;   ([remap describe-function] . helpful-function)
-;;   ([remap describe-symbol] . helpful-symbol)
-;;   ([remap describe-variable] . helpful-variable)
-;;   ([remap describe-command] . helpful-command)
-;;   ([remap describe-key] . helpful-key))
+;; Some symbol cannot be found(like eglot-server-programs, also the emacs
+;; buildin helper, but the latter in wider cases can find, maybe same buffer
+;; can find, different buffer cannot find). In this case, you should first search
+;; for eglot symbol, then all the symbols related to eglot can be found at the next
+;; time
+(use-package helpful
+	:bind
+  ([remap describe-function] . helpful-function)
+  ([remap describe-symbol] . helpful-symbol)
+  ([remap describe-variable] . helpful-variable)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-key] . helpful-key))
 
 ;;; fold ====================================================
 ;; @ vimmish-fold

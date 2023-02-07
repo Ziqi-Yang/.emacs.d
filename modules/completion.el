@@ -20,12 +20,6 @@
 	;; can selete entry with M-<number> <ret>
 	(vertico-indexed-mode))
 
-;; @ save minibuffer history
-;; such that vertico can make use of
-(use-package savehist
-  :init
-  (savehist-mode 1))
-
 ;; @ vertico recommended defualt configuration
 (use-package emacs
 	:ensure nil
