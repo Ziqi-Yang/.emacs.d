@@ -1,6 +1,11 @@
 #+title: README
 
 * Requirements
+Mainly Language Servers
+#+begin_src shell
+	# pip version pyright may not discoverable by emacs
+	sudo pacman -S clang pyright 
+#+end_src
 
 * Special Thanks
 - https://github.com/Likhon-baRoy/.emacs.d

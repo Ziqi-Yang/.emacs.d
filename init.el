@@ -2,15 +2,6 @@
 ;; Commentary:
 ;;; Code:
 
-;; Profile emacs startup
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
-
 ;; straight.el
 (setq straight-base-dir (expand-file-name ".local" user-emacs-directory))
 (defvar bootstrap-version)

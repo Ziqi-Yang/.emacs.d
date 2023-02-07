@@ -70,6 +70,11 @@
 ;;   :after vimish-fold
 ;;   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
+;; @ tree-sitter powered fold capability
+;; TODO this pakcage(folk) is temporary, wait for news
+;; (use-package ts-fold
+;;   :straight (:type git :host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support"))
+
 ;;; save file utility =======================================
 ;; when change window, lose focus & idle ...
 (use-package super-save
@@ -77,6 +82,21 @@
 	:hook (after-init . super-save-mode)
   :config
   (setq super-save-auto-save-when-idle t))
+
+;;; Treesitter ==============================================
+;; treesitter lang lib load path: /usr/local/lib and ~/.emacs.d/tree-sitter 
+;; use treesit-install-language-grammar to install lang by looking into
+;; treesit-language-source-alist variable
+;; for manual build: https://github.com/casouri/tree-sitter-module
+;; additional resources:
+;; starter-guide: https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
+;; https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
+
+;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
+(use-package treesit-auto
+  :demand t
+  :config
+  (global-treesit-auto-mode))
 
 ;;; Lsp =====================================================
 ;; check eglot-server-programs to know the language programs that corresponding
@@ -86,10 +106,23 @@
 ;; to check the value the eglot-server-programs.
 (progn
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
-	(customize-set-variable 'eglot-extend-to-xref t)
+	;; see outer files(like header files) as in project temporarily
+	(customize-set-variable 'eglot-extend-to-xref t) 
 
 	(add-hook 'c-mode-hook #'eglot-ensure)
+	(add-hook 'c-ts-mode-hook #'eglot-ensure)
 	(add-hook 'c++-mode-hook #'eglot-ensure)
+	(add-hook 'c++-ts-mode-hook #'eglot-ensure)
+
+	(with-eval-after-load 'eglot
+		(add-hook 'eglot-managed-mode-hook
+		(lambda () ;; show diagnostics in the echo area
+				;; Show flymake diagnostics first.
+				(setq eldoc-documentation-functions
+						(cons #'flymake-eldoc-function
+										(remove #'flymake-eldoc-function eldoc-documentation-functions)))
+		;; Show all eldoc feedback.
+		(setq eldoc-documentation-strategy #'eldoc-documentation-compose))))
 
 	;; corfu/orderless integration
 	(setq completion-category-overrides '((eglot (styles orderless))))

@@ -48,23 +48,37 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   :config
   (evil-mode 1))
 
+;; @ integrate evil to wide other mode
 (use-package evil-collection
   :after evil
   :custom (evil-collection-outline-bind-tab-p t)
   :config
   (evil-collection-init))
 
+;; @ custom key to escape
 (use-package evil-escape
   :after evil
   :config
   (evil-escape-mode t)
   (setq-default evil-escape-key-sequence "kk"))
 
+;; @ add / change surrounding notations
 (use-package evil-surround
   :after evil)
 
+;; @ comment
 (use-package evil-nerd-commenter
 	:general ([remap comment-line] #'evilnc-comment-or-uncomment-lines))
+
+;; @ textobj using tree-sitter
+;; TODO more hack can be here
+;; TODO wait for supporting emacs29 buildin tree-sitter
+;; (use-package evil-textobj-tree-sitter
+;; 	:config
+;; 	;; bind `function.outer`(entire function block) to `f` for use in things like `vaf`, `yaf`
+;; 	(define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+;; 	;; bind `function.inner`(function block without name and args) to `f` for use in things like `vif`, `yif`
+;; 	(define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner")))
 
 ;;; Which-key ===============================================
 (use-package which-key
@@ -80,6 +94,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (general-nmap
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "C-." #'embark-act
+
+	 ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
+	 "[f" '(treesit-beginning-of-defun :which-key "func begin")
+	 "]f" '(treesit-end-of-defun :which-key "func end")
 
 	 ;; @ text-scale via init-base/default-text-scale
 	 ;; C-- and C-= to change font size
@@ -130,8 +148,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	 ;; @ Code
 	 "c" '(:ignore t :which-key "Code")
+	 "ca" '(eglot-code-actions :which-key "action")
 	 "cr" '(eglot-rename :which-key "rename")
-	 "cf" '(eglot-format-buffer :which-key "format-buffer")
+	 "ci" '(eglot-code-action-organize-imports :which-key "format-buffer")
+	 "cf" '(eglot-code-action-quickfix :which-key "format-buffer")
+	 "cF" '(eglot-format-buffer :which-key "format-buffer")
 	 "ce" '(consult-flymake :which-key "errors(b)")
 	 "cd" '(xref-find-definitions :which-key "definitions")
 	 "cr" '(xref-find-references :which-key "references")
