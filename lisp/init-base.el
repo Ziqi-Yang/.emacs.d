@@ -64,16 +64,16 @@
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
 ;;; Enhance Help ============================================
-(use-package helpful
-	:custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-	:bind
-  ([remap describe-function] . helpful-function)
-  ([remap describe-symbol] . helpful-symbol)
-  ([remap describe-variable] . helpful-variable)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-key] . helpful-key))
+;; ;; Some symbol cannot be found(like eglot-server-programs) due to the inner
+;; ;; filter of helpful? Currently I cannot stand it. Maybe some days in the future
+;; ;; I will take a look at its source code.
+;; (use-package helpful
+;; 	:bind
+;;   ([remap describe-function] . helpful-function)
+;;   ([remap describe-symbol] . helpful-symbol)
+;;   ([remap describe-variable] . helpful-variable)
+;;   ([remap describe-command] . helpful-command)
+;;   ([remap describe-key] . helpful-key))
 
 ;;; fold ====================================================
 ;; @ vimmish-fold
