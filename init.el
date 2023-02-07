@@ -36,7 +36,8 @@
 
 ;; load language
 (with-temp-message ""
-  (require 'l-markdown))
+  (require 'l-markdown)
+	(require 'l-org))
 
 ;; remove old version native-compiled files
 (native-compile-prune-cache) 

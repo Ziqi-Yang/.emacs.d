@@ -1,10 +1,13 @@
 #+title: README
 
 * Requirements
-Mainly Language Servers
+Mainly Language Servers  
+Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to setup wakatime
 #+begin_src shell
 	# pip version pyright may not discoverable by emacs
-	sudo pacman -S clang pyright 
+	sudo pacman -S clang pyright rust-analyzer
+
+	sudo pacman -S wakatime
 #+end_src
 
 * Special Thanks

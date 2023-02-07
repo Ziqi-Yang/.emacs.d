@@ -3,7 +3,7 @@
 ;; primiary settings are in the early-init.el file, while extended setting like theme and font are here
 ;;; Code:
 
-;;; theme ===============================
+;;; theme ===================================================
 ;; @ editor theme
 (use-package doom-themes
   :config
@@ -15,7 +15,7 @@
   (when (not (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t)))
 
-;;; font settings =======================
+;;; font settings ===========================================
 ;; Set the font face based on platform
 ;; @ default font
 (when (member "BlexMono Nerd Font" (font-family-list))
@@ -39,12 +39,25 @@
 ;;   1. http://xahlee.info/emacs/emacs/emacs_set_font_emoji.html
 ;;   2. https://emacs-china.org/t/emacs/22193/6
 
-;;; mode line ===========================
-;; @ hide/change pesky minor mode string from mode line
-;; (use-package diminish)
-
+;;; mode line ===============================================
 ;; @ doom modeline
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
+
+;;; Navigation Highlight ====================================
+(use-package beacon
+	:defer 1
+	:hook ((after-init . (lambda () (beacon-mode 1)))))
+
+
+;;; Center Area =============================================
+(use-package olivetti
+  :hook ((text-mode         . olivetti-mode)
+         (prog-mode         . olivetti-mode)
+         (Info-mode         . olivetti-mode)
+         (org-mode          . olivetti-mode)
+         (markdown-mode     . olivetti-mode))
+  :custom
+  (olivetti-body-width 0.8))
 
 (provide 'init-ui)

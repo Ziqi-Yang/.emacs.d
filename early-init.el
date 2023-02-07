@@ -17,8 +17,7 @@
 ;; increase performance (origin 4096 byte)
 (setq read-process-output-max (* 3 1024 1024))
 
-;; @ ~benchmark
-;; Profile emacs startup
+;; @ time
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "*** Emacs loaded in %s with %d garbage collections."

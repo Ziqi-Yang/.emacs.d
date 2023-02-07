@@ -141,4 +141,9 @@
 	;; install markdown-mode to rich the doc
 	)
 
+;;; Waketime ================================================
+(use-package wakatime-mode
+	:config
+	(global-wakatime-mode))
+
 (provide 'init-base)
