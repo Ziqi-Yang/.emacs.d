@@ -7,5 +7,9 @@
 							evil-shift-width tab-width
 							scroll-margin 14)
 
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 
 (provide 'editor)
