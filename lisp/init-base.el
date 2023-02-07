@@ -118,6 +118,11 @@
 ;;; Lsp =====================================================
 ;; check eglot-server-programs to know the language programs that corresponding
 ;; to a certain language.
+;; 
+;; Notice that a language server can also execute other *optional package command*
+;; like bash-language-server can execute shellcheck, you should check the optional
+;; package required by the main pakcage is also installed(pacman -Qi to view)
+;;
 ;; If you still cannot know it since the corresponding function is byte-compiled,
 ;; go to https://github.com/emacs-mirror/emacs/blob/emacs-29/lisp/progmodes/eglot.el
 ;; to check the value the eglot-server-programs.
@@ -126,11 +131,10 @@
 	;; see outer files(like header files) as in project temporarily
 	(customize-set-variable 'eglot-extend-to-xref t) 
 
-	(add-hook 'c-mode-hook #'eglot-ensure)
+	(add-hook 'c-mode-hook #'eglot-ensure) ;; c
 	(add-hook 'c-ts-mode-hook #'eglot-ensure)
-	(add-hook 'c++-mode-hook #'eglot-ensure)
-	(add-hook 'c++-ts-mode-hook #'eglot-ensure)
-	(add-hook 'rust-ts-mode-hook #'eglot-ensure)
+	(add-hook 'rust-ts-mode-hook #'eglot-ensure) ;; rust
+	(add-hook 'sh-mode-hook #'eglot-ensure)
 
 	(with-eval-after-load 'eglot
 		(add-hook 'eglot-managed-mode-hook
