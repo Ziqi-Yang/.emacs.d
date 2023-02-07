@@ -76,6 +76,13 @@
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
+	;; Show Embark actions via which-key
+  (setq embark-action-indicator
+        (lambda (map)
+          (which-key--show-keymap "Embark" map nil nil 'no-paging)
+          #'which-key--hide-popup-ignore-command)
+        embark-become-indicator embark-action-indicator)
+
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
@@ -136,7 +143,14 @@
 	(unless (display-graphic-p)
 		(corfu-terminal-mode +1)))
 
-
+;;; Cafe ====================================================
+;; add completion etension
+;; TODO dict integration (enable it in org-mode or text-mode)
+(use-package cape
+  :init
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 
 (provide 'completion)
