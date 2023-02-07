@@ -106,6 +106,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "bb" '(consult-project-buffer :which-key "switch")
    "bB" '(consult-buffer :which-key "all buffer")
 	 "bd" '(evil-delete-buffer :which-key "delete")
+	 "bk" '(evil-delete-buffer :which-key "delete")
 	 
 	 ;; @ bookmark
 	 "B" '(:ignore t :which-key "Bookmark")
@@ -114,6 +115,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "Bd" '(bookmark-delete :which-key "delete")
 	 "Bk" '(bookmark-delete :which-key "delete")
 	 "BD" '(bookmark-delete :which-key "delete all")
+
+
+	 ;; @ Code
+	 "c" '(:ignore t :which-key "Code")
+	 "ce" '(flymake-show-buffer-diagnostics :which-key "errors(b)")
 
    ;; @ file
    "f" '(:ignore t :which-key "File")
@@ -154,6 +160,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	 ;; @ project
 	 "p" '(:ignore t :which-key "Project")
+	 "pp" '(project-switch-project :which-key "switch")
+	 "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
+	 "pk" '(project-kill-buffers :which-key "kill buffers(p)")
 
    ;; @ toggle
    "t" '(:ignore t :which-key "Toggle")
@@ -166,8 +175,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wv" #'split-window-vertically
 	 "wh" #'split-window-horizontally
 	 "wq" #'evil-window-delete
-	 "wd" #'evil-window-delete)
- )
+	 "wd" #'evil-window-delete))
 
 
 

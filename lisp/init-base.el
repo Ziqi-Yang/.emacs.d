@@ -33,7 +33,6 @@
 ;; @ enable consult to find file in project
 (use-package consult-project-extra)
 
-
 ;;; Window ==================================================
 ;; @ jump
 (use-package ace-window
@@ -77,5 +76,12 @@
 	:hook (after-init . super-save-mode)
   :config
   (setq super-save-auto-save-when-idle t))
+
+;;; Lsp =====================================================
+;; check eglot-server-programs to know the language programs that corresponding
+;; to a certain language.
+;; If you still cannot know it since the corresponding function is byte-compiled,
+;; go to https://github.com/emacs-mirror/emacs/blob/emacs-29/lisp/progmodes/eglot.el
+;; to check the value the eglot-server-programs.
 
 (provide 'init-base)
