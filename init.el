@@ -20,6 +20,11 @@
 (setq straight-use-package-by-default t)
 (straight-use-package 'use-package)
 
+;; (use-package benchmark-init ;; when needed, enable it
+;;   :config
+;;   ;; To disable collection of benchmark data after init is done.
+;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "modules" user-emacs-directory) load-path)
 (push (expand-file-name "modules/languages" user-emacs-directory) load-path)

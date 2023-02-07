@@ -8,6 +8,7 @@
 (use-package doom-themes
   :config
   (load-theme 'doom-solarized-light t))
+
 ;; @ icon theme
 (use-package all-the-icons
   :if (display-graphic-p)

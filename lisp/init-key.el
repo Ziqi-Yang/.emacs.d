@@ -14,13 +14,11 @@
  
   (general-create-definer mk/leader-def
     :prefix "SPC"
-		:non-normal-prefix "M-SPC"
-		:keymaps 'override)
+		:non-normal-prefix "S-SPC")
  
   (general-create-definer mk/local-leader-def
 		:prefix "SPC m"
-		:non-normal-prefix "M-SPC m"
-		:keymaps 'override))
+		:non-normal-prefix "M-SPC m"))
 
 (defmacro mapBegin! (&rest expression)
   "Used for defining keys. Keys are defined after package 'general' load up, so we
@@ -82,11 +80,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 ;;; Which-key ===============================================
 (use-package which-key
-  :init (which-key-mode)
-  ;; :diminish which-key-mode
+  :init
+  (setq which-key-idle-delay 0.5)
+  (setq which-key-side-window-max-height 0.3)
   :config
-  (setq which-key-idle-delay 0.3)
-  (setq which-key-side-window-max-height 0.3))
+	(which-key-mode))
 
 ;;; Main Key Mapping ========================================
 (mapBegin!
@@ -124,11 +122,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
  ;; @ normal anad insert map (leader
  (mk/leader-def
-	 :states '(normal insert)
+	 :states '(normal visual)
+	 :keymaps 'override
 	 ":" '(eval-expression :which-key "Eval")
 	 "SPC" '(execute-extended-command :which-key "M-x")
-	 "-" '(dired-jump :which-key "dired here")
-	 "=" '(project-dired :which-key "project dired")
 
    ;; @ buffer
    "b"  '(:ignore t :which-key "Buffer & Bookmark")
@@ -188,6 +185,16 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "gF"  'magit-fetch-all
    "gr"  'magit-rebase
 
+	 "o"  '(:ignore t :which-key "open")
+	 "o-" '(dired-jump :which-key "dired here")
+	 "o=" '(project-dired :which-key "project dired")
+
+	 ;; @ project
+	 "p" '(:ignore t :which-key "Project")
+	 "pp" '(project-switch-project :which-key "switch")
+	 "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
+	 "pk" '(project-kill-buffers :which-key "kill buffers(p)")
+
 	 ;; @ search
 	 "s" '(:ignore t :which-key "Search")
 	 "ss" '(consult-line :which-key "content")
@@ -195,12 +202,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "sp" '(consult-ripgrep :which-key "project content")
 	 "sb" '(consult-bookmark :which-key "bookmark")
 	 "so" '(consult-outline :which-key "outline")
-
-	 ;; @ project
-	 "p" '(:ignore t :which-key "Project")
-	 "pp" '(project-switch-project :which-key "switch")
-	 "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
-	 "pk" '(project-kill-buffers :which-key "kill buffers(p)")
 
    ;; @ toggle
    "t" '(:ignore t :which-key "Toggle")

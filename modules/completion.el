@@ -28,6 +28,7 @@
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs
+	:ensure nil
   :init
   (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
@@ -121,6 +122,7 @@
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs
+	:ensure nil
   :init
   (setq completion-cycle-threshold 3)
   (setq read-extended-command-predicate

@@ -4,14 +4,17 @@
 Mainly Language Servers  
 Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to setup wakatime
 #+begin_src shell
-	# pip version pyright may not discoverable by emacs
+	# # pip version pyright may not discoverable by emacs
 	sudo pacman -S clang pyright rust-analyzer
-
 	sudo pacman -S wakatime
 #+end_src
+- [ ] hello
+** TODO Test
+*** PROJ Hi
 
 * Special Thanks
 - https://github.com/Likhon-baRoy/.emacs.d
 - https://config.daviwil.com/emacs
 - https://github.com/daviwil/emacs-from-scratch
 - https://github.com/wowhxj/emacs-from-scratch
+
