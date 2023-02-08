@@ -5,7 +5,7 @@
 ;;; Vertico =================================================
 (use-package vertico
 	:straight (:host github :repo "minad/vertico"
-									 :files ("*.el" "extensions/vertico-indexed.el"))
+									 :files ("*.el" "extensions/vertico-indexed.el" "extensions/vertico-multiform.el"))
 	:bind (:map vertico-map
 				 ("C-j" . vertico-next)
 				 ("C-k" . vertico-previous)
@@ -18,7 +18,13 @@
 	(setq vertico-resize t)
 
 	;; can selete entry with M-<number> <ret>
-	(vertico-indexed-mode))
+	(vertico-indexed-mode)
+	;; configure display per command
+	(vertico-multiform-mode)
+
+	;; this enables vertico-posframe works well with emacs daemon
+	(setq vertico-multiform-commands
+				'((t posframe))))
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs
@@ -45,11 +51,13 @@
 (use-package vertico-posframe
 	:after vertico
 	:config
-	(vertico-posframe-mode)
+	;; (vertico-posframe-mode)
 	(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
 	(setq vertico-posframe-parameters
       '((left-fringe . 8)
         (right-fringe . 8))))
+;; make sure it works in daemon mode
+;; (add-hook 'server-after-make-frame-hook 'vertico-posframe-mode-hook)
 
 ;;; Annotations in completetion =============================
 (use-package marginalia
