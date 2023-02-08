@@ -32,9 +32,57 @@
 	custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 ;;; workspace ===============================================
+;; @ persp-mode
+;; poor document, conflict with vertico-posframe when manually recover, too hard to use
 ;; (use-package persp-mode
+;;   :hook (after-init . persp-mode)
 ;;   :config
-;;   (persp-mode))
+;;   (setq persp-autokill-buffer-on-remove 'kill-weak
+;;         persp-auto-resume-time -1 ; Don't auto-load on startup
+;;         persp-auto-save-opt 1 ;; save on the emacs shutdown and only if the persp-mode active
+;;         persp-reset-windows-on-nil-window-conf nil
+;;         persp-nil-hidden t
+;;         persp-set-last-persp-for-new-frames t
+;;         ;; persp-switch-to-added-buffer nil
+;;         persp-kill-foreign-buffer-behaviour 'kill
+;;         persp-remove-buffers-from-nil-persp-behaviour nil)) 
+
+(use-package eyebrowse
+  :config 
+	(define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+	(define-key eyebrowse-mode-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+	(define-key eyebrowse-mode-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+	(define-key eyebrowse-mode-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+	(define-key eyebrowse-mode-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+	(define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+	(eyebrowse-mode t)
+	(setq eyebrowse-wrap-around t) ;; makes workspaces a loop
+	(setq eyebrowse-new-workspace t)) ;; use *scratch* buffer (use string to provide it with custom buffer name)
+
+;; save session
+(use-package desktop
+  :custom
+  (desktop-restore-eager 4)
+	(desktop-save t)
+	:init
+	(if (display-graphic-p)
+		;; non-daemon emacs 
+		(progn
+			(add-hook 'after-init-hook '(lambda () (desktop-save-mode t)))
+			(add-hook 'after-init-hook #'desktop-read))
+			;; (add-hook 'kill-emacs-hook '(lambda () (desktop-save-in-desktop-dir)))) ;; optional
+		;; emacs server
+		(progn
+			(add-hook 'server-after-make-frame-hook '(lambda () (desktop-save-mode t)))
+			;; we need the first emacsclient to read the session, the later opened emacsclient(the
+			;; first one is still alive) will not read the session since the server arleady owns the
+			;; session
+			(add-hook 'server-after-make-frame-hook #'desktop-read)
+			(add-hook 'kill-emacs-hook '(lambda () (progn
+																							 (desktop-save-in-desktop-dir)
+																							 ;; emacs server won't release the lock file so
+																							 ;; we do it ourserlves
+																							 (desktop-release-lock)))))))
 
 ;;; text scale change on the fly ============================
 (use-package default-text-scale 
@@ -46,7 +94,7 @@
 ;;; Project Utilities =======================================
 ;; use buildin prokect.el for project ability
 ;; @ enable consult to find file in project
-(use-package consult-project-extra)
+;; (use-package consult-project-extra)
 
 ;;; Window ==================================================
 ;; @ jump

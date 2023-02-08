@@ -182,7 +182,21 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 :states '(normal visual)
 	 :keymaps 'override
 	 ":" '(eval-expression :which-key "Eval")
+	 "`" '(eyebrowse-last-window-config :which-key "previous workspace")
 	 "SPC" '(execute-extended-command :which-key "M-x")
+
+	 ;; @ workspace
+	 ;; eyebrowse switch functions are also bounded to "M-<num>" in its use-package scope
+	 "TAB" '(:ignore t :which-key "workspace")
+	 "TAB TAB" '(eyebrowse-switch-to-window-config :which "switch")
+	 "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "w0")
+	 "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "w1")
+	 "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "w2")
+	 "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "w3")
+	 "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "w4")
+	 "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "w5")	 
+	 "TAB s" '(desktop-save-in-desktop-dir :which-key "save session")
+	 "TAB l" '(desktop-load-file :which-key "load session")
 
    ;; @ buffer
    "b"  '(:ignore t :which-key "Buffer & Bookmark")
@@ -251,6 +265,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "pp" '(project-switch-project :which-key "switch")
 	 "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
 	 "pk" '(project-kill-buffers :which-key "kill buffers(p)")
+
+	 ;; @ quit
+	 "q" '(:ignore t :which-key "quit")
+	 "qq" '(kill-emacs :which-key "kill emacs")
 
 	 ;; @ search
 	 "s" '(:ignore t :which-key "Search")
