@@ -86,6 +86,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;; 	;; bind `function.inner`(function block without name and args) to `f` for use in things like `vif`, `yif`
 ;; 	(define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner")))
 
+;; @ navigatoin
+(use-package evil-easymotion
+	:config
+	(evilem-default-keybindings "g"))
+
 ;;; Which-key ===============================================
 (use-package which-key
   :init
