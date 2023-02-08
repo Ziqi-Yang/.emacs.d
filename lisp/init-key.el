@@ -143,6 +143,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;; Main Key Mapping ========================================
 (mapBegin!
  ;; @ normal map (no leader key
+ (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
+ (define-key evil-visual-state-map (kbd "<") 'djoyner/evil-shift-left-visual)
  (general-nmap
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "C-." #'embark-act
@@ -166,6 +168,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "S" #'evil-surround-region
    "C-S-c" #'clipboard-kill-ring-save
 	 "gc" #'evilnc-comment-or-uncomment-lines)
+
 
  ;; @ insert map (no leader key
  (general-imap ;; insert
@@ -291,6 +294,18 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wq" #'evil-window-delete
 	 "wd" #'evil-window-delete)
  )
+
+(defun djoyner/evil-shift-left-visual ()
+  (interactive)
+  (evil-shift-left (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
+
+(defun djoyner/evil-shift-right-visual ()
+  (interactive)
+  (evil-shift-right (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
 
 
 (provide 'init-key)
