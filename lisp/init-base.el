@@ -147,6 +147,8 @@
 
 	(add-hook 'c-mode-hook #'eglot-ensure) ;; c
 	(add-hook 'c-ts-mode-hook #'eglot-ensure)
+	(add-hook 'python-mode-hook #'eglot-ensure) ;; python
+	(add-hook 'python-ts-mode-hook #'eglot-ensure)
 	(add-hook 'rust-ts-mode-hook #'eglot-ensure) ;; rust
 	(add-hook 'sh-mode-hook #'eglot-ensure)
 

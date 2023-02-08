@@ -60,7 +60,14 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   (evil-escape-mode t)
   (setq-default evil-escape-key-sequence "kk"))
 
-;; @ add / change surrounding notations
+;; @ add / deleta/ change surrounding notations
+;; also works well with adding xml tags(can use class) and add funtion
+;; like print("something")
+;; visual state: S, and Sf (for add function), < (for add xml tags)
+;; normal state:
+;;   add: ysiw<new>
+;;   change: cs<old><new>
+;;   delete: cs<old>
 (use-package evil-surround
   :after evil)
 
@@ -68,13 +75,36 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 (use-package evil-nerd-commenter
 	:general ([remap comment-line] #'evilnc-comment-or-uncomment-lines))
 
+;; @ indent
+;; default keybindings: gl and gL
+(use-package evil-lion
+  :config
+  (evil-lion-mode))
+
 ;; @ textobj
-;; keybindings(incluing other useful function of this package are not here
+;; + arguments (function arguments, default style: (arg1, arg2) 
+;; keybindings(incluing other useful function of this package are in the main keymaps
+;; textobj: a
 (use-package evil-args
 	:config
 	;; bind evil-args text objects
 	(define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
 	(define-key evil-outer-text-objects-map "a" 'evil-outer-arg))
+
+;; + indentation
+;; textobj: i, I, J
+;; TODO: Current shorttage: cannot select objects inside arguments
+;; maybe I can combine it with evil-args
+(use-package evil-indent-plus
+	:config
+	(evil-indent-plus-default-bindings))
+
+;; + xml attribute
+;; textobj: x
+;; example: uncomment the line below and relocate in 'class="meow"', type 'vix'
+;; <html class="meow"></html>
+(use-package exato)
+
 
 ;; @ textobj using tree-sitter
 ;; TODO more hack can be here
@@ -87,9 +117,20 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;; 	(define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner")))
 
 ;; @ navigatoin
+;; Recommendation:
+;;   - vertical movement: evil-easymotion
+;;   - horizontal movement: evil-snipe
+;;   - *, # visual area replacement: evil-easymotion
+;; + gj,gk,ge,gb,g*,g#...
 (use-package evil-easymotion
 	:config
 	(evilem-default-keybindings "g"))
+
+;; + line: s(two characters search), f, t(makes f, t repectable)
+(use-package evil-snipe
+	:config
+	(evil-snipe-mode +1)
+	(evil-snipe-override-mode +1))
 
 ;;; Which-key ===============================================
 (use-package which-key
@@ -115,9 +156,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	 ;; @ text-scale via init-base/default-text-scale
 	 ;; C-- and C-= to change font size
-
-	 ;; @ fold via init-base/evil-vimish-mode
-	 ;; zf(create) -> za/zc/zo(toggle/close/open) -> zd(delete)
 	 )
  (general-mmap
 	 "L" #'evil-forward-arg

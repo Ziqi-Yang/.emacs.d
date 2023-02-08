@@ -61,7 +61,6 @@
 	:defer 1
 	:hook ((after-init . (lambda () (beacon-mode 1)))))
 
-
 ;;; Center Area =============================================
 (use-package olivetti
   :hook ((text-mode         . olivetti-mode)
