@@ -56,8 +56,6 @@
 	(setq vertico-posframe-parameters
       '((left-fringe . 8)
         (right-fringe . 8))))
-;; make sure it works in daemon mode
-;; (add-hook 'server-after-make-frame-hook 'vertico-posframe-mode-hook)
 
 ;;; Annotations in completetion =============================
 (use-package marginalia

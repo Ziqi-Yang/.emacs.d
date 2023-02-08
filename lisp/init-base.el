@@ -32,9 +32,9 @@
 	custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 ;;; workspace ===============================================
-(use-package persp-mode
-  :config
-  (persp-mode))
+;; (use-package persp-mode
+;;   :config
+;;   (persp-mode))
 
 ;;; text scale change on the fly ============================
 (use-package default-text-scale 
