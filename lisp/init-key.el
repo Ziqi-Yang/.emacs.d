@@ -142,9 +142,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 ;;; Main Key Mapping ========================================
 (mapBegin!
- ;; @ normal map (no leader key
+ ;; continuous shift-right/left, cannot be defined in general map
  (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
  (define-key evil-visual-state-map (kbd "<") 'djoyner/evil-shift-left-visual)
+
+ ;; @ normal map (no leader key
  (general-nmap
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "C-." #'embark-act
