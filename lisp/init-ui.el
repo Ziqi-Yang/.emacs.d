@@ -17,10 +17,25 @@
   (when (not (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t)))
 
+	(defun real-buffer-p ()
+		(or (solaire-mode-real-buffer-p)
+				(equal (buffer-name) "*dashboard*")))
+
+(use-package solaire-mode
+	:hook ( after-init . solaire-global-mode)
+	:config
+	;; https://github.com/hlissner/emacs-solaire-mode/issues/28#issuecomment-968126872
+	;; disable solaire mode in dashboard, since the banner background doesn't change(one way:
+	(setq solaire-mode-real-buffer-fn #'(lambda ()
+																				(or (solaire-mode-real-buffer-p)
+																						(equal (buffer-name) "*dashboard*")))))
+
 ;;; Dashboard ===============================================
 (use-package dashboard
+	:after all-the-icons
   :config
 	;; configuration for emacsclient
+	;; (set-face-background 'dashboard-banner-logo-title nil) ;; solaire-mode integration
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	;; icons display in the emacsclient
 	(add-hook 'server-after-make-frame-hook  '(lambda () (dashboard-refresh-buffer)))

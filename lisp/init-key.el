@@ -295,6 +295,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "ww" #'ace-window
 	 "wm" #'(maximize-window :which-key "maximize")
 	 "wM" #'(minimize-window :which-key "minimize")
+	 "wb" #'(balance-windows :which-key "balance")
+	 "w+" #'(maximize-window :which-key "maximize")
+	 "w-" #'(minimize-window :which-key "minimize")
+	 "w=" #'(balance-windows :which-key "balance")
 	 "wv" #'split-window-vertically
 	 "wh" #'split-window-horizontally
 	 "wq" #'evil-window-delete
