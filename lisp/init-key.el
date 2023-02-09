@@ -146,8 +146,14 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
  (define-key evil-visual-state-map (kbd "<") 'djoyner/evil-shift-left-visual)
 
+
+ (general-unbind 'normal
+	 "<"
+	 ">")
+
  ;; @ normal map (no leader key
- (general-nmap
+ (general-nmap 
+	 ;; "." evil-repeat can be your friend
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 	 "C-." #'embark-act
@@ -161,6 +167,27 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	 ;; @ text-scale via init-base/default-text-scale
 	 ;; C-- and C-= to change font size
+
+	 "<<" #'evil-shift-left-line
+	 ">>" #'evil-shift-right-line
+
+	 ;; @ smartparen in normal mode
+	 "zk" #'sp-kill-hybrid-sexp
+
+	 ;; the two works for the closest expression, for more specific control,
+	 ;; use evil-surround instead (cs<paren> ds<paren>)
+	 "zd" #'sp-splice-sexp
+	 "zc" #'sp-rewrap-sexp
+
+	 ">)" #'sp-forward-slurp-sexp
+	 "<)" #'sp-forward-barf-sexp
+
+	 ">(" #'sp-backward-barf-sexp
+	 "<(" #'sp-backward-slurp-sexp
+
+	 "]s" #'sp-end-of-sexp
+	 "[s" #'sp-beginning-of-sexp
+
 	 )
  (general-mmap
 	 "L" #'evil-forward-arg
@@ -172,10 +199,15 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "C-S-c" #'clipboard-kill-ring-save
 	 "gc" #'evilnc-comment-or-uncomment-lines)
 
-
- ;; @ insert map (no leader key
+ ;; ((hllo world) meowking)
+ ;; @ insert( map (no leader key
  (general-imap ;; insert
-   "C-S-v" #'clipboard-yank)
+	 ;; eivl(vim) default C-o can be useful when moving in evil insert mode
+   "C-S-v" #'clipboard-yank
+
+	 ;; smartparen
+	 "M-<backspace>" #'sp-backward-kill-sexp
+	 )
 
  ;; @ operation map (no leader key
  (general-omap

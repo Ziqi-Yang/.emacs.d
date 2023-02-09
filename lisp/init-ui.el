@@ -21,6 +21,7 @@
 		(or (solaire-mode-real-buffer-p)
 				(equal (buffer-name) "*dashboard*")))
 
+;;; dim unreal buffer =======================================
 (use-package solaire-mode
 	:hook ( after-init . solaire-global-mode)
 	:config

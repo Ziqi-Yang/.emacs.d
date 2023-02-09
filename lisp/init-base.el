@@ -3,17 +3,6 @@
 ;;; Code:
 
 ;;; Trivil ==================================================
-(setq select-enable-clipboard nil) ;; make register indepentent from clipboard
-(use-package paren
-	:ensure nil
-	:config
-	(setq show-paren-when-point-inside-paren t))
-
-;; @ remember cursor position
-(use-package saveplace
-  :ensure nil
-  :hook (after-init . save-place-mode))
-
 ;; @ save minibuffer history
 (use-package savehist
   :init
