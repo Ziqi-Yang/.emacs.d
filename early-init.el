@@ -47,5 +47,7 @@
  inhibit-startup-message t
  visible-bell t)
 
+;; Suppress warnings and errors during asynchronous native compilation
+(setq native-comp-async-report-warnings-errors nil)
 
 (provide 'early-init)

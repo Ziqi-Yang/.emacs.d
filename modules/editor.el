@@ -37,10 +37,15 @@
 ;;                               )))
 
 (use-package smartparens
-  (:hook (prog-mode org-mode) . smartparens-mode)
+  :hook ((prog-mode org-mode) . smartparens-mode)
 	:config
+	;; (sp-pair "<#" "#>") ;; example
 	(sp-pair "<" ">")
 	(sp-pair "$" "$"))
+
+;;; Indentation =============================================
+(use-package aggressive-indent ;; hello
+	:hook ((prog-mode . aggressive-indent-mode)))
 
 ;;; Focus ===================================================
 ;; focus mode, dim other text color

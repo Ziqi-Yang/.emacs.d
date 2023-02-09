@@ -133,7 +133,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	(evil-snipe-override-mode +1))
 
 ;;; Avy =====================================================
-(use-package avy)
+;; evil package has build avy
+;; (use-package avy)
 
 ;;; Which-key ===============================================
 (use-package which-key
@@ -142,6 +143,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   (setq which-key-side-window-max-height 0.3)
   :config
 	(which-key-mode))
+
+;;; select region ===========================================
+(use-package expand-region)
 
 ;;; Main Key Mapping ========================================
 (mapBegin!
@@ -152,22 +156,28 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
  (general-unbind 'normal
 	 "<"
-	 ">")
+	 ">"
+	 "v")
 
  ;; @ normal map (no leader key
  (general-nmap 
 	 ;; "." evil-repeat can be your friend
-	 "TAB" #'avy-goto-char-2
+	 "TAB" #'evil-avy-goto-char-2
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
+	 "L" #'sp-next-sexp
+	 "H" #'sp-previous-sexp
+	 "v" #'er/expand-region ;; can still use something like viw vi(
 	 "C-." #'embark-act
-	 "L"   #'evil-forward-arg
-	 "H"   #'evil-backward-arg
 	 "C-S-o"   #'evil-jump-out-args
 
 	 ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
 	 "[f" '(treesit-beginning-of-defun :which-key "func begin")
 	 "]f" '(treesit-end-of-defun :which-key "func end")
+	 "]a"   #'evil-forward-arg
+	 "[a"   #'evil-backward-arg
+	 "]s" #'sp-end-of-sexp
+	 "[s" #'sp-beginning-of-sexp
 
 	 ;; @ text-scale via init-base/default-text-scale
 	 ;; C-- and C-= to change font size
@@ -175,9 +185,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "<<" #'evil-shift-left-line
 	 ">>" #'evil-shift-right-line
 
-	 ;; @ smartparen in normal mode
 	 "zk" #'sp-kill-hybrid-sexp
-
 	 ;; the two works for the closest expression, for more specific control,
 	 ;; use evil-surround instead (cs<paren> ds<paren>)
 	 "zd" #'sp-splice-sexp
@@ -187,11 +195,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "<)" #'sp-forward-barf-sexp
 
 	 ">(" #'sp-backward-barf-sexp
-	 "<(" #'sp-backward-slurp-sexp
-
-	 "]s" #'sp-end-of-sexp
-	 "[s" #'sp-beginning-of-sexp
-	 )
+	 "<(" #'sp-backward-slurp-sexp)
  (general-mmap
 	 "L" #'evil-forward-arg
 	 "H" #'evil-backward-arg)
@@ -210,6 +214,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	 ;; smartparen
 	 "M-<backspace>" #'sp-backward-kill-sexp
+	 "M-<return>" #'sp-up-sexp
+	 "M-S-<return>" #'sp-backward-up-sexp
 	 )
 
  ;; @ operation map (no leader key
