@@ -25,13 +25,18 @@
 (use-package highlight-parentheses
 	:hook ((prog-mode . highlight-parentheses-mode))
 	:config
-	(setq highlight-parentheses-attributes '((:box
-																						( :line-width (1 . -1)
-																							:color ,(face-attribute 'shadow :foreground))))))
+	(setq highlight-parentheses-colors nil
+				highlight-parentheses-highlight-adjacent t
+				highlight-parentheses-attributes '((:weight ultra-bold :background "#ecf0f1"
+																										:box
+																										( :line-width (1 . -1)
+																											:color ,(face-attribute 'shadow :foreground))))))
 
-(use-package paren
+(use-package paren 
 	:custom
-	(show-paren-when-point-inside-paren t))
+	(show-paren-when-point-inside-paren t)
+	:init
+	(setq show-paren-mode nil)) ;; use highlight-parentheses instead
 
 ;; @ use smartparens instead
 ;; (use-package elec-pair
