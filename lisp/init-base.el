@@ -235,4 +235,7 @@
 	:config
 	(global-wakatime-mode))
 
+;;; Zoxide ==================================================
+(use-package zoxide)
+
 (provide 'init-base)

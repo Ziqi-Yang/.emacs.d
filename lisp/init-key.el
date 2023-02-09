@@ -273,6 +273,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "ff" '(find-file :which-key "find")
 	 "fp" '(consult-project-extra-find :which-key "find@project")
 	 "fr" '(consult-recent-file :which-key "recent")
+	 "fz" '(zoxide-find-file :which-key "zoxide")
 
    ;; @ help
    "h" '(:ignore t :which-key "Help")
