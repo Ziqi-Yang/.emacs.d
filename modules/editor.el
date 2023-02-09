@@ -17,14 +17,21 @@
 
 
 ;;; Paren ===================================================
-
+;; @ color for all 
 (use-package rainbow-delimiters
-  :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package paren
+;; @ according to point position
+(use-package highlight-parentheses
+	:hook ((prog-mode . highlight-parentheses-mode))
 	:config
-	(setq show-paren-when-point-inside-paren t))
+	(setq highlight-parentheses-attributes '((:box
+																						( :line-width (1 . -1)
+																							:color ,(face-attribute 'shadow :foreground))))))
+
+(use-package paren
+	:custom
+	(show-paren-when-point-inside-paren t))
 
 ;; @ use smartparens instead
 ;; (use-package elec-pair

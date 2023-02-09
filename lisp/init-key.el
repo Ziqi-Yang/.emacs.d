@@ -167,9 +167,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 	 "L" #'sp-next-sexp
 	 "H" #'sp-previous-sexp
-	 "v" #'er/expand-region ;; can still use something like viw vi(
+	 "M-v" #'er/expand-region
 	 "C-." #'embark-act
 	 "C-S-o"   #'evil-jump-out-args
+	 "M-v" #'er/expand-region
 
 	 ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
 	 "[f" '(treesit-beginning-of-defun :which-key "func begin")
