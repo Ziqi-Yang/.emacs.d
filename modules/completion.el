@@ -109,12 +109,6 @@
   (corfu-auto t)                 ;; Enable auto completion
 	(corfu-auto-delay 0)           ;; Enable auto completion
 	(corfu-auto-prefix 2)          ;; Enable auto completion
-	:bind
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous))
   :init
   (global-corfu-mode)
 
