@@ -149,6 +149,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  ;; @ normal map (no leader key
  (general-nmap
 	 "gcc" #'evilnc-comment-or-uncomment-lines
+	 "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 	 "C-." #'embark-act
 	 "L"   #'evil-forward-arg
 	 "H"   #'evil-backward-arg
@@ -209,6 +210,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "bB" '(consult-buffer :which-key "all buffer")
 	 "bd" '(evil-delete-buffer :which-key "delete")
 	 "bk" '(evil-delete-buffer :which-key "delete")
+	 "bK" '(mk/kill-all-buffers :which-key "delete")
 	 
 	 ;; @ bookmark
 	 "B" '(:ignore t :which-key "Bookmark")
@@ -291,23 +293,33 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    ;; @ window
    "w"  '(:ignore t :which-key "Window")
    "ww" #'ace-window
+	 "wm" #'(maximize-window :which-key "maximize")
+	 "wM" #'(minimize-window :which-key "minimize")
 	 "wv" #'split-window-vertically
 	 "wh" #'split-window-horizontally
 	 "wq" #'evil-window-delete
 	 "wd" #'evil-window-delete)
  )
 
+;;; Trivial Functions =======================================
+
 (defun djoyner/evil-shift-left-visual ()
+	"Continuous evil shift-left."
   (interactive)
   (evil-shift-left (region-beginning) (region-end))
   (evil-normal-state)
   (evil-visual-restore))
 
 (defun djoyner/evil-shift-right-visual ()
+	"Continuous evil shift-right."
   (interactive)
   (evil-shift-right (region-beginning) (region-end))
   (evil-normal-state)
   (evil-visual-restore))
 
+(defun mk/kill-all-buffers ()
+		"Kill all buffers except."
+		(interactive)
+		(mapc 'kill-buffer (delq (get-buffer "*dashboard*") (buffer-list))))
 
 (provide 'init-key)

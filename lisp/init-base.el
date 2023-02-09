@@ -4,6 +4,10 @@
 
 ;;; Trivil ==================================================
 (setq select-enable-clipboard nil) ;; make register indepentent from clipboard
+(use-package paren
+	:ensure nil
+	:config
+	(setq show-paren-when-point-inside-paren t))
 
 ;; @ remember cursor position
 (use-package saveplace
@@ -57,7 +61,7 @@
 	(define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
 	(eyebrowse-mode t)
 	(setq eyebrowse-wrap-around t) ;; makes workspaces a loop
-	(setq eyebrowse-new-workspace t)) ;; use *scratch* buffer (use string to provide it with custom buffer name)
+	(setq eyebrowse-new-workspace "*dashboard*")) ;; use *scratch* buffer (use string to provide it with custom buffer name)
 
 ;; save session
 (use-package desktop
@@ -69,20 +73,37 @@
 		;; non-daemon emacs 
 		(progn
 			(add-hook 'after-init-hook '(lambda () (desktop-save-mode t)))
-			(add-hook 'after-init-hook #'desktop-read))
-			;; (add-hook 'kill-emacs-hook '(lambda () (desktop-save-in-desktop-dir)))) ;; optional
+			;; Manually read by clicking on dashboard icon instead
+			;; (add-hook 'after-init-hook #'desktop-read)
+			)
 		;; emacs server
 		(progn
 			(add-hook 'server-after-make-frame-hook '(lambda () (desktop-save-mode t)))
 			;; we need the first emacsclient to read the session, the later opened emacsclient(the
 			;; first one is still alive) will not read the session since the server arleady owns the
 			;; session
-			(add-hook 'server-after-make-frame-hook #'desktop-read)
-			(add-hook 'kill-emacs-hook '(lambda () (progn
-																							 (desktop-save-in-desktop-dir)
-																							 ;; emacs server won't release the lock file so
-																							 ;; we do it ourserlves
-																							 (desktop-release-lock)))))))
+			;; Manually read by clicking on dashboard icon instead
+			;; (add-hook 'server-after-make-frame-hook #'desktop-read)
+			)
+		)
+	:config
+	;; Config Block makes sure this lambda function load later than desktop in kill-emacs-query-functions hook , so this lambda function is executed earlier
+
+	;; remove desktop-kill hook. Leave out the check procedure.
+	(remove-hook 'kill-emacs-query-functions #'desktop-kill)
+
+	(let ((save-path (expand-file-name ".local/data/desktop" user-emacs-directory)))
+		;; when explictly quit emacs with kill-emacs command
+		(add-hook 'kill-emacs-hook
+							`(lambda ()
+								 (desktop-remove)
+								 (desktop-save ,save-path t)))
+		;; when implictly quit emacs like close window
+		(add-hook 'kill-emacs-query-functions
+							`(lambda ()
+										 (desktop-remove) ;; make sure there is no desktop file or desktop.el will prompt you Whether override it or not
+										 (desktop-save ,save-path t))))) ;; save session without lock
+
 
 ;;; text scale change on the fly ============================
 (use-package default-text-scale 
