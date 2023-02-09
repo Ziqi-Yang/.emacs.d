@@ -132,6 +132,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	(evil-snipe-mode +1)
 	(evil-snipe-override-mode +1))
 
+;;; Avy =====================================================
+(use-package avy)
+
 ;;; Which-key ===============================================
 (use-package which-key
   :init
@@ -154,6 +157,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  ;; @ normal map (no leader key
  (general-nmap 
 	 ;; "." evil-repeat can be your friend
+	 "TAB" #'avy-goto-char-2
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 	 "C-." #'embark-act
@@ -187,7 +191,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	 "]s" #'sp-end-of-sexp
 	 "[s" #'sp-beginning-of-sexp
-
 	 )
  (general-mmap
 	 "L" #'evil-forward-arg
@@ -334,7 +337,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wv" #'split-window-vertically
 	 "wh" #'split-window-horizontally
 	 "wq" #'evil-window-delete
-	 "wd" #'evil-window-delete)
+	 "wd" #'evil-window-delete
+	 "wL" #'evil-window-right
+	 "wH" #'evil-window-left
+	 "wJ" #'evil-window-down
+	 "wK" #'evil-window-up
+	 )
  )
 
 ;;; Trivial Functions =======================================
