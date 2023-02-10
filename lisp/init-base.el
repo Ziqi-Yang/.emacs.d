@@ -243,4 +243,8 @@
 ;;; Zoxide ==================================================
 (use-package zoxide)
 
+;;; Search & Replce =========================================
+(use-package color-rg
+	:straight (:host github :repo "manateelazycat/color-rg"))
+
 (provide 'init-base)

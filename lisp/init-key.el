@@ -280,7 +280,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    ;; @ file
    "f" '(:ignore t :which-key "File")
    "ff" '(find-file :which-key "find")
-	 "fp" '(consult-project-extra-find :which-key "find@project")
+	 "fp" '(project-find-file :which-key "find@project")
 	 "fr" '(consult-recent-file :which-key "recent")
 	 "fz" '(zoxide-find-file :which-key "zoxide")
 
@@ -325,13 +325,26 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "q" '(:ignore t :which-key "quit")
 	 "qq" '(kill-emacs :which-key "kill emacs")
 
-	 ;; @ search
-	 "s" '(:ignore t :which-key "Search")
+	 ;; @ search @ replace
+	 "s" '(:ignore t :which-key "Search & Replace")
 	 "ss" '(consult-line :which-key "content")
 	 "si" '(consult-imenu :which-key "imenu")
 	 "sp" '(consult-ripgrep :which-key "project content")
 	 "sb" '(consult-bookmark :which-key "bookmark")
 	 "so" '(consult-outline :which-key "outline")
+	 "sr" '(:ignore t :which-key "color-rg") ; + color-rg
+	 "srd" '(:ignore t :which-key "current directory")
+	 "srpi" '(color-rg-search-input :which-key "input")
+	 "srpi" '(color-rg-search-symbol :which-key "point")
+	 "srpi" '(color-rg-search-symbol-with-type :which-key "with file-extension")
+	 "srp" '(:ignore t :which-key "current project")
+	 "srpi" '(color-rg-search-input-in-project :which-key "input")
+	 "srpp" '(color-rg-search-symbol-in-project :which-key "point")
+	 "srpi" '(color-rg-search-project-with-type :which-key "with file-extension")
+	 "srb" '(:ignore t :which-key "current buffer")
+	 "srbi" '(color-rg-search-input-in-current-file :which-key "input")
+	 "srbp" '(color-rg-search-symbol-in-current-file :which-key "point")
+
 
    ;; @ toggle
    "t" '(:ignore t :which-key "Toggle")
