@@ -137,5 +137,4 @@
 (setq blink-cursor-mode nil)
 
 
-
 (provide 'init-ui)

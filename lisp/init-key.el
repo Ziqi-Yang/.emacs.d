@@ -313,11 +313,15 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    "gr"  'magit-rebase
 
 	 "o"  '(:ignore t :which-key "open")
-	 "o-" '(dired-jump :which-key "dired here")
-	 "o=" '(project-dired :which-key "project dired")
+	 "o-" #'(dired-jump :which-key "dired here")
+	 "o=" #'(project-dired :which-key "project dired")
+	 "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
+	 "ot" #'(mk/open-alacritty-smart :which-key "open terminal")
 
 	 ;; @ project
 	 "p" '(:ignore t :which-key "Project")
+	 "pt" #'(mk/open-alacritty-smart :which-key "open terminal at root")
+	 "pT" #'(mk/open-alacritty-here :which "open terminal here")
 	 "pp" '(project-switch-project :which-key "switch")
 	 "pt" '(magit-todos-list :which-key "todos")
 	 "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
@@ -374,6 +378,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wH" #'(evil-window-left :which-key "go left")
 	 "wJ" #'(evil-window-down :which-key "go down") 
 	 "wK" #'(evil-window-up :which-key "go up")
+
+	 "z" #'(:ignore t :which-key "trivial")
+	 "zt" #'(mk/translate :which-key "translate")
+
+	 "m" #'(:ignore t :which-key "local")
 	 )
  )
 
@@ -394,8 +403,36 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   (evil-visual-restore))
 
 (defun mk/kill-all-buffers ()
-		"Kill all buffers except."
-		(interactive)
-		(mapc 'kill-buffer (delq (get-buffer "*dashboard*") (buffer-list))))
+	"Kill all buffers except *dashboard*."
+	(interactive)
+	(mapc 'kill-buffer (delq (get-buffer "*dashboard*") (buffer-list))))
+
+(defun mk/open-alacritty-smart()
+  "Open alacritty terminal at project root if in a project, otherwise current folder."
+  (interactive)
+  (if (project-current)
+			(start-process-shell-command "open-alacritty-in-folder" "*alacritty*"
+																	 (concat "alacritty --class floating --working-directory " (project-root (project-current)) ))
+    (start-process-shell-command "open-alacritty-in-folder" "*alacritty*"
+                                 (concat "alacritty --class floating --working-directory " (file-name-directory buffer-file-name) )) ))
+
+
+(defun mk/open-alacritty-here()
+  "Open alacritty terminal at the current folder."
+  (interactive)
+  (start-process-shell-command "open-alacritty-in-folder" "*alacritty*"
+                               (concat "alacritty --class floating --working-directory " (file-name-directory buffer-file-name) )) )
+
+(defun mk/translate()
+  "Translate words at the point by using ydicy in the external terminal alacritty."
+  (interactive)
+	(let* ((bounds (bounds-of-thing-at-point 'word))
+				 (pos1 (car bounds))
+				 (pos2 (cdr bounds))
+				 (word (buffer-substring-no-properties pos1 pos2))
+				 (command (concat "echo " word " ; source $HOME/.config/fish/functions/t.fish && t " word " ; echo ------------------------------ ; echo [Use Ctrl-Shift-Space to toggle vi mode] ; read -P '[Press ENTER key to exit]'"))
+				 )
+		(start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
+		))
 
 (provide 'init-key)
