@@ -8,33 +8,34 @@
 	:ensure nil
 	:config
 	(setq
-		org-directory "~/notes/"
-		org-hide-emphasis-markers t
-		org-edit-src-content-indentation 2
-		org-ellipsis " ▾ "
-		org-pretty-entities t
-		org-imenu-depth 4
-		org-fold-catch-invisible-edits 'smart
-		org-yank-adjusted-subtrees t 
-		org-log-done 'time
-		;; org-priority-faces ;; tweak org-modern buildin symbol instead
-		;;   '((?A :foreground "#ff6c6b" :weight bold)
-		;;     (?B :foreground "#98be65" :weight bold)
-		;;     (?C :foreground "#c678dd" :weight bold))
-		org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
-				'(("google" . "http://www.google.com/search?q=")
-				("arch-wiki" . "https://wiki.archlinux.org/index.php/")
-				("wiki" . "https://en.wikipedia.org/wiki/"))
-		org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
-				'((sequence
-						"TODO(t)"           ; A task that is ready to be tackled
-						"PROJ(p)"           ; A project that contains other tasks
-						"PROG(g)"           ; programming
-						"BLOG(b)"           ; Blog writing assignments
-						"WAIT(w)"           ; Something is holding up this task
-						"|"                 ; The pipe necessary to separate "active" states and "inactive" states
-						"DONE(d)"           ; Task has been completed
-						"CANCELLED(c)" ))))
+	 org-directory "~/notes/"
+	 org-hide-emphasis-markers t
+	 org-edit-src-content-indentation 2
+	 org-ellipsis " ▾ "
+	 org-pretty-entities t
+	 org-imenu-depth 4
+	 org-fold-catch-invisible-edits 'smart
+	 org-yank-adjusted-subtrees t 
+	 org-log-done 'time
+	 ;; org-priority-faces ;; tweak org-modern buildin symbol instead
+	 ;;   '((?A :foreground "#ff6c6b" :weight bold)
+	 ;;     (?B :foreground "#98be65" :weight bold)
+	 ;;     (?C :foreground "#c678dd" :weight bold))
+	 org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
+	 '(("google" . "http://www.google.com/search?q=")
+		 ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
+		 ("wiki" . "https://en.wikipedia.org/wiki/"))
+	 org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
+	 '((sequence
+			"TODO(t)"           ; A task that is ready to be tackled
+			"PROJ(p)"           ; A project that contains other tasks
+			"PROG(g)"           ; programming
+			"BLOG(b)"           ; Blog writing assignments
+			"WAIT(w)"           ; Something is holding up this task
+			"|"                 ; The pipe necessary to separate "active" states and "inactive" states
+			"DONE(d)"           ; Task has been completed
+			"CANCELLED(c)" ))))
+
 (add-hook 'org-mode-hook #'org-indent-mode)
 
 ;;; Fancy face ==============================================

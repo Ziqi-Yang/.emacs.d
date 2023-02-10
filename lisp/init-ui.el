@@ -48,7 +48,7 @@
 				dashboard-set-navigator t
 				dashboard-set-init-info t
 				dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark.png")
-				dashboard-banner-logo-title "Welcome to Emacs Dashboard"
+				dashboard-banner-logo-title "Happy coding, MeowKing!"
 				dashboard-items '((recents  . 5)
 													(bookmarks . 5)
 													(projects . 5)

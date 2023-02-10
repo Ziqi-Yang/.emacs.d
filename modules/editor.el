@@ -51,13 +51,17 @@
 (use-package smartparens
   :hook ((prog-mode org-mode) . smartparens-mode)
 	:config
-	;; (sp-pair "<#" "#>") ;; example
-	(sp-pair "<" ">")
-	(sp-pair "$" "$"))
+	;; (sp-pair "<#" "#>") ;; example, support multiple characters
+	)
 
 ;;; Indentation =============================================
 (use-package aggressive-indent ;; hello
-	:hook ((prog-mode . aggressive-indent-mode)))
+	;; :hook ((prog-mode . aggressive-indent-mode))
+	:config
+	(global-aggressive-indent-mode 1)
+	(add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+	(add-to-list 'aggressive-indent-excluded-modes 'mhtml-mode))
+
 
 ;;; Focus ===================================================
 ;; focus mode, dim other text color

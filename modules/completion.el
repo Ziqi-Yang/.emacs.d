@@ -147,5 +147,9 @@
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
 	)
 
+;;; Yasnippet
+(use-package yasnippet
+	:config
+	(yas-global-mode 1))
 
 (provide 'completion)

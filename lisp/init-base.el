@@ -174,67 +174,6 @@
   :config
   (setq super-save-auto-save-when-idle t))
 
-;;; Treesitter ==============================================
-;; treesitter lang lib load path: /usr/local/lib and ~/.emacs.d/tree-sitter 
-;; use treesit-install-language-grammar to install lang by looking into
-;; treesit-language-source-alist variable
-;; for manual build: https://github.com/casouri/tree-sitter-module
-;; additional resources:
-;; starter-guide: https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
-;; https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
-
-;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
-(use-package treesit-auto
-  :demand t
-  :config
-	;; currently, emacs lacks normal rust mode, we directly enebl rust-ts-mode
-	(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
-
-  (global-treesit-auto-mode))
-
-;;; Lsp =====================================================
-;; check eglot-server-programs to know the language programs that corresponding
-;; to a certain language.
-;; 
-;; Notice that a language server can also execute other *optional package command*
-;; like bash-language-server can execute shellcheck, you should check the optional
-;; package required by the main pakcage is also installed(pacman -Qi to view)
-;;
-;; If you still cannot know it since the corresponding function is byte-compiled,
-;; go to https://github.com/emacs-mirror/emacs/blob/emacs-29/lisp/progmodes/eglot.el
-;; to check the value the eglot-server-programs.
-(progn
-	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
-	;; see outer files(like header files) as in project temporarily
-	(customize-set-variable 'eglot-extend-to-xref t) 
-
-	(add-hook 'c-mode-hook #'eglot-ensure) ;; c
-	(add-hook 'c-ts-mode-hook #'eglot-ensure)
-	(add-hook 'python-mode-hook #'eglot-ensure) ;; python
-	(add-hook 'python-ts-mode-hook #'eglot-ensure)
-	(add-hook 'rust-ts-mode-hook #'eglot-ensure) ;; rust
-	(add-hook 'sh-mode-hook #'eglot-ensure)
-
-	(with-eval-after-load 'eglot
-		(add-hook 'eglot-managed-mode-hook
-		(lambda () ;; show diagnostics in the echo area
-				;; Show flymake diagnostics first.
-				(setq eldoc-documentation-functions
-						(cons #'flymake-eldoc-function
-										(remove #'flymake-eldoc-function eldoc-documentation-functions)))
-		;; Show all eldoc feedback.
-				(setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
-
-		;; to custom language server (like flags), add-to-list 'eglot-server-programs
-		)
-
-	;; corfu/orderless integration
-	(setq completion-category-overrides '((eglot (styles orderless))))
-
-	;; NOTE
-	;; install markdown-mode to rich the doc
-	)
-
 ;;; Waketime ================================================
 (use-package wakatime-mode
 	:config

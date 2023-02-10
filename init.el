@@ -25,6 +25,11 @@
 ;;   ;; To disable collection of benchmark data after init is done.
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
+;; add load path
+;; adding "~/.npm-global/bin/" cause vls for vue-mode error, maybe the system vls and
+;; vls here are different
+;; (add-to-list (expand-file-name "~/.npm-global/bin/") exec-path)
+
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "modules" user-emacs-directory) load-path)
 (push (expand-file-name "modules/languages" user-emacs-directory) load-path)
@@ -42,7 +47,8 @@
 ;; load language
 (with-temp-message ""
   (require 'l-markdown)
-	(require 'l-org))
+	(require 'l-org)
+	(require 'l-web))
 
 ;; remove old version native-compiled files
 (native-compile-prune-cache) 

@@ -168,9 +168,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "L" #'sp-forward-sexp
 	 "H" #'sp-backward-sexp
 	 "M-v" #'er/expand-region
-	 "C-." #'embark-act
-	 "C-S-o"   #'evil-jump-out-args
 	 "M-v" #'er/expand-region
+	 "C-." #'embark-act
+	 "go"   #'evil-jump-out-args
 
 	 ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
 	 "[f" '(treesit-beginning-of-defun :which-key "func begin")
