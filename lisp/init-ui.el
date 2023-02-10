@@ -18,8 +18,8 @@
     (all-the-icons-install-fonts t)))
 
 (use-package all-the-icons-completion
-	:config
-	(all-the-icons-completion-mode))
+	:after all-the-icons
+	:hook (after-init . all-the-icons-completion-mode))
 
 ;;; dim unreal buffer =======================================
 (use-package solaire-mode
