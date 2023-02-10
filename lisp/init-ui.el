@@ -124,4 +124,14 @@
   :custom
   (olivetti-body-width 0.8))
 
+;;; Evil ====================================================
+(use-package evil
+	:config
+	(setq  evil-normal-state-cursor  '("DodgerBlue" box)
+         evil-insert-state-cursor  '("IndianRed1" (bar . 2))
+         evil-emacs-state-cursor   '("SkyBlue2" box)
+         evil-replace-state-cursor '("Chocolate" (hbar . 2))
+         evil-visual-state-cursor  '("DarkViolet" (hollow . 2))
+         evil-motion-state-cursor  '("Plum3" box)))
+
 (provide 'init-ui)
