@@ -59,14 +59,11 @@
 
 	;; Format: "(icon title help action face prefix suffix)"
 	(setq dashboard-navigator-buttons
-      `(((,(all-the-icons-octicon "octoface" :height 1.1 :v-adjust 0.0)
-					"Homepage" "Browse homepage" (lambda (&rest _) (browse-url "https://github.com/Ziqi-Yang"))))
-				;; Empty line
-				(("" "\n" "" nil nil "" ""))
-				;; the second line
-				((,(all-the-icons-faicon "user-secret" :height 1.0 :v-adjust 0.0)
-					"Load Sessoin" nil (lambda (&rest _) (desktop-read))))
-				)))
+				`(((,(all-the-icons-octicon "octoface" :height 1.1 :v-adjust 0.0)
+						"Homepage" "Browse homepage" (lambda (&rest _) (browse-url "https://github.com/Ziqi-Yang")))
+					 (,(all-the-icons-faicon "user-secret" :height 1.0 :v-adjust 0.0)
+						"Load Sessoin" nil (lambda (&rest _) (desktop-read))))
+					)))
 
 ;;; font settings ===========================================
 ;; Set the font face based on platform

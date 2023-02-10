@@ -186,4 +186,15 @@
 (use-package color-rg
 	:straight (:host github :repo "manateelazycat/color-rg"))
 
+;;; Todo highlight ====================================================
+(use-package hl-todo
+	:hook ((after-init . global-hl-todo-mode))
+	:init
+	(setq hl-todo-keyword-faces
+				'(("TODO"   . "#2ecc71")
+					("FIXME"  . "#e74c3c")
+					("DEBUG"  . "#9b59b6")
+					("NOTE" . "#3498db")
+					("STUB"   . "#f39c12"))))
+
 (provide 'init-base)

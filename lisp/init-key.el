@@ -231,14 +231,15 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (mk/leader-def
 	 :states '(normal visual)
 	 :keymaps 'override
-	 ":" '(eval-expression :which-key "Eval")
-	 "`" '(eyebrowse-last-window-config :which-key "previous workspace")
-	 "SPC" '(execute-extended-command :which-key "M-x")
+	 ":" #'(eval-expression :which-key "Eval")
+	 "`" #'(eyebrowse-last-window-config :which-key "previous workspace")
+	 ";" #'(with-editor-async-shell-command :which-key "run command")
+	 "SPC" #'(execute-extended-command :which-key "M-x")
 
 	 ;; @ workspace
 	 ;; eyebrowse switch functions are also bounded to "M-<num>" in its use-package scope
 	 "TAB" '(:ignore t :which-key "workspace")
-	 "TAB TAB" '(eyebrowse-switch-to-window-config :which "switch")
+	 "TAB TAB" '(eyebrowse-switch-to-window-config :which-key "switch")
 	 "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "w0")
 	 "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "w1")
 	 "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "w2")
@@ -318,8 +319,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 ;; @ project
 	 "p" '(:ignore t :which-key "Project")
 	 "pp" '(project-switch-project :which-key "switch")
+	 "pt" '(magit-todos-list :which-key "todos")
 	 "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
 	 "pk" '(project-kill-buffers :which-key "kill buffers(p)")
+	 "pc" #'(project-compile :whici-key "compile")
+	 "ps" #'(project-async-shell-command :which-key "run command")
+	 "pr" #'(project-forget-project :which-key "select to remove project")
 
 	 ;; @ quit
 	 "q" '(:ignore t :which-key "quit")
@@ -353,21 +358,22 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 
    ;; @ window
    "w"  '(:ignore t :which-key "Window")
-   "ww" #'ace-window
+   "ww" #'(ace-window :which-key "ace-window")
+	 "wo" #'(delete-other-windows :which-key "delte other window")
 	 "wm" #'(maximize-window :which-key "maximize")
 	 "wM" #'(minimize-window :which-key "minimize")
 	 "wb" #'(balance-windows :which-key "balance")
 	 "w+" #'(maximize-window :which-key "maximize")
 	 "w-" #'(minimize-window :which-key "minimize")
 	 "w=" #'(balance-windows :which-key "balance")
-	 "wv" #'split-window-vertically
-	 "wh" #'split-window-horizontally
-	 "wq" #'evil-window-delete
-	 "wd" #'evil-window-delete
-	 "wL" #'evil-window-right
-	 "wH" #'evil-window-left
-	 "wJ" #'evil-window-down
-	 "wK" #'evil-window-up
+	 "wv" #'(split-window-vertically :which-key "split(v)")
+	 "wh" #'(split-window-horizontally :which-key "split(h)")
+	 "wq" #'(evil-window-delete :which-key "delete")
+	 "wd" #'(evil-window-delete :which-key "delete")
+	 "wL" #'(evil-window-right :which-key "go right")
+	 "wH" #'(evil-window-left :which-key "go left")
+	 "wJ" #'(evil-window-down :which-key "go down") 
+	 "wK" #'(evil-window-up :which-key "go up")
 	 )
  )
 
