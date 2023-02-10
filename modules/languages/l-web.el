@@ -3,8 +3,7 @@
 ;; 
 ;;; Code:
 
-;;; html settings
-
+;;; html 
 ;; in insert mode: C-j or C-<return> to expand
 (use-package emmet-mode
 	:hook ((html-mode . emmet-mode)))

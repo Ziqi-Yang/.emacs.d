@@ -4,18 +4,18 @@
 
 ;; universal-argument conflict with evil mode(c-u, scroll up half screen), so we change it
 (global-set-key (kbd "C-M-u") 'universal-argument)
- 
+
 ;;; Key Definers and Definer Macros =========================
 ;; define keybindings with ease
 (use-package general
   ;; :demand t ;; use mapBegin! instead
   :config
   (general-evil-setup)
- 
+	
   (general-create-definer mk/leader-def
     :prefix "SPC"
 		:non-normal-prefix "S-SPC")
- 
+	
   (general-create-definer mk/local-leader-def
 		:prefix "SPC m"
 		:non-normal-prefix "M-SPC m"))
@@ -168,7 +168,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "L" #'sp-forward-sexp
 	 "H" #'sp-backward-sexp
 	 "M-v" #'er/expand-region
-	 "M-v" #'er/expand-region
 	 "C-." #'embark-act
 	 "go"   #'evil-jump-out-args
 
@@ -207,7 +206,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
  (general-vmap ;; visual
    "S" #'evil-surround-region
    "C-S-c" #'clipboard-kill-ring-save
-	 "gc" #'evilnc-comment-or-uncomment-lines)
+	 "gc" #'evilnc-comment-or-uncomment-lines
+	 "TAB" #'evil-avy-goto-char-2)
 
  ;; ((hllo world) meowking)
  ;; @ insert( map (no leader key

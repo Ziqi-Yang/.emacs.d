@@ -5,8 +5,10 @@ Mainly Language Servers
 Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to setup wakatime
 #+begin_src shell
   # # pip version pyright may not discoverable by emacs
-  # cc python rust shell go js/ts
-  sudo pacman -S clang pyright rust-analyzer bash-language-server gopls typescript-language-server
+  # cc python rust shell go js/ts html css
+  sudo pacman -S clang pyright rust-analyzer bash-language-server gopls typescript-language-server vscode-html-languageserver vscode-css-languageserver
+  # vue
+  paru -S nodejs-vls
   sudo pacman -S --asdeps openmp python llvm # clang optional dependences
   sudo pacman -S bash-completion man-db shellcheck # bash-language-server
 

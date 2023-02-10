@@ -147,9 +147,28 @@
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
 	)
 
-;;; Yasnippet
-(use-package yasnippet
-	:config
-	(yas-global-mode 1))
+;;; Snippet =================================================
+;; @ yasnippet
+;; (use-package yasnippet
+;; 	:config
+;; 	(yas-global-mode 1))
+
+;; @ Tempel
+(use-package tempel
+	:custom
+	(tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
+  :bind (("TAB" . tempel-complete) ;; Alternative tempel-expand
+				 ("C-<tab>" . tempel-next))
+  :init
+  ;; Setup completion at point
+  (defun tempel-setup-capf ()
+    ;; NOTE: We add	`tempel-expand' *before* the main programming mode Capf,
+		;; such	that it will be tried first.
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf))
 
 (provide 'completion)
