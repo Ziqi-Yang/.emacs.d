@@ -148,6 +148,11 @@
   ([remap describe-key] . helpful-key))
 
 ;;; fold ====================================================
+;; @ buildin
+;; evil buildin fold throught this package
+(use-package hideshow 
+	:hook ((prog-mode . hs-minor-mode )))
+
 ;; @ vimmish-fold
 ;; (use-package vimish-fold
 ;;   :after evil)

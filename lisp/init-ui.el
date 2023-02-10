@@ -124,7 +124,9 @@
   :custom
   (olivetti-body-width 0.8))
 
-;;; Evil ====================================================
+
+;;; Cursor ==================================================
+;; @ evil cursor
 (use-package evil
 	:config
 	(setq  evil-normal-state-cursor  '("DodgerBlue" box)
@@ -133,5 +135,10 @@
          evil-replace-state-cursor '("Chocolate" (hbar . 2))
          evil-visual-state-cursor  '("DarkViolet" (hollow . 2))
          evil-motion-state-cursor  '("Plum3" box)))
+
+;; @ disable cursor blink
+(setq blink-cursor-mode nil)
+
+
 
 (provide 'init-ui)

@@ -165,8 +165,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "TAB" #'evil-avy-goto-char-2
 	 "gcc" #'evilnc-comment-or-uncomment-lines
 	 "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
-	 "L" #'sp-next-sexp
-	 "H" #'sp-previous-sexp
+	 "L" #'sp-forward-sexp
+	 "H" #'sp-backward-sexp
 	 "M-v" #'er/expand-region
 	 "C-." #'embark-act
 	 "C-S-o"   #'evil-jump-out-args
@@ -191,12 +191,14 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 ;; use evil-surround instead (cs<paren> ds<paren>)
 	 "zd" #'sp-splice-sexp
 	 "zc" #'sp-rewrap-sexp
+	 "zC" #'evil-close-fold
 
 	 ">)" #'sp-forward-slurp-sexp
 	 "<)" #'sp-forward-barf-sexp
 
 	 ">(" #'sp-backward-barf-sexp
 	 "<(" #'sp-backward-slurp-sexp)
+
  (general-mmap
 	 "L" #'evil-forward-arg
 	 "H" #'evil-backward-arg)
@@ -285,7 +287,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
    ;; @ help
    "h" '(:ignore t :which-key "Help")
    "hf" #'describe-function
+	 "hc" #'describe-char
+	 "hF" #'describe-face
    "hk" #'describe-key
+	 "hK" #'describe-keymap
    "ho" #'describe-symbol
    "hm" #'describe-mode
 	 "hM" '(woman :which-key "man page")
