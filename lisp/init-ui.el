@@ -17,9 +17,9 @@
   (when (not (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t)))
 
-	(defun real-buffer-p ()
-		(or (solaire-mode-real-buffer-p)
-				(equal (buffer-name) "*dashboard*")))
+(use-package all-the-icons-completion
+	:config
+	(all-the-icons-completion-mode))
 
 ;;; dim unreal buffer =======================================
 (use-package solaire-mode
