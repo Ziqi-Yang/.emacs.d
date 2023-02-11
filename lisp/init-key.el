@@ -254,8 +254,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
    ;; @ buffer
    "b"  '(:ignore t :which-key "Buffer & Bookmark")
-   "bb" '(consult-project-buffer :which-key "switch")
+   "bb" '(mk/smart-buffer-switch :which-key "switch")
    "bB" '(consult-buffer :which-key "all buffer")
+   "ba" '(consult-buffer :which-key "all buffer")
 	 "bd" '(evil-delete-buffer :which-key "delete")
 	 "bk" '(evil-delete-buffer :which-key "delete")
 	 "bK" '(mk/kill-all-buffers :which-key "delete")
@@ -441,8 +442,15 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 				 (pos2 (cdr bounds))
 				 (word (buffer-substring-no-properties pos1 pos2))
 				 (command (concat "echo " word " ; source $HOME/.config/fish/functions/t.fish && t " word " ; echo ------------------------------ ; echo [Use Ctrl-Shift-Space to toggle vi mode] ; read -P '[Press ENTER key to exit]'"))
-	 )
- (start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
- ))
+				 )
+		(start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
+		))
+
+(defun mk/smart-buffer-switch ()
+	"Smart buffer switch according to project existence."
+	(interactive)
+	(if (project-current)
+			(consult-project-buffer)
+		(consult-buffer)))
 
 (provide 'init-key)
