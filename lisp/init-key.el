@@ -384,6 +384,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wJ" #'(evil-window-down :which-key "go down") 
 	 "wK" #'(evil-window-up :which-key "go up")
 
+	 "x" #'(scratch-buffer :which-key "scratch")
 
 	 "z" #'(:ignore t :which-key "trivial")
 	 "zt" #'(mk/translate :which-key "translate")
@@ -437,8 +438,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 				 (pos2 (cdr bounds))
 				 (word (buffer-substring-no-properties pos1 pos2))
 				 (command (concat "echo " word " ; source $HOME/.config/fish/functions/t.fish && t " word " ; echo ------------------------------ ; echo [Use Ctrl-Shift-Space to toggle vi mode] ; read -P '[Press ENTER key to exit]'"))
-				 )
-		(start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
-		))
+	 )
+ (start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
+ ))
 
 (provide 'init-key)

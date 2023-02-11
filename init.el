@@ -49,6 +49,7 @@
   (require 'l-markdown)
 	(require 'l-org)
 	(require 'l-web)
+	(require 'l-lisp)
 	(require 'l-latex))
 
 ;; remove old version native-compiled files
