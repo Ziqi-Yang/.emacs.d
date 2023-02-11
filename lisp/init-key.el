@@ -178,6 +178,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "[a"   #'evil-backward-arg
 	 "]s" #'sp-end-of-sexp
 	 "[s" #'sp-beginning-of-sexp
+	 "C-<backspace>" #'(lambda () (interactive) (progn (sp-backward-kill-sexp ) (evil-insert-state)) )
 
 	 ;; @ text-scale via init-base/default-text-scale
 	 ;; C-- and C-= to change font size
@@ -282,7 +283,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
    ;; @ file
    "f" '(:ignore t :which-key "File")
-   "ff" '(find-file :which-key "find")
+   "ff" '(affe-find :which-key "fuzzy find")
+   "fF" '(find-file :which-key "find file")
 	 "fp" '(project-find-file :which-key "find@project")
 	 "fr" '(consult-recent-file :which-key "recent")
 	 "fz" '(zoxide-find-file :which-key "zoxide")
@@ -340,7 +342,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "s" '(:ignore t :which-key "Search & Replace")
 	 "ss" '(consult-line :which-key "content")
 	 "si" '(consult-imenu :which-key "imenu")
-	 "sp" '(consult-ripgrep :which-key "project content")
+	 "sp" '(affe-grep :which-key "affe-grep(p)")
+	 "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
 	 "sb" '(consult-bookmark :which-key "bookmark")
 	 "so" '(consult-outline :which-key "outline")
 	 "sr" '(:ignore t :which-key "color-rg") ; + color-rg
