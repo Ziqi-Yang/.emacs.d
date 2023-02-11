@@ -130,6 +130,7 @@
         #'command-completion-default-include-p)
   (setq tab-always-indent 'complete))
 
+;; @ enable corfu in terminal emacs
 (use-package corfu-terminal
 	:straight (:type git
 									 :repo "https://codeberg.org/akib/emacs-corfu-terminal.git")
@@ -157,8 +158,8 @@
 (use-package tempel
 	:custom
 	(tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
-  :bind (("TAB" . tempel-complete) ;; Alternative tempel-expand
-				 ("C-<tab>" . tempel-next))
+	:hook ((prog-mode . tempel-setup-capf)
+				 (text-mode . tempel-setup-capf))
   :init
   ;; Setup completion at point
   (defun tempel-setup-capf ()
@@ -166,9 +167,6 @@
 		;; such	that it will be tried first.
     (setq-local completion-at-point-functions
                 (cons #'tempel-expand
-                      completion-at-point-functions)))
-
-  (add-hook 'prog-mode-hook 'tempel-setup-capf)
-  (add-hook 'text-mode-hook 'tempel-setup-capf))
+                      completion-at-point-functions))))
 
 (provide 'completion)

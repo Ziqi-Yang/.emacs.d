@@ -23,8 +23,9 @@
 
 ;; @ according to point position
 (use-package highlight-parentheses
-	:hook ((prog-mode . highlight-parentheses-mode))
+	;; :hook ((prog-mode . highlight-parentheses-mode))
 	:config
+	(global-highlight-parentheses-mode)
 	(setq highlight-parentheses-colors nil
 				highlight-parentheses-highlight-adjacent t
 				highlight-parentheses-attributes '((:weight ultra-bold :background "#ecf0f1"

@@ -48,7 +48,8 @@
 (with-temp-message ""
   (require 'l-markdown)
 	(require 'l-org)
-	(require 'l-web))
+	(require 'l-web)
+	(require 'l-latex))
 
 ;; remove old version native-compiled files
 (native-compile-prune-cache) 

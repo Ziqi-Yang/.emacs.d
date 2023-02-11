@@ -6,8 +6,11 @@
 ;;; Theme ===================================================
 ;; @ editor theme
 (use-package doom-themes
-  :config
-  (load-theme 'doom-solarized-light t))
+	:defer t
+	:hook (server-after-make-frame . (lambda () (load-theme
+																							 'doom-solarized-light t)))
+	:init
+	(load-theme 'doom-solarized-light t))
 
 ;; @ icon theme
 (use-package all-the-icons
@@ -23,7 +26,7 @@
 
 ;;; dim unreal buffer =======================================
 (use-package solaire-mode
-	:hook ( after-init . solaire-global-mode)
+	:hook ((after-init . solaire-global-mode ))
 	:config
 	;; https://github.com/hlissner/emacs-solaire-mode/issues/28#issuecomment-968126872
 	;; disable solaire mode in dashboard, since the banner background doesn't change(one way:

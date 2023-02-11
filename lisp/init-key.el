@@ -219,6 +219,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "M-<backspace>" #'sp-backward-kill-sexp
 	 "M-<return>" #'sp-up-sexp
 	 "M-S-<return>" #'sp-backward-up-sexp
+
+	 "C-<return>" #'tempel-complete
 	 )
 
  ;; @ operation map (no leader key
@@ -354,6 +356,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "srbi" '(color-rg-search-input-in-current-file :which-key "input")
 	 "srbp" '(color-rg-search-symbol-in-current-file :which-key "point")
 
+	 "S" '(:ignore t :which-key "straight")
+	 "Sr" #'(straight-remove-unused-repos :which-key "remove unused")
+	 "Sp" #'(straight-pull-all :which-key "pull all")
 
    ;; @ toggle
    "t" '(:ignore t :which-key "Toggle")
@@ -378,6 +383,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wH" #'(evil-window-left :which-key "go left")
 	 "wJ" #'(evil-window-down :which-key "go down") 
 	 "wK" #'(evil-window-up :which-key "go up")
+
 
 	 "z" #'(:ignore t :which-key "trivial")
 	 "zt" #'(mk/translate :which-key "translate")
