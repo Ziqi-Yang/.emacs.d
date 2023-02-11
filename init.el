@@ -25,6 +25,9 @@
 ;;   ;; To disable collection of benchmark data after init is done.
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
+(setq user-full-name "MeowKing"
+			user-mail-address "mr.ziqiyang@gmail.com")
+
 ;; add load path
 ;; adding "~/.npm-global/bin/" cause vls for vue-mode error, maybe the system vls and
 ;; vls here are different

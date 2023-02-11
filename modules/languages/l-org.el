@@ -16,6 +16,7 @@
 	 org-imenu-depth 4
 	 org-fold-catch-invisible-edits 'smart
 	 org-yank-adjusted-subtrees t 
+	 org-image-actual-width nil ;; don't use actual image size
 	 org-log-done 'time
 	 ;; org-priority-faces ;; tweak org-modern buildin symbol instead
 	 ;;   '((?A :foreground "#ff6c6b" :weight bold)
@@ -35,8 +36,19 @@
 			"|"                 ; The pipe necessary to separate "active" states and "inactive" states
 			"DONE(d)"           ; Task has been completed
 			"CANCELLED(c)" ))))
-
 (add-hook 'org-mode-hook #'org-indent-mode)
+
+;;; Export
+(add-to-list 'org-latex-packages-alist '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
+(add-to-list 'org-latex-packages-alist '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+(setq org-export-with-toc t
+			org-export-with-footnotes t
+			org-export-coding-system 'utf-8
+			org-export-headline-levels 4
+			org-export-with-smart-quotes t
+			org-latex-compiler "xelatex"
+			)
+
 
 ;;; Fancy face ==============================================
 ;; @ most of the stuffs
@@ -45,24 +57,24 @@
 	(setq
 	 org-modern-star ["✿" "❀" "✜" "◉" "○" "✸" "✳" "◈" "◇"]
 	 org-modern-priority
-		`((?A . ,(propertize "❗" 'face 'error))
-		(?B . ,(propertize "⚡" 'face 'warning))
-		(?C . ,(propertize "☕" 'face 'sucess)))
-		org-modern-todo-faces
-		'(("TODO" :background "#00b894" ;; green
-						:foreground "white")
-		("PROG" :background "#e17055" ;; orange
-						:foreground "white")
-		("PROJ" :background "#6c5ce7" ;; purple
-						:foreground "white")
-		("BLOG" :background "#fdcb6e" ;; yellow
-						:foreground "black")
-		("WAIT" :background "#ff7675" ;; grey
-						:foreground "white")
-		("DONE" :background "#b2bec3" ;; grey
-						:foreground "white")
-		("CANCELLED"  :foreground "#b2bec3")))
-		(global-org-modern-mode))
+	 `((?A . ,(propertize "❗" 'face 'error))
+		 (?B . ,(propertize "⚡" 'face 'warning))
+		 (?C . ,(propertize "☕" 'face 'sucess)))
+	 org-modern-todo-faces
+	 '(("TODO" :background "#00b894" ;; green
+			:foreground "white")
+		 ("PROG" :background "#e17055" ;; orange
+			:foreground "white")
+		 ("PROJ" :background "#6c5ce7" ;; purple
+			:foreground "white")
+		 ("BLOG" :background "#fdcb6e" ;; yellow
+			:foreground "black")
+		 ("WAIT" :background "#ff7675" ;; grey
+			:foreground "white")
+		 ("DONE" :background "#b2bec3" ;; grey
+			:foreground "white")
+		 ("CANCELLED"  :foreground "#b2bec3")))
+	(global-org-modern-mode))
 
 
 ;;; Facility ===============================================
@@ -85,12 +97,19 @@
   (setq org-appear-autokeywords t)
   (setq org-appear-inside-latex t))
 
+;; @ presentation
+(use-package org-tree-slide
+	:config
+	(setq org-tree-slide-author "MeowKing"
+				org-tree-slide-email "mr.ziqiyang@gmail.com"))
+
 ;;; Local KeyBindings =======================================
 (mapBegin!
  (mk/local-leader-def
 	 :states 'normal
 	 :keymaps 'org-mode-map
-	 "B" '(org-babel-tangle :which-key "tangle")
+	 "b" #'(org-babel-tangle :which-key "tangle")
+	 "e" #'(org-export-dispatch :which-key "dispatch")
 	 ))
 
 (provide 'l-org)

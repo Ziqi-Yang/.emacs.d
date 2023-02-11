@@ -58,7 +58,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   :after evil
   :config
   (evil-escape-mode t)
-  (setq-default evil-escape-key-sequence "kk"))
+  (setq-default evil-escape-key-sequence "kk"
+    evil-escape-excluded-states '(visual)))
 
 ;; @ add / deleta/ change surrounding notations
 ;; also works well with adding xml tags(can use class) and add funtion
@@ -178,7 +179,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "[a"   #'evil-backward-arg
 	 "]s" #'sp-end-of-sexp
 	 "[s" #'sp-beginning-of-sexp
-	 "C-<backspace>" #'(lambda () (interactive) (progn (sp-backward-kill-sexp ) (evil-insert-state)) )
+	 "M-<backspace>" #'(lambda () (interactive) (progn (sp-backward-kill-sexp ) (evil-insert-state)) )
 
 	 ;; @ text-scale via init-base/default-text-scale
 	 ;; C-- and C-= to change font size
@@ -284,8 +285,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
    ;; @ file
    "f" '(:ignore t :which-key "File")
-   "ff" '(affe-find :which-key "fuzzy find")
-   "fF" '(find-file :which-key "find file")
+   "ff" '(find-file :which-key "find file")
+   "fF" '(affe-find :which-key "fuzzy find")
 	 "fp" '(project-find-file :which-key "find@project")
 	 "fr" '(consult-recent-file :which-key "recent")
 	 "fz" '(zoxide-find-file :which-key "zoxide")
@@ -335,6 +336,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "ps" #'(project-async-shell-command :which-key "run command")
 	 "pr" #'(project-forget-project :which-key "select to remove project")
 
+	 "P" #'(:ignore t :which-key: "Presentatoin")
+	 "PP" #'(org-tree-slide-mode :which-key "org-tree-slide")
+	 "Pk" #'(keycast-header-line-mode :which-key "key(header line)")
+	 "Pl" #'(keycast-header-line-mode :which-key "key(other frame)")
+
 	 ;; @ quit
 	 "q" '(:ignore t :which-key "quit")
 	 "qq" '(kill-emacs :which-key "kill emacs")
@@ -383,10 +389,14 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	 "wh" #'(split-window-horizontally :which-key "split(h)")
 	 "wq" #'(evil-window-delete :which-key "delete")
 	 "wd" #'(evil-window-delete :which-key "delete")
-	 "wL" #'(evil-window-right :which-key "go right")
-	 "wH" #'(evil-window-left :which-key "go left")
-	 "wJ" #'(evil-window-down :which-key "go down") 
-	 "wK" #'(evil-window-up :which-key "go up")
+	 ;; "wl" #'(evil-window-right :which-key "go right")
+	 ;; "wh" #'(evil-window-left :which-key "go left")
+	 ;; "wj" #'(evil-window-down :which-key "go down") 
+	 ;; "wk" #'(evil-window-up :which-key "go up")
+	 "wL" #'(buf-move-right :which-key "move right")
+	 "wH" #'(buf-move-left :which-key "move left")
+	 "wJ" #'(buf-move-down :which-key "move down")
+	 "wK" #'(buf-move-up :which-key "move up")
 
 	 "x" #'(scratch-buffer :which-key "scratch")
 

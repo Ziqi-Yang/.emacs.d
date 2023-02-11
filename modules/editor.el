@@ -63,9 +63,20 @@
 	(add-to-list 'aggressive-indent-excluded-modes 'html-mode)
 	(add-to-list 'aggressive-indent-excluded-modes 'mhtml-mode))
 
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
 
 ;;; Focus ===================================================
 ;; focus mode, dim other text color
 ;; (use-package focus)
+
+
+;;; Trivial
+;; @ show frequentcy of command
+;; (use-package keyfreq
+;; 	:config
+;; 	(keyfreq-mode 1)
+;; 	(keyfreq-autosave-mode 1))
 
 (provide 'editor)

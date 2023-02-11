@@ -35,6 +35,9 @@
 																						(equal (buffer-name) "*dashboard*")))))
 
 ;;; Dashboard ===============================================
+
+(add-hook 'dashboard-mode-hook '(lambda () (progn (setq buffer-face-mode-face '(:family "Zpix" :height 140))
+																									(buffer-face-mode)) ))
 (use-package dashboard
 	:after all-the-icons
   :config
@@ -50,7 +53,7 @@
 				dashboard-set-file-icons t
 				dashboard-set-navigator t
 				dashboard-set-init-info t
-				dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark.png")
+				dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
 				dashboard-banner-logo-title "Happy coding, MeowKing!"
 				dashboard-items '((recents  . 5)
 													(bookmarks . 5)
@@ -112,7 +115,10 @@
 ;;; Navigation Highlight ====================================
 (use-package beacon
 	:defer 1
-	:hook ((after-init . (lambda () (beacon-mode 1)))))
+	:hook ((after-init . (lambda () (beacon-mode 1)))
+				 ;; disable in org-tree-slide
+				 (org-tree-slide-play . (lambda () (beacon-mode -1)))
+				 (org-tree-slide-stop . (lambda () (beacon-mode 1)))))
 
 ;;; Center Area =============================================
 (use-package olivetti

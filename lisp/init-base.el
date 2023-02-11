@@ -215,4 +215,13 @@
 	:config
 	(persistent-scratch-setup-default))
 
+;;; Show Key ================================================
+;; for presentation usage
+(use-package keycast
+	:after (doom-modeline dashboard))
+
+;;; Buffer Move (swap window) ===============================
+(use-package buffer-move)
+
+
 (provide 'init-base)
