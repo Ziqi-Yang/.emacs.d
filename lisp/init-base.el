@@ -192,7 +192,6 @@
   :config
   ;; Manual preview key for `affe-grep' 
   (consult-customize affe-grep :preview-key '(:debounce 0.5 any))
-
 	;; use orderless 
 	(defun affe-orderless-regexp-compiler (input _type _ignorecase)
 		(setq input (orderless-pattern-compiler input))
@@ -200,7 +199,7 @@
 	(setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
 
 
-;;; Todo highlight ====================================================
+;;; Todo highlight ==========================================
 (use-package hl-todo
 	:hook ((after-init . global-hl-todo-mode))
 	:init
@@ -210,5 +209,10 @@
 					("DEBUG"  . "#9b59b6")
 					("NOTE" . "#3498db")
 					("STUB"   . "#f39c12"))))
+
+;;; Persistent Scrctch Buffer ===============================
+(use-package persistent-scratch
+	:config
+	(persistent-scratch-setup-default))
 
 (provide 'init-base)

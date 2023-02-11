@@ -7,11 +7,11 @@
 	:straight (:host github :repo "minad/vertico"
 									 :files ("*.el" "extensions/vertico-indexed.el" "extensions/vertico-multiform.el"))
 	:bind (:map vertico-map
-				 ("C-j" . vertico-next)
-				 ("C-k" . vertico-previous)
-				 :map minibuffer-local-map
-				 ("M-h" . backward-kill-word)
-				 ("C-w" . backward-kill-word))
+							("C-j" . vertico-next)
+							("C-k" . vertico-previous)
+							:map minibuffer-local-map
+							("M-h" . backward-kill-word)
+							("C-w" . backward-kill-word))
   :init
   (vertico-mode)
   (setq vertico-cycle t)
@@ -22,9 +22,8 @@
 	;; configure display per command
 	(vertico-multiform-mode)
 
-	;; this enables vertico-posframe works well with emacs daemon
 	(setq vertico-multiform-commands
-				'((t posframe))))
+				'((t posframe)))) ;; this enables vertico-posframe works well with emacs daemon
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs
