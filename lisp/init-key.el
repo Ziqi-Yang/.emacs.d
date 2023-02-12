@@ -1,5 +1,6 @@
 ;;; init-key.el --- Key Mappings Here -*- lexical-binding: t -*-
 ;;; Commentary:
+;; Main keys here. Specific mode keybindings are not included.
 ;;; Code:
 
 ;; universal-argument conflict with evil mode(c-u, scroll up half screen), so we change it
@@ -256,8 +257,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
     ;; @ buffer
     "b"  '(:ignore t :which-key "Buffer & Bookmark")
-    "bb" '(mk/smart-buffer-switch :which-key "switch")
-    "bB" '(consult-buffer :which-key "all buffer")
+    "bb" '(consult-buffer :which-key "all buffer")
+    "bp" '(mk/smart-buffer-switch :which-key "switch")
     "ba" '(consult-buffer :which-key "all buffer")
 	  "bd" '(evil-delete-buffer :which-key "delete")
 	  "bk" '(evil-delete-buffer :which-key "delete")
@@ -356,6 +357,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
 	  "sb" '(consult-bookmark :which-key "bookmark")
 	  "so" '(consult-outline :which-key "outline")
+    "st" #'(hl-todo-occur :which-key "todo(b)")
+    "sT" #'(hl-todo-rgrep :which-key "todo(p)")
 	  "sr" '(:ignore t :which-key "color-rg") ; + color-rg
 	  "srd" '(:ignore t :which-key "current directory")
 	  "srdi" '(color-rg-search-input :which-key "input")

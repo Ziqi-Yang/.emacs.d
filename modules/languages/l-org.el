@@ -139,7 +139,16 @@
 	(setq org-tree-slide-author "Ziqi Yang"
 		org-tree-slide-email "mr.ziqiyang@gmail.com"))
 
-;;; Local KeyBindings =======================================
+;;; Keybindings =============================================
+(use-package evil-org
+  :straight (:host github :repo "Somelauw/evil-org-mode")
+  :after org
+  :hook ((org-mode . (lambda () (evil-org-mode))))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+;; @ local keyBindings
 (mapBegin!
   (mk/local-leader-def
 	  :states 'normal
