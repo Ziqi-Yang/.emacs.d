@@ -288,6 +288,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "f" '(:ignore t :which-key "File")
     "ff" '(find-file :which-key "find file")
     "fF" '(affe-find :which-key "fuzzy find")
+    "fD" #'(mk/delete-file :which-key "delete")
+    "fR" #'(mk/rename-file :which-key "rename")
 	  "fp" '(project-find-file :which-key "find@project")
 	  "fr" '(consult-recent-file :which-key "recent")
 	  "fz" '(zoxide-find-file :which-key "zoxide")
@@ -464,11 +466,36 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 		(consult-project-buffer)
 		(consult-buffer)))
 
-;; it can also be achieved by binding tempel-next in tempel-map to the same key as tempel-complete
 (defun mk/tempel-complete-or-next ()
+  "This function combines tempel-complete and tempel-next. Though it can also be achieved by
+it can also be achieved by binding tempel-next in tempel-map to the same key as tempel-complete."
   (interactive)
   (if (not tempel--active)
     (call-interactively 'tempel-complete)
     (call-interactively 'tempel-next)))
+
+(defun mk/delete-file ()
+  "Delete the current buffer file."
+  (interactive)
+  (if (not buffer-file-name)
+    (message "[Error] This buffer havn't been saved to file.")
+    (let ((whether-to-delete (yes-or-no-p "Whether to delete this file?")))
+      (if whether-to-delete
+        (progn
+          (move-file-to-trash buffer-file-name)
+          (kill-buffer))
+        nil)
+      )))
+
+(defun mk/rename-file ()
+  "Rename the current buffer file."
+  (interactive)
+  (if (not buffer-file-name)
+    (message "[Error] This buffer havn't been saved to file.")
+    (let ((new-file-name (read-string "Enter a new name:"))
+           (old-buffer (current-buffer)))
+      (rename-file buffer-file-name new-file-name)
+      (find-file new-file-name)
+      (kill-buffer old-buffer))))
 
 (provide 'init-key)

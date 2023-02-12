@@ -3,6 +3,10 @@
 ;;; Code:
 
 ;;; Trivil ==================================================
+;; @ delete file by moving to trash
+;; change the behavior of delete-file and delete-directory function
+;; (setq delete-by-moving-to-trash t) 
+
 ;; @ save minibuffer history
 (use-package savehist
   :init
@@ -222,5 +226,6 @@
 
 ;;; Buffer Move (swap window) ===============================
 (use-package buffer-move)
+
 
 (provide 'init-base)
