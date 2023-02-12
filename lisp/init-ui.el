@@ -30,9 +30,9 @@
 	:config
 	;; https://github.com/hlissner/emacs-solaire-mode/issues/28#issuecomment-968126872
 	;; disable solaire mode in dashboard, since the banner background doesn't change(one way:
-	(setq solaire-mode-real-buffer-fn #'(lambda ()
-																				(or (solaire-mode-real-buffer-p)
-																						(equal (buffer-name) "*dashboard*")))))
+	(setq solaire-mode-real-buffer-fn '(lambda ()
+																			 (or (solaire-mode-real-buffer-p)
+																				 (equal (buffer-name) "*dashboard*")))))
 
 ;;; Dashboard ===============================================
 

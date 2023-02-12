@@ -5,3 +5,7 @@ fundamental-mode ;; Available everywhere
 mhtml-mode
 
 (p "<" (s tag) ">" r> "</" (s tag) ">") ;; p stands for '<', cuttently it doesn't support special character
+
+org-mode
+
+(inline "src_" p "[:exports code]{" r> "}")

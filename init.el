@@ -25,7 +25,7 @@
 ;;   ;; To disable collection of benchmark data after init is done.
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-(setq user-full-name "MeowKing"
+(setq user-full-name "Ziqi Yang"
 			user-mail-address "mr.ziqiyang@gmail.com")
 
 ;; add load path

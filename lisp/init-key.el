@@ -464,6 +464,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 		(consult-project-buffer)
 		(consult-buffer)))
 
+;; it can also be achieved by binding tempel-next in tempel-map to the same key as tempel-complete
 (defun mk/tempel-complete-or-next ()
   (interactive)
   (if (not tempel--active)
