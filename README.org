@@ -16,8 +16,8 @@ Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to se
   sudo pacman -S wakatime zoxide # wakatime-mode and zoxide.el
 #+end_src
 
-current state: evil keybindings integration (refer to doom
 * Special Thanks
+- https://github.com/doomemacs/doomemacs
 - https://github.com/Likhon-baRoy/.emacs.d
 - https://config.daviwil.com/emacs
 - https://github.com/daviwil/emacs-from-scratch

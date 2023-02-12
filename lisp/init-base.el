@@ -223,5 +223,4 @@
 ;;; Buffer Move (swap window) ===============================
 (use-package buffer-move)
 
-
 (provide 'init-base)

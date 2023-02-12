@@ -102,7 +102,7 @@
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 (use-package corfu
 	:straight (:host github :repo "minad/corfu"
-									 :files ("*.el" "extensions/*.el"))
+							:files ("*.el" "extensions/*.el"))
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
@@ -110,13 +110,10 @@
 	(corfu-auto-prefix 2)          ;; Enable auto completion
   :init
   (global-corfu-mode)
-
 	;; remembers selected candidates and sorts the candidates
 	(corfu-history-mode)
-
 	;; quick select, M-<number> <ret>
 	(corfu-indexed-mode)
-
 	;; popup info
 	(corfu-popupinfo-mode))
 
@@ -126,7 +123,7 @@
   :init
   (setq completion-cycle-threshold 3)
   (setq read-extended-command-predicate
-        #'command-completion-default-include-p)
+    #'command-completion-default-include-p)
   (setq tab-always-indent 'complete))
 
 ;; @ enable corfu in terminal emacs
@@ -141,11 +138,13 @@
 ;; add completion etension
 ;; TODO dict integration (enable it in org-mode or text-mode)
 (use-package cape
+	:hook ((prog-mode . mk/setup-cape)
+				  (text-mode . mk/setup-cape))
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
-  (add-to-list 'completion-at-point-functions #'cape-file)
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-	)
+  (defun mk/setup-cape()
+    (add-to-list 'completion-at-point-functions #'cape-file)))
 
 ;;; Snippet =================================================
 ;; @ yasnippet
@@ -158,14 +157,17 @@
 	:custom
 	(tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
 	:hook ((prog-mode . tempel-setup-capf)
-				 (text-mode . tempel-setup-capf))
+				  (text-mode . tempel-setup-capf))
   :init
   ;; Setup completion at point
   (defun tempel-setup-capf ()
     ;; NOTE: We add	`tempel-expand' *before* the main programming mode Capf,
 		;; such	that it will be tried first.
     (setq-local completion-at-point-functions
-                (cons #'tempel-expand
-                      completion-at-point-functions))))
+      (cons #'tempel-expand
+        completion-at-point-functions))))
+
+(use-package tempel-collection
+  :after tempel)
 
 (provide 'completion)

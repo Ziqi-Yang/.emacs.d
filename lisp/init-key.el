@@ -150,262 +150,261 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 ;;; Main Key Mapping ========================================
 (mapBegin!
- ;; continuous shift-right/left, cannot be defined in general map
- (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
- (define-key evil-visual-state-map (kbd "<") 'djoyner/evil-shift-left-visual)
+  ;; continuous shift-right/left, cannot be defined in general map
+  (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
+  (define-key evil-visual-state-map (kbd "<") 'djoyner/evil-shift-left-visual)
 
 
- (general-unbind 'normal
-	 "<"
-	 ">"
-	 "v")
+  (general-unbind 'normal
+	  "<"
+	  ">"
+	  "v")
 
- ;; @ normal map (no leader key
- (general-nmap 
-	 ;; "." evil-repeat can be your friend
-	 "TAB" #'evil-avy-goto-char-2
-	 "gcc" #'evilnc-comment-or-uncomment-lines
-	 "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
-	 "L" #'sp-forward-sexp
-	 "H" #'sp-backward-sexp
-	 "M-v" #'er/expand-region
-	 "C-." #'embark-act
-	 "go"   #'evil-jump-out-args
+  ;; @ normal map (no leader key
+  (general-nmap 
+	  ;; "." evil-repeat can be your friend
+	  "TAB" #'evil-avy-goto-char-2
+	  "gcc" #'evilnc-comment-or-uncomment-lines
+	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
+	  "L" #'sp-forward-sexp
+	  "H" #'sp-backward-sexp
+	  "M-v" #'er/expand-region
+	  "C-." #'embark-act
+	  "go"   #'evil-jump-out-args
 
-	 ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
-	 "[f" '(treesit-beginning-of-defun :which-key "func begin")
-	 "]f" '(treesit-end-of-defun :which-key "func end")
-	 "]a"   #'evil-forward-arg
-	 "[a"   #'evil-backward-arg
-	 "]s" #'sp-end-of-sexp
-	 "[s" #'sp-beginning-of-sexp
-	 "M-<backspace>" #'(lambda () (interactive) (progn (sp-backward-kill-sexp ) (evil-insert-state)) )
+	  ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
+	  "[f" '(treesit-beginning-of-defun :which-key "func begin")
+	  "]f" '(treesit-end-of-defun :which-key "func end")
+	  "]a"   #'evil-forward-arg
+	  "[a"   #'evil-backward-arg
+	  "]s" #'sp-end-of-sexp
+	  "[s" #'sp-beginning-of-sexp
+	  "M-<backspace>" #'(lambda () (interactive) (progn (sp-backward-kill-sexp ) (evil-insert-state)) )
 
-	 ;; @ text-scale via init-base/default-text-scale
-	 ;; C-- and C-= to change font size
+	  ;; @ text-scale via init-base/default-text-scale
+	  ;; C-- and C-= to change font size
 
-	 "<<" #'evil-shift-left-line
-	 ">>" #'evil-shift-right-line
+	  "<<" #'evil-shift-left-line
+	  ">>" #'evil-shift-right-line
 
-	 "zk" #'sp-kill-hybrid-sexp
-	 ;; the two works for the closest expression, for more specific control,
-	 ;; use evil-surround instead (cs<paren> ds<paren>)
-	 "zd" #'sp-splice-sexp
-	 "zc" #'sp-rewrap-sexp
-	 "zC" #'evil-close-fold
+	  "zk" #'sp-kill-hybrid-sexp
+	  ;; the two works for the closest expression, for more specific control,
+	  ;; use evil-surround instead (cs<paren> ds<paren>)
+	  "zd" #'sp-splice-sexp
+	  "zc" #'sp-rewrap-sexp
+	  "zC" #'evil-close-fold
 
-	 ">)" #'sp-forward-slurp-sexp
-	 "<)" #'sp-forward-barf-sexp
+	  ">)" #'sp-forward-slurp-sexp
+	  "<)" #'sp-forward-barf-sexp
 
-	 ">(" #'sp-backward-barf-sexp
-	 "<(" #'sp-backward-slurp-sexp)
+	  ">(" #'sp-backward-barf-sexp
+	  "<(" #'sp-backward-slurp-sexp)
 
- (general-mmap
-	 "L" #'evil-forward-arg
-	 "H" #'evil-backward-arg)
+  (general-mmap
+	  "L" #'evil-forward-arg
+	  "H" #'evil-backward-arg)
 
- ;; @ visual map (no leader key
- (general-vmap ;; visual
-   "S" #'evil-surround-region
-   "C-S-c" #'clipboard-kill-ring-save
-	 "gc" #'evilnc-comment-or-uncomment-lines
-	 "TAB" #'evil-avy-goto-char-2)
+  ;; @ visual map (no leader key
+  (general-vmap ;; visual
+    "S" #'evil-surround-region
+    "C-S-c" #'clipboard-kill-ring-save
+	  "gc" #'evilnc-comment-or-uncomment-lines
+	  "TAB" #'evil-avy-goto-char-2)
 
- ;; ((hllo world) meowking)
- ;; @ insert( map (no leader key
- (general-imap ;; insert
-	 ;; eivl(vim) default C-o can be useful when moving in evil insert mode
-   "C-S-v" #'clipboard-yank
+  ;; ((hllo world) meowking)
+  ;; @ insert( map (no leader key
+  (general-imap ;; insert
+	  ;; eivl(vim) default C-o can be useful when moving in evil insert mode
+    "C-S-v" #'clipboard-yank
 
-	 ;; smartparen
-	 "M-<backspace>" #'sp-backward-kill-sexp
-	 "M-<return>" #'sp-up-sexp
-	 "M-S-<return>" #'sp-backward-up-sexp
+	  ;; smartparen
+	  "M-<backspace>" #'sp-backward-kill-sexp
+	  "M-<return>" #'sp-up-sexp
+	  "M-S-<return>" #'sp-backward-up-sexp
 
-	 "C-<return>" #'tempel-complete
-	 )
+	  "C-<return>" #'mk/tempel-complete-or-next)
 
- ;; @ operation map (no leader key
- (general-omap
-   "s" #'evil-surround-edit
-   "S" #'evil-Surround-edit)
+  ;; @ operation map (no leader key
+  (general-omap
+    "s" #'evil-surround-edit
+    "S" #'evil-Surround-edit)
 
 
- ;; @ normal anad insert map (leader
- (mk/leader-def
-	 :states '(normal visual)
-	 :keymaps 'override
-	 ":" #'(eval-expression :which-key "Eval")
-	 "`" #'(eyebrowse-last-window-config :which-key "previous workspace")
-	 ";" #'(with-editor-async-shell-command :which-key "run command")
-	 "SPC" #'(execute-extended-command :which-key "M-x")
+  ;; @ normal anad insert map (leader
+  (mk/leader-def
+	  :states '(normal visual)
+	  :keymaps 'override
+	  ":" #'(eval-expression :which-key "Eval")
+	  "`" #'(eyebrowse-last-window-config :which-key "previous workspace")
+	  ";" #'(with-editor-async-shell-command :which-key "run command")
+	  "SPC" #'(execute-extended-command :which-key "M-x")
 
-	 ;; @ workspace
-	 ;; eyebrowse switch functions are also bounded to "M-<num>" in its use-package scope
-	 "TAB" '(:ignore t :which-key "workspace")
-	 "TAB TAB" '(eyebrowse-switch-to-window-config :which-key "switch")
-	 "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "w0")
-	 "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "w1")
-	 "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "w2")
-	 "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "w3")
-	 "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "w4")
-	 "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "w5")	 
-	 "TAB s" '(desktop-save-in-desktop-dir :which-key "save session")
-	 "TAB l" '(desktop-load-file :which-key "load session")
+	  ;; @ workspace
+	  ;; eyebrowse switch functions are also bounded to "M-<num>" in its use-package scope
+	  "TAB" '(:ignore t :which-key "workspace")
+	  "TAB TAB" '(eyebrowse-switch-to-window-config :which-key "switch")
+	  "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "w0")
+	  "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "w1")
+	  "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "w2")
+	  "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "w3")
+	  "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "w4")
+	  "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "w5")	 
+	  "TAB s" '(desktop-save-in-desktop-dir :which-key "save session")
+	  "TAB l" '(desktop-load-file :which-key "load session")
 
-   ;; @ buffer
-   "b"  '(:ignore t :which-key "Buffer & Bookmark")
-   "bb" '(mk/smart-buffer-switch :which-key "switch")
-   "bB" '(consult-buffer :which-key "all buffer")
-   "ba" '(consult-buffer :which-key "all buffer")
-	 "bd" '(evil-delete-buffer :which-key "delete")
-	 "bk" '(evil-delete-buffer :which-key "delete")
-	 "bK" '(mk/kill-all-buffers :which-key "delete")
-	 
-	 ;; @ bookmark
-	 "B" '(:ignore t :which-key "Bookmark")
-	 "Bb" '(bookmark-jump :which-key "switch")
-	 "BB" '(bookmark-jump :which-key "switch")
-	 "Bc" '(bookmark-set :which-key "create")
-	 "Bd" '(bookmark-delete :which-key "delete")
-	 "Bk" '(bookmark-delete :which-key "delete")
-	 "BD" '(bookmark-delete :which-key "delete all")
+    ;; @ buffer
+    "b"  '(:ignore t :which-key "Buffer & Bookmark")
+    "bb" '(mk/smart-buffer-switch :which-key "switch")
+    "bB" '(consult-buffer :which-key "all buffer")
+    "ba" '(consult-buffer :which-key "all buffer")
+	  "bd" '(evil-delete-buffer :which-key "delete")
+	  "bk" '(evil-delete-buffer :which-key "delete")
+	  "bK" '(mk/kill-all-buffers :which-key "delete")
+	  
+	  ;; @ bookmark
+	  "B" '(:ignore t :which-key "Bookmark")
+	  "Bb" '(bookmark-jump :which-key "switch")
+	  "BB" '(bookmark-jump :which-key "switch")
+	  "Bc" '(bookmark-set :which-key "create")
+	  "Bd" '(bookmark-delete :which-key "delete")
+	  "Bk" '(bookmark-delete :which-key "delete")
+	  "BD" '(bookmark-delete :which-key "delete all")
 
-	 ;; @ Code
-	 "c" '(:ignore t :which-key "Code")
-	 "ca" '(eglot-code-actions :which-key "action")
-	 "cr" '(eglot-rename :which-key "rename")
-	 "ci" '(eglot-code-action-organize-imports :which-key "format-buffer")
-	 "cf" '(eglot-code-action-quickfix :which-key "format-buffer")
-	 "cF" '(eglot-format-buffer :which-key "format-buffer")
-	 "ce" '(consult-flymake :which-key "errors(b)")
-	 "cd" '(xref-find-definitions :which-key "definitions")
-	 "cr" '(xref-find-references :which-key "references")
-	 "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
+	  ;; @ Code
+	  "c" '(:ignore t :which-key "Code")
+	  "ca" '(eglot-code-actions :which-key "action")
+	  "cr" '(eglot-rename :which-key "rename")
+	  "ci" '(eglot-code-action-organize-imports :which-key "format-buffer")
+	  "cf" '(eglot-code-action-quickfix :which-key "format-buffer")
+	  "cF" '(eglot-format-buffer :which-key "format-buffer")
+	  "ce" '(consult-flymake :which-key "errors(b)")
+	  "cd" '(xref-find-definitions :which-key "definitions")
+	  "cr" '(xref-find-references :which-key "references")
+	  "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
 
-   ;; @ file
-   "f" '(:ignore t :which-key "File")
-   "ff" '(find-file :which-key "find file")
-   "fF" '(affe-find :which-key "fuzzy find")
-	 "fp" '(project-find-file :which-key "find@project")
-	 "fr" '(consult-recent-file :which-key "recent")
-	 "fz" '(zoxide-find-file :which-key "zoxide")
+    ;; @ file
+    "f" '(:ignore t :which-key "File")
+    "ff" '(find-file :which-key "find file")
+    "fF" '(affe-find :which-key "fuzzy find")
+	  "fp" '(project-find-file :which-key "find@project")
+	  "fr" '(consult-recent-file :which-key "recent")
+	  "fz" '(zoxide-find-file :which-key "zoxide")
 
-   ;; @ help
-   "h" '(:ignore t :which-key "Help")
-   "hf" #'describe-function
-	 "hc" #'describe-char
-	 "hF" #'describe-face
-   "hk" #'describe-key
-	 "hK" #'describe-keymap
-   "ho" #'describe-symbol
-   "hm" #'describe-mode
-	 "hM" '(woman :which-key "man page")
+    ;; @ help
+    "h" '(:ignore t :which-key "Help")
+    "hf" #'describe-function
+	  "hc" #'describe-char
+	  "hF" #'describe-face
+    "hk" #'describe-key
+	  "hK" #'describe-keymap
+    "ho" #'describe-symbol
+    "hm" #'describe-mode
+	  "hM" '(woman :which-key "man page")
 
-	 ;; @ git
-	 "g" '(:ignore t :which-key "Git")
-	 "gg"  'magit-status
-	 "gs"  'magit-status
-   "gd"  'magit-diff-unstaged
-   "gc"  'magit-branch-or-checkout
-   "gl"  '(:ignore t :which-key "log")
-   "glc" 'magit-log-current
-   "glf" 'magit-log-buffer-file
-   "gb"  'magit-branch
-   "gP"  'magit-push-current
-   "gp"  'magit-pull-branch
-   "gf"  'magit-fetch
-   "gF"  'magit-fetch-all
-   "gr"  'magit-rebase
+	  ;; @ git
+	  "g" '(:ignore t :which-key "Git")
+	  "gg"  'magit-status
+	  "gs"  'magit-status
+    "gd"  'magit-diff-unstaged
+    "gc"  'magit-branch-or-checkout
+    "gl"  '(:ignore t :which-key "log")
+    "glc" 'magit-log-current
+    "glf" 'magit-log-buffer-file
+    "gb"  'magit-branch
+    "gP"  'magit-push-current
+    "gp"  'magit-pull-branch
+    "gf"  'magit-fetch
+    "gF"  'magit-fetch-all
+    "gr"  'magit-rebase
 
-	 "o"  '(:ignore t :which-key "open")
-	 "o-" #'(dired-jump :which-key "dired here")
-	 "o=" #'(project-dired :which-key "project dired")
-	 "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
-	 "ot" #'(mk/open-alacritty-smart :which-key "open terminal")
+	  "o"  '(:ignore t :which-key "open")
+	  "o-" #'(dired-jump :which-key "dired here")
+	  "o=" #'(project-dired :which-key "project dired")
+	  "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
+	  "ot" #'(mk/open-alacritty-smart :which-key "open terminal")
 
-	 ;; @ project
-	 "p" '(:ignore t :which-key "Project")
-	 "pt" #'(mk/open-alacritty-smart :which-key "open terminal at root")
-	 "pT" #'(mk/open-alacritty-here :which "open terminal here")
-	 "pp" '(project-switch-project :which-key "switch")
-	 "pt" '(magit-todos-list :which-key "todos")
-	 "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
-	 "pk" '(project-kill-buffers :which-key "kill buffers(p)")
-	 "pc" #'(project-compile :whici-key "compile")
-	 "ps" #'(project-async-shell-command :which-key "run command")
-	 "pr" #'(project-forget-project :which-key "select to remove project")
+	  ;; @ project
+	  "p" '(:ignore t :which-key "Project")
+	  "pt" #'(mk/open-alacritty-smart :which-key "open terminal at root")
+	  "pT" #'(mk/open-alacritty-here :which "open terminal here")
+	  "pp" '(project-switch-project :which-key "switch")
+	  "pt" '(magit-todos-list :which-key "todos")
+	  "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
+	  "pk" '(project-kill-buffers :which-key "kill buffers(p)")
+	  "pc" #'(project-compile :whici-key "compile")
+	  "ps" #'(project-async-shell-command :which-key "run command")
+	  "pr" #'(project-forget-project :which-key "select to remove project")
 
-	 "P" #'(:ignore t :which-key: "Presentatoin")
-	 "PP" #'(org-tree-slide-mode :which-key "org-tree-slide")
-	 "Pk" #'(keycast-header-line-mode :which-key "key(header line)")
-	 "Pl" #'(keycast-header-line-mode :which-key "key(other frame)")
+	  "P" #'(:ignore t :which-key: "Presentatoin")
+	  "PP" #'(org-tree-slide-mode :which-key "org-tree-slide")
+	  "Pk" #'(keycast-header-line-mode :which-key "key(header line)")
+	  "Pl" #'(keycast-header-line-mode :which-key "key(other frame)")
 
-	 ;; @ quit
-	 "q" '(:ignore t :which-key "quit")
-	 "qq" '(kill-emacs :which-key "kill emacs")
+	  ;; @ quit
+	  "q" '(:ignore t :which-key "quit")
+	  "qq" '(kill-emacs :which-key "kill emacs")
 
-	 ;; @ search @ replace
-	 "s" '(:ignore t :which-key "Search & Replace")
-	 "ss" '(consult-line :which-key "content")
-	 "si" '(consult-imenu :which-key "imenu")
-	 "sp" '(affe-grep :which-key "affe-grep(p)")
-	 "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
-	 "sb" '(consult-bookmark :which-key "bookmark")
-	 "so" '(consult-outline :which-key "outline")
-	 "sr" '(:ignore t :which-key "color-rg") ; + color-rg
-	 "srd" '(:ignore t :which-key "current directory")
-	 "srdi" '(color-rg-search-input :which-key "input")
-	 "srdp" '(color-rg-search-symbol :which-key "point")
-	 "srde" '(color-rg-search-symbol-with-type :which-key "with file-extension")
-	 "srp" '(:ignore t :which-key "current project")
-	 "srpi" '(color-rg-search-input-in-project :which-key "input")
-	 "srpp" '(color-rg-search-symbol-in-project :which-key "point")
-	 "srpe" '(color-rg-search-project-with-type :which-key "with file-extension")
-	 "srb" '(:ignore t :which-key "current buffer")
-	 "srbi" '(color-rg-search-input-in-current-file :which-key "input")
-	 "srbp" '(color-rg-search-symbol-in-current-file :which-key "point")
+	  ;; @ search @ replace
+	  "s" '(:ignore t :which-key "Search & Replace")
+	  "ss" '(consult-line :which-key "content")
+	  "si" '(consult-imenu :which-key "imenu")
+	  "sp" '(affe-grep :which-key "affe-grep(p)")
+	  "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
+	  "sb" '(consult-bookmark :which-key "bookmark")
+	  "so" '(consult-outline :which-key "outline")
+	  "sr" '(:ignore t :which-key "color-rg") ; + color-rg
+	  "srd" '(:ignore t :which-key "current directory")
+	  "srdi" '(color-rg-search-input :which-key "input")
+	  "srdp" '(color-rg-search-symbol :which-key "point")
+	  "srde" '(color-rg-search-symbol-with-type :which-key "with file-extension")
+	  "srp" '(:ignore t :which-key "current project")
+	  "srpi" '(color-rg-search-input-in-project :which-key "input")
+	  "srpp" '(color-rg-search-symbol-in-project :which-key "point")
+	  "srpe" '(color-rg-search-project-with-type :which-key "with file-extension")
+	  "srb" '(:ignore t :which-key "current buffer")
+	  "srbi" '(color-rg-search-input-in-current-file :which-key "input")
+	  "srbp" '(color-rg-search-symbol-in-current-file :which-key "point")
 
-	 "S" '(:ignore t :which-key "straight")
-	 "Sr" #'(straight-remove-unused-repos :which-key "remove unused")
-	 "Sp" #'(straight-pull-all :which-key "pull all")
+	  "S" '(:ignore t :which-key "straight")
+	  "Sr" #'(straight-remove-unused-repos :which-key "remove unused")
+	  "Sp" #'(straight-pull-all :which-key "pull all")
 
-   ;; @ toggle
-   "t" '(:ignore t :which-key "Toggle")
-   "tw" 'whitespace-mode
-   "tt" '(consult-theme :which-key "choose theme")
-	 
-   ;; @ window
-   "w"  '(:ignore t :which-key "Window")
-   "ww" #'(ace-window :which-key "ace-window")
-	 "wo" #'(delete-other-windows :which-key "delte other window")
-	 "wm" #'(maximize-window :which-key "maximize")
-	 "wM" #'(minimize-window :which-key "minimize")
-	 "wb" #'(balance-windows :which-key "balance")
-	 "w+" #'(maximize-window :which-key "maximize")
-	 "w-" #'(minimize-window :which-key "minimize")
-	 "w=" #'(balance-windows :which-key "balance")
-	 "wv" #'(split-window-vertically :which-key "split(v)")
-	 "wh" #'(split-window-horizontally :which-key "split(h)")
-	 "wq" #'(evil-window-delete :which-key "delete")
-	 "wd" #'(evil-window-delete :which-key "delete")
-	 ;; "wl" #'(evil-window-right :which-key "go right")
-	 ;; "wh" #'(evil-window-left :which-key "go left")
-	 ;; "wj" #'(evil-window-down :which-key "go down") 
-	 ;; "wk" #'(evil-window-up :which-key "go up")
-	 "wL" #'(buf-move-right :which-key "move right")
-	 "wH" #'(buf-move-left :which-key "move left")
-	 "wJ" #'(buf-move-down :which-key "move down")
-	 "wK" #'(buf-move-up :which-key "move up")
+    ;; @ toggle
+    "t" '(:ignore t :which-key "Toggle")
+    "tw" 'whitespace-mode
+    "tt" '(consult-theme :which-key "choose theme")
+	  
+    ;; @ window
+    "w"  '(:ignore t :which-key "Window")
+    "ww" #'(ace-window :which-key "ace-window")
+	  "wo" #'(delete-other-windows :which-key "delte other window")
+	  "wm" #'(maximize-window :which-key "maximize")
+	  "wM" #'(minimize-window :which-key "minimize")
+	  "wb" #'(balance-windows :which-key "balance")
+	  "w+" #'(maximize-window :which-key "maximize")
+	  "w-" #'(minimize-window :which-key "minimize")
+	  "w=" #'(balance-windows :which-key "balance")
+	  "wv" #'(split-window-vertically :which-key "split(v)")
+	  "wh" #'(split-window-horizontally :which-key "split(h)")
+	  "wq" #'(evil-window-delete :which-key "delete")
+	  "wd" #'(evil-window-delete :which-key "delete")
+	  ;; "wl" #'(evil-window-right :which-key "go right")
+	  ;; "wh" #'(evil-window-left :which-key "go left")
+	  ;; "wj" #'(evil-window-down :which-key "go down") 
+	  ;; "wk" #'(evil-window-up :which-key "go up")
+	  "wL" #'(buf-move-right :which-key "move right")
+	  "wH" #'(buf-move-left :which-key "move left")
+	  "wJ" #'(buf-move-down :which-key "move down")
+	  "wK" #'(buf-move-up :which-key "move up")
 
-	 "x" #'(scratch-buffer :which-key "scratch")
+	  "x" #'(scratch-buffer :which-key "scratch")
 
-	 "z" #'(:ignore t :which-key "trivial")
-	 "zt" #'(mk/translate :which-key "translate")
+	  "z" #'(:ignore t :which-key "trivial")
+	  "zt" #'(mk/translate :which-key "translate")
 
-	 "m" #'(:ignore t :which-key "local")
-	 )
- )
+	  "m" #'(:ignore t :which-key "local")
+	  )
+  )
 
 ;;; Trivial Functions =======================================
 
@@ -460,7 +459,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	"Smart buffer switch according to project existence."
 	(interactive)
 	(if (project-current)
-			(consult-project-buffer)
+		(consult-project-buffer)
 		(consult-buffer)))
+
+(defun mk/tempel-complete-or-next ()
+  (interactive)
+  (if (not tempel--active)
+    (call-interactively 'tempel-complete)
+    (call-interactively 'tempel-next)))
 
 (provide 'init-key)
