@@ -123,25 +123,14 @@
 ;;; Center Area =============================================
 (use-package olivetti
   :hook ((text-mode         . olivetti-mode)
-         (prog-mode         . olivetti-mode)
-         (Info-mode         . olivetti-mode)
-         (org-mode          . olivetti-mode)
-         (markdown-mode     . olivetti-mode))
+          (prog-mode         . olivetti-mode)
+          (Info-mode         . olivetti-mode)
+          (org-mode          . olivetti-mode)
+          (markdown-mode     . olivetti-mode))
   :custom
   (olivetti-body-width 0.8))
 
-
 ;;; Cursor ==================================================
-;; @ evil cursor
-(use-package evil
-	:config
-	(setq  evil-normal-state-cursor  '("DodgerBlue" box)
-         evil-insert-state-cursor  '("IndianRed1" (bar . 2))
-         evil-emacs-state-cursor   '("SkyBlue2" box)
-         evil-replace-state-cursor '("Chocolate" (hbar . 2))
-         evil-visual-state-cursor  '("DarkViolet" (hollow . 2))
-         evil-motion-state-cursor  '("Plum3" box)))
-
 ;; @ disable cursor blink
 (setq blink-cursor-mode nil)
 

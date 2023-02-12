@@ -50,7 +50,7 @@
 ;;                               )))
 
 (use-package smartparens
-  :hook ((prog-mode org-mode) . smartparens-mode)
+  :hook ((prog-mode org-mode) . smartparens-strict-mode)
 	:config
 	;; (sp-pair "<#" "#>") ;; example, support multiple characters
 	)

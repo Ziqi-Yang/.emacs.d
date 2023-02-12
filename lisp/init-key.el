@@ -33,16 +33,18 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   :demand t
   :bind (("<escape>" . keyboard-escape-quit)) ;; <escape> to act like <C-g>
   :preface
-  (setq
-   evil-normal-state-cursor 'box
-   evil-emacs-state-cursor  'box
-   evil-insert-state-cursor 'bar
-   evil-visual-state-cursor 'hollow)
+  (setq  evil-normal-state-cursor  '("DodgerBlue" box)
+    evil-insert-state-cursor  '("IndianRed1" (bar . 2))
+    evil-emacs-state-cursor   '("SkyBlue2" box)
+    evil-replace-state-cursor '("Chocolate" (hbar . 2))
+    evil-visual-state-cursor  '("DarkViolet" (hollow . 2))
+    evil-motion-state-cursor  '("Plum3" box))
   :init
   (setq
-   evil-want-keybinding nil ;; evil-collection required
-   evil-want-C-u-scroll t
-   evil-undo-system 'undo-redo)
+    evil-want-keybinding nil ;; evil-collection required
+    evil-want-C-u-scroll t
+    evil-move-beyond-eol t
+    evil-undo-system 'undo-redo)
   :config
   (evil-mode 1))
 
@@ -77,28 +79,28 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	:general ([remap comment-line] #'evilnc-comment-or-uncomment-lines))
 
 ;; @ indent
-;; default keybindings: gl and gL
+;; default keybindings: gl and gl
 (use-package evil-lion
   :config
   (evil-lion-mode))
 
 ;; @ textobj
-;; + arguments (function arguments, default style: (arg1, arg2) 
-;; keybindings(incluing other useful function of this package are in the main keymaps
-;; textobj: a
-(use-package evil-args
-	:config
-	;; bind evil-args text objects
-	(define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
-	(define-key evil-outer-text-objects-map "a" 'evil-outer-arg))
-
-;; + indentation
-;; textobj: i, I, J
-;; TODO: Current shorttage: cannot select objects inside arguments
-;; maybe I can combine it with evil-args
-(use-package evil-indent-plus
-	:config
-	(evil-indent-plus-default-bindings))
+;; + cleverparens
+;; textobjs:
+;;   f: From, nearest delimeter
+;;   c: comment, vic(delimeter detect), vac(all)
+;;   d: defun
+;;   W: smart word(aware delimeter)
+;; Keys:
+;;   H, L: move backward/forward by sexp
+;;   M-h/l: Move to the beginning/end of a top-level form
+;;   ()[]{} many more
+;;   clever D, Y, C, x, ... many more
+;; https://github.com/emacs-evil/evil-cleverparens
+(use-package evil-cleverparens
+  :hook ((prog-mode text-mode) . evil-cleverparens-mode)
+  :config
+  (setq evil-cleverparens-use-additional-bindings nil))
 
 ;; + xml attribute
 ;; textobj: x
@@ -335,7 +337,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "ps" #'(project-async-shell-command :which-key "run command")
 	  "pr" #'(project-forget-project :which-key "select to remove project")
 
-	  "P" #'(:ignore t :which-key: "Presentatoin")
+	  "P" '(:ignore t :which-key: "Presentation")
 	  "PP" #'(org-tree-slide-mode :which-key "org-tree-slide")
 	  "Pk" #'(keycast-header-line-mode :which-key "key(header line)")
 	  "Pl" #'(keycast-header-line-mode :which-key "key(other frame)")
