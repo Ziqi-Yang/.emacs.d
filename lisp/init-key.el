@@ -326,6 +326,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "o-" #'(dired-jump :which-key "dired here")
 	  "o=" #'(project-dired :which-key "project dired")
 	  "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
+    "oA" #'((lambda () (interactive) (find-file "~/Documents/dotfiles/docs/unclassified.org")) :which-key "application record")
 	  "ot" #'(mk/open-alacritty-smart :which-key "open terminal")
 
 	  ;; @ project

@@ -5,13 +5,13 @@
 ;;; Vertico =================================================
 (use-package vertico
 	:straight (:host github :repo "minad/vertico"
-									 :files ("*.el" "extensions/vertico-indexed.el" "extensions/vertico-multiform.el"))
+							:files ("*.el" "extensions/vertico-indexed.el" "extensions/vertico-multiform.el"))
 	:bind (:map vertico-map
-							("C-j" . vertico-next)
-							("C-k" . vertico-previous)
-							:map minibuffer-local-map
-							("M-h" . backward-kill-word)
-							("C-w" . backward-kill-word))
+					("C-j" . vertico-next)
+					("C-k" . vertico-previous)
+					:map minibuffer-local-map
+					("M-h" . backward-kill-word)
+					("C-w" . backward-kill-word))
   :init
   (vertico-mode)
   (setq vertico-cycle t)
@@ -23,7 +23,7 @@
 	(vertico-multiform-mode)
 
 	(setq vertico-multiform-commands
-				'((t posframe)))) ;; this enables vertico-posframe works well with emacs daemon
+		'((t posframe)))) ;; this enables vertico-posframe works well with emacs daemon
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs

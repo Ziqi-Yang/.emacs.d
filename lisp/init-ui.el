@@ -56,7 +56,7 @@
 				dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
 				dashboard-banner-logo-title "Happy coding, MeowKing!"
 				dashboard-items '((recents  . 5)
-													(bookmarks . 5)
+													;; (bookmarks . 5)
 													(projects . 5)
 													;; (agenda . 5)
 													;; (registers . 5)
