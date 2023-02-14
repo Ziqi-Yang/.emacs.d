@@ -66,13 +66,13 @@
 
 	(with-eval-after-load 'eglot
 		(add-hook 'eglot-managed-mode-hook
-							(lambda () ;; show diagnostics in the echo area
-								;; Show flymake diagnostics first.
-								(setq eldoc-documentation-functions
-											(cons #'flymake-eldoc-function
-														(remove #'flymake-eldoc-function eldoc-documentation-functions)))
-								;; Show all eldoc feedback.
-								(setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
+			(lambda () ;; show diagnostics in the echo area
+				;; Show flymake diagnostics first.
+				(setq eldoc-documentation-functions
+					(cons #'flymake-eldoc-function
+						(remove #'flymake-eldoc-function eldoc-documentation-functions)))
+				;; Show all eldoc feedback.
+				(setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
 
 		;; to custom language server (like flags), add-to-list 'eglot-server-programs
 		)
@@ -83,6 +83,20 @@
 	;; NOTE
 	;; install markdown-mode to rich the doc
 	)
+
+
+
+;;; Compile command for each mode ===========================
+;; since configuration files for some mode doesn't exist, so I put it all here
+(add-hook 'c-mode-hook
+  (lambda ()
+	  (unless (or (file-exists-p "makefile")
+		          (file-exists-p "Makefile"))
+      (setq-local compile-command
+		    (concat "make -k "
+			    (if buffer-file-name
+			      (shell-quote-argument
+			        (file-name-sans-extension buffer-file-name))))))))
 
 
 (provide 'l-general)

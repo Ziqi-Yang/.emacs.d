@@ -100,6 +100,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;; https://github.com/emacs-evil/evil-cleverparens
 (use-package evil-cleverparens
   :hook ((prog-mode text-mode) . evil-cleverparens-mode)
+  :init
+  (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
   :config
   (setq evil-cleverparens-use-additional-bindings nil))
 
@@ -212,6 +214,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "S" #'evil-surround-region
     "C-S-c" #'clipboard-kill-ring-save
 	  "gc" #'evilnc-comment-or-uncomment-lines
+	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 	  "TAB" #'evil-avy-goto-char-2)
 
   ;; ((hllo world) meowking)
@@ -331,8 +334,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ project
 	  "p" '(:ignore t :which-key "Project")
-    "pa" #'(project-remember-project :which-key "add p")
-    "pA" #'(project-remember-projects-under :which-key "add all p under")
+    "pa" #'(project-remember-projects-under :which-key "add p")
 	  "pt" #'(mk/open-alacritty-smart :which-key "open terminal at root")
 	  "pT" #'(mk/open-alacritty-here :which "open terminal here")
 	  "pp" '(project-switch-project :which-key "switch")
@@ -342,7 +344,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "pc" #'(project-compile :whici-key "compile")
 	  "ps" #'(project-async-shell-command :which-key "run command")
 	  "pr" #'(project-forget-project :which-key "remove p")
-	  "pR" #'(project-forget-project :which-key "remove all p under")
 
 	  "P" '(:ignore t :which-key: "Presentation")
 	  "PP" #'(org-tree-slide-mode :which-key "org-tree-slide")
