@@ -8,7 +8,7 @@
 (use-package doom-themes
 	:defer t
 	:hook (server-after-make-frame . (lambda () (load-theme
-																							 'doom-solarized-light t)))
+																							  'doom-solarized-light t)))
 	:init
 	(load-theme 'doom-solarized-light t))
 

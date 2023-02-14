@@ -5,7 +5,7 @@
 ;;; Vertico =================================================
 (use-package vertico
 	:straight (:host github :repo "minad/vertico"
-							:files ("*.el" "extensions/vertico-indexed.el" "extensions/vertico-multiform.el"))
+							:files ("*.el" "extensions/vertico-indexed.el" "extensions/vertico-multiform.el" "extensions/vertico-buffer.el"))
 	:bind (:map vertico-map
 					("C-j" . vertico-next)
 					("C-k" . vertico-previous)
@@ -14,8 +14,11 @@
 					("C-w" . backward-kill-word))
   :init
   (vertico-mode)
-  (setq vertico-cycle t)
-	(setq vertico-resize t)
+  (setq vertico-cycle t
+	  vertico-resize t
+    read-file-name-completion-ignore-case t
+    read-buffer-completion-ignore-case t
+    completion-ignore-case t)
 
 	;; can selete entry with M-<number> <ret>
 	(vertico-indexed-mode)
@@ -23,7 +26,16 @@
 	(vertico-multiform-mode)
 
 	(setq vertico-multiform-commands
-		'((t posframe)))) ;; this enables vertico-posframe works well with emacs daemon
+		'( (project-switch-project
+         posframe
+         (vertico-sort-function . nil))
+       (affe-grep
+         buffer
+         (vertico-buffer-display-action . (display-buffer-in-side-window
+					                                  (side . right)
+					                                  (window-width . 0.5)))
+         (:not posframe))
+       (t posframe)))) ;; this enables vertico-posframe works well with emacs daemon
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs
@@ -31,17 +43,17 @@
   :init
   (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
-                  (replace-regexp-in-string
-                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                   crm-separator)
-                  (car args))
-          (cdr args)))
+            (replace-regexp-in-string
+              "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+              crm-separator)
+            (car args))
+      (cdr args)))
   (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
   (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
+    '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
   (setq read-extended-command-predicate
-        #'command-completion-default-include-p)
+    #'command-completion-default-include-p)
   (setq enable-recursive-minibuffers t))
 
 
@@ -96,7 +108,8 @@
 (use-package consult
 	:config
 	;; integrated with xref
-	(setq xref-show-xrefs-function #'consult-xref))
+	(setq xref-show-xrefs-function #'consult-xref)
+  (consult-customize consult-recent-file :preview-key nil))  ;; disable preview for recent file
 
 ;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
