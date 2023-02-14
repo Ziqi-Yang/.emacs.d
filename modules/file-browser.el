@@ -1,8 +1,16 @@
 ;;; file-browser.el --- File Browser -*- lexical-binding: t -*-
 ;;; Commentary:
-;; including custom for dired
+;; customization for dired
 ;;; Code:
 
-;; TODO wait for drivish to fix bug.
+(setq dired-listing-switches "-agho --group-directories-first"
+  dired-hide-details-hide-symlink-targets nil
+  delete-by-moving-to-trash t)
+
+
+;; @ icon
+(use-package all-the-icons-dired
+  :after dired
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 (provide 'file-browser)
