@@ -331,13 +331,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "o=" #'(project-dired :which-key "project dired")
 	  "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
     "oA" #'((lambda () (interactive) (find-file "~/Documents/dotfiles/docs/unclassified.org")) :which-key "application record")
-	  "ot" #'(mk/open-alacritty-smart :which-key "open terminal")
+	  "ot" #'(mk/open-terminal-smart :which-key "open terminal(p)")
+	  "oT" #'(mk/open-terminal-here :which-key "open terminal(b)")
 
 	  ;; @ project
 	  "p" '(:ignore t :which-key "Project")
     "pA" #'(project-remember-projects-under :which-key "add p")
-	  "pt" #'(mk/open-alacritty-smart :which-key "open terminal at root")
-	  "pT" #'(mk/open-alacritty-here :which "open terminal here")
 	  "pp" '(project-switch-project :which-key "switch")
 	  "pt" '(magit-todos-list :which-key "todos")
 	  "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
@@ -440,31 +439,32 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	(interactive)
 	(mapc 'kill-buffer (delq (get-buffer "*dashboard*") (buffer-list))))
 
-(defun mk/open-alacritty-smart()
+(defun mk/open-terminal-smart()
   "Open alacritty terminal at project root if in a project, otherwise current folder."
   (interactive)
-  (if (project-current)
-			(start-process-shell-command "open-alacritty-in-folder" "*alacritty*"
-																	 (concat "alacritty --class floating --working-directory " (project-root (project-current)) ))
-    (start-process-shell-command "open-alacritty-in-folder" "*alacritty*"
-                                 (concat "alacritty --class floating --working-directory " (file-name-directory buffer-file-name) )) ))
+  (let ( (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ") ) ;; right parenthesis is needed to be added after concatance
+    (if (project-current)
+		  (start-process-shell-command "open terminal" "*terminal*"
+			  (concat command-prefix (project-root (project-current)) "'"))
+      (start-process-shell-command "open terminal" "*terminal*"
+        (concat command-prefix (file-name-directory buffer-file-name) "'")))))
 
-
-(defun mk/open-alacritty-here()
+(defun mk/open-terminal-here()
   "Open alacritty terminal at the current folder."
   (interactive)
-  (start-process-shell-command "open-alacritty-in-folder" "*alacritty*"
-                               (concat "alacritty --class floating --working-directory " (file-name-directory buffer-file-name) )) )
+  (let ( (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ") ) ;; right parenthesis is needed to be added after concatance
+    (start-process-shell-command "open terminal" "*terminal*"
+      (concat command-prefix (file-name-directory buffer-file-name) "'"))))
 
 (defun mk/translate()
   "Translate words at the point by using ydicy in the external terminal alacritty."
   (interactive)
 	(let* ((bounds (bounds-of-thing-at-point 'word))
-				 (pos1 (car bounds))
-				 (pos2 (cdr bounds))
-				 (word (buffer-substring-no-properties pos1 pos2))
-				 (command (concat "echo " word " ; source $HOME/.config/fish/functions/t.fish && t " word " ; echo ------------------------------ ; echo [Use Ctrl-Shift-Space to toggle vi mode] ; read -P '[Press ENTER key to exit]'"))
-				 )
+				  (pos1 (car bounds))
+				  (pos2 (cdr bounds))
+				  (word (buffer-substring-no-properties pos1 pos2))
+				  (command (concat "echo " word " ; source $HOME/.config/fish/functions/t.fish && t " word " ; echo ------------------------------ ; echo [Use Ctrl-Shift-Space to toggle vi mode] ; read -P '[Press ENTER key to exit]'"))
+				  )
 		(start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
 		))
 

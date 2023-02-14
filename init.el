@@ -27,7 +27,7 @@
 
 (setq user-full-name "Ziqi Yang"
 	user-mail-address "mr.ziqiyang@gmail.com"
-  default-directory (expand-file-name "~/.emacs.d/"))
+  default-directory (expand-file-name "~/.emacs.d"))
 
 ;; add load path
 ;; adding "~/.npm-global/bin/" cause vls for vue-mode error, maybe the system vls and
