@@ -38,7 +38,7 @@
 			  "CANCELLED(c)" ))))
 (add-hook 'org-mode-hook #'org-indent-mode)
 
-;;; Export
+;;; Export ==================================================
 (setq org-export-with-toc t
 	org-export-with-footnotes t
 	org-export-coding-system 'utf-8

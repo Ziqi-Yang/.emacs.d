@@ -155,7 +155,7 @@
 ;; @ buildin
 ;; evil buildin fold throught this package
 (use-package hideshow 
-	:hook ((prog-mode . hs-minor-mode )))
+	:hook ((prog-mode . (lambda () (mk/hs-hide-level-samrt)))))
 
 ;; @ vimmish-fold
 ;; (use-package vimish-fold
@@ -226,6 +226,20 @@
 
 ;;; Buffer Move (swap window) ===============================
 (use-package buffer-move)
+
+
+;;; My custom functions =====================================
+(defun mk/hs-hide-level-samrt()
+  "Calling hs-hide-level based on line numbers."
+  (interactive)
+  (hs-minor-mode)
+  (let ((n (car (buffer-line-statistics)))
+         (l2 50)
+         (l1 100))
+    (if (> n l1)
+      (hs-hide-level 1)
+      (> n l2)
+      (hs-hide-level 2))))
 
 
 (provide 'init-base)
