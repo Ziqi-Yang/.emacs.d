@@ -300,14 +300,15 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
     ;; @ help
     "h" '(:ignore t :which-key "Help")
-    "hf" #'describe-function
-	  "hc" #'describe-char
-	  "hF" #'describe-face
-    "hk" #'describe-key
-	  "hK" #'describe-keymap
-    "ho" #'describe-symbol
-    "hm" #'describe-mode
-	  "hM" '(woman :which-key "man page")
+    "hf" #'(describe-function :which-key "function")
+	  "hc" #'(describe-char :which-key "char")
+	  "hF" #'(describe-face :which-key "face")
+    "hk" #'(describe-key :which-key "key")
+	  "hK" #'(describe-keymap :which-key "keymap")
+    "ho" #'(describe-symbol :which-key "symbol")
+    "hv" #'(describe-variable :which-key "variable")
+    "hm" #'(describe-mode :which-key "mode")
+	  "hM" #'(woman :which-key "man page")
 
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")

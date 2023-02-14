@@ -25,8 +25,8 @@
 	(add-to-list 'recentf-exclude no-littering-var-directory)
 	(add-to-list 'recentf-exclude no-littering-etc-directory)
 	(setq
-	auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-	custom-file (no-littering-expand-etc-file-name "custom.el")))
+	  auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+	  custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 ;;; workspace ===============================================
 ;; @ persp-mode
@@ -235,11 +235,12 @@
   (hs-minor-mode)
   (let ((n (car (buffer-line-statistics)))
          (l2 50)
-         (l1 100))
-    (if (> n l1)
-      (hs-hide-level 1)
-      (> n l2)
-      (hs-hide-level 2))))
+         (l1 100)
+         (l0 200))
+    (cond
+      ((> n l0) (hs-hide-all))     ;; also hide long comment
+      ((> n l1) (hs-hide-level 1)) ;; show root function
+      ((> n l2) (hs-hide-level 2)))))
 
 
 (provide 'init-base)
