@@ -88,15 +88,22 @@
 
 ;;; Compile command for each mode ===========================
 ;; since configuration files for some mode doesn't exist, so I put it all here
-(add-hook 'c-mode-hook
-  (lambda ()
-	  (unless (or (file-exists-p "makefile")
-		          (file-exists-p "Makefile"))
-      (setq-local compile-command
-		    (concat "make -k "
-			    (if buffer-file-name
-			      (shell-quote-argument
-			        (file-name-sans-extension buffer-file-name))))))))
+(add-hook 'prog-mode-hook #'mk/compile-command)
+
+(defun mk/compile-command()
+  "Define compile command for every mode."
+  (if (or (file-exists-p "makefile")
+        (file-exists-p "Makefile"))
+    (message "hihihi")
+    ;; (setq-local compile-command "make run")
+    (setq-local compile-command
+      (cond
+        ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
+          "cargo run")
+        ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
+          "make run")
+        (t "make run")))))
+
 
 
 (provide 'l-general)

@@ -334,7 +334,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ project
 	  "p" '(:ignore t :which-key "Project")
-    "pa" #'(project-remember-projects-under :which-key "add p")
+    "pA" #'(project-remember-projects-under :which-key "add p")
 	  "pt" #'(mk/open-alacritty-smart :which-key "open terminal at root")
 	  "pT" #'(mk/open-alacritty-here :which "open terminal here")
 	  "pp" '(project-switch-project :which-key "switch")
@@ -342,8 +342,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
 	  "pk" '(project-kill-buffers :which-key "kill buffers(p)")
 	  "pc" #'(project-compile :whici-key "compile")
-	  "ps" #'(project-async-shell-command :which-key "run command")
-	  "pr" #'(project-forget-project :which-key "remove p")
+	  "pr" #'(project-async-shell-command :which-key "run command")
+	  "pR" #'(project-forget-project :which-key "remove p")
 
 	  "P" '(:ignore t :which-key: "Presentation")
 	  "PP" #'(org-tree-slide-mode :which-key "org-tree-slide")
