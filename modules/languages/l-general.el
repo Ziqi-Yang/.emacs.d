@@ -18,7 +18,9 @@
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
 
+;; manual(use script) build(recommend, since more language are included, but you need need to manualy hook the extra langauge. For build script, see above information), or use nf/treesit-install-all-languages for those languages defined in treesit-auto
 (defun nf/treesit-install-all-languages ()
   "Install all languages specified by `treesit-language-source-alist'."
   (interactive)
@@ -29,11 +31,10 @@
 	    (sit-for 0.75))))
 
 ;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
-;; Don't know why it cannot auto prompt to install lang. But the auto use ts mode
-;; and the set for treesit-language-source-alist is useful
-;; manual(use script) build(recommend, since more language are included, but you need need to manualy hook the extra langauge. For build script, see above information), or use nf/treesit-install-all-languages for those languages defined in treesit-auto
 (use-package treesit-auto
-	:hook (after-init . global-treesit-auto-mode))
+	:hook (after-init . global-treesit-auto-mode)
+  :config
+  (setq treesit-auto-install t))
 
 ;;; Lsp =====================================================
 ;; check eglot-server-programs to know the language programs that corresponding

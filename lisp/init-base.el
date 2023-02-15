@@ -242,5 +242,4 @@
       ((> n l1) (hs-hide-level 1)) ;; show root function
       ((> n l2) (hs-hide-level 2)))))
 
-
 (provide 'init-base)

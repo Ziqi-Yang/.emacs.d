@@ -260,7 +260,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
     ;; @ buffer
     "b"  '(:ignore t :which-key "Buffer & Bookmark")
-    "bb" '(consult-buffer :which-key "all buffer")
+    "bb" '(mk/consult-buffer-no-hidden :which-key "all buffer")
+    "bB" '(consult-buffer :which-key "all buffer")
     "bp" '(mk/smart-buffer-switch :which-key "switch")
     "ba" '(consult-buffer :which-key "all buffer")
 	  "bd" '(evil-delete-buffer :which-key "delete")
@@ -506,5 +507,12 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
       (rename-file buffer-file-name new-file-name)
       (find-file new-file-name)
       (kill-buffer old-buffer))))
+
+(defun mk/consult-buffer-no-hidden()
+  "Consult buffer without displaying hidden buffers."
+  (interactive)
+  (let* ((filters consult-buffer-filter)
+          (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
+    (consult-buffer)))
 
 (provide 'init-key)

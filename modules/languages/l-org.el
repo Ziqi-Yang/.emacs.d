@@ -83,8 +83,9 @@
 
 (add-hook 'after-init-hook #'mk/org-export-latex-init)
 
-
-
+;; @ beamer
+(setq org-beamer-frame-level 2)
+(add-hook 'after-init-hook #'(lambda () (org-beamer-mode)))
 
 ;;; Fancy face ==============================================
 ;; @ most of the stuffs

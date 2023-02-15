@@ -63,10 +63,11 @@
 	:after vertico
 	:config
 	;; (vertico-posframe-mode)
-	(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
+	(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center
+    vertico-posframe-font "BlexMono Nerd Font 12") ;; smaller font size to show more content(often with long file path :(  )
 	(setq vertico-posframe-parameters
-      '((left-fringe . 8)
-        (right-fringe . 8))))
+    '((left-fringe . 8)
+       (right-fringe . 8))))
 
 ;;; Annotations in completetion =============================
 (use-package marginalia
