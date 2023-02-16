@@ -25,9 +25,8 @@
   "Used for defining keys. Keys are defined after package 'general' load up, so we
 don't need to add ':demand t' keyword to 'use-package' declearation."
   `(use-package general
-    :config
-    ,@expression))
-
+     :config
+     ,@expression))
 
 ;;; Evil Collection ========================================= 
 (use-package evil
@@ -110,7 +109,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;; example: uncomment the line below and relocate in 'class="meow"', type 'vix'
 ;; <html class="meow"></html>
 (use-package exato)
-
 
 ;; @ textobj using tree-sitter
 ;; TODO more hack can be here
@@ -264,8 +262,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "bB" '(consult-buffer :which-key "all buffer")
     "bp" '(mk/smart-buffer-switch :which-key "switch")
     "ba" '(consult-buffer :which-key "all buffer")
-	  "bd" '(evil-delete-buffer :which-key "delete")
-	  "bk" '(evil-delete-buffer :which-key "delete")
+	  "bd" '(mk/kill-buffer :which-key "delete")
+	  "bk" '(mk/kill-buffer :which-key "delete")
 	  "bK" '(mk/kill-all-buffers :which-key "delete")
 	  
 	  ;; @ bookmark
@@ -298,6 +296,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "fp" '(project-find-file :which-key "find@project")
 	  "fr" '(consult-recent-file :which-key "recent")
 	  "fz" '(zoxide-find-file :which-key "zoxide")
+
+    ;; @ fold
+                                        ; other fold method is integrated into evil's buildin 'z'
+    "F" '(:ignore t :which-key "Fold")
+    "Fo" #'(hs-show-all :which-key "open all")
+    "Fc" #'(hs-hide-all :which-key "hide all")
 
     ;; @ help
     "h" '(:ignore t :which-key "Help")
@@ -420,6 +424,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   )
 
 ;;; Trivial Functions =======================================
+(defun mk/kill-buffer()
+  "Kill buffer without deleting its window. (unlike evil-delete-buffer)"
+  (interactive)
+  (kill-buffer))
 
 (defun djoyner/evil-shift-left-visual ()
 	"Continuous evil shift-left."
