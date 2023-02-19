@@ -315,6 +315,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "hm" #'(describe-mode :which-key "mode")
 	  "hM" #'(woman :which-key "man page")
 
+    ;; @ hugo
+    "H" '(:ignore t :which-key "hugo")
+    "Hh" #'(mk/hugo/cd-project :which-key "switch to blog project")
+    "Hp" #'(mk/hugo/toggle-preview :which-key "toggle preview")
+    "Hb" #'(mk/hugo/build :which-key "build")
+    "Hn" #'(mk/hugo/new-file :which-key "new file")
+
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")
 	  "gg"  'magit-status
@@ -477,12 +484,19 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 		(start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
 		))
 
+(defun mk/consult-buffer-no-hidden()
+  "Consult buffer without displaying hidden buffers."
+  (interactive)
+  (let* ((filters consult-buffer-filter)
+          (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
+    (consult-buffer)))
+
 (defun mk/smart-buffer-switch ()
 	"Smart buffer switch according to project existence."
 	(interactive)
 	(if (project-current)
 		(consult-project-buffer)
-		(consult-buffer)))
+    (mk/consult-buffer-no-hidden)))
 
 (defun mk/tempel-complete-or-next ()
   "This function combines tempel-complete and tempel-next. Though it can also be achieved by
@@ -515,12 +529,5 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
       (rename-file buffer-file-name new-file-name)
       (find-file new-file-name)
       (kill-buffer old-buffer))))
-
-(defun mk/consult-buffer-no-hidden()
-  "Consult buffer without displaying hidden buffers."
-  (interactive)
-  (let* ((filters consult-buffer-filter)
-          (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
-    (consult-buffer)))
 
 (provide 'init-key)

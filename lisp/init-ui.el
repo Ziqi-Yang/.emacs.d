@@ -12,13 +12,18 @@
 	:init
 	(load-theme 'doom-solarized-light t))
 
-;; @ icon theme
+;; icon theme
+(defun mk/check-and-install-all-the-icons()
+  "Check and install all-the-icons font if in emacs GUI(client and single)."
+  (interactive)
+  (if (display-graphic-p)
+    (when (not (member "all-the-icons" (font-family-list)))
+      (all-the-icons-install-fonts t))
+    nil))
 (use-package all-the-icons
-	;; comment the below line to enable emacsclient capibility, but not perfect.
-	;; :if (display-graphic-p)
   :config
-  (when (not (member "all-the-icons" (font-family-list)))
-    (all-the-icons-install-fonts t)))
+  (mk/check-and-install-all-the-icons)
+  (add-hook 'server-after-make-frame-hook #'mk/check-and-install-all-the-icons))
 
 (use-package all-the-icons-completion
 	:after all-the-icons
@@ -133,6 +138,5 @@
 ;;; Cursor ==================================================
 ;; @ disable cursor blink
 (setq blink-cursor-mode nil)
-
 
 (provide 'init-ui)

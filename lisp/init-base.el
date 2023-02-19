@@ -176,7 +176,8 @@
   :defer t
 	:hook (after-init . super-save-mode)
   :config
-  (setq super-save-auto-save-when-idle t))
+  (setq super-save-auto-save-when-idle t
+    super-save-idle-duration 1)) ;; 1s idle
 
 ;;; Waketime ================================================
 (use-package wakatime-mode

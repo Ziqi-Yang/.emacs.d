@@ -46,7 +46,8 @@
   (require 'completion)
   (require 'file-browser)
   (require 'git)
-  (require 'l-general))
+  (require 'l-general)
+  (require 'hugo))
 
 ;; load language
 (with-temp-message ""
