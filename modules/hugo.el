@@ -59,7 +59,9 @@ force-cd:
 
 (defun mk/hugo/new-file (filename)
   "Hugo new file"
-  (interactive "sSection/FileName.<Ext>:")
+  ;; "sSection/FileName.<Ext>:"
+  (interactive
+    (list (completing-read "Section/FileName.<Ext>:" (directory-files (expand-file-name "content" mk/hugo-root) nil "\\`[^.]*\\'"))))
   (mk/hugo/execute-command (concat "hugo new " filename) t t)
   (find-file (expand-file-name (concat "content/" filename) mk/hugo-root )))
 
