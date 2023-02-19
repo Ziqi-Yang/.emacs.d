@@ -157,7 +157,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
   (define-key evil-visual-state-map (kbd "<") 'djoyner/evil-shift-left-visual)
 
-
+  ;; mainly for rebinding these keys
   (general-unbind 'normal
 	  "<"
 	  ">"
@@ -233,7 +233,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "s" #'evil-surround-edit
     "S" #'evil-Surround-edit)
 
-
   ;; @ normal anad insert map (leader
   (mk/leader-def
 	  :states '(normal visual)
@@ -241,6 +240,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ":" #'(eval-expression :which-key "Eval")
 	  "`" #'(eyebrowse-last-window-config :which-key "previous workspace")
 	  ";" #'(with-editor-async-shell-command :which-key "run command")
+    "~" #'(list-processes :which-key "list processes")
 	  "SPC" #'(execute-extended-command :which-key "M-x")
 
 	  ;; @ workspace
@@ -252,7 +252,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "w2")
 	  "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "w3")
 	  "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "w4")
-	  "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "w5")	 
+	  "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "w5")
 	  "TAB s" '(desktop-save-in-desktop-dir :which-key "save session")
 	  "TAB l" '(desktop-load-file :which-key "load session")
 
@@ -276,7 +276,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "BD" '(bookmark-delete :which-key "delete all")
 
 	  ;; @ Code
-	  "c" '(:ignore t :which-key "Code")
+	  "c"  '(:ignore t :which-key "Code")
 	  "ca" '(eglot-code-actions :which-key "action")
 	  "cr" '(eglot-rename :which-key "rename")
 	  "ci" '(eglot-code-action-organize-imports :which-key "format-buffer")
