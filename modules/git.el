@@ -8,7 +8,7 @@
 ;; https://github.com/emacs-evil/evil-collection
 (use-package magit
 	:config
-	(setq magit-status-buffer-switch-function 'switch-to-buffer)
+	(setq magit-status-buffer-switch-function #'switch-to-buffer)
 	:custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
@@ -29,8 +29,8 @@
 
 	;; make sure it works in daemon mode
 	(add-hook 'server-after-make-frame-hook
-						'(lambda () (unless (display-graphic-p)
-													(diff-hl-margin-mode))))
+		'(lambda () (unless (display-graphic-p)
+									(diff-hl-margin-mode))))
 	(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 	(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 

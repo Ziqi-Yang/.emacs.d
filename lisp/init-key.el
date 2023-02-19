@@ -401,6 +401,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; @ window
     "w"  '(:ignore t :which-key "Window")
     "ww" #'(ace-window :which-key "ace-window")
+    "wt" #'(others/window-split-toggle :which-key "split layout toggle")
 	  "wo" #'(delete-other-windows :which-key "delte other window")
 	  "wm" #'(maximize-window :which-key "maximize")
 	  "wM" #'(minimize-window :which-key "minimize")
@@ -529,5 +530,22 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
       (rename-file buffer-file-name new-file-name)
       (find-file new-file-name)
       (kill-buffer old-buffer))))
+
+(defun others/window-split-toggle ()
+  "Toggle window layout: vertical <-> horizontal"
+  (interactive)
+  (if (eq (length (window-list)) 2)
+    (let ((func (if (window-full-height-p)
+                  #'split-window-vertically
+                  #'split-window-horizontally)))
+      ;; to make sure the other buffer has been selected once
+      (other-window 1)
+      (other-window 1)
+      (delete-other-windows)
+      (funcall func)
+      (save-selected-window
+        (other-window 1)
+        (switch-to-buffer (other-buffer))))
+    (error "Can't toggle with more than 2 windows!")))
 
 (provide 'init-key)
