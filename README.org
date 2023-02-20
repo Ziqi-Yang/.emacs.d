@@ -4,16 +4,21 @@
 Mainly Language Servers  
 Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to setup wakatime
 #+begin_src shell
-  # # pip version pyright may not discoverable by emacs
-  # cc python rust shell go js/ts html css
-  sudo pacman -S ripgrep
-  sudo pacman -S clang pyright rust-analyzer bash-language-server gopls typescript-language-server vscode-html-languageserver vscode-css-languageserver
-  # vue
-  paru -S nodejs-vls
-  sudo pacman -S --asdeps openmp python llvm # clang optional dependences
-  sudo pacman -S bash-completion man-db shellcheck # bash-language-server
+# # pip version pyright may not discoverable by emacs
+# cc python rust shell go js/ts html css
+sudo pacman -S ripgrep
+sudo pacman -S clang pyright rust-analyzer bash-language-server gopls typescript-language-server vscode-html-languageserver vscode-css-languageserver
+# vue
+paru -S nodejs-vls
+sudo pacman -S --asdeps openmp python llvm # clang optional dependences
+sudo pacman -S bash-completion man-db shellcheck # bash-language-server
 
-  sudo pacman -S wakatime zoxide # wakatime-mode and zoxide.el
+sudo pacman -S jdk17-openjdk # jdtls needs at least jdk17
+sudo archlinux-java set java-17-openjdk # set jdk17 as default jdk
+sudo paru -S jdtls
+
+
+sudo pacman -S wakatime zoxide # wakatime-mode and zoxide.el
 #+end_src
 
 * Special Thanks

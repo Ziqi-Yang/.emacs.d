@@ -65,4 +65,4 @@ force-cd:
   (mk/hugo/execute-command (concat "hugo new " filename) t t)
   (find-file (expand-file-name (concat "content/" filename) mk/hugo-root )))
 
-(provide 'l-hugo)
+(provide 'hugo)
