@@ -1,10 +1,13 @@
 ;;; hugo.el --- hugo -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(defvar mk/hugo-root "~/Documents/blog-meow/"
+(defvar mk/hugo-root "~/Documents/blog-meow/" ;; must start with ~
   "Hugo blog root.")
 
-(defvar mk/hugo-preview-command "open http://127.0.0.1:1313 && hugo server -D"
+(defvar mk/hugo-content-dir (expand-file-name "content" mk/hugo-root)
+  "Hugo blog content directory.")
+
+(defvar mk/hugo-preview-command "firefox --new-window http://127.0.0.1:1313 && hugo server -D"
   "Hugo preview command & process-name")
 
 (defun mk/hugo/execute-command (command &optional wait force-cd)
@@ -37,7 +40,7 @@ force-cd:
 (defun mk/hugo/preview()
   "Start hugo server to preview your site(with draft)."
   (interactive)
-  (mk/hugo/execute-command mk/hugo-preview-command))
+  (mk/hugo/execute-command mk/hugo-preview-command nil t))
 
 (defun mk/hugo/stop-preview()
   "Stop hugo server process."
@@ -57,12 +60,13 @@ force-cd:
   (interactive)
   (mk/hugo/execute-command "hugo"))
 
-(defun mk/hugo/new-file (filename)
-  "Hugo new file"
-  ;; "sSection/FileName.<Ext>:"
-  (interactive
-    (list (completing-read "Section/FileName.<Ext>:" (directory-files (expand-file-name "content" mk/hugo-root) nil "\\`[^.]*\\'"))))
-  (mk/hugo/execute-command (concat "hugo new " filename) t t)
-  (find-file (expand-file-name (concat "content/" filename) mk/hugo-root )))
+(defun mk/hugo/edit-or-create ()
+  (interactive)
+  (let* ( (direname (completing-read "Section/FileName.<Ext>:" (directory-files mk/hugo-content-dir nil "\\`[^.]*\\'")))
+          (filename (concat direname "/" (completing-read "File:"  (directory-files (expand-file-name direname mk/hugo-content-dir) nil "\\`[^.].*\\'"))))
+          (file (expand-file-name filename mk/hugo-content-dir)))
+    (unless (file-exists-p file) ;; create file if not exists
+      (mk/hugo/execute-command (concat "hugo new " filename) t t))
+    (find-file file)))
 
 (provide 'hugo)

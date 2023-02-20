@@ -10,6 +10,7 @@
 	(setq
 	  org-directory "~/notes/"
 	  org-hide-emphasis-markers t
+    org-list-allow-alphabetical t
 	  org-edit-src-content-indentation 0 ;; 0 for better hugo code block
 	  org-ellipsis " ▾ "
 	  org-pretty-entities t

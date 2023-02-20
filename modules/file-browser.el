@@ -14,4 +14,12 @@
   :after dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
+;; @ side bar
+(use-package dired-sidebar
+  :init
+  (add-hook 'dired-sidebar-mode-hook
+    (lambda ()
+      (unless (file-remote-p default-directory)
+        (auto-revert-mode)))))
+
 (provide 'file-browser)

@@ -279,12 +279,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "c"  '(:ignore t :which-key "Code")
 	  "ca" '(eglot-code-actions :which-key "action")
 	  "cr" '(eglot-rename :which-key "rename")
+	  "cR" '(xref-find-references :which-key "references")
 	  "ci" '(eglot-code-action-organize-imports :which-key "format-buffer")
 	  "cf" '(eglot-code-action-quickfix :which-key "format-buffer")
 	  "cF" '(eglot-format-buffer :which-key "format-buffer")
 	  "ce" '(consult-flymake :which-key "errors(b)")
 	  "cd" '(xref-find-definitions :which-key "definitions")
-	  "cr" '(xref-find-references :which-key "references")
 	  "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
 
     ;; @ file
@@ -320,7 +320,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "Hh" #'(mk/hugo/cd-project :which-key "switch to blog project")
     "Hp" #'(mk/hugo/toggle-preview :which-key "toggle preview")
     "Hb" #'(mk/hugo/build :which-key "build")
-    "Hn" #'(mk/hugo/new-file :which-key "new file")
+    "He" #'(mk/hugo/edit-or-create :which-key "edit or create")
 
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")
@@ -341,6 +341,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "o"  '(:ignore t :which-key "open")
 	  "o-" #'(dired-jump :which-key "dired here")
 	  "o=" #'(project-dired :which-key "project dired")
+    "os" #'(dired-sidebar-toggle-sidebar :which-key "toggle sidebar")
 	  "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
     "oA" #'((lambda () (interactive) (find-file "~/Documents/dotfiles/docs/unclassified.org")) :which-key "application record")
 	  "ot" #'(mk/open-terminal-smart :which-key "open terminal(p)")

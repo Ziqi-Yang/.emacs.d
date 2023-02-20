@@ -6,7 +6,7 @@
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init
-	;; export function(haven't instaal this)
+	;; export function(haven't install this)
 	(setq markdown-command "multimarkdown"))
 
 (provide 'l-markdown)
