@@ -319,8 +319,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "H" '(:ignore t :which-key "hugo")
     "Hh" #'(mk/hugo/cd-project :which-key "switch to blog project")
     "Hp" #'(mk/hugo/toggle-preview :which-key "toggle preview")
+    "Hd" #'(mk/hugo/goto-draft :which-key "goto draft")
     "Hb" #'(mk/hugo/build :which-key "build")
-    "He" #'(mk/hugo/edit-or-create :which-key "edit or create")
+    "Hf" #'(mk/hugo/edit-or-create :which-key "edit or create")
 
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")
@@ -493,11 +494,18 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
           (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
     (consult-buffer)))
 
+(defun mk/consult-project-buffer-no-hidden()
+  "Consult project buffer without displaying hidden buffers."
+  (interactive)
+  (let* ((filters consult-buffer-filter)
+          (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
+    (consult-project-buffer)))
+
 (defun mk/smart-buffer-switch ()
 	"Smart buffer switch according to project existence."
 	(interactive)
 	(if (project-current)
-		(consult-project-buffer)
+		(mk/consult-project-buffer-no-hidden)
     (mk/consult-buffer-no-hidden)))
 
 (defun mk/tempel-complete-or-next ()

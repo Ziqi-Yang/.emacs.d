@@ -10,26 +10,33 @@
 (defvar mk/hugo-preview-command "firefox --new-window http://127.0.0.1:1313 && hugo server -D"
   "Hugo preview command & process-name")
 
-(defun mk/hugo/execute-command (command &optional wait force-cd)
+(defun mk/hugo/execute-command (command &optional wait force-cd get-result)
   "Execute a command at hugo root directory.
 Arguments:
 command: command executed at hugo blog root.
 wait: whether or not should we wait the command execution.
 force-cd:
   t: temporarily change into the blog directory and execute the command
-  nil: should be in blog directory."
+  nil: should be in blog directory.
+get-result:
+  t: ignore wait and force-cd(functions like all they are true).
+     Execute command and return the result.
+  nil: nil"
   (interactive "sCommand:")
   (let ((default-directory default-directory))
-    (if force-cd
+    (if (or force-cd get-result)
       (setq default-directory mk/hugo-root)
       nil)
     (if (and (project-current) (string= (project-root (project-current)) mk/hugo-root))
       (let ((default-directory mk/hugo-root))
-        (if wait
-          (unless (eq (shell-command command "*hugo*" "*hugo-error*") 0)
-            (user-error "execute command failed"))
-          (start-process-shell-command command "*hugo*" command))
-        (message command))
+        (if get-result
+          (shell-command-to-string command)
+          (progn
+            (if wait
+              (unless (eq (shell-command command "*hugo*" "*hugo-error*") 0)
+                (user-error "execute command failed"))
+              (start-process-shell-command command "*hugo*" command))
+            (message command))))
       (user-error "Please make sure that you are in the blog (sub)directory."))))
 
 (defun mk/hugo/cd-project()
@@ -58,9 +65,10 @@ force-cd:
 (defun mk/hugo/build()
   "Build without draft."
   (interactive)
-  (mk/hugo/execute-command "hugo"))
+  (mk/hugo/execute-command "hugo --minify --gc --cleanDestinationDir"))
 
 (defun mk/hugo/edit-or-create ()
+  "Edit or create a blog."
   (interactive)
   (let* ( (direname (completing-read "Section/FileName.<Ext>:" (directory-files mk/hugo-content-dir nil "\\`[^.]*\\'")))
           (filename (concat direname "/" (completing-read "File:"  (directory-files (expand-file-name direname mk/hugo-content-dir) nil "\\`[^.].*\\'"))))
@@ -68,5 +76,13 @@ force-cd:
     (unless (file-exists-p file) ;; create file if not exists
       (mk/hugo/execute-command (concat "hugo new " filename) t t))
     (find-file file)))
+
+(defun mk/hugo/goto-draft()
+  "Goto draft."
+  (interactive)
+  (let* ((draft (completing-read "draft:"
+                  (split-string (mk/hugo/execute-command "hugo list drafts" nil nil t) "\n" t)))
+          (draft-file (expand-file-name draft mk/hugo-root)))
+    (find-file draft-file)))
 
 (provide 'hugo)
