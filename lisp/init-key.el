@@ -259,8 +259,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; @ buffer
     "b"  '(:ignore t :which-key "Buffer & Bookmark")
     "bb" '(mk/consult-buffer-no-hidden :which-key "all buffer")
-    "bB" '(consult-buffer :which-key "all buffer")
-    "bp" '(mk/smart-buffer-switch :which-key "switch")
+    "bB" '(consult-buffer :which-key "buffer(all)")
+    "bp" '(mk/smart-buffer-switch-no-hidden :which-key "switch(p)")
+    "bP" '(mk/smart-buffer-switch :which-key "switch(p,all)")
     "ba" '(consult-buffer :which-key "all buffer")
 	  "bd" '(mk/kill-buffer :which-key "delete")
 	  "bk" '(mk/kill-buffer :which-key "delete")
@@ -325,19 +326,20 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")
-	  "gg"  'magit-status
-	  "gs"  'magit-status
-    "gd"  'magit-diff-unstaged
-    "gc"  'magit-branch-or-checkout
+	  "gg"  #(magit-status :which-key "status")
+	  "gs"  #(magit-status :which-key "status")
+    "gd"  #(magit-diff-staged :which-key "diff(staged)")
+    "gc"  #(magit-branch-or-checkout :which-key "branch or checkout")
     "gl"  '(:ignore t :which-key "log")
-    "glc" 'magit-log-current
-    "glf" 'magit-log-buffer-file
-    "gb"  'magit-branch
-    "gP"  'magit-push-current
-    "gp"  'magit-pull-branch
-    "gf"  'magit-fetch
-    "gF"  'magit-fetch-all
-    "gr"  'magit-rebase
+    "glc" #(magit-log-current :which-key "log current")
+    "glf" #(magit-log-buffer-file :which-key "log buffer file")
+    "gb"  #(magit-branch :which-key "branch")
+    "gB"  #(magit-blame :which-key "blame")
+    "gP"  #(magit-push-current :which-key "push")
+    "gp"  #(magit-pull-branch :which-key "pull")
+    "gf"  #(magit-fetch :which-key "fetch")
+    "gF"  #(magit-fetch-all :which-key "fet all")
+    "gr"  #(magit-rebase :which-key "rebase")
 
 	  "o"  '(:ignore t :which-key "open")
 	  "o-" #'(dired-jump :which-key "dired here")
@@ -501,12 +503,19 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
           (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
     (consult-project-buffer)))
 
-(defun mk/smart-buffer-switch ()
-	"Smart buffer switch according to project existence."
+(defun mk/smart-buffer-switch-no-hidden ()
+	"Smart buffer switch according to project existence without showing hidden buffers."
 	(interactive)
 	(if (project-current)
 		(mk/consult-project-buffer-no-hidden)
     (mk/consult-buffer-no-hidden)))
+
+(defun mk/smart-buffer-switch ()
+	"Smart buffer switch according to project existence."
+	(interactive)
+	(if (project-current)
+		(consult-project-buffer)
+    (consult-buffer)))
 
 (defun mk/tempel-complete-or-next ()
   "This function combines tempel-complete and tempel-next. Though it can also be achieved by

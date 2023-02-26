@@ -85,7 +85,7 @@
 
 (add-hook 'after-init-hook #'mk/org-export-latex-init)
 
-;; @ beamer
+;; @ beamer (latex presentation)
 (setq org-beamer-frame-level 2)
 (add-hook 'after-init-hook #'(lambda () (org-beamer-mode)))
 

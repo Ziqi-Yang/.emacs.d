@@ -7,7 +7,7 @@
 (defvar mk/hugo-content-dir (expand-file-name "content" mk/hugo-root)
   "Hugo blog content directory.")
 
-(defvar mk/hugo-preview-command "firefox --new-window http://127.0.0.1:1313 && hugo server -D"
+(defvar mk/hugo-preview-command "firefox --new-window http://127.0.0.1:1313/blog_meow && hugo server -D"
   "Hugo preview command & process-name")
 
 (defun mk/hugo/execute-command (command &optional wait force-cd get-result)

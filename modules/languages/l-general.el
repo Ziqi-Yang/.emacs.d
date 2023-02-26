@@ -86,6 +86,8 @@
 	;; install markdown-mode to rich the doc
 	)
 
+;; @ eldoc
+(setq eldoc-echo-area-use-multiline-p nil)
 
 
 ;;; Compile command for each mode ===========================
