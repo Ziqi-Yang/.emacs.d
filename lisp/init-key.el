@@ -173,6 +173,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "H" #'sp-backward-sexp
 	  "M-v" #'er/expand-region
 	  "C-." #'embark-act
+    "C-o" #'evil-jump-forward
 	  "go"   #'evil-jump-out-args
 
 	  ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
@@ -236,7 +237,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   ;; @ normal anad insert map (leader
   (mk/leader-def
 	  :states '(normal visual)
-	  :keymaps 'override
+    :keymaps 'override
 	  ":" #'(eval-expression :which-key "Eval")
 	  "`" #'(eyebrowse-last-window-config :which-key "previous workspace")
 	  ";" #'(with-editor-async-shell-command :which-key "run command")
@@ -259,6 +260,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; @ buffer
     "b"  '(:ignore t :which-key "Buffer & Bookmark")
     "bb" '(mk/consult-buffer-no-hidden :which-key "all buffer")
+    "br" #'(mk/reload-buffer :which-key "reload")
     "bB" '(consult-buffer :which-key "buffer(all)")
     "bp" '(mk/smart-buffer-switch-no-hidden :which-key "switch(p)")
     "bP" '(mk/smart-buffer-switch :which-key "switch(p,all)")
@@ -357,7 +359,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "pt" '(magit-todos-list :which-key "todos")
 	  "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
 	  "pk" '(project-kill-buffers :which-key "kill buffers(p)")
-	  "pc" #'(project-compile :whici-key "compile")
+	  "pc" #'(mk/project-compile :whici-key "compile")
 	  "pr" #'(project-async-shell-command :which-key "run command")
 	  "pR" #'(project-forget-project :which-key "remove p")
 
@@ -565,5 +567,16 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
         (other-window 1)
         (switch-to-buffer (other-buffer))))
     (error "Can't toggle with more than 2 windows!")))
+
+(defun mk/reload-buffer ()
+  "Use find-file to reload buffer if the file is changed by other programs."
+  (interactive)
+  (find-file (buffer-file-name)))
+
+(defun mk/project-compile()
+  "Save & Compile Project."
+  (interactive)
+  (save-buffer)
+  (project-compile))
 
 (provide 'init-key)

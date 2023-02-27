@@ -60,7 +60,7 @@
 
 	(mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
 	(mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
-	(mk/add-eglot-ensure '(rust-ts-mode-hook)) ;; rust
+	(mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
 	(mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
 	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
 	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css

@@ -139,4 +139,9 @@
 ;; @ disable cursor blink
 (setq blink-cursor-mode nil)
 
+;;; Compilation =============================================
+;; @ colorful
+(use-package ansi-color ;; @ emacs 28 buildin
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 (provide 'init-ui)

@@ -46,8 +46,7 @@
   (require 'completion)
   (require 'file-browser)
   (require 'git)
-  (require 'hugo)
-  (require 'l-general))
+  (require 'hugo))
 
 ;; load language
 (with-temp-message ""
@@ -55,7 +54,9 @@
 	(require 'l-org)
 	(require 'l-web)
 	(require 'l-lisp)
-	(require 'l-latex))
+  (require 'l-rust)
+	(require 'l-latex)
+  (require 'l-general)) ;; l-general must loaded after l-rust
 
 ;; remove old version native-compiled files
 (native-compile-prune-cache) 
