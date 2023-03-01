@@ -28,4 +28,10 @@
     "tc" #'(rustic-cargo-current-test :which-key "current")
     "d" #'(rustic-cargo-doc :which-key "doc")))
 
+(defun mk/add-rust-search-engine()
+  "Add search engine in addition to mk/search-engines when in rust."
+  (push '("crate" . "https://crates.io/crates/%s") mk/search-engines))
+(add-hook 'toml-ts-mode-hook 'mk/add-rust-search-engine)
+(add-hook 'rust-ts-mode-hook 'mk/add-rust-search-engine)
+
 (provide 'l-rust)

@@ -380,6 +380,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
 	  "sb" '(consult-bookmark :which-key "bookmark")
 	  "so" '(consult-outline :which-key "outline")
+    "sO" '(mk/search-online :which-key "online search")
     "st" #'(hl-todo-occur :which-key "todo(b)")
     "sT" #'(hl-todo-rgrep :which-key "todo(p)")
 	  "sr" '(:ignore t :which-key "color-rg") ; + color-rg
@@ -578,5 +579,25 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (interactive)
   (save-buffer)
   (project-compile))
+
+(defvar-local mk/search-engines
+  '(("google" . "https://www.google.com/search?q=%s")
+     ("bing" . "https://www.bing.com/search?q=%s"))
+  "Search engines used for function mk/search-online.")
+
+(defun mk/search-online()
+  "Search online, using word at point as default."
+  (interactive)
+  (let* ((word (current-word))
+          (word (read-string "Search: " word))
+          (engine-names (mapcar #'car mk/search-engines))
+          (engine (completing-read "Choose a search engine:" engine-names))
+          (search-url (cdr (assoc engine mk/search-engines)))
+          (url (format search-url word)))
+    (if url
+      (progn
+        (browse-url url)
+        (message "open url: %s" url))
+      (message "Invalid search engine!"))))
 
 (provide 'init-key)
