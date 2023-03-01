@@ -283,9 +283,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "ca" '(eglot-code-actions :which-key "action")
 	  "cr" '(eglot-rename :which-key "rename")
 	  "cR" '(xref-find-references :which-key "references")
-	  "ci" '(eglot-code-action-organize-imports :which-key "format-buffer")
-	  "cf" '(eglot-code-action-quickfix :which-key "format-buffer")
-	  "cF" '(eglot-format-buffer :which-key "format-buffer")
+	  "ci" '(eglot-code-action-organize-imports :which-key "import organization")
+	  "cf" '(eglot-format-buffer :which-key "format buffer")
+	  "cF" '(eglot-code-action-quickfix :which-key "quick fix")
 	  "ce" '(consult-flymake :which-key "errors(b)")
 	  "cd" '(xref-find-definitions :which-key "definitions")
 	  "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode

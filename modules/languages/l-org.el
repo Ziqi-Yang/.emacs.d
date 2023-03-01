@@ -159,6 +159,7 @@
 	  "b" #'(org-babel-tangle :which-key "tangle")
 	  "e" #'(org-export-dispatch :which-key "dispatch")
     "t" #'(org-todo :which-key "todo")
+    "T" #'(org-set-tags-command :which-key "set tag")
     "p" #'(org-priority :which-key "priority")))
 
 (provide 'l-org)

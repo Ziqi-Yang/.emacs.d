@@ -13,6 +13,19 @@
   (mk/leader-def
 	  :states '(normal visual)
     :keymaps 'override
-	  "cF" #'(rust-format-buffer  :which-key "format")))
+	  "cf" #'(rust-format-buffer  :which-key "format")))
+
+(mapBegin!
+  (mk/local-leader-def
+	  :states 'normal
+    :keymaps '(toml-ts-mode-map rust-ts-mode-map)
+    "c" '(:ignore t :which-key "dependencies")
+    "ca" #'(rustic-cargo-add :which-key "add")
+    "cu" #'(rustic-cargo-update :which-key "upgrade")
+    "cm" #'(rustic-cargo-add-missing-dependencies :which-key "add missing")
+    "t" '(:ignore t :which-key "test")
+    "tt" #'(rustic-cargo-test-run :which-key "run")
+    "tc" #'(rustic-cargo-current-test :which-key "current")
+    "d" #'(rustic-cargo-doc :which-key "doc")))
 
 (provide 'l-rust)
