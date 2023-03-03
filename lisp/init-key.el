@@ -367,8 +367,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "pr" #'(project-async-shell-command :which-key "run command")
 	  "pR" #'(project-forget-project :which-key "remove p")
 
+    ;; @ Presentation
 	  "P" '(:ignore t :which-key: "Presentation")
-	  "PP" #'(org-tree-slide-mode :which-key "org-tree-slide")
+	  "Pp" #'(org-tree-slide-mode :which-key "org-tree-slide")
 	  "Pk" #'(keycast-header-line-mode :which-key "key(header line)")
 	  "Pl" #'(keycast-header-line-mode :which-key "key(other frame)")
 
@@ -585,7 +586,8 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (project-compile))
 
 (defvar-local mk/search-engines
-  '(("google" . "https://www.google.com/search?q=%s")
+  '(("github" . "https://github.com/search?q=%s")
+     ("google" . "https://www.google.com/search?q=%s")
      ("bing" . "https://www.bing.com/search?q=%s"))
   "Search engines used for function mk/search-online.")
 
