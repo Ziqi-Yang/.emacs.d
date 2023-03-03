@@ -19,6 +19,8 @@
   (mk/local-leader-def
 	  :states 'normal
     :keymaps '(toml-ts-mode-map rust-ts-mode-map)
+    "r" #'(rustic-cargo-run :which-key "run")
+    "b" #'(rustic-cargo-build :which-key "build")
     "c" '(:ignore t :which-key "dependencies")
     "ca" #'(rustic-cargo-add :which-key "add")
     "cu" #'(rustic-cargo-update :which-key "upgrade")

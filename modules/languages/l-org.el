@@ -153,6 +153,10 @@
 
 ;; @ local keyBindings
 (mapBegin!
+  (general-imap
+    :keymaps 'org-mode-map
+    "C-c t" #'(mk/hugo/complete-tag-at-point :which-key "complete tag"))
+
   (mk/local-leader-def
 	  :states 'normal
 	  :keymaps 'org-mode-map

@@ -161,19 +161,21 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   (general-unbind 'normal
 	  "<"
 	  ">"
-	  "v")
+	  "v"
+    "TAB")
 
   ;; @ normal map (no leader key
   (general-nmap 
 	  ;; "." evil-repeat can be your friend
-	  "TAB" #'evil-avy-goto-char-2
+	  ;; "TAB" #'evil-avy-goto-char-2 ;; FIXME no use?
 	  "gcc" #'evilnc-comment-or-uncomment-lines
 	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 	  "L" #'sp-forward-sexp
 	  "H" #'sp-backward-sexp
 	  "M-v" #'er/expand-region
 	  "C-." #'embark-act
-    "C-o" #'evil-jump-forward
+    "C-i" #'evil-jump-forward
+    "C-o" #'evil-jump-backward
 	  "go"   #'evil-jump-out-args
 
 	  ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
@@ -242,6 +244,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "`" #'(eyebrowse-last-window-config :which-key "previous workspace")
 	  ";" #'(with-editor-async-shell-command :which-key "run command")
     "~" #'(list-processes :which-key "list processes")
+    "/" #'(evil-avy-goto-char-2 :which-key "avy")
 	  "SPC" #'(execute-extended-command :which-key "M-x")
 
 	  ;; @ workspace
@@ -322,6 +325,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "H" '(:ignore t :which-key "hugo")
     "Hh" #'(mk/hugo/cd-project :which-key "switch to blog project")
     "Hp" #'(mk/hugo/toggle-preview :which-key "toggle preview")
+    "Ht" #'(mk/hugo/find-blog-using-tag-search :which-key "tag search") 
     "Hd" #'(mk/hugo/goto-draft :which-key "goto draft")
     "Hb" #'(mk/hugo/build :which-key "build")
     "Hf" #'(mk/hugo/edit-or-create :which-key "edit or create")

@@ -153,7 +153,8 @@
 ;; TODO dict integration (enable it in org-mode or text-mode)
 (use-package cape
 	:hook ((prog-mode . mk/setup-cape)
-				  (text-mode . mk/setup-cape))
+				  (text-mode . mk/setup-cape)
+          (org-mode . mk/setup-cape))
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
