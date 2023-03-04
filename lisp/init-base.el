@@ -203,17 +203,16 @@
 		(cons input (lambda (str) (orderless--highlight input str))))
 	(setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
 
-
 ;;; Todo highlight ==========================================
 (use-package hl-todo
 	:hook ((after-init . global-hl-todo-mode))
 	:init
 	(setq hl-todo-keyword-faces
-				'(("TODO"   . "#2ecc71")
-					("FIXME"  . "#e74c3c")
-					("DEBUG"  . "#9b59b6")
-					("NOTE" . "#3498db")
-					("STUB"   . "#f39c12"))))
+		'(("TODO"   . "#2ecc71")
+			 ("FIXME"  . "#e74c3c")
+			 ("DEBUG"  . "#9b59b6")
+			 ("NOTE" . "#3498db")
+			 ("STUB"   . "#f39c12"))))
 
 ;;; Persistent Scrctch Buffer ===============================
 (use-package persistent-scratch

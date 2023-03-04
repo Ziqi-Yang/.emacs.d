@@ -19,6 +19,9 @@ sudo paru -S jdtls
 
 
 sudo pacman -S wakatime zoxide # wakatime-mode and zoxide.el
+
+# draw
+sudo pacman -S plantuml
 #+end_src
 
 * Special Thanks
