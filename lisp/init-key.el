@@ -577,7 +577,8 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
 (defun mk/reload-buffer ()
   "Use find-file to reload buffer if the file is changed by other programs."
   (interactive)
-  (find-file (buffer-file-name)))
+  ;; (find-file (buffer-file-name))
+  (revert-buffer nil t))
 
 (defun mk/project-compile()
   "Save & Compile Project."

@@ -56,6 +56,7 @@
 	(require 'l-lisp)
   (require 'l-rust)
 	(require 'l-latex)
+  (require 'l-shell)
 	(require 'l-plantuml)
   (require 'l-general)) ;; l-general must loaded after l-rust
 

@@ -43,7 +43,9 @@
 ;;         ;; persp-switch-to-added-buffer nil
 ;;         persp-kill-foreign-buffer-behaviour 'kill
 ;;         persp-remove-buffers-from-nil-persp-behaviour nil)) 
+;; TODO try tabspace 
 
+;; @ switch workspace
 (use-package eyebrowse
   :config 
 	(define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
@@ -56,7 +58,7 @@
 	(setq eyebrowse-wrap-around t) ;; makes workspaces a loop
 	(setq eyebrowse-new-workspace "*dashboard*")) ;; use *scratch* buffer (use string to provide it with custom buffer name)
 
-;; save session
+;; @ save session(buildin)
 (use-package desktop
   :custom
   (desktop-restore-eager 4)
@@ -88,20 +90,19 @@
 	(let ((save-path (expand-file-name ".local/data/desktop" user-emacs-directory)))
 		;; when explictly quit emacs with kill-emacs command
 		(add-hook 'kill-emacs-hook
-							`(lambda ()
-								 (desktop-remove)
-								 (desktop-save ,save-path t)))
+			`(lambda ()
+				 (desktop-remove)
+				 (desktop-save ,save-path t)))
 		;; when implictly quit emacs like close window
 		(add-hook 'kill-emacs-query-functions
-							`(lambda ()
-										 (desktop-remove) ;; make sure there is no desktop file or desktop.el will prompt you Whether override it or not
-										 (desktop-save ,save-path t))))) ;; save session without lock
-
+			`(lambda ()
+				 (desktop-remove) ;; make sure there is no desktop file or desktop.el will prompt you Whether override it or not
+				 (desktop-save ,save-path t))))) ;; save session without lock
 
 ;;; text scale change on the fly ============================
 (use-package default-text-scale 
 	:bind (("C--" . default-text-scale-decrease)
-				 ("C-=" . default-text-scale-increase))
+				  ("C-=" . default-text-scale-increase))
   :defer 1
 	:hook (after-init . default-text-scale-mode))
 

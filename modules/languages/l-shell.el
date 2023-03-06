@@ -4,4 +4,4 @@
 ;;; Code:
 (use-package fish-mode)
 
-(provide 'l-fish)
+(provide 'l-shell)
