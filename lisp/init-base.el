@@ -228,7 +228,6 @@
 ;;; Buffer Move (swap window) ===============================
 (use-package buffer-move)
 
-
 ;;; My custom functions =====================================
 (defun mk/hs-hide-level-samrt()
   "Calling hs-hide-level based on line numbers."

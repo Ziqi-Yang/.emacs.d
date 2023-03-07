@@ -438,6 +438,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  "z" #'(:ignore t :which-key "trivial")
 	  "zt" #'(mk/translate :which-key "translate")
+    "zc" #'(jit-spell-correct-word :which-key "correct misspelling")
 
 	  "m" #'(:ignore t :which-key "local")
 	  )

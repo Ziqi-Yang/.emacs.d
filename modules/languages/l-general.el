@@ -94,6 +94,16 @@
 ;; since configuration files for some mode doesn't exist, so I put it all here
 (add-hook 'prog-mode-hook #'mk/compile-command)
 
+
+;;; ispell
+(setq ispell-program-name "hunspell"
+  ispell-dictionary "en_US") ;; M-: (ispell-valid-dictionary-list)
+
+;; @ Just-in-time spell checking
+(use-package jit-spell
+  :straight (:type git :host github :repo "astoff/jit-spell")
+  :hook (( text-mode org-mode) . jit-spell-mode))
+
 (defun mk/compile-command()
   "Define compile command for every mode."
   (if (or (file-exists-p "makefile")
@@ -107,7 +117,5 @@
         ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
           "make run")
         (t "make run")))))
-
-
 
 (provide 'l-general)
