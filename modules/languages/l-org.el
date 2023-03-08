@@ -161,6 +161,7 @@
 	  :states 'normal
 	  :keymaps 'org-mode-map
 	  "b" #'(org-babel-tangle :which-key "tangle")
+    "c" #'(org-toggle-checkbox :which-key "toggle checkbox")
     "i" #'(org-toggle-inline-images :which-key "toggle image")
 	  "e" #'(org-export-dispatch :which-key "dispatch")
     "t" #'(org-todo :which-key "todo")
