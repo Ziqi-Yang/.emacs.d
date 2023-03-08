@@ -86,13 +86,22 @@
 	;; install markdown-mode to rich the doc
 	)
 
+;; (use-package citre
+;;   :defer t
+;;   :init
+;;   (require 'citre-config)
+;;   :config
+;;   (setq
+;;     citre-default-create-tags-file-location 'global-cache
+;;     citre-use-project-root-when-creating-tags t
+;;     citre-prompt-language-for-ctags-command t))
+
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
 
 ;;; Compile command for each mode ===========================
 ;; since configuration files for some mode doesn't exist, so I put it all here
 (add-hook 'prog-mode-hook #'mk/compile-command)
-
 
 ;;; ispell
 (setq ispell-program-name "hunspell"

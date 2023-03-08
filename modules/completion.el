@@ -120,6 +120,7 @@
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
+  (corfu-on-exact-match 'quit) 
 	(corfu-auto-delay 0)           ;; Enable auto completion
 	(corfu-auto-prefix 2)          ;; Enable auto completion
   :init

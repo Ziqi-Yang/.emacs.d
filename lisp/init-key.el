@@ -97,12 +97,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;   ()[]{} many more
 ;;   clever D, Y, C, x, ... many more
 ;; https://github.com/emacs-evil/evil-cleverparens
-(use-package evil-cleverparens
-  :hook ((prog-mode text-mode) . evil-cleverparens-mode)
-  :init
-  (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
-  :config
-  (setq evil-cleverparens-use-additional-bindings nil))
+;; (use-package evil-cleverparens
+;;   :hook ((prog-mode text-mode) . evil-cleverparens-mode)
+;;   :init
+;;   (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
+;;   :config
+;;   (setq evil-cleverparens-use-additional-bindings nil))
 
 ;; + xml attribute
 ;; textobj: x
@@ -172,6 +172,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 	  "L" #'sp-forward-sexp
 	  "H" #'sp-backward-sexp
+    "M-h" #'sp-beginning-of-sexp
+    "M-l" #'sp-end-of-sexp
 	  "M-v" #'er/expand-region
 	  "C-." #'embark-act
     "C-i" #'evil-jump-forward
@@ -244,7 +246,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "`" #'(eyebrowse-last-window-config :which-key "previous workspace")
 	  ";" #'(with-editor-async-shell-command :which-key "run command")
     "~" #'(list-processes :which-key "list processes")
-    "/" #'(evil-avy-goto-char-2 :which-key "avy")
+    "/" #'(evil-avy-goto-word-0 :which-key "avy")
 	  "SPC" #'(execute-extended-command :which-key "M-x")
 
 	  ;; @ workspace
@@ -334,7 +336,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "g" '(:ignore t :which-key "Git")
 	  "gg"  #'(magit-status :which-key "status")
 	  "gs"  #'(magit-status :which-key "status")
-    "gd"  #'(magit-diff-staged :which-key "diff(staged)")
+    "gd"  #'(magit-diff :which-key "diff(staged)")
     "gc"  #'(magit-branch-or-checkout :which-key "branch or checkout")
     "gl"  '(:ignore t :which-key "log")
     "glc" #'(magit-log-current :which-key "log current")
