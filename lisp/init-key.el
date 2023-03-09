@@ -170,6 +170,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; "TAB" #'evil-avy-goto-char-2 ;; FIXME no use?
 	  "gcc" #'evilnc-comment-or-uncomment-lines
 	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
+    "," #'evil-avy-goto-word-0
 	  "L" #'sp-forward-sexp
 	  "H" #'sp-backward-sexp
     "M-h" #'sp-beginning-of-sexp

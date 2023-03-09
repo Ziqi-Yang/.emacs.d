@@ -81,19 +81,6 @@ get-result:
       (mk/hugo/execute-command (concat "hugo new " filename) t t))
     (find-file file)))
 
-(defun mk/hugo/find-blog-using-tag-search ()
-  "Use tag completion to find blog file."
-  (interactive)
-  (let* ((path-abbrev-symbol "$content")
-          (pre-directory-abbrev-alist directory-abbrev-alist)
-          (directory-abbrev-alist (cons `(,(expand-file-name mk/hugo-content-dir) . ,path-abbrev-symbol) directory-abbrev-alist))
-          (tags (mk/hugo/get-all-org-tags))
-          (tag (completing-read "Tag:" tags))
-          (file (completing-read "File:" (mapcar #'abbreviate-file-name (gethash tag mk/hugo-tags-map))))
-          (abs-file-path  (string-replace path-abbrev-symbol (expand-file-name mk/hugo-content-dir) file))
-          (directory-abbrev-alist pre-directory-abbrev-alist)) ;; find-file use directory-abbrev-alist, so we recover this variable
-    (find-file abs-file-path)))
-
 (defun mk/hugo/goto-draft()
   "Goto draft."
   (interactive)
@@ -101,6 +88,10 @@ get-result:
                   (split-string (mk/hugo/execute-command "hugo list drafts" nil nil t) "\n" t)))
           (draft-file (expand-file-name draft mk/hugo-root)))
     (find-file draft-file)))
+
+(defun mk/hugo/get-all-orgs-files ()
+  "Get all blogs absolute path recursively under mk/hugo-content-dir"
+  (directory-files-recursively mk/hugo-content-dir "\\`.*\\.org\\'"))
 
 (defun mk/hugo/read-tags-from-org-file (file)
   "Read the tags from the header of an org-mode FILE.
@@ -114,10 +105,6 @@ Return value example: ('rust' 'hi')"
 				  (message "%s" keyword)
           (when (string= (org-element-property :key keyword) "TAGS[]")
             (split-string (org-element-property :value keyword) " ")))))))
-
-(defun mk/hugo/get-all-orgs-files ()
-  "Get all blogs absolute path recursively under mk/hugo-content-dir"
-  (directory-files-recursively mk/hugo-content-dir "\\`.*\\.org\\'"))
 
 (defun mk/hugo/establish-tags-map ()
   "Scan all the org files in hugo content directories. Establish tag-file hashmap."
@@ -137,6 +124,19 @@ Return value example: ('rust' 'hi')"
   (when (eq (hash-table-count mk/hugo-tags-map) 0)
     (mk/hugo/establish-tags-map))
   (hash-table-keys mk/hugo-tags-map))
+
+(defun mk/hugo/find-blog-using-tag-search ()
+  "Use tag completion to find blog file."
+  (interactive)
+  (let* ((path-abbrev-symbol "$content")
+          (pre-directory-abbrev-alist directory-abbrev-alist)
+          (directory-abbrev-alist (cons `(,(expand-file-name mk/hugo-content-dir) . ,path-abbrev-symbol) directory-abbrev-alist))
+          (tags (mk/hugo/get-all-org-tags))
+          (tag (completing-read "Tag:" tags))
+          (file (completing-read "File:" (mapcar #'abbreviate-file-name (gethash tag mk/hugo-tags-map))))
+          (abs-file-path  (string-replace path-abbrev-symbol (expand-file-name mk/hugo-content-dir) file))
+          (directory-abbrev-alist pre-directory-abbrev-alist)) ;; find-file use directory-abbrev-alist, so we recover this variable
+    (find-file abs-file-path)))
 
 ;; TODO drop cape warper of emacs buildin completion framework
 (defun mk/hugo/complete-tag-at-point (&optional interactive)
