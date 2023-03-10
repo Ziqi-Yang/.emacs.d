@@ -290,7 +290,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "cr" '(eglot-rename :which-key "rename")
 	  "cR" '(xref-find-references :which-key "references")
 	  "ci" '(eglot-code-action-organize-imports :which-key "import organization")
-	  "cf" '(eglot-format-buffer :which-key "format buffer")
+	  "cf" '(editorconfig-format-buffer :which-key "format buffer")
 	  "cF" '(eglot-code-action-quickfix :which-key "quick fix")
 	  "ce" '(consult-flymake :which-key "errors(b)")
 	  "cd" '(xref-find-definitions :which-key "definitions")

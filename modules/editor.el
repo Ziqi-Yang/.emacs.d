@@ -4,10 +4,10 @@
 ;;; Code:
 
 (setq-default tab-width 2
-							evil-shift-width tab-width
-							scroll-margin 14
-							select-enable-clipboard nil ;; make register indepentent from clipboard
-							)
+	evil-shift-width tab-width
+	scroll-margin 5
+	select-enable-clipboard nil ;; make register indepentent from clipboard
+	)
 
 ;; @ remember cursor position
 (use-package saveplace
