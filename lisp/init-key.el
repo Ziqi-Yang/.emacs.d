@@ -424,8 +424,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "w+" #'(maximize-window :which-key "maximize")
 	  "w-" #'(minimize-window :which-key "minimize")
 	  "w=" #'(balance-windows :which-key "balance")
-	  "wv" #'(split-window-vertically :which-key "split(v)")
-	  "wh" #'(split-window-horizontally :which-key "split(h)")
+	  "wv" #'(mk/split-window-vertically :which-key "split(v)")
+	  "wh" #'(mk/split-window-horizontally :which-key "split(h)")
 	  "wq" #'(evil-window-delete :which-key "delete")
 	  "wd" #'(evil-window-delete :which-key "delete")
 	  ;; "wl" #'(evil-window-right :which-key "go right")
@@ -473,21 +473,27 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	(mapc 'kill-buffer (delq (get-buffer "*dashboard*") (buffer-list))))
 
 (defun mk/open-terminal-smart()
-  "Open alacritty terminal at project root if in a project, otherwise current folder."
+  "Open terminal at project root if in a project, otherwise current folder."
   (interactive)
-  (let ( (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ") ) ;; right parenthesis is needed to be added after concatance
+  (let (
+         ;; (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ")
+         (command-prefix "kitty -d ")) ;; right parenthesis is needed to be added after concatance
     (if (project-current)
 		  (start-process-shell-command "open terminal" "*terminal*"
 			  (concat command-prefix (project-root (project-current)) "'"))
       (start-process-shell-command "open terminal" "*terminal*"
-        (concat command-prefix (file-name-directory buffer-file-name) "'")))))
+        ;; (concat command-prefix (file-name-directory buffer-file-name) "'")
+        (concat command-prefix (file-name-directory buffer-file-name))))))
 
 (defun mk/open-terminal-here()
-  "Open alacritty terminal at the current folder."
+  "Open terminal at the current folder."
   (interactive)
-  (let ( (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ") ) ;; right parenthesis is needed to be added after concatance
+  (let (
+         ;; (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ")
+         (command-prefix "kitty --class floating -d ")) ;; right parenthesis is needed to be added after concatance
     (start-process-shell-command "open terminal" "*terminal*"
-      (concat command-prefix (file-name-directory buffer-file-name) "'"))))
+      ;; (concat command-prefix (file-name-directory buffer-file-name) "'")
+      (concat command-prefix (file-name-directory buffer-file-name)))))
 
 (defun mk/translate()
   "Translate words at the point by using ydicy in the external terminal alacritty."
@@ -536,6 +542,17 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (if (not tempel--active)
     (call-interactively 'tempel-complete)
     (call-interactively 'tempel-next)))
+
+(defun mk/split-window-horizontally ()
+  "Split window horizontally & Move to spawned window."
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1)) 
+
+(defun mk/split-window-vertically ()
+  (interactive)
+  (split-window-vertically)
+  (other-window 1)) 
 
 (defun mk/delete-file ()
   "Delete the current buffer file."
