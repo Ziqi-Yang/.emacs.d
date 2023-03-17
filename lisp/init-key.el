@@ -97,12 +97,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;   ()[]{} many more
 ;;   clever D, Y, C, x, ... many more
 ;; https://github.com/emacs-evil/evil-cleverparens
-;; (use-package evil-cleverparens
-;;   :hook ((prog-mode text-mode) . evil-cleverparens-mode)
-;;   :init
-;;   (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
-;;   :config
-;;   (setq evil-cleverparens-use-additional-bindings nil))
+(use-package evil-cleverparens
+  :hook ((emacs-lisp-mode) . evil-cleverparens-mode)
+  :init
+  (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
+  :config
+  (setq evil-cleverparens-use-additional-bindings nil))
 
 ;; + xml attribute
 ;; textobj: x

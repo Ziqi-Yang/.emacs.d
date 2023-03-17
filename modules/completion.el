@@ -5,7 +5,7 @@
 ;;; Vertico =================================================
 (use-package vertico
 	:straight (:host github :repo "minad/vertico"
-							:files ("*.el" "extensions/vertico-indexed.el" "extensions/vertico-multiform.el" "extensions/vertico-buffer.el"))
+							:files ("*.el" "extensions/*.el"))
 	:bind (:map vertico-map
 					("C-j" . vertico-next)
 					("C-k" . vertico-previous)
@@ -21,21 +21,32 @@
     completion-ignore-case t)
 
 	;; can selete entry with M-<number> <ret>
+  (vertico-flat-mode)
 	(vertico-indexed-mode)
 	;; configure display per command
 	(vertico-multiform-mode)
 
 	(setq vertico-multiform-commands
-		'( (project-switch-project
-         posframe
-         (vertico-sort-function . nil))
-       (affe-grep
-         buffer
-         (vertico-buffer-display-action . (display-buffer-in-side-window
-					                                  (side . right)
-					                                  (window-width . 0.5)))
-         (:not posframe))
-       (t posframe)))) ;; this enables vertico-posframe works well with emacs daemon
+		'((affe-grep
+        buffer
+        (vertico-buffer-display-action . (display-buffer-in-side-window
+					                                 (side . right)
+					                                 (window-width . 0.5)))
+        (:not flat))))) 
+
+;; Configure directory extension.
+;; TODO don't know the actual working scenario
+(use-package vertico-directory
+  :straight nil
+  :ensure nil
+  :after vertico
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+          ("RET" . vertico-directory-enter)
+          ("DEL" . vertico-directory-delete-char)
+          ("C-w" . vertico-directory-delete-word))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs
@@ -59,15 +70,15 @@
 
 ;; @ posframe
 ;; vertico-posframe depends on posframe(thus it is auto-installed)
-(use-package vertico-posframe
-	:after vertico
-	:config
-	;; (vertico-posframe-mode)
-	(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center
-    vertico-posframe-font "BlexMono Nerd Font 12") ;; smaller font size to show more content(often with long file path :(  )
-	(setq vertico-posframe-parameters
-    '((left-fringe . 8)
-       (right-fringe . 8))))
+;; (use-package vertico-posframe
+;; 	:after vertico
+;; 	:config
+;; 	;; (vertico-posframe-mode)
+;; 	(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center
+;;     vertico-posframe-font "BlexMono Nerd Font 12") ;; smaller font size to show more content(often with long file path :(  )
+;; 	(setq vertico-posframe-parameters
+;;     '((left-fringe . 8)
+;;        (right-fringe . 8))))
 
 ;;; Annotations in completetion =============================
 (use-package marginalia
