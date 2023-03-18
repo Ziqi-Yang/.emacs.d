@@ -242,4 +242,10 @@
       ((> n l1) (hs-hide-level 1)) ;; show root function
       ((> n l2) (hs-hide-level 2)))))
 
+(defun mk/base/copy-string-to-clipboard (str)
+  ;; note this function only works in GUI version emacs
+  (with-temp-buffer
+    (insert str)
+    (clipboard-kill-region (point-min) (point-max))))
+
 (provide 'init-base)

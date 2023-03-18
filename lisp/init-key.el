@@ -440,8 +440,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "x" #'(scratch-buffer :which-key "scratch")
 
 	  "z" #'(:ignore t :which-key "trivial")
+    "zd" #'(mk/draw-diagram :which-key "draw diagram")
 	  "zt" #'(mk/translate :which-key "translate")
     "zc" #'(jit-spell-correct-word :which-key "correct misspelling")
+    "zp" #'(mk/copy-path-smart :which-key "copy path")
 
 	  "m" #'(:ignore t :which-key "local")
 	  )
@@ -627,5 +629,20 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
         (browse-url url)
         (message "open url: %s" url))
       (message "Invalid search engine!"))))
+
+(defun mk/copy-path-smart()
+  "Copy current path/project path into clipboard."
+  (interactive)
+  (if (project-current)
+    (mk/base/copy-string-to-clipboard (project-root (project-current)))
+    (mk/base/copy-string-to-clipboard (file-name-directory buffer-file-name))))
+
+(defvar mk/draw-diagram-path "~/Documents/diagrams/new.mmd"
+  "Diagram file path for mk/draw-diagram.")
+
+(defun mk/draw-diagram ()
+  "Draw Mermaid Diagram."
+  (interactive)
+  (find-file mk/draw-diagram-path))
 
 (provide 'init-key)

@@ -1,4 +1,4 @@
-;;; init-key.el --- Key Mappings Here -*- lexical-binding: t -*-
+;;; l-draw.el --- Key Mappings Here -*- lexical-binding: t -*-
 ;;; Commentary:
 ;; 
 ;;; Code:
@@ -22,5 +22,15 @@
        (:results . "file")
        )))
 
+(use-package mermaid-mode
+  :config
+  (mapBegin!
+    (mk/local-leader-def
+	    :states 'normal
+	    :keymaps 'mermaid-mode-map
+      "c" #'(mermaid-compile :which-key "compile current-file")
+      "o" #'(mermaid-open-browser :which-key "open in browser editor")
+      "d" #'(mermaid-open-doc :which-key "documentation"))))
 
-(provide 'l-plantuml)
+
+(provide 'l-draw)

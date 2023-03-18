@@ -57,7 +57,7 @@
   (require 'l-rust)
 	(require 'l-latex)
   (require 'l-shell)
-	(require 'l-plantuml)
+	(require 'l-draw)
   (require 'l-general)) ;; l-general must loaded after l-rust
 
 ;; remove old version native-compiled files

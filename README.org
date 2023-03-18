@@ -22,6 +22,7 @@ sudo pacman -S wakatime zoxide # wakatime-mode and zoxide.el
 
 # draw
 sudo pacman -S plantuml
+paru -S mermaid-cli
 #+end_src
 
 * Special Thanks
