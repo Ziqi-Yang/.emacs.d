@@ -22,6 +22,7 @@
 
 	;; can selete entry with M-<number> <ret>
   (vertico-flat-mode)
+  (setq vertico-flat-max-lines 8)
 	(vertico-indexed-mode)
 	;; configure display per command
 	(vertico-multiform-mode)
@@ -32,7 +33,13 @@
         (vertico-buffer-display-action . (display-buffer-in-side-window
 					                                 (side . right)
 					                                 (window-width . 0.5)))
-        (:not flat))))) 
+        (:not flat))
+       (consult-line
+         buffer
+         (vertico-buffer-display-action . (display-buffer-in-side-window
+					                                  (side . right)
+					                                  (window-width . 0.5)))
+         (:not flat)))))
 
 ;; Configure directory extension.
 ;; TODO don't know the actual working scenario
