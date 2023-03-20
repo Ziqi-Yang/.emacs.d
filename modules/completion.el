@@ -39,6 +39,12 @@
          (vertico-buffer-display-action . (display-buffer-in-side-window
 					                                  (side . right)
 					                                  (window-width . 0.5)))
+         (:not flat))
+       (consult-outline
+         buffer
+         (vertico-buffer-display-action . (display-buffer-in-side-window
+					                                  (side . right)
+					                                  (window-width . 0.5)))
          (:not flat)))))
 
 ;; Configure directory extension.

@@ -1,4 +1,4 @@
-;;; init-key.el --- Basics -*- lexical-binding: t -*-
+;;; init-base.el --- Basics -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -8,11 +8,15 @@
 ;; (setq delete-by-moving-to-trash t) 
 
 ;; @ save minibuffer history
+;;; save minibuffer history
 (use-package savehist
   :init
 	;; Allow commands in minibuffers, will affect `dired-do-dired-do-find-regexp-and-replace' command:
   (setq enable-recursive-minibuffers t)
   (savehist-mode 1))
+
+;;; auto revert buffer
+(global-auto-revert-mode)
 
 ;;; clean directory =========================================
 (use-package no-littering

@@ -60,7 +60,7 @@
 	;; :hook ((prog-mode . aggressive-indent-mode))
 	:config
 	(global-aggressive-indent-mode 1)
-  (dolist (mode '(html-mode python-mode python-ts-mode))
+  (dolist (mode '(html-mode python-mode python-ts-mode mermaid-mode))
     (add-to-list 'aggressive-indent-excluded-modes mode))
 	(add-to-list 'aggressive-indent-excluded-modes 'mhtml-mode))
 

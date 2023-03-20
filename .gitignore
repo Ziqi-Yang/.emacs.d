@@ -1,4 +1,8 @@
-/.local
+!/.local
+/.local/*
+!/.local/straight
+/.local/straight/*
+!/.local/straight/versions
 /eln-cache
 /test.el
 /parinfer-rust

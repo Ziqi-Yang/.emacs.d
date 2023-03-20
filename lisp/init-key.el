@@ -407,6 +407,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "S" '(:ignore t :which-key "straight")
 	  "Sr" #'(straight-remove-unused-repos :which-key "remove unused")
 	  "Sp" #'(straight-pull-all :which-key "pull all")
+    "Sl" #'(straight-freeze-versions :which-key "lock version")
 
     ;; @ toggle
     "t" '(:ignore t :which-key "Toggle")

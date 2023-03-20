@@ -73,7 +73,7 @@
 				`(((,(all-the-icons-octicon "octoface" :height 1.1 :v-adjust 0.0)
 						"Homepage" "Browse homepage" (lambda (&rest _) (browse-url "https://github.com/Ziqi-Yang")))
 					 (,(all-the-icons-faicon "user-secret" :height 1.0 :v-adjust 0.0)
-						"Load Sessoin" nil (lambda (&rest _) (desktop-read))))
+						"Load Session" nil (lambda (&rest _) (desktop-read))))
 					)))
 
 ;;; font settings ===========================================
