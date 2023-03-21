@@ -3,6 +3,8 @@
 ;; 
 ;;; Code:
 
+;;; PlantUML ================================================
+;; TODO try plantuml-emacs: https://github.com/ginqi7/plantuml-emacs
 (use-package plantuml-mode
   :mode ("\\.plantuml\\'" . plantuml-mode)
   :init
@@ -22,6 +24,8 @@
        (:results . "file")
        )))
 
+;;; Mermaid =================================================
+;; github support rendering mermaid diagrams
 (use-package mermaid-mode
   :custom
   (mermaid-flags "-w 1568 -H 1168")

@@ -27,25 +27,23 @@
 	;; configure display per command
 	(vertico-multiform-mode)
 
-	(setq vertico-multiform-commands
-		'((affe-grep
-        buffer
-        (vertico-buffer-display-action . (display-buffer-in-side-window
-					                                 (side . right)
-					                                 (window-width . 0.5)))
-        (:not flat))
-       (consult-line
-         buffer
-         (vertico-buffer-display-action . (display-buffer-in-side-window
-					                                  (side . right)
-					                                  (window-width . 0.5)))
-         (:not flat))
-       (consult-outline
-         buffer
-         (vertico-buffer-display-action . (display-buffer-in-side-window
-					                                  (side . right)
-					                                  (window-width . 0.5)))
-         (:not flat)))))
+  (defun mk/create-vertico-multiform-commands (commands common-properties)
+    (let ((result '()))
+      (dolist (cmd commands)
+        (setq result (append result (list (cons cmd common-properties)))))
+      result))
+
+  (setq vertico-multiform-commands
+    (append
+      '(("desctibe-*" grid (:not flat))
+         ("helpful-*" grid (:not flat)))
+      (mk/create-vertico-multiform-commands
+        '(affe-grep consult-line consult-outline)
+        '(buffer
+           (vertico-buffer-display-action . (display-buffer-in-side-window
+                                              (side . right)
+                                              (window-width . 0.5)))
+           (:not flat))))))
 
 ;; Configure directory extension.
 ;; TODO don't know the actual working scenario
