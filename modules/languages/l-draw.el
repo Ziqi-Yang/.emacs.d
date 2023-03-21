@@ -23,6 +23,8 @@
        )))
 
 (use-package mermaid-mode
+  :custom
+  (mermaid-flags "-w 1568 -H 1168")
   :config
   (mapBegin!
     (mk/local-leader-def

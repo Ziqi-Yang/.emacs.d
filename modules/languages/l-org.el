@@ -163,7 +163,7 @@
 	  "b" #'(org-babel-tangle :which-key "tangle")
     "c" #'(org-toggle-checkbox :which-key "toggle checkbox")
     "i" #'(org-toggle-inline-images :which-key "toggle image")
-	  "e" #'(org-export-dispatch :which-key "dispatch")
+	  "e" #'(org-export-dispatch :which-key "export")
     "t" #'(org-todo :which-key "todo")
     "T" #'(org-set-tags-command :which-key "set tag")
     "p" #'(org-priority :which-key "priority")))

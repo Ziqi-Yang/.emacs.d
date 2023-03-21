@@ -342,6 +342,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "gl"  '(:ignore t :which-key "log")
     "glc" #'(magit-log-current :which-key "log current")
     "glf" #'(magit-log-buffer-file :which-key "log buffer file")
+    "gll" #'(magit-log :which-key "log")
     "gb"  #'(magit-branch :which-key "branch")
     "gB"  #'(magit-blame :which-key "blame")
     "gP"  #'(magit-push-current :which-key "push")
@@ -350,11 +351,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "gF"  #'(magit-fetch-all :which-key "fet all")
     "gr"  #'(magit-rebase :which-key "rebase")
 
+    ;; @ open
 	  "o"  '(:ignore t :which-key "open")
 	  "o-" #'(dired-jump :which-key "dired here")
 	  "o=" #'(project-dired :which-key "project dired")
     "os" #'(dired-sidebar-toggle-sidebar :which-key "toggle sidebar")
 	  "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
+    "od" #'(mk/draw-diagram :which-key "draw diagram")
     "oA" #'((lambda () (interactive) (find-file "~/Documents/dotfiles/docs/unclassified.org")) :which-key "application record")
 	  "ot" #'(mk/open-terminal-smart :which-key "open terminal(p)")
 	  "oT" #'(mk/open-terminal-here :which-key "open terminal(b)")
@@ -407,6 +410,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "S" '(:ignore t :which-key "straight")
 	  "Sr" #'(straight-remove-unused-repos :which-key "remove unused")
 	  "Sp" #'(straight-pull-all :which-key "pull all")
+    ;; lockfile: .local/straight/versions/default.el
     "Sl" #'(straight-freeze-versions :which-key "lock version")
 
     ;; @ toggle
@@ -441,7 +445,6 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "x" #'(scratch-buffer :which-key "scratch")
 
 	  "z" #'(:ignore t :which-key "trivial")
-    "zd" #'(mk/draw-diagram :which-key "draw diagram")
 	  "zt" #'(mk/translate :which-key "translate")
     "zc" #'(jit-spell-correct-word :which-key "correct misspelling")
     "zp" #'(mk/copy-path-smart :which-key "copy path")
