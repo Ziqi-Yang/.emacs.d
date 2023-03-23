@@ -1,0 +1,3 @@
+[submodule "modules/languages/typst-mode"]
+	path = modules/languages/typst-mode
+	url = git@github.com:Ziqi-Yang/typst-mode.el.git
