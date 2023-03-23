@@ -105,8 +105,10 @@
 (add-hook 'prog-mode-hook #'mk/compile-command)
 
 ;;; ispell
+;; wor
 (setq ispell-program-name "hunspell"
-  ispell-dictionary "en_US") ;; M-: (ispell-valid-dictionary-list)
+  ispell-dictionary "en_US" ;; M-: (message "%s" (ispell-valid-dictionary-list))
+  ispell-alternate-dictionary (expand-file-name  "dicts/en_US-large.dic" user-emacs-directory))
 
 ;; @ Just-in-time spell checking
 (use-package jit-spell

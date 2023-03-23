@@ -55,6 +55,7 @@
 	(require 'l-web)
 	(require 'l-lisp)
   (require 'l-rust)
+  (require 'l-java)
 	(require 'l-latex)
   (require 'l-shell)
 	(require 'l-draw)

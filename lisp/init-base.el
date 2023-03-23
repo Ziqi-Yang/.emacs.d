@@ -9,6 +9,7 @@
 
 ;; @ save minibuffer history
 ;;; save minibuffer history
+;; Persist history over Emacs restarts.
 (use-package savehist
   :init
 	;; Allow commands in minibuffers, will affect `dired-do-dired-do-find-regexp-and-replace' command:

@@ -229,8 +229,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; smartparen
 	  "M-<backspace>" #'sp-backward-kill-sexp
-	  "M-<return>" #'sp-up-sexp
-	  "M-S-<return>" #'sp-backward-up-sexp
+    "S-<return>" #'ispell-complete-word
+	  ;; "M-<return>" #'sp-up-sexp
+	  ;; "M-S-<return>" #'sp-backward-up-sexp
 
 	  "C-<return>" #'mk/tempel-complete-or-next)
 
@@ -298,13 +299,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
     ;; @ file
     "f" '(:ignore t :which-key "File")
-    "ff" '(find-file :which-key "find file")
-    "fF" '(affe-find :which-key "fuzzy find")
+    "ff" #'(find-file :which-key "find file")
+    "fF" #'(affe-find :which-key "fuzzy find")
     "fD" #'(mk/delete-file :which-key "delete")
     "fR" #'(mk/rename-file :which-key "rename")
-	  "fp" '(project-find-file :which-key "find@project")
-	  "fr" '(consult-recent-file :which-key "recent")
-	  "fz" '(zoxide-find-file :which-key "zoxide")
+	  "fp" #'(project-find-file :which-key "find@project")
+	  "fr" #'(consult-recent-file :which-key "recent")
+	  "fz" #'(zoxide-find-file :which-key "zoxide")
 
     ;; @ fold
                                         ; other fold method is integrated into evil's buildin 'z'
@@ -446,12 +447,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  "z" #'(:ignore t :which-key "trivial")
 	  "zt" #'(mk/translate :which-key "translate")
-    "zc" #'(jit-spell-correct-word :which-key "correct misspelling")
+    "zc" #'(ispell-word :which-key "correct word")
+    ;; "zc" #'(jit-spell-correct-word :which-key "correct misspelling")
     "zp" #'(mk/copy-path-smart :which-key "copy path")
 
-	  "m" #'(:ignore t :which-key "local")
-	  )
-  )
+	  "m" #'(:ignore t :which-key "local")))
 
 ;;; Trivial Functions =======================================
 (defun mk/kill-buffer()

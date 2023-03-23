@@ -25,6 +25,9 @@ sudo pacman -S plantuml
 paru -S mermaid-cli
 #+end_src
 
+* Note
+The dictionary file =en_US-large.dic= in =dict= directory is stolen from =/usr/share/hunspell/en_US-large.dic= (and do some clean work: ~sed 's/\/.*//' en_US-large.dic > en_US-large_mod.dic~).
+
 * Special Thanks
 - https://github.com/doomemacs/doomemacs
 - https://github.com/Likhon-baRoy/.emacs.d
