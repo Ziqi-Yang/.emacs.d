@@ -151,6 +151,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;; select region ===========================================
 (use-package expand-region)
 
+;;; Mini buffer enhance =====================================
+(defun mk/insert-clipboard-in-minibuffer ()
+  (interactive)
+  (insert (gui-get-selection 'CLIPBOARD)))
+(define-key minibuffer-local-map (kbd "C-y") 'mk/insert-clipboard-in-minibuffer)
+(define-key minibuffer-local-map (kbd "C-S-v") 'mk/insert-clipboard-in-minibuffer)
+
 ;;; Main Key Mapping ========================================
 (mapBegin!
   ;; continuous shift-right/left, cannot be defined in general map
