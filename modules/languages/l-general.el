@@ -100,10 +100,6 @@
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
 
-;;; Compile command for each mode ===========================
-;; since configuration files for some mode doesn't exist, so I put it all here
-(add-hook 'prog-mode-hook #'mk/compile-command)
-
 ;;; ispell
 ;; wor
 (setq ispell-program-name "hunspell"
@@ -115,18 +111,27 @@
   :straight (:type git :host github :repo "astoff/jit-spell")
   :hook (( text-mode org-mode) . jit-spell-mode))
 
-(defun mk/compile-command()
+;;; Compile command for each mode ===========================
+;; since configuration files for some mode doesn't exist, so I put it all here
+(defun mk/set-compile-command ()
   "Define compile command for every mode."
-  (if (or (file-exists-p "makefile")
-        (file-exists-p "Makefile"))
-    (message "hihihi")
-    ;; (setq-local compile-command "make run")
-    (setq-local compile-command
-      (cond
-        ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
-          "cargo run")
-        ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
-          "make run")
-        (t "make run")))))
+  (setq-local compile-command
+    (cond
+      ;; rust
+      ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
+        "cargo run")
+      ;; emacs lisp 
+      ((eq major-mode 'emacs-lisp-mode)
+        (concat "emacs -Q -l " (buffer-file-name) " <open-file>"))
+      ;; c
+      ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
+        "make run")
+      ;; python
+      ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
+        (concat "python " (buffer-file-name)))
+      ;; other
+      (t "make run"))))
+
+(add-hook 'prog-mode-hook #'mk/set-compile-command)
 
 (provide 'l-general)
