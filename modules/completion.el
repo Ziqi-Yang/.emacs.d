@@ -93,7 +93,7 @@
 ;;     '((left-fringe . 8)
 ;;        (right-fringe . 8))))
 
-;;; Annotations in completetion =============================
+;;; Annotations in completion =============================
 (use-package marginalia
   :init
   (marginalia-mode))

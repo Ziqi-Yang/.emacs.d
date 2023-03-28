@@ -13,4 +13,9 @@
     :keymaps '(java-ts-mode-map)
     "d" #'(mk/java-open-doc :which-key "open java doc")))
 
+(add-hook 'java-ts-mode-hook
+  '(lambda ()
+     (setq-local completion-at-point-functions
+       (append completion-at-point-functions '(cape-dabbrev cape-keyword)))))
+
 (provide 'l-java)
