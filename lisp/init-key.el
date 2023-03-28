@@ -394,6 +394,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; @ search @ replace
 	  "s" '(:ignore t :which-key "Search & Replace")
 	  "ss" '(consult-line :which-key "content")
+    "sc" '(list-colors-display :which-key "colors")
 	  "si" '(consult-imenu :which-key "imenu")
 	  "sp" '(affe-grep :which-key "affe-grep(p)")
 	  "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
@@ -454,8 +455,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  "z" #'(:ignore t :which-key "trivial")
 	  "zt" #'(mk/translate :which-key "translate")
-    "zc" #'(ispell-word :which-key "correct word")
+    ;; "zc" #'(ispell-word :which-key "correct word")
     ;; "zc" #'(jit-spell-correct-word :which-key "correct misspelling")
+    "zc" #'(jinx-correct :which-key "correct word")
     "zp" #'(mk/copy-path-smart :which-key "copy path")
 
 	  "m" #'(:ignore t :which-key "local")))
@@ -621,7 +623,8 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (project-compile))
 
 (defvar-local mk/search-engines
-  '(("github" . "https://github.com/search?q=%s")
+  '(("direct" . "%s")
+     ("github" . "https://github.com/search?q=%s")
      ("google" . "https://www.google.com/search?q=%s")
      ("bing" . "https://www.bing.com/search?q=%s"))
   "Search engines used for function mk/search-online.")

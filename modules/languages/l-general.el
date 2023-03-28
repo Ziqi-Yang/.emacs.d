@@ -100,37 +100,55 @@
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
 
-;;; ispell
-;; wor
+;;; Spell Checker
+;; @ ispell
 (setq ispell-program-name "hunspell"
   ispell-dictionary "en_US" ;; M-: (message "%s" (ispell-valid-dictionary-list))
   ispell-alternate-dictionary (expand-file-name  "dicts/en_US-large.dic" user-emacs-directory))
 
 ;; @ Just-in-time spell checking
-(use-package jit-spell
-  :straight (:type git :host github :repo "astoff/jit-spell")
-  :hook (( text-mode org-mode) . jit-spell-mode))
+;; (use-package jit-spell
+;;   :straight (:type git :host github :repo "astoff/jit-spell")
+;;   :hook (( text-mode org-mode) . jit-spell-mode))
+
+;; @ jinx
+(use-package jinx
+  :straight (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
+  :init
+  (add-hook 'emacs-startup-hook #'global-jinx-mode)
+  :config
+  ;; (setq jinx-languages '("en_US.UTF-8" "zh_CN.UTF-8"))
+  )
 
 ;;; Compile command for each mode ===========================
 ;; since configuration files for some mode doesn't exist, so I put it all here
 (defun mk/set-compile-command ()
   "Define compile command for every mode."
   (setq-local compile-command
-    (cond
-      ;; rust
-      ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
-        "cargo run")
-      ;; emacs lisp 
-      ((eq major-mode 'emacs-lisp-mode)
-        (concat "emacs -Q -l " (buffer-file-name) " <open-file>"))
-      ;; c
-      ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
-        "make run")
-      ;; python
-      ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
-        (concat "python " (buffer-file-name)))
-      ;; other
-      (t "make run"))))
+    (let* ((base-path
+             (if (project-current)
+               (project-root (project-current)) ;; have problem with git submodule
+               (file-name-directory buffer-file-name)))
+            (makefile-exist-p
+              (file-exists-p (expand-file-name "Makefile" base-path))))
+      (if makefile-exist-p
+        "make run"
+        (cond
+          ;; rust
+          ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
+            "cargo run")
+          ;; emacs lisp 
+          ((eq major-mode 'emacs-lisp-mode)
+            (concat "emacs -Q -l " (buffer-file-name) " <open-file>"))
+          ;; c
+          ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
+            "make run")
+          ;; python
+          ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
+            (concat "python " (buffer-file-name)))
+          ;; other
+          (t "make run"))))
+    ))
 
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
 

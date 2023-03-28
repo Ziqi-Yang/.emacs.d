@@ -46,6 +46,7 @@
   (require 'completion)
   (require 'file-browser)
   (require 'git)
+  (require 'emacs-developer)
   (require 'hugo))
 
 ;; load language
