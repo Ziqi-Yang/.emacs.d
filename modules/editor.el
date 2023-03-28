@@ -6,6 +6,7 @@
 (setq-default tab-width 2
 	evil-shift-width tab-width
 	scroll-margin 5
+  scroll-step 1
 	select-enable-clipboard nil ;; make register indepentent from clipboard
 	)
 
