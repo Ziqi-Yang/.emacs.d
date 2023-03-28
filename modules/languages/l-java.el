@@ -5,13 +5,21 @@
 
 (defun mk/java-open-doc()
   "Open java17 documentation."
+  (interactive)
   (browse-url "https://docs.oracle.com/en/java/javase/17/docs/api/index.html"))
+
+(defun mk/java-generate-tags ()
+  "Generate tags file for current java project."
+  (interactive)
+  (let ((compile-command "make gen_tags"))
+    (project-compile)))
 
 (mapBegin!
   (mk/local-leader-def
 	  :states 'normal
     :keymaps '(java-ts-mode-map)
-    "d" #'(mk/java-open-doc :which-key "open java doc")))
+    "d" '(mk/java-open-doc :which-key "open java doc")
+    "t" '(mk/java-generate-tags :which-key "generate tags")))
 
 (add-hook 'java-ts-mode-hook
   '(lambda ()
