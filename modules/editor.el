@@ -15,8 +15,6 @@
   :ensure nil
   :hook (after-init . save-place-mode))
 
-
-
 ;;; Paren ===================================================
 ;; @ color for all 
 (use-package rainbow-delimiters
@@ -51,7 +49,7 @@
 ;;                               )))
 
 (use-package smartparens
-  :hook ((prog-mode org-mode) . smartparens-mode)
+  :hook ((prog-mode org-mode lisp-interaction-mode-hook) . smartparens-mode)
 	:config
 	;; (sp-pair "<#" "#>") ;; example, support multiple characters
 	)

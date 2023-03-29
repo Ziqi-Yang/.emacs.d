@@ -3,8 +3,10 @@
 !/.local/straight
 /.local/straight/*
 !/.local/straight/versions
+
 /eln-cache
 /test.el
 /parinfer-rust
 /test
 /tree-sitter
+/openai-api-key.txt

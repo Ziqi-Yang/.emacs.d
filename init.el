@@ -46,6 +46,8 @@
   (require 'completion)
   (require 'file-browser)
   (require 'git)
+  (require 'init-proxy)
+	(require 'ai)
   (require 'emacs-developer)
   (require 'hugo))
 

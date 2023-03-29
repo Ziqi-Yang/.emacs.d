@@ -271,6 +271,18 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "TAB s" '(desktop-save-in-desktop-dir :which-key "save session")
 	  "TAB l" '(desktop-load-file :which-key "load session")
 
+    ;; @ ai
+    "a" '(:ignore t :which-key "AI")
+    "at" #'(mind-wave-translate-to-english :which-key "translate") ;; note: can also translate Chinese
+    "ap" #'(mind-wave-proofreading-doc :whici-key "proof")
+    "ae" #'(:ignore t :which-key "explain")
+    "aew" #'(mind-wave-explain-word "word")
+    "aec" #'(mind-wave-explain-code :which-key "code")
+    "aeC" #'(mind-wave-comment-code :which-key "comment to explain")
+    "ac" #'(:ignore t :which-key "refractory")
+    "aca" #'(mind-wave-refactory-code :which-key "refractory")
+    "acc" #'(mind-wave-generate-commit-name :whici-key "generate commit name")
+
     ;; @ buffer
     "b"  '(:ignore t :which-key "Buffer & Bookmark")
     "bb" '(mk/consult-buffer-no-hidden :which-key "all buffer")
@@ -381,8 +393,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "pr" #'(project-async-shell-command :which-key "run command")
 	  "pR" #'(project-forget-project :which-key "remove p")
 
-    ;; @ Presentation
-	  "P" '(:ignore t :which-key: "Presentation")
+    ;; @ Proxy & Presentation
+	  "P" '(:ignore t :which-key: "Proxy & Presentation")
+    "Ph" #'(proxy-http-toggle :which-key "toggle HTTP proxy")
+    "PH" #'(proxy-http-show :which-key "show HTTP proxy")
+    "Ps" #'(proxy-socks-toggle :which-key "toggle socks proxy")
+    "PS" #'(proxy-http-show :which-key "show socks proxy")
 	  "Pp" #'(org-tree-slide-mode :which-key "org-tree-slide")
 	  "Pk" #'(keycast-header-line-mode :which-key "key(header line)")
 	  "Pl" #'(keycast-header-line-mode :which-key "key(other frame)")
