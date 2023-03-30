@@ -65,6 +65,6 @@
   (require 'l-general)) ;; l-general must loaded after l-rust
 
 ;; remove old version native-compiled files
-(native-compile-prune-cache) 
+;; (native-compile-prune-cache) 
 
 (provide 'init)

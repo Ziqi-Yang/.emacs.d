@@ -276,7 +276,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "at" #'(mind-wave-translate-to-english :which-key "translate") ;; note: can also translate Chinese
     "ap" #'(mind-wave-proofreading-doc :whici-key "proof")
     "ae" #'(:ignore t :which-key "explain")
-    "aew" #'(mind-wave-explain-word "word")
+    "aew" #'(mind-wave-explain-word :which-key "word")
     "aec" #'(mind-wave-explain-code :which-key "code")
     "aeC" #'(mind-wave-comment-code :which-key "comment to explain")
     "ac" #'(:ignore t :which-key "refractory")

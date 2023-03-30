@@ -31,11 +31,13 @@
 	    (message "`%s' parser was installed." lang)
 	    (sit-for 0.75))))
 
+(setq treesit-font-lock-level 4)
+
 ;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
 (use-package treesit-auto
 	:hook (after-init . global-treesit-auto-mode)
   :config
-  (setq treesit-auto-install t))
+  (setq treesit-auto-install nil))
 
 ;;; Lsp =====================================================
 ;; check eglot-server-programs to know the language programs that corresponding
