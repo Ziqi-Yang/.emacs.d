@@ -247,6 +247,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "s" #'evil-surround-edit
     "S" #'evil-Surround-edit)
 
+  (general-define-key
+    :keymaps 'isearch-mode-map
+    "C-n" #'isearch-repeat-forward
+    "C-j" #'isearch-repeat-forward
+    "C-p" #'isearch-repeat-backward
+    "C-k" #'isearch-repeat-backward)
+
   ;; @ normal anad insert map (leader
   (mk/leader-def
 	  :states '(normal visual)
@@ -445,7 +452,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  
     ;; @ window
     "w"  '(:ignore t :which-key "Window")
-    "ww" #'(ace-window :which-key "ace-window")
+    "ww" #'(mk/ace-window-balance-window :which-key "ace-window")
+    "wW" #'(ace-window :which-key "ace-window")
     "wt" #'(others/window-split-toggle :which-key "split layout toggle")
 	  "wo" #'(delete-other-windows :which-key "delte other window")
 	  "wm" #'(maximize-window :which-key "maximize")
@@ -674,5 +682,13 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   "Draw Mermaid Diagram."
   (interactive)
   (find-file mk/draw-diagram-path))
+
+(defun mk/ace-window-balance-window ()
+  "Balance window after `ace-window`"
+  (interactive)
+  (ace-window 0)
+  (if (solaire-mode-real-buffer-p)
+    (balance-windows)
+    (maximize-window)))
 
 (provide 'init-key)

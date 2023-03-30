@@ -32,10 +32,17 @@ one specified by listing header."
 (mapBegin!
   (general-unbind 'normal dired-mode-map
     "SPC")
+  
+  ;; TODO no use?
+  ;; (general-define-key
+  ;;   :keymaps 'dired-mode-map
+  ;;   "s" #'(dired-isearch-filenames :which-key "search"))
+
   (mk/local-leader-def
 	  :states 'normal
     :keymaps 'dired-mode-map
-    "f" #'(mk/dired-find-file :which-key "find file")))
+    "f" #'(mk/dired-find-file :which-key "find file")
+    "s" #'(dired-isearch-filenames :which-key "search")))
 
 
 (provide 'file-browser)
