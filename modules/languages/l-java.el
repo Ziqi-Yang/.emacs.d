@@ -21,11 +21,12 @@
     "d" '(mk/java-open-doc :which-key "open java doc")
     "t" '(mk/java-generate-tags :which-key "generate tags")))
 
-(dolist (mode '(java-mode-hook java-ts-mode-hook))
-  (add-hook mode
-    '(lambda ()
-       (setq-local completion-at-point-functions
-         (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
+;; ;; enable cape-dabbrev and cape-keyword for java-mode and java-ts-mode
+;; (dolist (mode '(java-mode-hook java-ts-mode-hook))
+;;   (add-hook mode
+;;     '(lambda ()
+;;        (setq-local completion-at-point-functions
+;;          (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
 
 
 (provide 'l-java)
