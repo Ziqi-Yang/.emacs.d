@@ -3,6 +3,11 @@
 ;;; Code:
 
 ;; straight.el
+;; (setq straight-repository-branch "develop")
+(define-obsolete-variable-alias
+  'native-comp-deferred-compilation-deny-list
+  'native-comp-jit-compilation-deny-list
+  "Renamed in emacs#95692f6")
 (setq straight-base-dir (expand-file-name ".local" user-emacs-directory))
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -65,6 +70,6 @@
   (require 'l-general)) ;; l-general must loaded after l-rust
 
 ;; remove old version native-compiled files
-;; (native-compile-prune-cache) 
+(native-compile-prune-cache) 
 
 (provide 'init)

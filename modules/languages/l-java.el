@@ -17,13 +17,15 @@
 (mapBegin!
   (mk/local-leader-def
 	  :states 'normal
-    :keymaps '(java-ts-mode-map)
+    :keymaps '(java-mode-map java-ts-mode-map)
     "d" '(mk/java-open-doc :which-key "open java doc")
     "t" '(mk/java-generate-tags :which-key "generate tags")))
 
-(add-hook 'java-ts-mode-hook
-  '(lambda ()
-     (setq-local completion-at-point-functions
-       (append completion-at-point-functions '(cape-dabbrev cape-keyword)))))
+(dolist (mode '(java-mode-hook java-ts-mode-hook))
+  (add-hook mode
+    '(lambda ()
+       (setq-local completion-at-point-functions
+         (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
+
 
 (provide 'l-java)
