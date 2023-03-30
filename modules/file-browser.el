@@ -33,10 +33,10 @@ one specified by listing header."
   (general-unbind 'normal dired-mode-map
     "SPC")
   
-  ;; TODO no use?
-  ;; (general-define-key
-  ;;   :keymaps 'dired-mode-map
-  ;;   "s" #'(dired-isearch-filenames :which-key "search"))
+  (general-define-key
+    :states 'normal
+    :keymaps 'dired-mode-map
+    "s" #'(dired-isearch-filenames :which-key "search"))
 
   (mk/local-leader-def
 	  :states 'normal
