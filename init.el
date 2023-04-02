@@ -54,6 +54,7 @@
   (require 'git)
   (require 'init-proxy)
 	(require 'ai)
+  (require 'info)
   (require 'emacs-developer)
   (require 'hugo))
 

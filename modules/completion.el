@@ -40,7 +40,7 @@
          ("jinx-correct" grid (:not flat))
          (execute-extended-command grid (:not flat)))
       (mk/create-vertico-multiform-commands
-        '(affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references)
+        '(affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)
         '(buffer
            (vertico-buffer-display-action . (display-buffer-in-side-window
                                               (side . right)

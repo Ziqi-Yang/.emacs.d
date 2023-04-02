@@ -348,6 +348,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; @ help
     "h" '(:ignore t :which-key "Help")
     "hf" #'(describe-function :which-key "function")
+    "hi" #'(info :which-key "info")
 	  "hc" #'(describe-char :which-key "char")
 	  "hF" #'(describe-face :which-key "face")
     "hk" #'(describe-key :which-key "key")
@@ -369,6 +370,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")
 	  "gg"  #'(magit-status :which-key "status")
+    "gi" #'(magit-init :which-key "init")
 	  "gs"  #'(magit-status :which-key "status")
     "gd"  #'(magit-diff :which-key "diff(staged)")
     "gc"  #'(magit-branch-or-checkout :which-key "branch or checkout")
@@ -425,6 +427,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "ss" '(consult-line :which-key "content")
     "sc" '(list-colors-display :which-key "colors")
 	  "si" '(consult-imenu :which-key "imenu")
+    "sI" '(consult-info :which-key "info")
 	  "sp" '(affe-grep :which-key "affe-grep(p)")
 	  "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
 	  "sb" '(consult-bookmark :which-key "bookmark")
