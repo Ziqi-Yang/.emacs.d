@@ -84,6 +84,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   :config
   (evil-lion-mode))
 
+(use-package evil-visualstar
+  :hook ((after-init . global-evil-visualstar-mode)))
+
 ;; @ textobj
 ;; + cleverparens
 ;; textobjs:
@@ -188,6 +191,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "C-o" #'evil-jump-backward
 	  "go"   #'evil-jump-out-args
 
+    "*" #'mk/evil-search-symbol-forward
+    "#" #'mk/evil-search-symbol-backward
+
 	  ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
 	  "[f" '(treesit-beginning-of-defun :which-key "func begin")
 	  "]f" '(treesit-end-of-defun :which-key "func end")
@@ -281,7 +287,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; @ ai
     "a" '(:ignore t :which-key "AI")
     "at" #'(mind-wave-translate-to-english :which-key "translate") ;; note: can also translate Chinese
-    "ap" #'(mind-wave-proofreading-doc :whici-key "proof")
+    "ap" #'(mind-wave-proofreading-doc :which-key "proofreading")
     "ae" #'(:ignore t :which-key "explain")
     "aew" #'(mind-wave-explain-word :which-key "word")
     "aec" #'(mind-wave-explain-code :which-key "code")
@@ -690,5 +696,21 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (if (solaire-mode-real-buffer-p)
     (balance-windows)
     (maximize-window)))
+
+(defun mk/evil-search-symbol-forward ()
+  "Symbol instead of word in normal state. This function aims to replace the default '*' binding in evil."
+  (interactive)
+  (cond
+    ;; visual mode use package `evil-visualstar`
+    ((evil-normal-state-p)
+      (evil-search-word-forward 1 (symbol-at-point)))))
+
+(defun mk/evil-search-symbol-backward ()
+  "Symbol instead of word in normal state. This function aims to replace the default '*' binding in evil."
+  (interactive)
+  (cond
+    ;; visual mode use package `evil-visualstar`
+    ((evil-normal-state-p)
+      (evil-search-word-backward 1 (symbol-at-point)))))
 
 (provide 'init-key)

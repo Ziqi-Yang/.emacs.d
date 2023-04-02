@@ -68,6 +68,7 @@
 	(require 'l-latex)
   (require 'l-shell)
 	(require 'l-draw)
+  (require 'l-typst)
   (require 'l-general)) ;; l-general must loaded after l-rust
 
 ;; remove old version native-compiled files
