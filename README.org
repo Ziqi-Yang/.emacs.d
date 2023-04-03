@@ -17,6 +17,13 @@ sudo pacman -S jdk17-openjdk # jdtls needs at least jdk17
 sudo archlinux-java set java-17-openjdk # set jdk17 as default jdk
 sudo paru -S jdtls
 
+# spell check (jinx)
+sudo pacman -S enchant hunspell hunspell-en_us
+# dict
+# note: change the dictionary order in /etc/dict/dictd.conf
+sudo pacman -S dictd
+gfw paru -S dict-gcide dict-moby-thesaurus dict-wn dict-foldoc dict-devils
+sudo systemctl enable --now dictd
 
 sudo pacman -S wakatime zoxide # wakatime-mode and zoxide.el
 

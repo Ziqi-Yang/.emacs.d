@@ -69,6 +69,7 @@
 	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
   ;; in l-java, I use cape to provide very basic completion abilities
   (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
+  (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
 
 	(with-eval-after-load 'eglot
 		(add-hook 'eglot-managed-mode-hook
@@ -108,6 +109,14 @@
 (setq ispell-program-name "hunspell"
   ispell-dictionary "en_US" ;; M-: (message "%s" (ispell-valid-dictionary-list))
   ispell-alternate-dictionary (expand-file-name  "dicts/en_US-large.dic" user-emacs-directory))
+
+;; @ dictionary
+(setq dictionary-server "localhost")
+(setq switch-to-buffer-obey-display-actions t)
+(add-to-list 'display-buffer-alist
+  '("^\\*Dictionary\\*" display-buffer-in-side-window
+     (side . left)
+     (window-width . 100)))
 
 ;; @ Just-in-time spell checking
 ;; (use-package jit-spell

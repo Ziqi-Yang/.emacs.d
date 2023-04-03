@@ -66,6 +66,7 @@
 	(require 'l-lisp)
   (require 'l-rust)
   (require 'l-java)
+  (require 'l-zig)
 	(require 'l-latex)
   (require 'l-shell)
 	(require 'l-draw)

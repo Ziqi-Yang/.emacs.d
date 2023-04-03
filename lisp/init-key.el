@@ -431,6 +431,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "sp" '(affe-grep :which-key "affe-grep(p)")
 	  "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
 	  "sb" '(consult-bookmark :which-key "bookmark")
+    "sd" '(dictionary-search :which-key "dictionary")
 	  "so" '(consult-outline :which-key "outline")
     "sO" '(mk/search-online :which-key "online search")
     "st" #'(hl-todo-occur :which-key "todo(b)")
