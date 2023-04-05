@@ -58,9 +58,11 @@
 (use-package aggressive-indent 
 	;; :hook ((prog-mode . aggressive-indent-mode))
 	:config
-	(global-aggressive-indent-mode 1)
-  (dolist (mode '(html-mode mhtml-mode python-mode python-ts-mode mermaid-mode java-ts-mode java-mode))
-    (add-to-list 'aggressive-indent-excluded-modes mode)))
+  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+	;; (global-aggressive-indent-mode 1)
+  ;; (dolist (mode '(html-mode mhtml-mode python-mode python-ts-mode mermaid-mode java-ts-mode java-mode))
+  ;;   (add-to-list 'aggressive-indent-excluded-modes mode))
+  )
 
 (use-package editorconfig
   :config
