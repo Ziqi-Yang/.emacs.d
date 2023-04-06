@@ -56,41 +56,71 @@
 	(dolist (mode hook-list)
 		(add-hook mode #'eglot-ensure)))
 
-(progn
-	;; (setq-default eglot-events-buffer-size 0)  ;; NOTE disable log, improve performance
-	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
-	;; see outer files(like header files) as in project temporarily
-	(customize-set-variable 'eglot-extend-to-xref t) 
+;; (progn
+;; 	;; (setq-default eglot-events-buffer-size 0)  ;; NOTE disable log, improve performance
+;; 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
+;; 	;; see outer files(like header files) as in project temporarily
+;; 	(customize-set-variable 'eglot-extend-to-xref t) 
 
-	(mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
-	(mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
-	(mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
-	(mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
-	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
-	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
-  ;; in l-java, I use cape to provide very basic completion abilities
-  ;; (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
-  (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
+;; 	(mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
+;; 	(mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
+;; 	(mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
+;; 	(mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
+;; 	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
+;; 	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
+;;   ;; in l-java, I use cape to provide very basic completion abilities
+;;   ;; (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
+;;   (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
 
-	(with-eval-after-load 'eglot
-		(add-hook 'eglot-managed-mode-hook
-			(lambda () ;; show diagnostics in the echo area
-				;; Show flymake diagnostics first.
-				(setq eldoc-documentation-functions
-					(cons #'flymake-eldoc-function
-						(remove #'flymake-eldoc-function eldoc-documentation-functions)))
-				;; Show all eldoc feedback.
-				(setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
+;; 	(with-eval-after-load 'eglot
+;; 		(add-hook 'eglot-managed-mode-hook
+;; 			(lambda () ;; show diagnostics in the echo area
+;; 				;; Show flymake diagnostics first.
+;; 				(setq eldoc-documentation-functions
+;; 					(cons #'flymake-eldoc-function
+;; 						(remove #'flymake-eldoc-function eldoc-documentation-functions)))
+;; 				;; Show all eldoc feedback.
+;; 				(setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
 
-		;; to custom language server (like flags), add-to-list 'eglot-server-programs
-		)
+;; 		;; to custom language server (like flags), add-to-list 'eglot-server-programs
+;; 		)
 
-	;; corfu/orderless integration
-	(setq completion-category-overrides '((eglot (styles orderless))))
+;; 	;; corfu/orderless integration
+;; 	(setq completion-category-overrides '((eglot (styles orderless))))
 
-	;; NOTE
-	;; install markdown-mode to rich the doc
-	)
+;; 	;; NOTE
+;; 	;; install markdown-mode to rich the doc
+;; 	)
+
+;;; @ lsp-bridge ============================================
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+(use-package posframe)
+(push (expand-file-name "modules/lsp-bridge" user-emacs-directory) load-path)
+
+(require 'lsp-bridge)
+(require 'lsp-bridge-jdtls) 
+(dolist (mode-hook '(java-ts-mode-hook rust-ts-mode-hook))
+	(add-to-list 'lsp-bridge-default-mode-hooks mode-hook))
+(global-lsp-bridge-mode)
+;; (add-hook 'after-init-hook '(lambda () ((global-lsp-bridge-mode))))
+(setq acm-candidate-match-function 'orderless-flex
+  lsp-bridge-enable-auto-import t)
+(evil-define-key 'normal lsp-bridge-mode-map (kbd "M-k") #'lsp-bridge-popup-documentation-scroll-up)
+(evil-define-key 'normal lsp-bridge-mode-map (kbd "M-j") #'lsp-bridge-popup-documentation-scroll-down)
+
+(setq evil-lookup-func #'lsp-bridge-popup-documentation)
+(evil-define-key 'insert acm-mode-map (kbd "C-n") #'acm-select-next)
+(evil-define-key 'insert acm-mode-map (kbd "C-p") #'acm-select-prev)
+(evil-define-key 'insert acm-mode-map (kbd "C-j") #'acm-select-next)
+(evil-define-key 'insert acm-mode-map (kbd "C-k") #'acm-select-prev)
+
+(evil-define-key 'insert acm-mode-map (kbd "M-n") #'acm-select-next-page)
+(evil-define-key 'insert acm-mode-map (kbd "M-p") #'acm-select-prev-page)
+;; (evil-define-key 'insert acm-mode-map (kbd "M-j") #'acm-select-next-page)
+;; (evil-define-key 'insert acm-mode-map (kbd "M-k") #'acm-select-prev-page)
+(add-hook 'acm-mode-hook #'evil-normalize-keymaps)
 
 ;; (use-package citre
 ;;   :defer t
@@ -123,6 +153,7 @@
 ;; (use-package jit-spell
 ;;   :straight (:type git :host github :repo "astoff/jit-spell")
 ;;   :hook (( text-mode org-mode) . jit-spell-mode))
+
 
 ;; @ jinx
 (use-package jinx

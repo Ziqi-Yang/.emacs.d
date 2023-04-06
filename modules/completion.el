@@ -137,55 +137,56 @@
 	(setq xref-show-xrefs-function #'consult-xref)
   (consult-customize consult-recent-file :preview-key nil))  ;; disable preview for recent file
 
-;;; Corfu: In Region Completion  ============================
-;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
-(use-package corfu
-	:straight (:host github :repo "minad/corfu"
-							:files ("*.el" "extensions/*.el"))
-  :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                 ;; Enable auto completion
-  (corfu-on-exact-match 'quit) 
-	(corfu-auto-delay 0)           ;; Enable auto completion
-	(corfu-auto-prefix 2)          ;; Enable auto completion
-  :init
-  (global-corfu-mode)
-	;; remembers selected candidates and sorts the candidates
-	(corfu-history-mode)
-	;; quick select, M-<number> <ret>
-	(corfu-indexed-mode)
-	;; popup info
-	(corfu-popupinfo-mode))
+;; NOTE: disable these to using lsp-bridge
+;; ;;; Corfu: In Region Completion  ============================
+;; ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
+;; (use-package corfu
+;; 	:straight (:host github :repo "minad/corfu"
+;; 							:files ("*.el" "extensions/*.el"))
+;;   :custom
+;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+;;   (corfu-auto t)                 ;; Enable auto completion
+;;   (corfu-on-exact-match 'quit) 
+;; 	(corfu-auto-delay 0)           ;; Enable auto completion
+;; 	(corfu-auto-prefix 2)          ;; Enable auto completion
+;;   :init
+;;   (global-corfu-mode)
+;; 	;; remembers selected candidates and sorts the candidates
+;; 	(corfu-history-mode)
+;; 	;; quick select, M-<number> <ret>
+;; 	(corfu-indexed-mode)
+;; 	;; popup info
+;; 	(corfu-popupinfo-mode))
 
 ;; @ corfu recommended defualt configuration
-(use-package emacs
-	:ensure nil
-  :init
-  (setq completion-cycle-threshold 3)
-  (setq read-extended-command-predicate
-    #'command-completion-default-include-p)
-  (setq tab-always-indent 'complete))
+;; (use-package emacs
+;; 	:ensure nil
+;;   :init
+;;   (setq completion-cycle-threshold 3)
+;;   (setq read-extended-command-predicate
+;;     #'command-completion-default-include-p)
+;;   (setq tab-always-indent 'complete))
 
-;; @ enable corfu in terminal emacs
-(use-package corfu-terminal
-	:straight (:type git
-									 :repo "https://codeberg.org/akib/emacs-corfu-terminal.git")
-	:config
-	(unless (display-graphic-p)
-		(corfu-terminal-mode +1)))
+;; ;; @ enable corfu in terminal emacs
+;; (use-package corfu-terminal
+;; 	:straight (:type git
+;; 									 :repo "https://codeberg.org/akib/emacs-corfu-terminal.git")
+;; 	:config
+;; 	(unless (display-graphic-p)
+;; 		(corfu-terminal-mode +1)))
 
 ;;; Cafe ====================================================
 ;; add completion etension
 ;; TODO dict integration (enable it in org-mode or text-mode)
-(use-package cape
-	:hook ((prog-mode . mk/setup-cape)
-				  (text-mode . mk/setup-cape)
-          (org-mode . mk/setup-cape))
-  :init
-  ;; Add `completion-at-point-functions', used by `completion-at-point'.
-  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (defun mk/setup-cape()
-    (add-to-list 'completion-at-point-functions #'cape-file)))
+;; (use-package cape
+;; 	:hook ((prog-mode . mk/setup-cape)
+;; 				  (text-mode . mk/setup-cape)
+;;           (org-mode . mk/setup-cape))
+;;   :init
+;;   ;; Add `completion-at-point-functions', used by `completion-at-point'.
+;;   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+;;   (defun mk/setup-cape()
+;;     (add-to-list 'completion-at-point-functions #'cape-file)))
 
 ;;; Snippet =================================================
 ;; @ yasnippet

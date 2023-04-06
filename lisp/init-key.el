@@ -247,7 +247,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; "M-<return>" #'sp-up-sexp
 	  ;; "M-S-<return>" #'sp-backward-up-sexp
 
-	  "C-<return>" #'mk/tempel-complete-or-next)
+	  "C-<return>" #'mk/tempel-complete-or-next
+    "C-S-<return>" #'tempel-insert)
 
   ;; @ operation map (no leader key
   (general-omap
@@ -320,15 +321,25 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ Code
 	  "c"  '(:ignore t :which-key "Code")
-	  "ca" '(eglot-code-actions :which-key "action")
-	  "cr" '(eglot-rename :which-key "rename")
-	  "cR" '(xref-find-references :which-key "references")
-	  "ci" '(eglot-code-action-organize-imports :which-key "import organization")
+	  ;; "ca" '(eglot-code-actions :which-key "action")
+	  ;; "cr" '(eglot-rename :which-key "rename")
+	  ;; "cR" '(xref-find-references :which-key "references")
+	  ;; "ci" '(eglot-code-action-organize-imports :which-key "import organization")
+	  ;; "cf" '(editorconfig-format-buffer :which-key "format buffer")
+	  ;; "cF" '(eglot-code-action-quickfix :which-key "quick fix")
+	  ;; "ce" '(consult-flymake :which-key "errors(b)")
+	  ;; "cd" '(xref-find-definitions :which-key "definitions")
+	  ;; "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
+
+	  "ca" '(lsp-bridge-code-action :which-key "action")
+	  "cr" '(lsp-bridge-rename :which-key "rename")
+	  "cR" '(color-rg-search-project-with-type :which-key "references") ;; lsp-bridge-find-references cannot popup
+	  "ci" '(lsp-bridge-workspace-list-symbols :which-key "import organization")
 	  "cf" '(editorconfig-format-buffer :which-key "format buffer")
-	  "cF" '(eglot-code-action-quickfix :which-key "quick fix")
-	  "ce" '(consult-flymake :which-key "errors(b)")
-	  "cd" '(xref-find-definitions :which-key "definitions")
-	  "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
+	  ;; "cF" '(eglot-code-action-quickfix :which-key "quick fix")
+	  "ce" '(lsp-bridge-diagnostic-jump-next :which-key "errors(b)")
+	  "cd" '(lsp-bridge-find-def :which-key "definitions")
+	  "cD" '(lsp-bridge-popup-documentation :which-key "doc") ;; also available as "K" in evil mode
 
     ;; @ file
     "f" '(:ignore t :which-key "File")
