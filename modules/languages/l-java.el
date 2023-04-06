@@ -22,11 +22,11 @@
     "t" '(mk/java-generate-tags :which-key "generate tags")))
 
 ;; ;; enable cape-dabbrev and cape-keyword for java-mode and java-ts-mode
-;; (dolist (mode '(java-mode-hook java-ts-mode-hook))
-;;   (add-hook mode
-;;     '(lambda ()
-;;        (setq-local completion-at-point-functions
-;;          (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
+(dolist (mode '(java-mode-hook java-ts-mode-hook))
+  (add-hook mode
+    '(lambda ()
+       (setq-local completion-at-point-functions
+         (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
 
 
 (provide 'l-java)
