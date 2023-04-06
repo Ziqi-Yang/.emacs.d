@@ -181,6 +181,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "gcc" #'evilnc-comment-or-uncomment-lines
 	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
     "," #'evil-avy-goto-word-0
+    "." #'evil-avy-goto-word-1
 	  "L" #'sp-forward-sexp
 	  "H" #'sp-backward-sexp
     "M-h" #'sp-beginning-of-sexp
@@ -392,6 +393,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "o=" #'(project-dired :which-key "project dired")
     "os" #'(dired-sidebar-toggle-sidebar :which-key "toggle sidebar")
 	  "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
+    "or" #'((lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org" :which-key "os learning record")))
     "od" #'(mk/draw-diagram :which-key "draw diagram")
     "oA" #'((lambda () (interactive) (find-file "~/Documents/dotfiles/docs/unclassified.org")) :which-key "application record")
 	  "ot" #'(mk/open-terminal-smart :which-key "open terminal(p)")
@@ -621,7 +623,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (interactive)
   (if (not buffer-file-name)
     (message "[Error] This buffer havn't been saved to file.")
-    (let ((new-file-name (read-string "Enter a new name:"))
+    (let ((new-file-name (read-string "Enter a new name:" (file-name-nondirectory (buffer-file-name))))
            (old-buffer (current-buffer)))
       (rename-file buffer-file-name new-file-name)
       (find-file new-file-name)

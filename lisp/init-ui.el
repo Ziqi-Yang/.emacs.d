@@ -10,7 +10,12 @@
 	:hook (server-after-make-frame . (lambda () (load-theme
 																							  'doom-solarized-light t)))
 	:init
-	(load-theme 'doom-solarized-light t))
+	(load-theme 'doom-solarized-light t)
+  :config
+  (doom-themes-visual-bell-config)
+  (setq doom-themes-treemacs-theme "doom-atom")
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
 
 ;; icon theme
 (defun mk/check-and-install-all-the-icons()

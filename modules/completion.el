@@ -38,6 +38,7 @@
       '(("describe-*" grid (:not flat))
          ("helpful-*" grid (:not flat))
          ("jinx-correct" grid (:not flat))
+         (consult-theme grid (:not flat))
          (execute-extended-command grid (:not flat)))
       (mk/create-vertico-multiform-commands
         '(affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)

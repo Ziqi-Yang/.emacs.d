@@ -40,8 +40,8 @@
 (menu-bar-mode -1)
 (set-fringe-mode 3) ;; diff-hl make use of fringe
 
-;; Emacs 29
-(push (cons 'alpha-background 90) default-frame-alist)
+;; Emacs 29 alpha background
+(push (cons 'alpha-background 95) default-frame-alist)
 
 (column-number-mode)
 (global-display-line-numbers-mode 1)
