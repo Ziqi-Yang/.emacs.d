@@ -106,7 +106,8 @@
 (global-lsp-bridge-mode)
 ;; (add-hook 'after-init-hook '(lambda () ((global-lsp-bridge-mode))))
 (setq acm-candidate-match-function 'orderless-flex
-  lsp-bridge-enable-auto-import t)
+  lsp-bridge-enable-auto-import t
+  lsp-bridge-complete-manually t)
 (evil-define-key 'normal lsp-bridge-mode-map (kbd "M-k") #'lsp-bridge-popup-documentation-scroll-up)
 (evil-define-key 'normal lsp-bridge-mode-map (kbd "M-j") #'lsp-bridge-popup-documentation-scroll-down)
 

@@ -243,11 +243,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; smartparen
 	  "M-<backspace>" #'sp-backward-kill-sexp
-    "S-<return>" #'ispell-complete-word
+    ;; "S-<return>" #'ispell-complete-word
+    "C-<return>" #'lsp-bridge-popup-complete-menu
 	  ;; "M-<return>" #'sp-up-sexp
 	  ;; "M-S-<return>" #'sp-backward-up-sexp
 
-	  "C-<return>" #'mk/tempel-complete-or-next
+	  "S-<return>" #'mk/tempel-complete-or-next
     "C-S-<return>" #'tempel-insert)
 
   ;; @ operation map (no leader key
