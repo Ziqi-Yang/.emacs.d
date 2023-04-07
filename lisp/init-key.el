@@ -161,7 +161,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 (define-key minibuffer-local-map (kbd "C-y") 'mk/insert-clipboard-in-minibuffer)
 (define-key minibuffer-local-map (kbd "C-S-v") 'mk/insert-clipboard-in-minibuffer)
 
-;;; Main Key Mapping ========================================
+;;; Main Key Mapping ==============================================
 (mapBegin!
   ;; continuous shift-right/left, cannot be defined in general map
   (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
@@ -176,6 +176,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
   ;; @ normal map (no leader key
   (general-nmap 
+    :keymaps 'override
 	  ;; "." evil-repeat can be your friend
 	  ;; "TAB" #'evil-avy-goto-char-2 ;; FIXME no use?
 	  "gcc" #'evilnc-comment-or-uncomment-lines
@@ -195,7 +196,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "*" #'mk/evil-search-symbol-forward
     "#" #'mk/evil-search-symbol-backward
 
-	  ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
+    ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
 	  "[f" '(treesit-beginning-of-defun :which-key "func begin")
 	  "]f" '(treesit-end-of-defun :which-key "func end")
 	  "]a"   #'evil-forward-arg
@@ -356,9 +357,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
     ;; @ fold
                                         ; other fold method is integrated into evil's buildin 'z'
-    "F" '(:ignore t :which-key "Fold")
-    "Fo" #'(hs-show-all :which-key "open all")
-    "Fc" #'(hs-hide-all :which-key "hide all")
+    "F" '(:ignore t :which-key "Fold & Outline")
+    "Fo" #'(hs-show-all :which-key "open all folds")
+    "FO" #'(outline-show-all :which-key "open all headings")
+    "Fc" #'(hs-hide-all :which-key "hide all folds")
+    "FC" #'(outline-show-only-headings :which-key "show only headings")
 
     ;; @ help
     "h" '(:ignore t :which-key "Help")
