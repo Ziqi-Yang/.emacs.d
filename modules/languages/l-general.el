@@ -57,7 +57,7 @@
 		(add-hook mode #'eglot-ensure)))
 
 (progn
-	;; (setq-default eglot-events-buffer-size 0)  ;; NOTE disable log, improve performance
+	(setq-default eglot-events-buffer-size 0)  ;; NOTE disable log, improve performance
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
 	;; see outer files(like header files) as in project temporarily
 	(customize-set-variable 'eglot-extend-to-xref t) 
