@@ -350,7 +350,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "ff" #'(find-file :which-key "find file")
     "fF" #'(affe-find :which-key "fuzzy find")
     "fD" #'(mk/delete-file :which-key "delete")
-    "fR" #'(mk/rename-file :which-key "rename")
+    "fR" #'(rename-visited-file :which-key "rename")
 	  "fp" #'(project-find-file :which-key "find@project")
 	  "fr" #'(consult-recent-file :which-key "recent")
 	  "fz" #'(zoxide-find-file :which-key "zoxide")
@@ -367,6 +367,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "h" '(:ignore t :which-key "Help")
     "hf" #'(describe-function :which-key "function")
     "hi" #'(info :which-key "info")
+    "hn" #'(view-emacs-news :which-key "news")
 	  "hc" #'(describe-char :which-key "char")
 	  "hF" #'(describe-face :which-key "face")
     "hk" #'(describe-key :which-key "key")
@@ -375,6 +376,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "hv" #'(describe-variable :which-key "variable")
     "hm" #'(describe-mode :which-key "mode")
 	  "hM" #'(woman :which-key "man page")
+
+    ;; @ insert
+    "i" '(:ignore t :which-key "insert")
+    "ie" '(:ignore t :which-key "emoji")
+    "iei" '(emoji-insert :which-key "insert")
+    "ier" '(emoji-insert :which-key "recent")
 
     ;; @ hugo
     "H" '(:ignore t :which-key "hugo")
@@ -635,6 +642,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
         nil)
       )))
 
+;; NOTE: deprecated since 29.1 because of the builtin function rename-visited-file
 (defun mk/rename-file ()
   "Rename the current buffer file."
   (interactive)
