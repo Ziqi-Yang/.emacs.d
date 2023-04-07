@@ -161,7 +161,7 @@
 ;; @ buildin
 ;; evil buildin fold throught this package
 (use-package hideshow 
-	:hook ((prog-mode . (lambda () (mk/hs-hide-level-samrt)))))
+	:hook ((prog-mode . mk/hs-hide-level-samrt)))
 
 ;; @ vimmish-fold
 ;; (use-package vimish-fold
@@ -260,13 +260,15 @@
   (interactive)
   (hs-minor-mode)
   (let ((n (car (buffer-line-statistics)))
-         (l2 50)
-         (l1 100)
-         (l0 200))
+         (l3 50)
+         (l2 100)
+         (l1 200)
+         (l0 500))
     (cond
-      ((> n l0) (hs-hide-all))     ;; also hide long comment
-      ((> n l1) (hs-hide-level 1)) ;; show root function
-      ((> n l2) (hs-hide-level 2)))))
+      ((> n l0) (outline-show-only-headings))
+      ((> n l1) (hs-hide-all))     ;; also hide long comment
+      ((> n l2) (hs-hide-level 1)) ;; show root function
+      ((> n l3) (hs-hide-level 2)))))
 
 (defun mk/base/copy-string-to-clipboard (str)
   ;; note this function only works in GUI version emacs
