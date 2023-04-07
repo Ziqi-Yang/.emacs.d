@@ -28,7 +28,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
      :config
      ,@expression))
 
-;;; Evil Collection ========================================= 
+;;; Evil Collection =========================================
 (use-package evil
   :demand t
   :bind (("<escape>" . keyboard-escape-quit)) ;; <escape> to act like <C-g>
@@ -161,7 +161,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 (define-key minibuffer-local-map (kbd "C-y") 'mk/insert-clipboard-in-minibuffer)
 (define-key minibuffer-local-map (kbd "C-S-v") 'mk/insert-clipboard-in-minibuffer)
 
-;;; Main Key Mapping ==============================================
+;;; Main Key Mapping ========================================
 (mapBegin!
   ;; continuous shift-right/left, cannot be defined in general map
   (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
@@ -218,11 +218,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "zc" #'sp-rewrap-sexp
 	  "zC" #'evil-close-fold
 
-	  ">)" #'sp-forward-slurp-sexp
-	  "<)" #'sp-forward-barf-sexp
+	  ;; ">)" #'sp-forward-slurp-sexp
+	  ;; "<)" #'sp-forward-barf-sexp
 
-	  ">(" #'sp-backward-barf-sexp
-	  "<(" #'sp-backward-slurp-sexp)
+	  ;; ">(" #'sp-backward-barf-sexp
+	  ;; "<(" #'sp-backward-slurp-sexp
+    )
 
   (general-mmap
 	  "L" #'evil-forward-arg

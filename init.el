@@ -32,7 +32,7 @@
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (setq user-full-name "Ziqi Yang"
-	user-mail-address "mr.ziqiyang@gmail.com"
+  user-mail-address "mr.ziqiyang@gmail.com"
   default-directory (expand-file-name "~/.emacs.d"))
 
 ;; add load path
@@ -53,7 +53,7 @@
   (require 'file-browser)
   (require 'git)
   (require 'init-proxy)
-	(require 'ai)
+  (require 'ai)
   (require 'info)
   (require 'emacs-developer)
   (require 'hugo))
@@ -61,15 +61,15 @@
 ;; load language
 (with-temp-message ""
   (require 'l-markdown)
-	(require 'l-org)
-	(require 'l-web)
-	(require 'l-lisp)
+  (require 'l-org)
+  (require 'l-web)
+  (require 'l-lisp)
   (require 'l-rust)
   (require 'l-java)
   (require 'l-zig)
-	(require 'l-latex)
+  (require 'l-latex)
   (require 'l-shell)
-	(require 'l-draw)
+  (require 'l-draw)
   (require 'l-typst)
   (require 'l-general)) ;; l-general must loaded after l-rust
 
