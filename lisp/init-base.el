@@ -265,7 +265,7 @@
          (l1 200)
          (l0 500))
     (cond
-      ((> n l0) (outline-show-only-headings))
+      ((> n l0) (hs-hide-all) (outline-show-only-headings))
       ((> n l1) (hs-hide-all))     ;; also hide long comment
       ((> n l2) (hs-hide-level 1)) ;; show root function
       ((> n l3) (hs-hide-level 2)))))

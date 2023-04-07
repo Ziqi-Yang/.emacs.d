@@ -450,6 +450,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ search @ replace
 	  "s" '(:ignore t :which-key "Search & Replace")
+    "sa" '(:igore t :which-key "apropos")
+    "saa" '(apropos :which-key "apropos")
+    "sac" '(apropos-command :which-key "command")
+    "sad" '(apropos-documentation :which-key "documentation")
+    "sas" '(apropos-symbol :which-key "symbol")
+    "sav" '(apropos-variable :which-key "variable")
+    "saf" '(apropos-function :which-key "function")
 	  "ss" '(consult-line :which-key "content")
     "sc" '(list-colors-display :which-key "colors")
 	  "si" '(consult-imenu :which-key "imenu")
