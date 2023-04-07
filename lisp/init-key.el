@@ -312,7 +312,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "ba" '(consult-buffer :which-key "all buffer")
 	  "bd" '(mk/kill-buffer :which-key "delete")
 	  "bk" '(mk/kill-buffer :which-key "delete")
-	  "bK" '(mk/kill-all-buffers :which-key "delete")
+	  "bK" '(mk/kill-all-buffers :which-key "kill all")
 	  
 	  ;; @ bookmark
 	  "B" '(:ignore t :which-key "Bookmark")

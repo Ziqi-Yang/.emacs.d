@@ -21,3 +21,8 @@ java-ts-mode
 (elif "else if (" p ") {" n> q n> "}")
 (else "else {" n> q n> "}")
 (for "for (" p ") {" n> q n> "}")
+
+rust-ts-mode
+
+(pt "fn pt<T>(_: &T) { println!(\"{}\", std::any::type_name::<T>()) }" q)
+

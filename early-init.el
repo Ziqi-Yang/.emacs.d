@@ -12,10 +12,11 @@
 
 
 ;;; Performance =============================================
-;; The default is ~800kB. Now allocating 200 MB.
-(setq gc-cons-threshold (* 200 1024 1024))
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+;; The default is ~800kB. Now allocating 500 MB.
+(setq gc-cons-threshold (* 500 1024 1024))
 ;; increase performance (origin 4096 byte)
-(setq read-process-output-max (* 3 1024 1024))
+(setq read-process-output-max (* 10 1024 1024))
 
 ;; ;; @ time ;; discord, since dashboard owns the same function
 ;; (add-hook 'emacs-startup-hook
