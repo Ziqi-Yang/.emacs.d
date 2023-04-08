@@ -357,7 +357,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "fz" #'(zoxide-find-file :which-key "zoxide")
 
     ;; @ fold
-                                        ; other fold method is integrated into evil's buildin 'z'
+    ;; other fold method is integrated into evil's buildin 'z'
     "F" '(:ignore t :which-key "Fold & Outline")
     "Fo" #'(hs-show-all :which-key "open all folds")
     "FO" #'(outline-show-all :which-key "open all headings")
@@ -528,7 +528,15 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "zc" #'(jinx-correct :which-key "correct word")
     "zp" #'(mk/copy-path-smart :which-key "copy path")
 
-	  "m" #'(:ignore t :which-key "local")))
+	  "m" #'(:ignore t :which-key "local"))
+
+  ;; info mode map
+  (general-nmap
+    :keymaps 'Info-mode-map 
+    "p" #'(Info-prev :which-key "prev")
+    "n" #'(Info-next :which-key "next")
+    "u" #'(Info-up :which-key "up")
+    "t" #'(Info-toc :which-key "toc")))
 
 ;;; Trivial Functions =======================================
 (defun mk/kill-buffer()

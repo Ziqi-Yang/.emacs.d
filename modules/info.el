@@ -3,9 +3,7 @@
 ;;; Code:
 
 ;; FIXME don't know why this file is not loaded
-(defun mk/hello()
-  (interactive))
-
+;; temporarily the keybinding for info mode has been moved to the init-keys.el
 (defun mk/info-mode-set-keybinds ()
   (interactive)
   (general-unbind 'normal Info-mode-map

@@ -32,7 +32,7 @@
 	    (message "`%s' parser was installed." lang)
 	    (sit-for 0.75))))
 
-(setq treesit-font-lock-level 4)
+;; (setq treesit-font-lock-level 3)
 
 ;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
 (use-package treesit-auto

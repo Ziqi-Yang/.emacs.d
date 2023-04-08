@@ -5,7 +5,7 @@
 ;;; Common ==================================================
 
 (use-package org
-	:ensure nil
+  :straight nil
 	:config
 	(setq
 	  org-directory "~/notes/"
@@ -91,29 +91,29 @@
 
 ;;; Fancy face ==============================================
 ;; @ most of the stuffs
-(use-package org-modern
-	:config
-	(setq
-	  org-modern-star ["✿" "❀" "✜" "◉" "○" "✸" "✳" "◈" "◇"]
-	  org-modern-priority
-	  `((?A . ,(propertize "❗" 'face 'error))
-		   (?B . ,(propertize "⚡" 'face 'warning))
-		   (?C . ,(propertize "☕" 'face 'sucess)))
-	  org-modern-todo-faces
-	  '(("TODO" :background "#00b894" ;; green
-			  :foreground "white")
-		   ("PROG" :background "#e17055" ;; orange
-			   :foreground "white")
-		   ("PROJ" :background "#6c5ce7" ;; purple
-			   :foreground "white")
-		   ("BLOG" :background "#fdcb6e" ;; yellow
-			   :foreground "black")
-		   ("WAIT" :background "#ff7675" ;; grey
-			   :foreground "white")
-		   ("DONE" :background "#b2bec3" ;; grey
-			   :foreground "white")
-		   ("CANCELLED"  :foreground "#b2bec3")))
-	(global-org-modern-mode))
+;; (use-package org-modern
+;; 	:config
+;; 	(setq
+;; 	  org-modern-star ["✿" "❀" "✜" "◉" "○" "✸" "✳" "◈" "◇"]
+;; 	  org-modern-priority
+;; 	  `((?A . ,(propertize "❗" 'face 'error))
+;; 		   (?B . ,(propertize "⚡" 'face 'warning))
+;; 		   (?C . ,(propertize "☕" 'face 'sucess)))
+;; 	  org-modern-todo-faces
+;; 	  '(("TODO" :background "#00b894" ;; green
+;; 			  :foreground "white")
+;; 		   ("PROG" :background "#e17055" ;; orange
+;; 			   :foreground "white")
+;; 		   ("PROJ" :background "#6c5ce7" ;; purple
+;; 			   :foreground "white")
+;; 		   ("BLOG" :background "#fdcb6e" ;; yellow
+;; 			   :foreground "black")
+;; 		   ("WAIT" :background "#ff7675" ;; grey
+;; 			   :foreground "white")
+;; 		   ("DONE" :background "#b2bec3" ;; grey
+;; 			   :foreground "white")
+;; 		   ("CANCELLED"  :foreground "#b2bec3")))
+;; 	(global-org-modern-mode))
 
 
 ;;; Facility ===============================================
@@ -126,8 +126,9 @@
   :config
   (setq org-auto-tangle-default t))
 
-;; @ visibility
+;; ;; @ visibility
 (use-package org-appear
+  :straight (:includes org) ;; prevent org-appear from installing org
   :hook (org-mode . org-appear-mode)
   :config
   (setq org-appear-autolinks t)
@@ -137,10 +138,10 @@
   (setq org-appear-inside-latex t))
 
 ;; @ presentation
-(use-package org-tree-slide
-	:config
-	(setq org-tree-slide-author "Ziqi Yang"
-		org-tree-slide-email "mr.ziqiyang@gmail.com"))
+;; (use-package org-tree-slide
+;; 	:config
+;; 	(setq org-tree-slide-author "Ziqi Yang"
+;; 		org-tree-slide-email "mr.ziqiyang@gmail.com"))
 
 ;;; Keybindings =============================================
 (use-package evil-org
