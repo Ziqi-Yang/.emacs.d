@@ -45,6 +45,7 @@
 (push (cons 'alpha-background 95) default-frame-alist)
 
 (column-number-mode)
+(setq display-line-numbers 'relative)
 (global-display-line-numbers-mode 1)
 
 (setq
