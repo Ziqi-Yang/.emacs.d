@@ -475,6 +475,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "srdi" '(color-rg-search-input :which-key "input")
 	  "srdp" '(color-rg-search-symbol :which-key "point")
 	  "srde" '(color-rg-search-symbol-with-type :which-key "with file-extension")
+	  "srdd" '(color-rg-search-symbol :which-key "point")
 	  "srp" '(:ignore t :which-key "current project")
 	  "srpi" '(color-rg-search-input-in-project :which-key "input")
 	  "srpp" '(color-rg-search-symbol-in-project :which-key "point")
@@ -482,6 +483,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "srb" '(:ignore t :which-key "current buffer")
 	  "srbi" '(color-rg-search-input-in-current-file :which-key "input")
 	  "srbp" '(color-rg-search-symbol-in-current-file :which-key "point")
+	  "srbb" '(color-rg-search-symbol-in-current-file :which-key "point")
 
 	  "S" '(:ignore t :which-key "straight")
 	  "Sr" #'(straight-remove-unused-repos :which-key "remove unused")

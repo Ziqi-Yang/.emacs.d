@@ -32,8 +32,6 @@
 	    (message "`%s' parser was installed." lang)
 	    (sit-for 0.75))))
 
-;; (setq treesit-font-lock-level 3)
-
 ;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
 (use-package treesit-auto
 	:hook (after-init . global-treesit-auto-mode)
@@ -52,6 +50,7 @@
 ;; go to source code. 
 ;; to check the value the eglot-server-programs.
 
+;; @ elgot ==================================================
 (defun mk/add-eglot-ensure (hook-list)
 	(dolist (mode hook-list)
 		(add-hook mode #'eglot-ensure)))
@@ -62,15 +61,15 @@
 	;; see outer files(like header files) as in project temporarily
 	(customize-set-variable 'eglot-extend-to-xref t) 
 
-	(mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
-	(mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
-	(mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
-	(mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
-	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
-	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
-  ;; in l-java, I use cape to provide very basic completion abilities
-  (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
-  (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
+	;; (mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
+	;; (mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
+	;; (mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
+	;; (mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
+	;; (mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
+	;; (mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
+  ;; ;; in l-java, I use cape to provide very basic completion abilities
+  ;; (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
+  ;; (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
 
 	(with-eval-after-load 'eglot
 		(add-hook 'eglot-managed-mode-hook
@@ -123,15 +122,20 @@
 ;; ;; (evil-define-key 'insert acm-mode-map (kbd "M-k") #'acm-select-prev-page)
 ;; (add-hook 'acm-mode-hook #'evil-normalize-keymaps)
 
-;; (use-package citre
-;;   :defer t
-;;   :init
-;;   (require 'citre-config)
-;;   :config
-;;   (setq
-;;     citre-default-create-tags-file-location 'global-cache
-;;     citre-use-project-root-when-creating-tags t
-;;     citre-prompt-language-for-ctags-command t))
+(use-package citre
+  :defer t
+  :init
+  (require 'citre-config)
+  (global-set-key (kbd "C-x c j") 'citre-jump)
+  (global-set-key (kbd "C-x c J") 'citre-jump-back)
+  (global-set-key (kbd "C-x c p") 'citre-ace-peek)
+  (global-set-key (kbd "C-x c u") 'citre-update-this-tags-file)
+  :config
+  (setq
+    citre-default-create-tags-file-location 'global-cache
+    citre-use-project-root-when-creating-tags t
+    citre-prompt-language-for-ctags-command t
+    citre-auto-enable-citre-mode-modes '(prog-mode)))
 
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)

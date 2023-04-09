@@ -7,13 +7,23 @@
 ;; @ editor theme
 (use-package doom-themes
 	:defer t
-	:hook (server-after-make-frame . (lambda () (load-theme
-																							  'doom-solarized-light t)))
+	;; :hook (server-after-make-frame . (lambda () (load-theme
+	;; 																						  'doom- ho-light t)))
+	:hook (server-after-make-frame .
+          (lambda ()
+            (progn
+              (setq treesit-font-lock-level 1)
+              (setq font-lock-maximum-decoration nil)
+              (load-theme 'doom-one-light t))))
 	:init
-	(load-theme 'doom-solarized-light t)
+	;; (load-theme 'doom-solarized-light t)
+  (progn
+    (setq treesit-font-lock-level 1)
+    (setq font-lock-maximum-decoration nil)
+	  (load-theme 'doom-earl-grey t))
   :config
   (doom-themes-visual-bell-config)
-  (setq doom-themes-treemacs-theme "doom-atom")
+  (setq doom-themes-treemacs-theme "doom-one-light")
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 

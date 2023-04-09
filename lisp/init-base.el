@@ -260,10 +260,10 @@
   (interactive)
   (hs-minor-mode)
   (let ((n (car (buffer-line-statistics)))
-         (l3 50)
-         (l2 100)
-         (l1 200)
-         (l0 500))
+         (l3 100)
+         (l2 200)
+         (l1 400)
+         (l0 600))
     (cond
       ((> n l0) (hs-hide-all) (outline-show-only-headings))
       ((> n l1) (hs-hide-all))     ;; also hide long comment

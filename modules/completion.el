@@ -14,6 +14,7 @@
 					("C-w" . backward-kill-word))
   :init
   (vertico-mode)
+
   (setq vertico-cycle t
 	  vertico-resize t
     read-file-name-completion-ignore-case t
@@ -21,11 +22,19 @@
     completion-ignore-case t)
 
 	;; can selete entry with M-<number> <ret>
-  (vertico-flat-mode)
-  (setq vertico-flat-max-lines 8)
+  ;; (vertico-flat-mode)
+  ;; (setq vertico-flat-max-lines 8)
+  (vertico-grid-mode)
 	(vertico-indexed-mode)
 	;; configure display per command
 	(vertico-multiform-mode)
+
+  (setq completion-in-region-function
+    (lambda (&rest args)
+      (apply (if vertico-mode
+               #'consult-completion-in-region
+               #'completion--in-region)
+        args)))
 
   (defun mk/create-vertico-multiform-commands (commands common-properties)
     (let ((result '()))
@@ -35,19 +44,19 @@
 
   (setq vertico-multiform-commands
     (append
-      '(("describe-*" grid (:not flat))
-         ("helpful-*" grid (:not flat))
-         ("jinx-correct" grid (:not flat))
-         (eglot-code-actions grid (:not flat))
-         (consult-theme grid (:not flat))
-         (execute-extended-command grid (:not flat)))
+      '(;; ("describe-*" grid (:not flat))
+         ;; ("helpful-*" grid (:not flat))
+         ;; ("jinx-correct" grid (:not flat))
+         ;; (eglot-code-actions grid (:not flat))
+         ;; (consult-theme grid (:not flat))
+         ;; (execute-extended-command grid (:not flat)))
       (mk/create-vertico-multiform-commands
         '(affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)
         '(buffer
            (vertico-buffer-display-action . (display-buffer-in-side-window
                                               (side . right)
                                               (window-width . 0.5)))
-           (:not flat))))))
+           (:not flat)))))))
 
 ;; Configure directory extension.
 ;; TODO don't know the actual working scenario
@@ -141,23 +150,24 @@
 ;; NOTE: disable these to using lsp-bridge
 ;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
-(use-package corfu
-	:straight (:host github :repo "minad/corfu"
-							:files ("*.el" "extensions/*.el"))
-  :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto nil)               ;; Disable auto completion
-  (corfu-on-exact-match 'quit) 
-	(corfu-auto-delay 0)           ;; Enable auto completion
-	(corfu-auto-prefix 2)          ;; Enable auto completion
-  :init
-  (global-corfu-mode)
-	;; remembers selected candidates and sorts the candidates
-	(corfu-history-mode)
-	;; quick select, M-<number> <ret>
-	(corfu-indexed-mode)
-	;; popup info
-	(corfu-popupinfo-mode))
+;; use vertico completion instead(since I don't use completion often)
+;; (use-package corfu
+;; 	:straight (:host github :repo "minad/corfu"
+;; 							:files ("*.el" "extensions/*.el"))
+;;   :custom
+;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+;;   (corfu-auto nil)               ;; Disable auto completion
+;;   (corfu-on-exact-match 'quit) 
+;; 	(corfu-auto-delay 0)           ;; Enable auto completion
+;; 	(corfu-auto-prefix 2)          ;; Enable auto completion
+;;   :init
+;;   (global-corfu-mode)
+;; 	;; remembers selected candidates and sorts the candidates
+;; 	(corfu-history-mode)
+;; 	;; quick select, M-<number> <ret>
+;; 	(corfu-indexed-mode)
+;; 	;; popup info
+;; 	(corfu-popupinfo-mode))
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs
