@@ -45,12 +45,12 @@
 (push (cons 'alpha-background 95) default-frame-alist)
 
 (column-number-mode)
-(setq display-line-numbers 'relative)
 (global-display-line-numbers-mode 1)
+(setq display-line-numbers 'relative)
 
 (setq
- inhibit-startup-message t
- visible-bell t)
+  inhibit-startup-message t
+  visible-bell t)
 
 ;; Suppress warnings and errors during asynchronous native compilation
 (setq native-comp-async-report-warnings-errors nil)
