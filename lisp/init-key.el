@@ -740,6 +740,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
         ;; directly call Firefox instead of using browse-url to make parameters("?a=b") can be passed to local url
         ;; (browse-url url)
         (call-process "firefox" nil 0 nil url)
+        (call-process "swaymsg" nil 0 nil "workspace" "3")
         (message "open url: %s" url))
       (message "Invalid search engine!"))))
 
