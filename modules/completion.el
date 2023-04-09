@@ -185,14 +185,15 @@
 ;; add completion etension
 ;; TODO dict integration (enable it in org-mode or text-mode)
 (use-package cape
-	:hook ((prog-mode . mk/setup-cape)
-				  (text-mode . mk/setup-cape)
-          (org-mode . mk/setup-cape))
+	:hook ((prog-mode . mk/setup-cape))
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (defun mk/setup-cape()
-    (add-to-list 'completion-at-point-functions #'cape-file)))
+    (add-to-list 'completion-at-point-functions #'cape-file)
+    (add-to-list 'completion-at-point-functions #'cape-keyword)
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    ))
 
 ;;; Snippet =================================================
 ;; @ Tempel
