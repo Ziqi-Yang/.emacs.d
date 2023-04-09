@@ -192,6 +192,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "C-i" #'evil-jump-forward
     "C-o" #'evil-jump-backward
 	  "go"   #'evil-jump-out-args
+    "C-S-v" #'clipboard-yank
 
     "*" #'mk/evil-search-symbol-forward
     "#" #'mk/evil-search-symbol-backward
@@ -412,7 +413,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")
 	  ;; "gg"  #'(magit-status :which-key "status")
-	  "gg"  #'(mk/open-terminal-smart :which-key "status")
+	  "gg"  #'(mk/project-git :which-key "status")
     "gi" #'(magit-init :which-key "init")
 	  "gs"  #'(magit-status :which-key "status")
     "gd"  #'(magit-diff :which-key "diff(staged)")
@@ -795,5 +796,14 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
     (if symbol-bounds
       (delete-region (car symbol-bounds) (cdr symbol-bounds))
       (message "No symbol at point."))))
+
+(defun mk/project-git()
+  "Open gitui at project root.(Due to magit's poor performance)"
+  (interactive)
+  (let ((command-prefix "kitty --class fullscreen -d ")) ;; right parenthesis is needed to be added after concatance
+    (if (project-current)
+		  (start-process-shell-command "open terminal" "*terminal*"
+			  (concat command-prefix (project-root (project-current)) " gitui"))
+      (message "Not in a project!"))))
 
 (provide 'init-key)
