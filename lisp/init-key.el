@@ -305,6 +305,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; @ buffer
     "b"  '(:ignore t :which-key "Buffer & Bookmark")
     "bb" '(mk/consult-buffer-no-hidden :which-key "all buffer")
+    "bc" '(mk/switch-to-compilation-buffer :which-key "*compilation*")
     "br" #'(mk/reload-buffer :which-key "reload")
     "bB" '(consult-buffer :which-key "buffer(all)")
     "bp" '(mk/smart-buffer-switch-no-hidden :which-key "switch(p)")
@@ -325,17 +326,31 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ Code
 	  "c"  '(:ignore t :which-key "Code")
-	  "ca" '(eglot-code-actions :which-key "action")
-	  "cr" '(eglot-rename :which-key "rename")
-	  "cR" '(xref-find-references :which-key "references")
-	  "cc" '(color-rg-search-project-with-type :which-key "references")
-	  "ci" '(eglot-code-action-organize-imports :which-key "import organization")
-	  "cf" '(editorconfig-format-buffer :which-key "format buffer")
-	  "cF" '(eglot-code-action-quickfix :which-key "quick fix")
-	  "ce" '(consult-flymake :which-key "errors(b)")
-	  "cd" '(xref-find-definitions :which-key "definitions")
-	  "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
 
+    ;; citre
+	  "cr" '(color-rg-search-project-with-type :which-key "rg(p)")
+    "cb" '(color-rg-search-symbol-in-current-file :which-key "rg(b)")
+    "cf" '(color-rg-search-symbol :which-key "rg(d)")
+    "cj" '(citre-jump :which-key "jump")
+    "ck" '(citre-jump :which-key "jump back")
+    "cp" '(citre-peek :which-key "peek") ;; M-n M-p to scroll
+    "cu" '(citre-update-this-tags-file :which-key "update tags")
+    "cc" '(citre-create-tags-file :which-key "create tags")
+    "ce" '(citre-edit-tags-file-recipe :which-key "edit tags recipe")
+
+    ;; ;; eglot
+	  ;; "ca" '(eglot-code-actions :which-key "action")
+	  ;; "cr" '(eglot-rename :which-key "rename")
+	  ;; "cR" '(xref-find-references :which-key "references")
+	  ;; "cc" '(color-rg-search-project-with-type :which-key "references")
+	  ;; "ci" '(eglot-code-action-organize-imports :which-key "import organization")
+	  ;; "cf" '(editorconfig-format-buffer :which-key "format buffer")
+	  ;; "cF" '(eglot-code-action-quickfix :which-key "quick fix")
+	  ;; "ce" '(consult-flymake :which-key "errors(b)")
+	  ;; "cd" '(xref-find-definitions :which-key "definitions")
+	  ;; "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
+
+    ;; lsp-bridge
 	  ;; "ca" '(lsp-bridge-code-action :which-key "action")
 	  ;; "cr" '(lsp-bridge-rename :which-key "rename")
 	  ;; "cR" '(color-rg-search-project-with-type :which-key "references") ;; lsp-bridge-find-references cannot popup
@@ -761,5 +776,10 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
     ;; visual mode use package `evil-visualstar`
     ((evil-normal-state-p)
       (evil-search-word-backward 1 (symbol-at-point)))))
+
+(defun mk/switch-to-compilation-buffer()
+  "Switch to compilation buffer"
+  (interactive)
+  (switch-to-buffer "*compilation*"))
 
 (provide 'init-key)

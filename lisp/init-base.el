@@ -236,36 +236,39 @@
 
 ;;; outline minor mode ======================================
 ;; use TAB, ze, zE to toggle outline (evil-collection binding)
-(defun mk/set-outline-minor-mode ()
-  "Define compile command for every mode."
-  (outline-minor-mode)
-  ;; this line also set hs-hide symbol
-  (set-display-table-slot standard-display-table 
-    'selective-display 
-    (string-to-vector " ❡❡❡"))
-  (let (comment-symbol)
-    (cond
-      ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
-        (setq comment-symbol "//"))
-      (t
-        (setq comment-symbol '(syntax comment-start))))
-    (set (make-local-variable 'outline-regexp)
-      (eval `(rx bol ,comment-symbol (*? not-newline) (>= 10 "=") (* blank) eol)))))
+;; (defun mk/set-outline-minor-mode ()
+;;   "Define compile command for every mode."
+;;   (outline-minor-mode)
+;;   ;; this line also set hs-hide symbol
+;;   (let (comment-symbol)
+;;     (cond
+;;       ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
+;;         (setq comment-symbol "//"))
+;;       (t
+;;         (setq comment-symbol '(syntax comment-start))))
+;;     (set (make-local-variable 'outline-regexp)
+;;       (eval `(rx bol ,comment-symbol (*? not-newline) (>= 10 "=") (* blank) eol)))))
 
-(add-hook 'prog-mode-hook #'mk/set-outline-minor-mode)
+;; (add-hook 'prog-mode-hook #'mk/set-outline-minor-mode)
 
 ;;; My custom functions =====================================
 (defun mk/hs-hide-level-samrt()
   "Calling hs-hide-level based on line numbers."
   (interactive)
   (hs-minor-mode)
+  (set-display-table-slot standard-display-table 
+    'selective-display 
+    (string-to-vector " ❡❡❡"))
   (let ((n (car (buffer-line-statistics)))
          (l3 100)
          (l2 200)
          (l1 400)
          (l0 600))
     (cond
-      ((> n l0) (hs-hide-all) (outline-show-only-headings))
+      ((> n l0)
+        (hs-hide-all)
+        ;; (outline-show-only-headings)
+        )
       ((> n l1) (hs-hide-all))     ;; also hide long comment
       ((> n l2) (hs-hide-level 1)) ;; show root function
       ((> n l3) (hs-hide-level 2)))))

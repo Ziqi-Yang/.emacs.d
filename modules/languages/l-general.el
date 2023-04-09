@@ -126,10 +126,6 @@
   :defer t
   :init
   (require 'citre-config)
-  (global-set-key (kbd "C-x c j") 'citre-jump)
-  (global-set-key (kbd "C-x c J") 'citre-jump-back)
-  (global-set-key (kbd "C-x c p") 'citre-ace-peek)
-  (global-set-key (kbd "C-x c u") 'citre-update-this-tags-file)
   :config
   (setq
     citre-default-create-tags-file-location 'global-cache

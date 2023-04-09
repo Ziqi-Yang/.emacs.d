@@ -44,19 +44,14 @@
 
   (setq vertico-multiform-commands
     (append
-      '(;; ("describe-*" grid (:not flat))
-         ;; ("helpful-*" grid (:not flat))
-         ;; ("jinx-correct" grid (:not flat))
-         ;; (eglot-code-actions grid (:not flat))
-         ;; (consult-theme grid (:not flat))
-         ;; (execute-extended-command grid (:not flat)))
+      '()
       (mk/create-vertico-multiform-commands
         '(affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)
         '(buffer
            (vertico-buffer-display-action . (display-buffer-in-side-window
                                               (side . right)
                                               (window-width . 0.5)))
-           (:not flat)))))))
+           (:not grid))))))
 
 ;; Configure directory extension.
 ;; TODO don't know the actual working scenario
