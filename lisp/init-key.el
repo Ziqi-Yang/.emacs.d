@@ -803,7 +803,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (let ((command-prefix "kitty --class fullscreen -d ")) ;; right parenthesis is needed to be added after concatance
     (if (project-current)
 		  (start-process-shell-command "open terminal" "*terminal*"
-			  (concat command-prefix (project-root (project-current)) " gitui"))
+			  (concat command-prefix (project-root (project-current)) " ~/.emacs.d/gitui_start.sh"))
       (message "Not in a project!"))))
 
 (provide 'init-key)
