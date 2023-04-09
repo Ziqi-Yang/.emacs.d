@@ -100,9 +100,9 @@
 ;;        (right-fringe . 8))))
 
 ;;; Annotations in completion =============================
-(use-package marginalia
-  :init
-  (marginalia-mode))
+;; (use-package marginalia
+;;   :init
+;;   (marginalia-mode))
 
 
 ;;; Orderless completion ====================================
@@ -113,22 +113,22 @@
         completion-category-overrides '((file (styles . (partial-completion))))))
 
 ;;; Embark ==================================================
-(use-package embark
-  :bind (("C-." . embark-act))
-  :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-	;; Show Embark actions via which-key
-  (setq embark-action-indicator
-        (lambda (map)
-          (which-key--show-keymap "Embark" map nil nil 'no-paging)
-          #'which-key--hide-popup-ignore-command)
-        embark-become-indicator embark-action-indicator)
+;; (use-package embark
+;;   :bind (("C-." . embark-act))
+;;   :init
+;;   (setq prefix-help-command #'embark-prefix-help-command)
+;;   :config
+;; 	;; Show Embark actions via which-key
+;;   (setq embark-action-indicator
+;;         (lambda (map)
+;;           (which-key--show-keymap "Embark" map nil nil 'no-paging)
+;;           #'which-key--hide-popup-ignore-command)
+;;         embark-become-indicator embark-action-indicator)
 
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
+;;   (add-to-list 'display-buffer-alist
+;;                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+;;                  nil
+;;                  (window-parameters (mode-line-format . none)))))
 
 ;; @ Interact at Consult 
 (use-package embark-consult
@@ -174,12 +174,12 @@
   (setq tab-always-indent 'complete))
 
 ;; @ enable corfu in terminal emacs
-(use-package corfu-terminal
-	:straight (:type git
-							:repo "https://codeberg.org/akib/emacs-corfu-terminal.git")
-	:config
-	(unless (display-graphic-p)
-		(corfu-terminal-mode +1)))
+;; (use-package corfu-terminal
+;; 	:straight (:type git
+;; 							:repo "https://codeberg.org/akib/emacs-corfu-terminal.git")
+;; 	:config
+;; 	(unless (display-graphic-p)
+;; 		(corfu-terminal-mode +1)))
 
 ;; Cafe ====================================================
 ;; add completion etension

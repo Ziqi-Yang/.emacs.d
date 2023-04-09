@@ -54,8 +54,8 @@
   (require 'git)
   (require 'init-proxy)
   (require 'ai)
-  (require 'info)
-  (require 'emacs-developer)
+  (require 'info) ;; FIXME this file cannot be loaded
+  (require 'emacs-developer) ;; and If I comment this line, l-general file cannot be loaded
   (require 'hugo))
 
 ;; load language

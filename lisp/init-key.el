@@ -100,12 +100,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;   ()[]{} many more
 ;;   clever D, Y, C, x, ... many more
 ;; https://github.com/emacs-evil/evil-cleverparens
-(use-package evil-cleverparens
-  :hook ((emacs-lisp-mode) . evil-cleverparens-mode)
-  :init
-  (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
-  :config
-  (setq evil-cleverparens-use-additional-bindings nil))
+;; (use-package evil-cleverparens
+;;   :hook ((emacs-lisp-mode) . evil-cleverparens-mode)
+;;   :init
+;;   (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
+;;   :config
+;;   (setq evil-cleverparens-use-additional-bindings nil))
 
 ;; + xml attribute
 ;; textobj: x
@@ -129,9 +129,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;   - horizontal movement: evil-snipe
 ;;   - *, # visual area replacement: evil-easymotion
 ;; + gj,gk,ge,gb,g*,g#...
-(use-package evil-easymotion
-	:config
-	(evilem-default-keybindings "g"))
+;; (use-package evil-easymotion
+;; 	:config
+;; 	(evilem-default-keybindings "g"))
 
 ;; + line: s(two characters search), f, t(makes f, t repectable)
 (use-package evil-snipe
@@ -152,7 +152,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	(which-key-mode))
 
 ;;; select region ===========================================
-(use-package expand-region)
+;; (use-package expand-region)
 
 ;;; Mini buffer enhance =====================================
 (defun mk/insert-clipboard-in-minibuffer ()
@@ -203,7 +203,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "[a"   #'evil-backward-arg
 	  "]s" #'sp-end-of-sexp
 	  "[s" #'sp-beginning-of-sexp
-	  "M-<backspace>" #'(lambda () (interactive) (progn (sp-backward-kill-sexp ) (evil-insert-state)) )
+	  "M-<backspace>" #'(lambda () (interactive) (progn (mk/delete-symbol-at-point) (evil-insert-state)) )
 
 	  ;; @ text-scale via init-base/default-text-scale
 	  ;; C-- and C-= to change font size
@@ -244,7 +244,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "C-S-v" #'clipboard-yank
 
 	  ;; smartparen
-	  "M-<backspace>" #'sp-backward-kill-sexp
+	  "M-<backspace>" #'mk/delete-symbol-at-point
     ;; "S-<return>" #'ispell-complete-word
     ;; "C-j" #'lsp-bridge-popup-complete-menu
     "C-j" #'complete-symbol
@@ -330,9 +330,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; citre
 	  "cr" '(color-rg-search-project-with-type :which-key "rg(p)")
     "cb" '(color-rg-search-symbol-in-current-file :which-key "rg(b)")
+	  "cd" '(xref-find-definitions :which-key "definitions")
     "cf" '(color-rg-search-symbol :which-key "rg(d)")
     "cj" '(citre-jump :which-key "jump")
-    "ck" '(citre-jump :which-key "jump back")
+    "ck" '(citre-jump-back :which-key "jump back")
     "cp" '(citre-peek :which-key "peek") ;; M-n M-p to scroll
     "cu" '(citre-update-this-tags-file :which-key "update tags")
     "cc" '(citre-create-tags-file :which-key "create tags")
@@ -410,7 +411,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ git
 	  "g" '(:ignore t :which-key "Git")
-	  "gg"  #'(magit-status :which-key "status")
+	  ;; "gg"  #'(magit-status :which-key "status")
+	  "gg"  #'(mk/open-terminal-smart :which-key "status")
     "gi" #'(magit-init :which-key "init")
 	  "gs"  #'(magit-status :which-key "status")
     "gd"  #'(magit-diff :which-key "diff(staged)")
@@ -445,6 +447,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "pp" '(project-switch-project :which-key "switch")
 	  "pt" '(magit-todos-list :which-key "todos")
 	  "pe" '(flymake-show-project-diagnostics :which-key "errors(p)")
+    "ps" #'(project-shell :which-key "project-shell")
 	  "pk" '(project-kill-buffers :which-key "kill buffers(p)")
 	  "pc" #'(mk/project-compile :whici-key "compile")
 	  "pr" #'(project-async-shell-command :which-key "run command")
@@ -585,10 +588,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   (interactive)
   (let (
          ;; (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ")
-         (command-prefix "kitty -d ")) ;; right parenthesis is needed to be added after concatance
+         (command-prefix "kitty --class floating -d ")) ;; right parenthesis is needed to be added after concatance
     (if (project-current)
 		  (start-process-shell-command "open terminal" "*terminal*"
-			  (concat command-prefix (project-root (project-current)) "'"))
+			  (concat command-prefix (project-root (project-current))))
       (start-process-shell-command "open terminal" "*terminal*"
         ;; (concat command-prefix (file-name-directory buffer-file-name) "'")
         (concat command-prefix (file-name-directory buffer-file-name))))))
@@ -781,5 +784,13 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   "Switch to compilation buffer"
   (interactive)
   (switch-to-buffer "*compilation*"))
+
+(defun mk/delete-symbol-at-point ()
+  "Delete the symbol at point."
+  (interactive)
+  (let ((symbol-bounds (bounds-of-thing-at-point 'symbol)))
+    (if symbol-bounds
+      (delete-region (car symbol-bounds) (cdr symbol-bounds))
+      (message "No symbol at point."))))
 
 (provide 'init-key)

@@ -64,45 +64,45 @@
 	(setq eyebrowse-new-workspace "*dashboard*")) ;; use *scratch* buffer (use string to provide it with custom buffer name)
 
 ;; @ save session(buildin)
-(use-package desktop
-  :custom
-  (desktop-restore-eager 4)
-	(desktop-save t)
-	:init
-	(if (display-graphic-p)
-		;; non-daemon emacs 
-		(progn
-			(add-hook 'after-init-hook '(lambda () (desktop-save-mode t)))
-			;; Manually read by clicking on dashboard icon instead
-			;; (add-hook 'after-init-hook #'desktop-read)
-			)
-		;; emacs server
-		(progn
-			(add-hook 'server-after-make-frame-hook '(lambda () (desktop-save-mode t)))
-			;; we need the first emacsclient to read the session, the later opened emacsclient(the
-			;; first one is still alive) will not read the session since the server arleady owns the
-			;; session
-			;; Manually read by clicking on dashboard icon instead
-			;; (add-hook 'server-after-make-frame-hook #'desktop-read)
-			)
-		)
-	:config
-	;; Config Block makes sure this lambda function load later than desktop in kill-emacs-query-functions hook , so this lambda function is executed earlier
+;; (use-package desktop
+;;   :custom
+;;   (desktop-restore-eager 4)
+;; 	(desktop-save t)
+;; 	:init
+;; 	(if (display-graphic-p)
+;; 		;; non-daemon emacs 
+;; 		(progn
+;; 			(add-hook 'after-init-hook '(lambda () (desktop-save-mode t)))
+;; 			;; Manually read by clicking on dashboard icon instead
+;; 			;; (add-hook 'after-init-hook #'desktop-read)
+;; 			)
+;; 		;; emacs server
+;; 		(progn
+;; 			(add-hook 'server-after-make-frame-hook '(lambda () (desktop-save-mode t)))
+;; 			;; we need the first emacsclient to read the session, the later opened emacsclient(the
+;; 			;; first one is still alive) will not read the session since the server arleady owns the
+;; 			;; session
+;; 			;; Manually read by clicking on dashboard icon instead
+;; 			;; (add-hook 'server-after-make-frame-hook #'desktop-read)
+;; 			)
+;; 		)
+;; 	:config
+;; 	;; Config Block makes sure this lambda function load later than desktop in kill-emacs-query-functions hook , so this lambda function is executed earlier
 
-	;; remove desktop-kill hook. Leave out the check procedure.
-	(remove-hook 'kill-emacs-query-functions #'desktop-kill)
+;; 	;; remove desktop-kill hook. Leave out the check procedure.
+;; 	(remove-hook 'kill-emacs-query-functions #'desktop-kill)
 
-	(let ((save-path (expand-file-name ".local/data/desktop" user-emacs-directory)))
-		;; when explictly quit emacs with kill-emacs command
-		(add-hook 'kill-emacs-hook
-			`(lambda ()
-				 (desktop-remove)
-				 (desktop-save ,save-path t)))
-		;; when implictly quit emacs like close window
-		(add-hook 'kill-emacs-query-functions
-			`(lambda ()
-				 (desktop-remove) ;; make sure there is no desktop file or desktop.el will prompt you Whether override it or not
-				 (desktop-save ,save-path t))))) ;; save session without lock
+;; 	(let ((save-path (expand-file-name ".local/data/desktop" user-emacs-directory)))
+;; 		;; when explictly quit emacs with kill-emacs command
+;; 		(add-hook 'kill-emacs-hook
+;; 			`(lambda ()
+;; 				 (desktop-remove)
+;; 				 (desktop-save ,save-path t)))
+;; 		;; when implictly quit emacs like close window
+;; 		(add-hook 'kill-emacs-query-functions
+;; 			`(lambda ()
+;; 				 (desktop-remove) ;; make sure there is no desktop file or desktop.el will prompt you Whether override it or not
+;; 				 (desktop-save ,save-path t))))) ;; save session without lock
 
 ;;; text scale change on the fly ============================
 (use-package default-text-scale 
@@ -126,8 +126,8 @@
   (aw-minibuffer-flag t))
 
 ;; @ remember window layout for different scino
-(use-package winner
-	:hook (after-init . winner-mode))
+;; (use-package winner
+;; 	:hook (after-init . winner-mode))
 
 ;;; Recent file =============================================
 (use-package recentf
@@ -221,9 +221,9 @@
 			 ("STUB"   . "#f39c12"))))
 
 ;;; Persistent Scrctch Buffer ===============================
-(use-package persistent-scratch
-	:config
-	(persistent-scratch-setup-default))
+;; (use-package persistent-scratch
+;; 	:config
+;; 	(persistent-scratch-setup-default))
 
 ;;; Show Key ================================================
 ;; for presentation usage

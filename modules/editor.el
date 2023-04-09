@@ -17,8 +17,8 @@
 
 ;;; Paren ===================================================
 ;; @ color for all 
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+;; (use-package rainbow-delimiters
+;;   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; @ according to point position
 (use-package highlight-parentheses
@@ -48,11 +48,11 @@
 ;;                               (?\< . ?\>)
 ;;                               )))
 
-(use-package smartparens
-  :hook ((prog-mode org-mode lisp-interaction-mode-hook) . smartparens-mode)
-	:config
-	;; (sp-pair "<#" "#>") ;; example, support multiple characters
-	)
+;; (use-package smartparens
+;;   :hook ((prog-mode org-mode lisp-interaction-mode-hook) . smartparens-mode)
+;; 	:config
+;; 	;; (sp-pair "<#" "#>") ;; example, support multiple characters
+;; 	)
 
 ;;; Indentation =============================================
 (use-package aggressive-indent 

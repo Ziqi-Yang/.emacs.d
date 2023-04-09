@@ -6,20 +6,20 @@
 ;; use C-j and C-k to navigate instead
 ;; when meet key conflicts, please refer to evil-collection
 ;; https://github.com/emacs-evil/evil-collection
-(use-package magit
-	:config
-	(setq magit-status-buffer-switch-function #'switch-to-buffer)
-	:custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+;; FIXME it seems that magit has performance issue
+;; (use-package magit
+;; 	:config
+;; 	(setq magit-status-buffer-switch-function #'switch-to-buffer)
+;; 	:custom
+;;   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; @ Forge
 ;; Work with Git forges, such as Github and Gitlab, from the comfort of Magit and the rest of Emacs.
-;; TODO 
-(use-package forge 
-  :disabled)
+;; (use-package forge 
+;;   :disabled)
 
-(use-package magit-todos
-  :defer t)
+;; (use-package magit-todos
+;;   :defer t)
 
 ;;; Diff-hl =================================================
 (use-package diff-hl
