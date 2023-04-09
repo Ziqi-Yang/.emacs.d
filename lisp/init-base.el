@@ -251,7 +251,13 @@
 
 ;; (add-hook 'prog-mode-hook #'mk/set-outline-minor-mode)
 
-;;; My custom functions =====================================
+;;; Window Configuration ==================================
+(setq display-buffer-alist
+  '(("*compilation*"
+      (display-buffer-same-window)
+      (reusable-frames . nil))))
+
+;;; My custom functions ===================================
 (defun mk/hs-hide-level-samrt()
   "Calling hs-hide-level based on line numbers."
   (interactive)
