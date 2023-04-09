@@ -46,7 +46,7 @@
 
 (column-number-mode)
 (global-display-line-numbers-mode 1)
-(setq display-line-numbers 'relative)
+(setq display-line-numbers-type 'relative)
 
 (setq
   inhibit-startup-message t
