@@ -38,15 +38,15 @@
 	:init
 	(setq show-paren-mode nil)) ;; use highlight-parentheses instead
 
-;; @ use smartparens instead
-;; (use-package elec-pair
-;;   :hook ((prog-mode org-mode) . electric-pair-mode)
-;;   :config
-;;   (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
-;;                               (?\{ . ?\})
-;;                               (?\[ . ?\])
-;;                               (?\< . ?\>)
-;;                               )))
+;; @ use electronic pair
+(use-package elec-pair
+  :hook ((prog-mode) . electric-pair-mode)
+  :config
+  (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
+                               (?\{ . ?\})
+                               (?\[ . ?\])
+                               (?\< . ?\>)
+                               )))
 
 ;; (use-package smartparens
 ;;   :hook ((prog-mode org-mode lisp-interaction-mode-hook) . smartparens-mode)
