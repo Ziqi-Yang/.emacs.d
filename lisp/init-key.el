@@ -242,6 +242,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   ;; @ insert( map (no leader key
   (general-imap ;; insert
 	  ;; eivl(vim) default C-o can be useful when moving in evil insert mode
+    ;; emacs keybindings like C-f, C-b, M-f, M-b are also useful.
     "C-S-v" #'clipboard-yank
 
 	  ;; smartparen
@@ -329,16 +330,17 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "c"  '(:ignore t :which-key "Code")
 
     ;; citre
-	  "cr" '(color-rg-search-project-with-type :which-key "rg(p)")
-    "cb" '(color-rg-search-symbol-in-current-file :which-key "rg(b)")
-	  "cd" '(xref-find-definitions :which-key "definitions")
-    "cf" '(color-rg-search-symbol :which-key "rg(d)")
-    "cj" '(citre-jump :which-key "jump")
-    "ck" '(citre-jump-back :which-key "jump back")
-    "cp" '(citre-peek :which-key "peek") ;; M-n M-p to scroll
-    "cu" '(citre-update-this-tags-file :which-key "update tags")
-    "cc" '(citre-create-tags-file :which-key "create tags")
-    "ce" '(citre-edit-tags-file-recipe :which-key "edit tags recipe")
+	  "cr" #'(color-rg-search-project-with-type :which-key "rg(p)")
+    "cb" #'(color-rg-search-symbol-in-current-file :which-key "rg(b)")
+    "cd" #'(xref-find-definitions :which-key "rg(d)") ;; dumb-jump enhanced
+	  "cD" #'(dumb-jump-go-prefer-external :which-key "definitions")
+    "cf" #'(editorconfig-format-buffer :which-key "format buffer")
+    "cj" #'(citre-jump :which-key "jump")
+    "ck" #'(citre-jump-back :which-key "jump back")
+    "cp" #'(citre-peek :which-key "peek") ;; M-n M-p to scroll
+    "cu" #'(citre-update-this-tags-file :which-key "update tags")
+    "cc" #'(citre-create-tags-file :which-key "create tags")
+    "ce" #'(citre-edit-tags-file-recipe :which-key "edit tags recipe")
 
     ;; ;; eglot
 	  ;; "ca" '(eglot-code-actions :which-key "action")
@@ -554,8 +556,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   ;; info mode map
   (general-nmap
     :keymaps 'Info-mode-map 
-    "p" #'(Info-prev :which-key "prev")
-    "n" #'(Info-next :which-key "next")
+    "P" #'(Info-prev :which-key "prev")
+    "N" #'(Info-next :which-key "next")
     "u" #'(Info-up :which-key "up")
     "t" #'(Info-toc :which-key "toc")))
 

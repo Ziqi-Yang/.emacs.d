@@ -16,7 +16,7 @@
   (setq enable-recursive-minibuffers t)
   (savehist-mode 1))
 
-;;; auto revert buffer
+;;; auto revert buffer ======================================
 (global-auto-revert-mode)
 
 ;;; clean directory =========================================
@@ -195,6 +195,7 @@
 
 ;;; Search & Replce =========================================
 ;; @ make search and replace very easy (even for project)
+;; notice: in replace: !, y, n is the keybindings to replace all, replace current and not replace current
 (use-package color-rg
 	:straight (:host github :repo "manateelazycat/color-rg"))
 
@@ -271,10 +272,10 @@
     'selective-display 
     (string-to-vector " ❡❡❡"))
   (let ((n (car (buffer-line-statistics)))
-         (l3 100)
-         (l2 200)
-         (l1 400)
-         (l0 600))
+         (l3 200)
+         (l2 400)
+         (l1 600)
+         (l0 800))
     (cond
       ((> n l0)
         (hs-hide-all)

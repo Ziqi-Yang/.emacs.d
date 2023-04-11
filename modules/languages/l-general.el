@@ -91,6 +91,10 @@
 	;; install markdown-mode to rich the doc
 	)
 
+
+;; @ eldoc
+(setq eldoc-echo-area-use-multiline-p nil)
+
 ;;; @ lsp-bridge ============================================
 ;; (use-package yasnippet
 ;;   :config
@@ -122,6 +126,7 @@
 ;; ;; (evil-define-key 'insert acm-mode-map (kbd "M-k") #'acm-select-prev-page)
 ;; (add-hook 'acm-mode-hook #'evil-normalize-keymaps)
 
+;;; citre ===================================================
 (use-package citre
   :defer t
   :init
@@ -133,8 +138,12 @@
     citre-prompt-language-for-ctags-command t
     citre-auto-enable-citre-mode-modes '(prog-mode)))
 
-;; @ eldoc
-(setq eldoc-echo-area-use-multiline-p nil)
+;;; dumb-jump ===============================================
+(use-package dumb-jump
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+  (setq evil-lookup-func #'dumb-jump-quick-look))
 
 ;;; Spell Checker
 ;; @ ispell
