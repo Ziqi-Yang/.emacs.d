@@ -152,7 +152,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	(which-key-mode))
 
 ;;; select region ===========================================
-;; (use-package expand-region)
+(use-package expand-region)
 
 ;;; Mini buffer enhance =====================================
 (defun mk/insert-clipboard-in-minibuffer ()
@@ -200,10 +200,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
 	  "[f" '(treesit-beginning-of-defun :which-key "func begin")
 	  "]f" '(treesit-end-of-defun :which-key "func end")
-	  "]a"   #'evil-forward-arg
-	  "[a"   #'evil-backward-arg
-	  "]s" #'sp-end-of-sexp
-	  "[s" #'sp-beginning-of-sexp
+	  "]a"  #'evil-forward-arg
+	  "[a"  #'evil-backward-arg
+	  "]s"  #'forward-sexp
+	  "[s"  #'backward-sexp
 	  "M-<backspace>" #'(lambda () (interactive) (progn (mk/delete-symbol-at-point) (evil-insert-state)) )
 
 	  ;; @ text-scale via init-base/default-text-scale
@@ -332,7 +332,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; citre
 	  "cr" #'(color-rg-search-project-with-type :which-key "rg(p)")
     "cb" #'(color-rg-search-symbol-in-current-file :which-key "rg(b)")
-    "cd" #'(xref-find-definitions :which-key "rg(d)") ;; dumb-jump enhanced
+    "cd" #'(dumb-jump-go :which-key "rg(d)") ;; xref-find-references may be occupied by citre's backend
 	  "cD" #'(dumb-jump-go-prefer-external :which-key "definitions")
     "cf" #'(editorconfig-format-buffer :which-key "format buffer")
     "cj" #'(citre-jump :which-key "jump")
@@ -491,20 +491,21 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "sO" '(mk/search-online :which-key "online search")
     "st" #'(hl-todo-occur :which-key "todo(b)")
     "sT" #'(hl-todo-rgrep :which-key "todo(p)")
-	  "sr" '(:ignore t :which-key "color-rg") ; + color-rg
-	  "srd" '(:ignore t :which-key "current directory")
-	  "srdi" '(color-rg-search-input :which-key "input")
-	  "srdp" '(color-rg-search-symbol :which-key "point")
-	  "srde" '(color-rg-search-symbol-with-type :which-key "with file-extension")
-	  "srdd" '(color-rg-search-symbol :which-key "point")
-	  "srp" '(:ignore t :which-key "current project")
-	  "srpi" '(color-rg-search-input-in-project :which-key "input")
-	  "srpp" '(color-rg-search-symbol-in-project :which-key "point")
-	  "srpe" '(color-rg-search-project-with-type :which-key "with file-extension")
-	  "srb" '(:ignore t :which-key "current buffer")
-	  "srbi" '(color-rg-search-input-in-current-file :which-key "input")
-	  "srbp" '(color-rg-search-symbol-in-current-file :which-key "point")
-	  "srbb" '(color-rg-search-symbol-in-current-file :which-key "point")
+    "sr" '(query-replace :which-key "query replace")
+	  ;; "sr" '(:ignore t :which-key "color-rg") ; + color-rg
+	  ;; "srd" '(:ignore t :which-key "current directory")
+	  ;; "srdi" '(color-rg-search-input :which-key "input")
+	  ;; "srdp" '(color-rg-search-symbol :which-key "point")
+	  ;; "srde" '(color-rg-search-symbol-with-type :which-key "with file-extension")
+	  ;; "srdd" '(color-rg-search-symbol :which-key "point")
+	  ;; "srp" '(:ignore t :which-key "current project")
+	  ;; "srpi" '(color-rg-search-input-in-project :which-key "input")
+	  ;; "srpp" '(color-rg-search-symbol-in-project :which-key "point")
+	  ;; "srpe" '(color-rg-search-project-with-type :which-key "with file-extension")
+	  ;; "srb" '(:ignore t :which-key "current buffer")
+	  ;; "srbi" '(color-rg-search-input-in-current-file :which-key "input")
+	  ;; "srbp" '(color-rg-search-symbol-in-current-file :which-key "point")
+	  ;; "srbb" '(color-rg-search-symbol-in-current-file :which-key "point")
 
 	  "S" '(:ignore t :which-key "straight")
 	  "Sr" #'(straight-remove-unused-repos :which-key "remove unused")
@@ -545,6 +546,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "x" #'(scratch-buffer :which-key "scratch")
 
 	  "z" #'(:ignore t :which-key "trivial")
+    "zj" #'(evil-collection-consult-jump-list :which-key "jump his")
 	  "zt" #'(mk/translate :which-key "translate")
     ;; "zc" #'(ispell-word :which-key "correct word")
     ;; "zc" #'(jit-spell-correct-word :which-key "correct misspelling")

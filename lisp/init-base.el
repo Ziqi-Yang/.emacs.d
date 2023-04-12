@@ -256,12 +256,7 @@
 (setq display-buffer-alist
   '(("*compilation*"
       (display-buffer-same-window)
-      (reusable-frames . nil))
-     ("*color-rg*"
-       (display-buffer-in-side-window)
-       (side . right)
-       (window-width . 0.5)
-       (reusable-frames . nil))))
+      (reusable-frames . nil))))
 
 ;;; My custom functions ===================================
 (defun mk/hs-hide-level-samrt()

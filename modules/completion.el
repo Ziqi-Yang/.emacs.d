@@ -209,7 +209,9 @@
 		;; such	that it will be tried first.
     (setq-local completion-at-point-functions
       (cons #'tempel-expand
-        completion-at-point-functions))))
+        completion-at-point-functions)))
+  (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
+  (add-hook 'text-mode-hook #'tempel-abbrev-mode))
 
 (use-package tempel-collection
   :after tempel)

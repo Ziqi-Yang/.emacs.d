@@ -22,12 +22,12 @@
       (unless (file-remote-p default-directory)
         (auto-revert-mode)))))
 
-;; (defun mk/dired-find-file ()
-;;   "Like `find-file' but with `default-directory' set to the
-;; one specified by listing header."
-;;   (interactive)
-;;   (let ((default-directory (dired-current-directory)))
-;;     (call-interactively #'find-file)))
+(defun mk/dired-find-file ()
+  "Like `find-file' but with `default-directory' set to the
+one specified by listing header."
+  (interactive)
+  (let ((default-directory (dired-current-directory)))
+    (call-interactively #'find-file)))
 
 (mapBegin!
   (general-unbind 'normal dired-mode-map
