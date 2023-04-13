@@ -183,7 +183,7 @@
 
 ;; Cafe ====================================================
 ;; add completion etension
-;; TODO dict integration (enable it in org-mode or text-mode)
+;; FIXME it seems like this package doesn't work well with citre (may be citre's problem)
 (use-package cape
 	:hook ((prog-mode . mk/setup-cape))
   :init

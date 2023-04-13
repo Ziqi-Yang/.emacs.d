@@ -250,6 +250,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; "S-<return>" #'ispell-complete-word
     ;; "C-j" #'lsp-bridge-popup-complete-menu
     "C-j" #'complete-symbol
+    "C-k" #'cape-dabbrev
+    "C-f" #'cape-file
 	  ;; "M-<return>" #'sp-up-sexp
 	  ;; "M-S-<return>" #'sp-backward-up-sexp
 
