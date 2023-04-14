@@ -486,7 +486,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "sc" '(list-colors-display :which-key "colors")
 	  "si" '(consult-imenu :which-key "imenu")
     "sI" '(consult-info :which-key "info")
-	  "sp" '(affe-grep :which-key "affe-grep(p)")
+	  "sp" '(mk/better-affe-grep :which-key "affe-grep(p)")
 	  "sP" '(consult-ripgrep :which-key "consult-ripgrep(p)")
 	  "sb" '(consult-bookmark :which-key "bookmark")
     "sd" '(dictionary-search :which-key "dictionary")
@@ -819,5 +819,10 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
 		  (start-process-shell-command "open terminal" "*terminal*"
 			  (concat command-prefix (project-root (project-current)) " ~/.emacs.d/gitui_start.sh"))
       (message "Not in a project!"))))
+
+(defun mk/better-affe-grep()
+  "Use symbol at point as the default input of affe-grep."
+  (interactive)
+  (affe-grep nil (thing-at-point 'symbol)))
 
 (provide 'init-key)

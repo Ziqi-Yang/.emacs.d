@@ -201,6 +201,7 @@
 
 ;; @ fuzzy finder
 (use-package affe
+  :straight (:host github :repo "minad/affe" :files ("*.el"))
   :config
   ;; Manual preview key for `affe-grep' 
   (consult-customize affe-grep :preview-key '(:debounce 0.5 any))

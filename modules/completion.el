@@ -46,7 +46,7 @@
     (append
       '()
       (mk/create-vertico-multiform-commands
-        '(affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)
+        '(mk/better-affe-grep affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)
         '(buffer
            (vertico-buffer-display-action . (display-buffer-in-side-window
                                               (side . right)

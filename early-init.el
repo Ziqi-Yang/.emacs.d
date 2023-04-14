@@ -14,7 +14,8 @@
 ;;; Performance =============================================
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
 ;; The default is ~800kB. Now allocating 500 MB.
-(setq gc-cons-threshold (* 500 1024 1024))
+(setq gc-cons-threshold (* 500 1024 1024)
+  gc-cons-percentage 0.5)
 ;; increase performance (origin 4096 byte)
 (setq read-process-output-max (* 10 1024 1024))
 
