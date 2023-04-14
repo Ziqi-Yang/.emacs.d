@@ -159,4 +159,19 @@
 (use-package ansi-color ;; @ emacs 28 buildin
   :hook (compilation-filter . ansi-color-compilation-filter))
 
+;;; Hi-lock =================================================
+;; highlight-symbol-at-point (which is integrated to `mk/evil-search-symbol-forward')
+
+(setq hi-lock-face-defaults '("mk/face/hi-yellow" "mk/face/hi-pink" "hi-green" "hi-blue" "hi-salmon" "hi-aquamarine" "hi-black-b" "hi-blue-b" "hi-red-b" "hi-green-b" "hi-black-hb"))
+
+(defface mk/face/hi-yellow
+  '((t (:background "#feca57")))
+  "Custom face for hi-lock mode."
+  :group 'hi-lock-faces)
+
+(defface mk/face/hi-pink
+  '((t (:background "#ff9ff3")))
+  "Custom face for hi-lock mode."
+  :group 'hi-lock-faces)
+
 (provide 'init-ui)

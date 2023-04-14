@@ -197,6 +197,9 @@
           ;; c
           ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
             "make run")
+          ;; zig
+          ((eq major-mode 'zig-mode)
+            "zig build")
           ;; python
           ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
             (concat "python " (buffer-file-name)))
@@ -205,5 +208,7 @@
     ))
 
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
+
+(setq project-vc-extra-root-markers '("Cargo.toml"))
 
 (provide 'l-general)

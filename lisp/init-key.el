@@ -195,6 +195,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "C-S-v" #'clipboard-yank
 
     "*" #'mk/evil-search-symbol-forward
+    "C-*" #'mk/unhighlight-search
     "#" #'mk/evil-search-symbol-backward
 
     ;; TODO this is temporary, wait for news from evil-textobj-tree-sitter
@@ -780,6 +781,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (cond
     ;; visual mode use package `evil-visualstar`
     ((evil-normal-state-p)
+      (highlight-symbol-at-point)
       (evil-search-word-forward 1 (symbol-at-point)))))
 
 (defun mk/evil-search-symbol-backward ()
@@ -788,7 +790,13 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (cond
     ;; visual mode use package `evil-visualstar`
     ((evil-normal-state-p)
+      (highlight-symbol-at-point)
       (evil-search-word-backward 1 (symbol-at-point)))))
+
+(defun mk/unhighlight-search()
+  "Unhighlight all symbols highlighted by `highlight-symbol-at-point' in `mk/evil-search-symbol-*'"
+  (interactive)
+  (unhighlight-regexp t))
 
 (defun mk/switch-to-compilation-buffer()
   "Switch to compilation buffer"
