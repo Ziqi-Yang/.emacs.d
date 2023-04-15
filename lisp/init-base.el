@@ -259,6 +259,13 @@
       (display-buffer-same-window)
       (reusable-frames . nil))))
 
+;;; Environment Variables ===================================
+(defun mk/set-env()
+  "Set environment variables for Emacs"
+  (interactive)
+  (setenv "GTAGSOBJDIRPREFIX" "/home/zarkli/.cache/gtags/"))
+(add-hook 'emacs-startup-hook #'mk/set-env)
+
 ;;; My custom functions ===================================
 (defun mk/hs-hide-level-samrt()
   "Calling hs-hide-level based on line numbers."
@@ -286,5 +293,6 @@
   (with-temp-buffer
     (insert str)
     (clipboard-kill-region (point-min) (point-max))))
+
 
 (provide 'init-base)

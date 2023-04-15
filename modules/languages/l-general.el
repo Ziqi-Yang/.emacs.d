@@ -136,14 +136,16 @@
     citre-default-create-tags-file-location 'global-cache
     citre-use-project-root-when-creating-tags t
     citre-prompt-language-for-ctags-command t
-    citre-auto-enable-citre-mode-modes '(prog-mode)))
+    citre-auto-enable-citre-mode-modes '(prog-mode))
+  (setq evil-lookup-func #'citre-peek))
 
 ;;; dumb-jump ===============================================
-(use-package dumb-jump
-  :config
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-  (setq evil-lookup-func #'dumb-jump-quick-look))
+;; (use-package dumb-jump
+;;   :config
+;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;;   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+;;   ;; (setq evil-lookup-func #'dumb-jump-quick-look)
+;;   )
 
 ;;; Spell Checker
 ;; @ ispell

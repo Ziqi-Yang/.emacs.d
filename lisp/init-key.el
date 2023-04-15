@@ -335,13 +335,15 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; citre
 	  "cr" #'(color-rg-search-project-with-type :which-key "rg(p)")
     "cb" #'(color-rg-search-symbol-in-current-file :which-key "rg(b)")
-    "cd" #'(dumb-jump-go :which-key "rg(d)") ;; xref-find-references may be occupied by citre's backend
+    "cd" #'(citre-jump :which-key "rg(d)") ;; xref-find-references may be occupied by citre's backend
+    "cr" #'(citre-jump-to-reference :which-key "reference")
 	  "cD" #'(dumb-jump-go-prefer-external :which-key "definitions")
     "cf" #'(editorconfig-format-buffer :which-key "format buffer")
     "cj" #'(citre-jump :which-key "jump")
     "ck" #'(citre-jump-back :which-key "jump back")
     "cp" #'(citre-peek :which-key "peek") ;; M-n M-p to scroll
     "cu" #'(citre-update-this-tags-file :which-key "update tags")
+    "cU" #'(mk/update-all-tags :which-key "update gtags")
     "cc" #'(citre-create-tags-file :which-key "create tags")
     "ce" #'(citre-edit-tags-file-recipe :which-key "edit tags recipe")
 
@@ -824,5 +826,11 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   "Use symbol at point as the default input of affe-grep."
   (interactive)
   (affe-grep nil (thing-at-point 'symbol)))
+
+(defun mk/update-all-tags()
+  "Update both ctags and gtags file (for citre)."
+  (interactive)
+  (citre-update-this-tags-file)
+  (citre-global-update-database))
 
 (provide 'init-key)

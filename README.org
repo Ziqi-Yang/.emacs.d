@@ -32,7 +32,7 @@ sudo pacman -S plantuml
 paru -S mermaid-cli
 
 # ctire
-sudo pacman -S ctags
+sudo pacman -S ctags global # ctags and gtags(needed for finding reference)
 #+end_src
 
 (Now I don't use it)Requirements of =lsp-bridge=: https://github.com/manateelazycat/lsp-bridge
