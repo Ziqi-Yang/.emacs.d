@@ -333,7 +333,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "c"  '(:ignore t :which-key "Code")
 
     ;; citre
-	  "cr" #'(color-rg-search-project-with-type :which-key "rg(p)")
+	  "cR" #'(color-rg-search-project-with-type :which-key "rg(p)")
     "cb" #'(color-rg-search-symbol-in-current-file :which-key "rg(b)")
     "cd" #'(citre-jump :which-key "rg(d)") ;; xref-find-references may be occupied by citre's backend
     "cr" #'(citre-jump-to-reference :which-key "reference")
@@ -484,7 +484,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "sas" '(apropos-symbol :which-key "symbol")
     "sav" '(apropos-variable :which-key "variable")
     "saf" '(apropos-function :which-key "function")
-	  "ss" '(consult-line :which-key "content")
+	  "ss" '(mk/better-consult-line :which-key "content")
     "sc" '(list-colors-display :which-key "colors")
 	  "si" '(consult-imenu :which-key "imenu")
     "sI" '(consult-info :which-key "info")
@@ -823,9 +823,14 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
       (message "Not in a project!"))))
 
 (defun mk/better-affe-grep()
-  "Use symbol at point as the default input of affe-grep."
+  "Use symbol at point as the default input of `affe-grep'."
   (interactive)
   (affe-grep nil (thing-at-point 'symbol)))
+
+(defun mk/better-consult-line()
+  "Use symbol at point as the default input of `consult-line'."
+  (interactive)
+  (consult-line (thing-at-point 'symbol) nil))
 
 (defun mk/update-all-tags()
   "Update both ctags and gtags file (for citre)."

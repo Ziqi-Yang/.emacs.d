@@ -45,7 +45,7 @@
   (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
                                (?\{ . ?\})
                                (?\[ . ?\])
-                               (?\< . ?\>)
+                               ;; (?\< . ?\>)
                                )))
 
 ;; (use-package smartparens

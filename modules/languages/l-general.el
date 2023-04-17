@@ -136,7 +136,10 @@
     citre-default-create-tags-file-location 'global-cache
     citre-use-project-root-when-creating-tags t
     citre-prompt-language-for-ctags-command t
+    citre-capf-substr-completion t
     citre-auto-enable-citre-mode-modes '(prog-mode))
+  (add-to-list 'completion-category-overrides
+    '(citre (substring basic))) ;; it seems that citre only support substring
   (setq evil-lookup-func #'citre-peek))
 
 ;;; dumb-jump ===============================================

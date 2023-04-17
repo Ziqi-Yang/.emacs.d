@@ -43,7 +43,7 @@
 (set-fringe-mode 3) ;; diff-hl make use of fringe
 
 ;; Emacs 29 alpha background
-(push (cons 'alpha-background 95) default-frame-alist)
+(push (cons 'alpha-background 92) default-frame-alist)
 
 (column-number-mode)
 (global-display-line-numbers-mode 1)

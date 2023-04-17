@@ -46,7 +46,7 @@
     (append
       '()
       (mk/create-vertico-multiform-commands
-        '(mk/better-affe-grep affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)
+        '(mk/better-affe-grep mk/better-consult-line affe-grep consult-line consult-outline consult-flymake consult-ripgrep consult-imenu xref-find-references consult-info)
         '(buffer
            (vertico-buffer-display-action . (display-buffer-in-side-window
                                               (side . right)
@@ -109,8 +109,8 @@
 (use-package orderless
   :init
   (setq completion-styles '(orderless basic) ;; orderless, and basic as fallback
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion))))))
+    completion-category-defaults nil
+    completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;;; Embark ==================================================
 ;; (use-package embark
