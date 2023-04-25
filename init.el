@@ -65,6 +65,7 @@
   (require 'l-web)
   (require 'l-lisp)
   (require 'l-rust)
+  (require 'l-cc)
   (require 'l-java)
   (require 'l-zig)
   (require 'l-latex)

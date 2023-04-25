@@ -335,7 +335,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; citre
 	  "cR" #'(color-rg-search-project-with-type :which-key "rg(p)")
     "cb" #'(color-rg-search-symbol-in-current-file :which-key "rg(b)")
-    "cd" #'(citre-jump :which-key "rg(d)") ;; xref-find-references may be occupied by citre's backend
+    "cd" #'(xref-find-definitions :which-key "rg(d)") ;; xref-find-references may be occupied by citre's backend
     "cr" #'(citre-jump-to-reference :which-key "reference")
 	  "cD" #'(dumb-jump-go-prefer-external :which-key "definitions")
     "cf" #'(editorconfig-format-buffer :which-key "format buffer")
@@ -521,6 +521,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     ;; @ toggle
     "t" '(:ignore t :which-key "Toggle")
     "tw" 'whitespace-mode
+    "th" '(mk/unhighlight-search :which-key "unhighlight search")
     "tt" '(consult-theme :which-key "choose theme")
 	  
     ;; @ window
