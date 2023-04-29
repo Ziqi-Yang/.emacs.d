@@ -97,29 +97,32 @@
 (defun mk/setup-font-faces ()
 	"Setup Fonts."
 	;; font faces only works in emacs GUI, terminal emcas should change terminal font instead
-	(when (display-graphic-p) 
-		(when (member "BlexMono Nerd Font" (font-family-list))
-			(set-face-attribute 'default nil :font (font-spec :family "BlexMono Nerd Font" :size 17)))
-		;; @ fixed-pitch font ;; i.e. Monospaced font
-		;;(when (member "BlexMono Nerd Font" (font-family-list))
-		;;(set-face-attribute 'fixed-pitch nil :font (font-spec :family "BlexMono Nerd Font" :size 13.5)))
-		(set-face-attribute 'fixed-pitch nil :inherit 'default)
-		;; @ variable-pitch font ;; i.e. variable-width font
-		(set-face-attribute 'variable-pitch nil :inherit 'default)
-		;; @ CJK font 包括中文、日语、韩语中的汉字，但是不包含日语假名
-		(when (member "LXGW WenKai" (font-family-list))
-			(set-fontset-font t 'han (font-spec :family "LXGW WenKai" :size 17)))
-		;; @ Japanese Kana 日语假名
-		(when (member "LXGW WenKai" (font-family-list))
-			(set-fontset-font t 'kana (font-spec :family "LXGW WenKai" :size 17))
-		  ;; @ symbol font ('symbol)
-		  ;; @ emoji ('emoji)
-		  ;; 
-		  ;; reference:
-		  ;;   1. http://xahlee.info/emacs/emacs/emacs_set_font_emoji.html
-		  ;;   2. https://emacs-china.org/t/emacs/22193/6
-			)
-		)
+  (let ((default-font "IBM Plex Mono")
+         (CJK-font "LXGW WenKai"))
+    (when (display-graphic-p) 
+		  (when (member default-font (font-family-list))
+			  (set-face-attribute 'default nil :font (font-spec :family default-font :size 17)))
+		  ;; @ fixed-pitch font ;; i.e. Monospaced font
+		  ;;(when (member "BlexMono Nerd Font" (font-family-list))
+		  ;;(set-face-attribute 'fixed-pitch nil :font (font-spec :family "BlexMono Nerd Font" :size 13.5)))
+		  (set-face-attribute 'fixed-pitch nil :inherit 'default)
+		  ;; @ variable-pitch font ;; i.e. variable-width font
+		  (set-face-attribute 'variable-pitch nil :inherit 'default)
+		  ;; @ CJK font 包括中文、日语、韩语中的汉字，但是不包含日语假名
+		  (when (member CJK-font (font-family-list))
+			  (set-fontset-font t 'han (font-spec :family CJK-font :size 17)))
+		  ;; @ Japanese Kana 日语假名
+		  (when (member CJK-font (font-family-list))
+			  (set-fontset-font t 'kana (font-spec :family CJK-font :size 17))
+		    ;; @ symbol font ('symbol)
+		    ;; @ emoji ('emoji)
+		    ;; 
+		    ;; reference:
+		    ;;   1. http://xahlee.info/emacs/emacs/emacs_set_font_emoji.html
+		    ;;   2. https://emacs-china.org/t/emacs/22193/6
+			  )
+		  )
+    )
 	)
 ;; run this hook after we have initialized the first time
 (add-hook 'after-init-hook 'mk/setup-font-faces)

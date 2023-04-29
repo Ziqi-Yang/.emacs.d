@@ -72,6 +72,9 @@
 ;; focus mode, dim other text color
 ;; (use-package focus)
 
+;;; 80 column ruler =========================================
+(setq-local display-fill-column-indicator-column 100)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
 ;;; Trivial
 ;; @ show frequentcy of command

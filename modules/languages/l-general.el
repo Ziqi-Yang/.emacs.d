@@ -214,6 +214,6 @@
 
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
 
-(setq project-vc-extra-root-markers '("Cargo.toml"))
+(setq project-vc-extra-root-markers '("Cargo.toml" ".project-root"))
 
 (provide 'l-general)
