@@ -113,22 +113,22 @@
     completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;;; Embark ==================================================
-;; (use-package embark
-;;   :bind (("C-." . embark-act))
-;;   :init
-;;   (setq prefix-help-command #'embark-prefix-help-command)
-;;   :config
-;; 	;; Show Embark actions via which-key
-;;   (setq embark-action-indicator
-;;         (lambda (map)
-;;           (which-key--show-keymap "Embark" map nil nil 'no-paging)
-;;           #'which-key--hide-popup-ignore-command)
-;;         embark-become-indicator embark-action-indicator)
+(use-package embark
+  :bind (("C-." . embark-act))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+	;; Show Embark actions via which-key
+  (setq embark-action-indicator
+    (lambda (map)
+      (which-key--show-keymap "Embark" map nil nil 'no-paging)
+      #'which-key--hide-popup-ignore-command)
+    embark-become-indicator embark-action-indicator)
 
-;;   (add-to-list 'display-buffer-alist
-;;                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-;;                  nil
-;;                  (window-parameters (mode-line-format . none)))))
+  (add-to-list 'display-buffer-alist
+    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+       nil
+       (window-parameters (mode-line-format . none)))))
 
 ;; @ Interact at Consult 
 (use-package embark-consult
@@ -215,5 +215,31 @@
 
 (use-package tempel-collection
   :after tempel)
+
+;;; Custom Cape Functions ===================================
+(defun mk/get-lines-from-previous-buffer ()
+  "Collect all visible lines from the previously visited buffer and store them in a list."
+  (interactive)
+  (let ((previous-buffer (other-buffer))
+         (lines))
+    (with-current-buffer previous-buffer
+      (save-excursion
+        (goto-char (point-min))
+        (while (not (eobp))
+          (setq lines (cons (buffer-substring (line-beginning-position) (line-end-position)) lines))
+          (forward-line 1))))
+    (setq lines (nreverse lines))
+    lines))
+
+(defun mk/cape-line-previous-buffer (&optional interactive)
+  "Complete current line from other lines.
+The buffers returned by `cape-line-buffer-function' are scanned for lines.
+If INTERACTIVE is nil the function acts like a Capf."
+  (interactive (list t))
+  (if interactive
+    (cape-interactive #'mk/cape-line-previous-buffer)
+    `(,(pos-bol) ,(point)
+       ,(cape--table-with-properties (mk/get-lines-from-previous-buffer) :sort nil)
+       ,@cape--line-properties)))
 
 (provide 'completion)

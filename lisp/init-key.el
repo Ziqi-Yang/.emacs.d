@@ -253,6 +253,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "C-j" #'complete-symbol
     "C-k" #'cape-dabbrev
     "C-f" #'cape-file
+    "C-l" #'cape-line
+    "C-L" #'mk/cape-line-previous-buffer
 	  ;; "M-<return>" #'sp-up-sexp
 	  ;; "M-S-<return>" #'sp-backward-up-sexp
 
