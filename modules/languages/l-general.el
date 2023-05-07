@@ -61,15 +61,14 @@
 	;; see outer files(like header files) as in project temporarily
 	(customize-set-variable 'eglot-extend-to-xref t) 
 
-	;; (mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
-	;; (mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
-	;; (mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
-	;; (mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
-	;; (mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
-	;; (mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
-  ;; ;; in l-java, I use cape to provide very basic completion abilities
+	(mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
+	(mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
+	(mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
+	(mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
+	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
+	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
   ;; (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
-  ;; (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
+  (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
 
 	(with-eval-after-load 'eglot
 		(add-hook 'eglot-managed-mode-hook
@@ -140,7 +139,8 @@
     citre-auto-enable-citre-mode-modes '(prog-mode))
   (add-to-list 'completion-category-overrides
     '(citre (substring basic))) ;; it seems that citre only support substring
-  (setq evil-lookup-func #'citre-peek))
+  ;; (setq evil-lookup-func #'citre-peek) ;; mapping key "K"
+  )
 
 ;;; dumb-jump ===============================================
 ;; (use-package dumb-jump

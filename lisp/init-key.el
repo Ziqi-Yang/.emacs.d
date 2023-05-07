@@ -254,7 +254,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "C-k" #'cape-dabbrev
     "C-f" #'cape-file
     "C-l" #'cape-line
-    "C-L" #'mk/cape-line-previous-buffer
+    "C-S-l" #'mk/cape-line-previous-buffer
 	  ;; "M-<return>" #'sp-up-sexp
 	  ;; "M-S-<return>" #'sp-backward-up-sexp
 
@@ -333,33 +333,34 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  ;; @ Code
 	  "c"  '(:ignore t :which-key "Code")
+    ;; citre & eglot
+	  "ca" '(eglot-code-actions :which-key "lsp action")
+	  "cR" '(eglot-rename :which-key "lsp rename")
+	  "ci" '(eglot-code-action-organize-imports :which-key "lsp organize import")
 
-    ;; citre
-	  "cR" #'(color-rg-search-project-with-type :which-key "rg(p)")
-    "cb" #'(color-rg-search-symbol-in-current-file :which-key "rg(b)")
-    "cd" #'(xref-find-definitions :which-key "rg(d)") ;; xref-find-references may be occupied by citre's backend
-    "cr" #'(citre-jump-to-reference :which-key "reference")
-	  "cD" #'(dumb-jump-go-prefer-external :which-key "definitions")
-    "cf" #'(editorconfig-format-buffer :which-key "format buffer")
+	  "cf" '(editorconfig-format-buffer :which-key "format buffer")
+	  ;; "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
+    "cp" #'(citre-ace-peek :which-key "ace peek") ;; M-n M-p to scroll
+	  "cP" #'(citre-peek :which-key "peek")
+
+    "cc" '(:ignore t :which-key "color-rg")
+	  "ccp" #'(color-rg-search-project-with-type :which-key "rg(p)")
+    "ccb" #'(color-rg-search-symbol-in-current-file :which-key "rg(b)")
+
+    "cd" #'(xref-find-definitions :which-key "lsp definitions") 
+	  "cr" '(xref-find-references :which-key "references");; xref-find-references may be occupied by citre's backend
+    ;; "cr" #'(citre-jump-to-reference :which-key "reference")
     "cj" #'(citre-jump :which-key "jump")
     "ck" #'(citre-jump-back :which-key "jump back")
-    "cp" #'(citre-peek :which-key "peek") ;; M-n M-p to scroll
     "cu" #'(citre-update-this-tags-file :which-key "update tags")
     "cU" #'(mk/update-all-tags :which-key "update gtags")
-    "cc" #'(citre-create-tags-file :which-key "create tags")
-    "ce" #'(citre-edit-tags-file-recipe :which-key "edit tags recipe")
 
-    ;; ;; eglot
-	  ;; "ca" '(eglot-code-actions :which-key "action")
-	  ;; "cr" '(eglot-rename :which-key "rename")
-	  ;; "cR" '(xref-find-references :which-key "references")
-	  ;; "cc" '(color-rg-search-project-with-type :which-key "references")
-	  ;; "ci" '(eglot-code-action-organize-imports :which-key "import organization")
-	  ;; "cf" '(editorconfig-format-buffer :which-key "format buffer")
-	  ;; "cF" '(eglot-code-action-quickfix :which-key "quick fix")
-	  ;; "ce" '(consult-flymake :which-key "errors(b)")
-	  ;; "cd" '(xref-find-definitions :which-key "definitions")
-	  ;; "cD" '(eldoc-doc-buffer :which-key "doc") ;; also available as "K" in evil mode
+	  "ce" '(consult-flymake :which-key "errors(b)")
+	  "cF" '(eglot-code-action-quickfix :which-key "quick fix")
+
+    "co" '(:ignore t :which-key "other") ;; not frequently used functions
+    "coc" #'(citre-create-tags-file :which-key "create tags")
+    "coe" #'(citre-edit-tags-file-recipe :which-key "edit tags recipe")
 
     ;; lsp-bridge
 	  ;; "ca" '(lsp-bridge-code-action :which-key "action")
