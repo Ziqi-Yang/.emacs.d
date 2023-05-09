@@ -40,6 +40,10 @@
   (push '("rust" . rust-ts) org-src-lang-modes))
 (add-hook 'org-mode-hook #'org-indent-mode)
 
+;;; org-agenda ==============================================
+(setq org-agenda-files
+  (list "~/notes/agenda.org"))
+
 ;;; Export ==================================================
 (setq org-export-with-toc t
 	org-export-with-footnotes t

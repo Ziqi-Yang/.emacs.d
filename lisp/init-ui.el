@@ -68,28 +68,30 @@
 	(add-hook 'server-after-make-frame-hook  '(lambda () (dashboard-refresh-buffer)))
   (dashboard-setup-startup-hook)
 	(setq dashboard-projects-backend 'project-el
-				dashboard-center-content t
-				dashboard-set-heading-icons t
-				dashboard-set-file-icons t
-				dashboard-set-navigator t
-				dashboard-set-init-info t
-				dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
-				dashboard-banner-logo-title "Happy coding, MeowKing!"
-				dashboard-items '((recents  . 5)
-													;; (bookmarks . 5)
-													(projects . 5)
-													;; (agenda . 5)
-													;; (registers . 5)
-													)
-				)
+		dashboard-center-content t
+		dashboard-set-heading-icons t
+		dashboard-set-file-icons t
+		dashboard-set-navigator t
+		dashboard-set-init-info t
+		dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
+		dashboard-banner-logo-title "Enjoy hacking, MeowKing!"
+		dashboard-items '((recents  . 5)
+											 ;; (bookmarks . 5)
+											 (projects . 5)
+											 (agenda . 5)
+											 ;; (registers . 5)
+											 )
+		)
 
 	;; Format: "(icon title help action face prefix suffix)"
 	(setq dashboard-navigator-buttons
-				`(((,(all-the-icons-octicon "octoface" :height 1.1 :v-adjust 0.0)
-						"Homepage" "Browse homepage" (lambda (&rest _) (browse-url "https://github.com/Ziqi-Yang")))
-					 (,(all-the-icons-faicon "user-secret" :height 1.0 :v-adjust 0.0)
-						"Load Session" nil (lambda (&rest _) (desktop-read))))
-					)))
+		`(((,(all-the-icons-octicon "octoface" :height 1.1 :v-adjust 0.0)
+				 "Homepage" "Browse homepage" (lambda (&rest _) (browse-url "https://github.com/Ziqi-Yang")))
+				(,(all-the-icons-faicon "user-secret" :height 1.0 :v-adjust 0.0)
+					"Load Session" nil (lambda (&rest _) (desktop-read)))
+				(,(all-the-icons-faicon "sticky-note" :height 1.0 :v-adjust 0.0)
+					"Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
+        ))))
 
 ;;; font settings ===========================================
 ;; Set the font face based on platform
