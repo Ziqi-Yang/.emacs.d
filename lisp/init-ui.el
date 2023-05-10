@@ -74,7 +74,7 @@
 		dashboard-set-navigator t
 		dashboard-set-init-info t
 		dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
-		dashboard-banner-logo-title "Enjoy hacking, MeowKing!"
+		dashboard-banner-logo-title "赌狗必输"
 		dashboard-items '((recents  . 5)
 											 ;; (bookmarks . 5)
 											 (projects . 5)
