@@ -61,7 +61,8 @@
 	(define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
 	(eyebrowse-mode t)
 	(setq eyebrowse-wrap-around t) ;; makes workspaces a loop
-	(setq eyebrowse-new-workspace "*dashboard*")) ;; use *scratch* buffer (use string to provide it with custom buffer name)
+	;; (setq eyebrowse-new-workspace "*dashboard*")
+  ) ;; use *scratch* buffer (use string to provide it with custom buffer name)
 
 ;; @ save session(buildin)
 ;; (use-package desktop

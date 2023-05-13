@@ -177,6 +177,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   ;; @ normal map (no leader key
   (general-nmap 
     :keymaps 'override
+    ;; to better move around in long wrapped lines
+    "j" '(lambda () (interactive) (call-interactively #'next-line)) 
+    "k" '(lambda () (interactive) (call-interactively #'previous-line)) 
+
 	  ;; "." evil-repeat can be your friend
 	  ;; "TAB" #'evil-avy-goto-char-2 ;; FIXME no use?
 	  "gcc" #'evilnc-comment-or-uncomment-lines
