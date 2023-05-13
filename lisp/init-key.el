@@ -174,6 +174,10 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "v"
     "TAB")
 
+  (general-mmap
+	  "L" '(lambda () (interactive) (call-interactively #'forward-sexp))
+	  "H" '(lambda () (interactive) (call-interactively #'backward-sexp)))
+
   ;; @ normal map (no leader key
   (general-nmap 
     :keymaps 'override
@@ -187,9 +191,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
     "," #'evil-avy-goto-word-0
     "." #'evil-avy-goto-word-1
-	  "L" #'sp-forward-sexp
-	  "H" #'sp-backward-sexp
-    "M-h" #'sp-beginning-of-sexp
+	  "M-h" #'sp-beginning-of-sexp
     "M-l" #'sp-end-of-sexp
 	  "M-v" #'er/expand-region
 	  "C-." #'embark-act
@@ -231,12 +233,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; "<(" #'sp-backward-slurp-sexp
     )
 
-  (general-mmap
-	  "L" #'evil-forward-arg
-	  "H" #'evil-backward-arg)
-
   ;; @ visual map (no leader key
   (general-vmap ;; visual
+    ;; to better move around in long wrapped lines
+    "C-j" '(lambda () (interactive) (call-interactively #'next-line)) 
+    "C-k" '(lambda () (interactive) (call-interactively #'previous-line)) 
+
     "S" #'evil-surround-region
     "C-S-c" #'clipboard-kill-ring-save
 	  "gc" #'evilnc-comment-or-uncomment-lines
