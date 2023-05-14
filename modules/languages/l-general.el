@@ -150,6 +150,12 @@
 ;;   ;; (setq evil-lookup-func #'dumb-jump-quick-look)
 ;;   )
 
+;;; Breadcrumb ==============================================
+(use-package breadcrumb
+  :straight (:type git :host github :repo "joaotavora/breadcrumb")
+  :config
+  (breadcrumb-mode))
+
 ;;; Spell Checker
 ;; @ ispell
 (setq ispell-program-name "hunspell"
@@ -214,6 +220,7 @@
 
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
 
+;;; Extra Project Root Markers ==============================
 (setq project-vc-extra-root-markers '("Cargo.toml" ".project-root"))
 
 (provide 'l-general)
