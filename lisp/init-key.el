@@ -289,6 +289,12 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "~" #'(list-processes :which-key "list processes")
     "/" #'(evil-avy-goto-word-0 :which-key "avy")
 	  "SPC" #'(execute-extended-command :which-key "M-x")
+	  "0" '(eyebrowse-last-window-config :which-key "last workspace")
+	  "1" '(eyebrowse-switch-to-window-config-1 :which-key "w1")
+	  "2" '(eyebrowse-switch-to-window-config-2 :which-key "w2")
+	  "3" '(eyebrowse-switch-to-window-config-3 :which-key "w3")
+	  "4" '(eyebrowse-switch-to-window-config-4 :which-key "w4")
+	  "5" '(eyebrowse-switch-to-window-config-5 :which-key "w5")
 
 	  ;; @ workspace
 	  ;; eyebrowse switch functions are also bounded to "M-<num>" in its use-package scope

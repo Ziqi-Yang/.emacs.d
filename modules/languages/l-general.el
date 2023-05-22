@@ -67,7 +67,7 @@
 	(mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
 	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
 	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
-  ;; (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
+  (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
   (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
 
 	(with-eval-after-load 'eglot
@@ -151,10 +151,10 @@
 ;;   )
 
 ;;; Breadcrumb ==============================================
-(use-package breadcrumb
-  :straight (:type git :host github :repo "joaotavora/breadcrumb")
-  :config
-  (breadcrumb-mode))
+;; (use-package breadcrumb
+;;   :straight (:type git :host github :repo "joaotavora/breadcrumb")
+;;   :config
+;;   (breadcrumb-mode))
 
 ;;; Spell Checker
 ;; @ ispell
