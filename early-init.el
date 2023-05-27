@@ -5,19 +5,21 @@
 (set-default-coding-systems 'utf-8)
 
 ;;; Disable package.el ======================================
-;; disable package.el at startup
-(setq package-enable-at-startup nil)
-;; don't load from package cache
-(setq package-quickstart nil)
-
+(setq package-enable-at-startup nil ;; disable package.el at startup
+  package-quickstart nil) ;; don't load from package cache
 
 ;;; Performance =============================================
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-;; The default is ~800kB. Now allocating 500 MB.
-(setq gc-cons-threshold (* 500 1024 1024)
-  gc-cons-percentage 0.5)
-;; increase performance (origin 4096 byte)
-(setq read-process-output-max (* 10 1024 1024))
+;; NOTE: This GCMH minimizes GC interference with the activity by using a high GC
+;; threshold during normal use, then when Emacs is idling, GC is triggered and a
+;; low threshold is set. We set the threshold (`gc-cons-threshold'
+;; variable) to an unlimited size in "early-init.el", this helps improving the
+;; startup time, but needs to be set down to a more reasonable value after Emacs
+;; gets loaded. The use of `gcmh-mode' ensures reverting this value so we don't
+;; need to do it manually.
+(setq gc-cons-threshold most-positive-fixnum
+  ;; gc-cons-percentage 0.5
+  read-process-output-max (* 10 1024 1024))
 
 ;; ;; @ time ;; discord, since dashboard owns the same function
 ;; (add-hook 'emacs-startup-hook
@@ -32,8 +34,8 @@
 ;; Change eln-cache folder place ============================
 (when (fboundp 'startup-redirect-eln-cache)
   (startup-redirect-eln-cache
-   (convert-standard-filename
-	  (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
+    (convert-standard-filename
+	    (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
 
 ;;; UI settings =============================================
 (scroll-bar-mode -1)

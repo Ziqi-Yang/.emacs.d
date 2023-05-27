@@ -297,5 +297,11 @@
     (insert str)
     (clipboard-kill-region (point-min) (point-max))))
 
+;;; Hack Garbage Collector ==================================
+(use-package gcmh
+  :straight t
+  :hook (after-init . gcmh-mode))
+
+
 
 (provide 'init-base)
