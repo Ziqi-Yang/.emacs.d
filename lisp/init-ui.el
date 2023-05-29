@@ -161,13 +161,20 @@
 
 ;;; Center Area =============================================
 (use-package olivetti
-  :hook ((text-mode         . olivetti-mode)
-          (prog-mode         . olivetti-mode)
-          (Info-mode         . olivetti-mode)
-          (org-mode          . olivetti-mode)
-          (markdown-mode     . olivetti-mode))
+  ;; :hook ((text-mode         . olivetti-mode)
+  ;;         (prog-mode         . olivetti-mode)
+  ;;         (Info-mode         . olivetti-mode)
+  ;;         (org-mode          . olivetti-mode)
+  ;;         (markdown-mode     . olivetti-mode))
   :custom
-  (olivetti-body-width 0.8))
+  (olivetti-body-width 120))
+
+(use-package auto-olivetti
+  :straight (:type git :host sourcehut :repo "ashton314/auto-olivetti")
+  :custom
+  (auto-olivetti-enabled-modes '(text-mode prog-mode))
+  :config
+  (auto-olivetti-mode))
 
 ;;; Cursor ==================================================
 ;; @ disable cursor blink
