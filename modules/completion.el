@@ -137,10 +137,21 @@
 
 ;;; Consult =================================================
 (use-package consult
-	:config
-	;; integrated with xref
-	(setq xref-show-xrefs-function #'consult-xref)
-  (consult-customize consult-recent-file :preview-key nil))  ;; disable preview for recent file
+  :custom
+  (consult-imenu-config '((java-ts-mode :toplevel "Method" :types
+                            ((?m "Method" font-lock-function-name-face)
+                              (?c "Class" font-lock-type-face)
+                              (?i "Interface" font-lock-type-face)))
+                           (emacs-lisp-mode :toplevel "Functions" :types
+									           ((102 "Functions" font-lock-function-name-face)
+									             (109 "Macros" font-lock-function-name-face)
+									             (112 "Packages" font-lock-constant-face)
+									             (116 "Types" font-lock-type-face)
+									             (118 "Variables" font-lock-variable-name-face)))))
+  :config
+  ;; integrated with xref
+  (setq xref-show-xrefs-function #'consult-xref)
+  (consult-customize consult-recent-file :preview-key nil)) ;; disable preview for recent file  
 
 ;; NOTE: disable these to using lsp-bridge
 ;;; Corfu: In Region Completion  ============================

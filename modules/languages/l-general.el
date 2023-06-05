@@ -57,6 +57,8 @@
 
 (progn
 	(setq-default eglot-events-buffer-size 0)  ;; NOTE disable log, improve performance
+  ;; list of things that eglot won't change
+	(customize-set-variable 'eglot-stay-out-of '(imenu))
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
 	;; see outer files(like header files) as in project temporarily
 	(customize-set-variable 'eglot-extend-to-xref t) 
@@ -131,6 +133,7 @@
   :init
   (require 'citre-config)
   :config
+  (setq-default citre-enable-imenu-integration nil) ;; disable imenu integration
   (setq
     citre-default-create-tags-file-location 'global-cache
     citre-use-project-root-when-creating-tags t
@@ -151,10 +154,10 @@
 ;;   )
 
 ;;; Breadcrumb ==============================================
-;; (use-package breadcrumb
-;;   :straight (:type git :host github :repo "joaotavora/breadcrumb")
-;;   :config
-;;   (breadcrumb-mode))
+(use-package breadcrumb
+  :straight (:type git :host github :repo "joaotavora/breadcrumb")
+  :config
+  (breadcrumb-mode))
 
 ;;; Spell Checker
 ;; @ ispell

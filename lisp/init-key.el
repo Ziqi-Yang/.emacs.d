@@ -107,11 +107,18 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;   :config
 ;;   (setq evil-cleverparens-use-additional-bindings nil))
 
+(use-package evil-ts
+  ;; visual: s, f, c, x
+  ;; ]c, ]f, ]w, s
+  :straight (:type git :host github :repo "foxfriday/evil-ts")
+  :after evil)
+
+
 ;; + xml attribute
 ;; textobj: x
 ;; example: uncomment the line below and relocate in 'class="meow"', type 'vix'
 ;; <html class="meow"></html>
-(use-package exato)
+;; (use-package exato)
 
 ;; @ textobj using tree-sitter
 ;; TODO more hack can be here
