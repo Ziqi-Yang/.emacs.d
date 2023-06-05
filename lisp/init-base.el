@@ -161,6 +161,26 @@
 ;;; fold ====================================================
 ;; @ buildin
 ;; evil buildin fold throught this package
+(defun mk/hs-hide-level-samrt()
+  "Calling hs-hide-level based on line numbers."
+  (interactive)
+  (hs-minor-mode)
+  (set-display-table-slot standard-display-table 
+    'selective-display 
+    (string-to-vector " ❡❡❡"))
+  (let ((n (car (buffer-line-statistics)))
+         (l3 200)
+         (l2 400)
+         (l1 600)
+         (l0 800))
+    (cond
+      ((> n l0)
+        (hs-hide-all)
+        ;; (outline-show-only-headings)
+        )
+      ((> n l1) (hs-hide-all))     ;; also hide long comment
+      ((> n l2) (hs-hide-level 1)) ;; show root function
+      ((> n l3) (hs-hide-level 2)))))
 (use-package hideshow 
 	:hook ((prog-mode . mk/hs-hide-level-samrt)))
 
@@ -270,27 +290,6 @@
 (add-hook 'emacs-startup-hook #'mk/set-env)
 
 ;;; My custom functions ===================================
-(defun mk/hs-hide-level-samrt()
-  "Calling hs-hide-level based on line numbers."
-  (interactive)
-  (hs-minor-mode)
-  (set-display-table-slot standard-display-table 
-    'selective-display 
-    (string-to-vector " ❡❡❡"))
-  (let ((n (car (buffer-line-statistics)))
-         (l3 200)
-         (l2 400)
-         (l1 600)
-         (l0 800))
-    (cond
-      ((> n l0)
-        (hs-hide-all)
-        ;; (outline-show-only-headings)
-        )
-      ((> n l1) (hs-hide-all))     ;; also hide long comment
-      ((> n l2) (hs-hide-level 1)) ;; show root function
-      ((> n l3) (hs-hide-level 2)))))
-
 (defun mk/base/copy-string-to-clipboard (str)
   ;; note this function only works in GUI version emacs
   (with-temp-buffer
