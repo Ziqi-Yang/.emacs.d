@@ -161,8 +161,8 @@
 ;;; fold ====================================================
 ;; @ buildin
 ;; evil buildin fold throught this package
-;; (use-package hideshow 
-;; 	:hook ((prog-mode . mk/hs-hide-level-samrt)))
+(use-package hideshow 
+	:hook ((prog-mode . mk/hs-hide-level-samrt)))
 
 ;; @ vimmish-fold
 ;; (use-package vimish-fold
