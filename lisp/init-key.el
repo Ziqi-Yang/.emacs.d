@@ -179,9 +179,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "<"
 	  ">"
 	  "v"
-    "TAB")
+    "TAB"
+    )
 
   (general-mmap
+    :keymaps 'override
 	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
 
     "H" 'combobulate-navigate-logical-previous
@@ -194,9 +196,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; "H" '(lambda () (interactive) (call-interactively #'backward-sexp))
 
     "`" #'evil-avy-goto-word-1
-	  "TAB" #'combobulate-avy-jump
     "," #'combobulate-avy-jump
-    "." #'combobulate-avy-jump-defun
+    ;; "." #'combobulate-avy-jump-defun ;; need to put in nomral mode; otherwise no use
     )
 
   ;; @ normal map (no leader key
@@ -207,7 +208,8 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "k" '(lambda () (interactive) (call-interactively #'previous-line)) 
 
 	  ;; "." evil-repeat can be your friend
-	  ;; "TAB" #'evil-avy-goto-char-2 ;; FIXME no use?
+	  ;; "TAB" #'combobulate-avy-jump ;; FIXME no use?
+    "." #'combobulate-avy-jump-defun
 	  "gcc" #'evilnc-comment-or-uncomment-lines
 	  "M-v" #'er/expand-region
 	  "C-." #'embark-act
