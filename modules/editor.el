@@ -68,6 +68,10 @@
   :config
   (editorconfig-mode 1))
 
+(use-package combobulate
+	:straight (:host github :repo "mickeynp/combobulate")
+  :hook ((prog-mode . combobulate-mode)))
+
 ;;; Focus ===================================================
 ;; focus mode, dim other text color
 ;; (use-package focus)

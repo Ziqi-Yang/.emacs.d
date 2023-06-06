@@ -182,8 +182,22 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "TAB")
 
   (general-mmap
-	  "L" '(lambda () (interactive) (call-interactively #'forward-sexp))
-	  "H" '(lambda () (interactive) (call-interactively #'backward-sexp)))
+	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
+
+    "H" 'combobulate-navigate-logical-previous
+    "L" 'combobulate-navigate-logical-next
+    "C-M-h" 'combobulate-navigate-beginning-of-defun
+    "C-M-l" 'combobulate-navigate-end-of-defun
+    "C-S-h" 'combobulate-navigate-up
+    "C-S-l" 'combobulate-navigate-down
+	  ;; "L" '(lambda () (interactive) (call-interactively #'forward-sexp))
+	  ;; "H" '(lambda () (interactive) (call-interactively #'backward-sexp))
+
+    "`" #'evil-avy-goto-word-1
+	  "TAB" #'combobulate-avy-jump
+    "," #'combobulate-avy-jump
+    "." #'combobulate-avy-jump-defun
+    )
 
   ;; @ normal map (no leader key
   (general-nmap 
@@ -195,16 +209,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  ;; "." evil-repeat can be your friend
 	  ;; "TAB" #'evil-avy-goto-char-2 ;; FIXME no use?
 	  "gcc" #'evilnc-comment-or-uncomment-lines
-	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
-    "," #'evil-avy-goto-word-0
-    "." #'evil-avy-goto-word-1
-	  "M-h" #'sp-beginning-of-sexp
-    "M-l" #'sp-end-of-sexp
 	  "M-v" #'er/expand-region
 	  "C-." #'embark-act
     "C-i" #'evil-jump-forward
     "C-o" #'evil-jump-backward
-	  "go"   #'evil-jump-out-args
+	  ;; "go"   #'evil-jump-out-args
     "C-S-v" #'clipboard-yank
 
     "*" #'mk/evil-search-symbol-forward
@@ -249,8 +258,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "S" #'evil-surround-region
     "C-S-c" #'clipboard-kill-ring-save
 	  "gc" #'evilnc-comment-or-uncomment-lines
-	  "gg" #'evil-goto-first-line ;; deal with evil-easymotion keymap 
-	  "TAB" #'evil-avy-goto-char-2)
+    )
 
   ;; ((hllo world) meowking)
   ;; @ insert( map (no leader key
@@ -350,9 +358,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "Bk" '(bookmark-delete :which-key "delete")
 	  "BD" '(bookmark-delete :which-key "delete all")
 
+    ;; Combobulate
+    "C" '(combobulate :which-key "combobulate")
+
 	  ;; @ Code
 	  "c"  '(:ignore t :which-key "Code")
     ;; citre & eglot
+    "ce" '(combobulate-envelop :which-key "envelop")
 	  "ca" '(eglot-code-actions :which-key "lsp action")
 	  "cR" '(eglot-rename :which-key "lsp rename")
 	  "ci" '(eglot-code-action-organize-imports :which-key "lsp organize import")
@@ -374,7 +386,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "cu" #'(citre-update-this-tags-file :which-key "update tags")
     "cU" #'(mk/update-all-tags :which-key "update gtags")
 
-	  "ce" '(consult-flymake :which-key "errors(b)")
+	  "cE" '(consult-flymake :which-key "errors(b)")
 	  "cF" '(eglot-code-action-quickfix :which-key "quick fix")
 
     "co" '(:ignore t :which-key "other") ;; not frequently used functions
