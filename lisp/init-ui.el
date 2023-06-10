@@ -20,6 +20,7 @@
   ;;   (setq font-lock-maximum-decoration nil)
 	;;   (load-theme 'doom-earl-grey t))
   :config
+  :config
   (doom-themes-visual-bell-config)
   (setq doom-themes-treemacs-theme "doom-one-light")
   (doom-themes-treemacs-config)
@@ -70,8 +71,8 @@
 
 ;;; Dashboard ===============================================
 
-(add-hook 'dashboard-mode-hook '(lambda () (progn (setq buffer-face-mode-face '(:family "Zpix" :height 120))
-																						 (buffer-face-mode)) ))
+;; (add-hook 'dashboard-mode-hook '(lambda () (progn (setq buffer-face-mode-face '(:family "Zpix" :height 120))
+;; 																						 (buffer-face-mode)) ))
 (use-package dashboard
 	:after all-the-icons
   :config
@@ -113,11 +114,12 @@
 (defun mk/setup-font-faces ()
 	"Setup Fonts."
 	;; font faces only works in emacs GUI, terminal emcas should change terminal font instead
-  (let ((default-font "IBM Plex Mono")
+  (let ((default-font "Cascadia Code") ;; IBM Plex Mono
+         (font-size 19)
          (CJK-font "LXGW WenKai"))
     (when (display-graphic-p) 
 		  (when (member default-font (font-family-list))
-			  (set-face-attribute 'default nil :font (font-spec :family default-font :size 17)))
+			  (set-face-attribute 'default nil :font (font-spec :family default-font :size font-size)))
 		  ;; @ fixed-pitch font ;; i.e. Monospaced font
 		  ;;(when (member "BlexMono Nerd Font" (font-family-list))
 		  ;;(set-face-attribute 'fixed-pitch nil :font (font-spec :family "BlexMono Nerd Font" :size 13.5)))
@@ -126,10 +128,10 @@
 		  (set-face-attribute 'variable-pitch nil :inherit 'default)
 		  ;; @ CJK font 包括中文、日语、韩语中的汉字，但是不包含日语假名
 		  (when (member CJK-font (font-family-list))
-			  (set-fontset-font t 'han (font-spec :family CJK-font :size 17)))
+			  (set-fontset-font t 'han (font-spec :family CJK-font :size font-size)))
 		  ;; @ Japanese Kana 日语假名
 		  (when (member CJK-font (font-family-list))
-			  (set-fontset-font t 'kana (font-spec :family CJK-font :size 17))
+			  (set-fontset-font t 'kana (font-spec :family CJK-font :size font-size))
 		    ;; @ symbol font ('symbol)
 		    ;; @ emoji ('emoji)
 		    ;; 
@@ -167,7 +169,7 @@
   ;;         (org-mode          . olivetti-mode)
   ;;         (markdown-mode     . olivetti-mode))
   :custom
-  (olivetti-body-width 120))
+  (olivetti-body-width 111))
 
 (use-package auto-olivetti
   :straight (:type git :host sourcehut :repo "ashton314/auto-olivetti")

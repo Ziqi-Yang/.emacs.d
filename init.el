@@ -53,6 +53,7 @@
   (require 'file-browser)
   (require 'git)
   (require 'init-proxy)
+  (require 'auto-insert)
   (require 'ai)
   (require 'info) ;; FIXME this file cannot be loaded
   (require 'emacs-developer) ;; and If I comment this line, l-general file cannot be loaded

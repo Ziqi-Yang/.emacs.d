@@ -68,6 +68,8 @@
   :config
   (editorconfig-mode 1))
 
+;; Other ====================================================
+
 (use-package combobulate
 	:straight (:host github :repo "mickeynp/combobulate")
   :hook ((prog-mode . combobulate-mode)))
