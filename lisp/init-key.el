@@ -488,6 +488,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 	  "o=" #'(project-dired :which-key "project dired")
     "os" #'(dired-sidebar-toggle-sidebar :which-key "toggle sidebar")
 	  "oa" #'((lambda () (interactive) (find-file "~/notes/agenda.org")) :which-key "todos")
+    "oe" #'(project-eshell :which-key "eshell(p)")
     "or" #'((lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org" :which-key "os learning record")))
     "od" #'(dashboard-open :which-key "open dashboard")
     "oD" #'(mk/draw-diagram :which-key "draw diagram")
