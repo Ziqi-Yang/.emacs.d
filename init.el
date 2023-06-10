@@ -78,3 +78,5 @@
 (native-compile-prune-cache) 
 
 (provide 'init)
+(put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-region 'disabled nil)

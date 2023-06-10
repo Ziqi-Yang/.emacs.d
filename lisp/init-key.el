@@ -188,12 +188,14 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
     "H" 'combobulate-navigate-logical-previous
     "L" 'combobulate-navigate-logical-next
+	  ;; "L" '(lambda () (interactive) (call-interactively #'forward-sexp))
+	  ;; "H" '(lambda () (interactive) (call-interactively #'backward-sexp))
     "C-M-h" 'combobulate-navigate-beginning-of-defun
     "C-M-l" 'combobulate-navigate-end-of-defun
     "C-S-h" 'combobulate-navigate-up
     "C-S-l" 'combobulate-navigate-down
-	  ;; "L" '(lambda () (interactive) (call-interactively #'forward-sexp))
-	  ;; "H" '(lambda () (interactive) (call-interactively #'backward-sexp))
+
+    "C-M-d" 'combobulate-mark-defun
 
     "`" #'evil-avy-goto-word-1
     "," #'combobulate-avy-jump
@@ -472,6 +474,13 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
     "gf"  #'(magit-fetch :which-key "fetch")
     "gF"  #'(magit-fetch-all :which-key "fet all")
     "gr"  #'(magit-rebase :which-key "rebase")
+
+    ;; @ narrow
+    "n" '(:ignore t :which-key "narrow")
+    "nn" '(narrow-to-region :which-key "region")
+    "np" '(narrow-to-page :which-key "page")
+    "nd" '(narrow-to-defun :which-key "defun")
+    "nw" '(widen :which-key "exit narrow")
 
     ;; @ open
 	  "o"  '(:ignore t :which-key "open")
