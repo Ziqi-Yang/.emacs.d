@@ -10,9 +10,12 @@
 
 
 ;; @ icon
-(use-package all-the-icons-dired
+;; (use-package all-the-icons-dired
+;;   :after dired
+;;   :hook (dired-mode . all-the-icons-dired-mode))
+(use-package nerd-icons-dired
   :after dired
-  :hook (dired-mode . all-the-icons-dired-mode))
+  :hook (dired-mode . nerd-icons-dired-mode))
 
 ;; @ side bar
 (use-package dired-sidebar

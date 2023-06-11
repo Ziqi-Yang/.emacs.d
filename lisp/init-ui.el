@@ -74,7 +74,6 @@
 ;; (add-hook 'dashboard-mode-hook '(lambda () (progn (setq buffer-face-mode-face '(:family "Zpix" :height 120))
 ;; 																						 (buffer-face-mode)) ))
 (use-package dashboard
-	:after all-the-icons
   :config
 	;; configuration for emacsclient
 	;; (set-face-background 'dashboard-banner-logo-title nil) ;; solaire-mode integration
@@ -100,11 +99,11 @@
 
 	;; Format: "(icon title help action face prefix suffix)"
 	(setq dashboard-navigator-buttons
-		`(((,(all-the-icons-octicon "octoface" :height 1.1 :v-adjust 0.0)
+		`(((nil
 				 "Homepage" "Browse homepage" (lambda (&rest _) (browse-url "https://github.com/Ziqi-Yang")))
-				(,(all-the-icons-faicon "user-secret" :height 1.0 :v-adjust 0.0)
+				(nil
 					"Load Session" nil (lambda (&rest _) (desktop-read)))
-				(,(all-the-icons-faicon "sticky-note" :height 1.0 :v-adjust 0.0)
+				(nil
 					"Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
         ))))
 
