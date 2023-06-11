@@ -106,13 +106,11 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 ;;   (setq evil-cleverparens-use-s-and-S nil) ;; use evil-snipe instead
 ;;   :config
 ;;   (setq evil-cleverparens-use-additional-bindings nil))
-
 (use-package evil-ts
   ;; visual: s, f, c, x
   ;; ]c, ]f, ]w, s
   :straight (:type git :host github :repo "foxfriday/evil-ts")
   :after evil)
-
 
 ;; + xml attribute
 ;; textobj: x

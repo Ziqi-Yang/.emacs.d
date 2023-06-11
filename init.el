@@ -46,7 +46,9 @@
 
 (with-temp-message ""
   (require 'init-base)
-  (require 'init-key)
+  ;; (require 'init-key)
+  ;; (require 'evil)
+  (require 'meow)
   (require 'init-ui)
   (require 'editor)
   (require 'completion)
