@@ -561,6 +561,9 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 
 	  "S" '(:ignore t :which-key "straight")
 	  "Sr" #'(straight-remove-unused-repos :which-key "remove unused")
+    "Sb" '(:ignore t :which-key "rebuild")
+    "Sba" '(straight-rebuild-all :which-key "all")
+    "Sbp" '(straight-rebuild-package :which-key "single")
 	  "Sp" #'(straight-pull-all :which-key "pull all")
     ;; lockfile: .local/straight/versions/default.el
     "Sl" #'(straight-freeze-versions :which-key "lock version")
