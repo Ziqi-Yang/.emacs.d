@@ -8,16 +8,15 @@
   :config
   (setq zig-format-on-save nil))
 
-;; (mapBegin!
-;;   (mk/local-leader-def
-;;     :states 'normal
-;;     :keymaps 'zig-mode-map
-;;     "c" #'zig-compile
-;;     "e" #'zig-build-exe
-;;     "l" #'zig-build-lib
-;;     "o" #'zig-build-obj
-;;     "t" #'zig-test-buffer
-;;     "r" #'zig-run
-;;     "f" #'zig-format-buffer))
+(defun mk/zig-local-keybinding-setup()
+  (keymap-local-set "M-c" #'zig-compile)
+  (keymap-local-set "M-e" #'zig-build-exe)
+  (keymap-local-set "M-l" #'zig-build-lib)
+  (keymap-local-set "M-o" #'zig-build-obj)
+  (keymap-local-set "M-t" #'zig-test-buffer)
+  (keymap-local-set "M-r" #'zig-run)
+  (keymap-local-set "M-f" #'zig-format-buffer))
+
+(add-hook 'zig-mode-hook 'mk/zig-local-keybinding-setup)
 
 (provide 'l-zig)

@@ -3,11 +3,11 @@
 ;; 
 ;;; Code:
 
-;; (mapBegin!
-;;   (mk/local-leader-def
-;; 	  :states 'normal
-;;     :keymaps '(c-ts-mode-map c++-ts-mode-map)
-;;     "w" #'(woman :which-key "woman")
-;;     "m" #'(woman :which-key "man")))
+(defun mk/cc-local-keybinding-setup()
+  (keymap-local-set "M-m" #'woman))
+
+(add-hook 'c-ts-mode-hook 'mk/cc-local-keybinding-setup)
+(add-hook 'c++-ts-mode-hook 'mk/cc-local-keybinding-setup)
+
 
 (provide 'l-cc)

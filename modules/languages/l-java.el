@@ -14,19 +14,19 @@
   (let ((compile-command "make gen_tags"))
     (project-compile)))
 
-;; (mapBegin!
-;;   (mk/local-leader-def
-;; 	  :states 'normal
-;;     :keymaps '(java-mode-map java-ts-mode-map)
-;;     "d" '(mk/java-open-doc :which-key "open java doc")
-;;     "t" '(mk/java-generate-tags :which-key "generate tags")))
-
 ;; ;; enable cape-dabbrev and cape-keyword for java-mode and java-ts-mode
 ;; (dolist (mode '(java-mode-hook java-ts-mode-hook))
 ;;   (add-hook mode
 ;;     '(lambda ()
 ;;        (setq-local completion-at-point-functions
 ;;          (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
+
+(defun mk/java-local-keybinding-setup()
+  (keymap-local-set "M-d" #'mk/java-open-doc)
+  (keymap-local-set "M-t" #'mk/java-generate-tags))
+
+(add-hook 'java-mode-hook 'mk/java-local-keybinding-setup)
+(add-hook 'java-ts-mode-hook 'mk/java-local-keybinding-setup)
 
 
 (provide 'l-java)

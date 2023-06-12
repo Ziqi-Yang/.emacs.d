@@ -32,20 +32,10 @@ one specified by listing header."
   (let ((default-directory (dired-current-directory)))
     (call-interactively #'find-file)))
 
-;; (mapBegin!
-;;   (general-unbind 'normal dired-mode-map
-;;     "SPC")
-;;   
-;;   (general-define-key
-;;     :states 'normal
-;;     :keymaps 'dired-mode-map
-;;     "s" #'(dired-isearch-filenames :which-key "search"))
-;; 
-;;   (mk/local-leader-def
-;; 	  :states 'normal
-;;     :keymaps 'dired-mode-map
-;;     "f" #'(mk/dired-find-file :which-key "find file")
-;;     "s" #'(dired-isearch-filenames :which-key "search")))
+(defun mk/dired-local-keybinding-setup()
+  (keymap-local-set "M-s" #'dired-isearch-filenames)
+  (keymap-local-set "M-f" #'mk/dired-find-file))
 
+(add-hook 'dired-mode-hook 'mk/dired-local-keybinding-setup)
 
 (provide 'file-browser)

@@ -9,24 +9,21 @@
   (setq rustic-lsp-client 'eglot
     lsp-rust-server 'rust-analyzer))
 
-;; (mapBegin!
-;;   (mk/local-leader-def
-;; 	  :states 'normal
-;;     :keymaps '(toml-ts-mode-map rust-ts-mode-map)
-;;     "f"  #'(rust-format-buffer :which-key "rust-format-buffer")
-;;     "r"  #'(rustic-cargo-run :which-key "run")
-;;     "b"  #'(rustic-cargo-build :which-key "build")
-;;     "c"  #'(:ignore t :which-key "clippy")
-;;     "cc"  #'(rust-run-clippy :which-key "clippy")
-;;     "cf"  #'(rustic-cargo-clippy-fix :which-key "fix")
-;;     "d"  '(:ignore t :which-key "dependencies")
-;;     "da" #'(rustic-cargo-add :which-key "add")
-;;     "du" #'(rustic-cargo-update :which-key "upgrade")
-;;     "dm" #'(rustic-cargo-add-missing-dependencies :which-key "add missing")
-;;     "t"  '(:ignore t :which-key "test")
-;;     "tt" #'(rustic-cargo-test-run :which-key "run")
-;;     "tc" #'(rustic-cargo-current-test :which-key "current")
-;;     "D"  #'(rustic-cargo-doc :which-key "doc")))
+(defun mk/rust-local-keybinding-setup()
+  (keymap-local-set "M-f" #'rust-format-buffer)
+  (keymap-local-set "M-r" #'rustic-cargo-run)
+  (keymap-local-set "M-b" #'rustic-cargo-build)
+  (keymap-local-set "M-c c" #'rust-run-clippy)
+  (keymap-local-set "M-c f" #'rustic-cargo-clippy-fix)
+  (keymap-local-set "M-d a" #'rustic-cargo-add)
+  (keymap-local-set "M-d u" #'rustic-cargo-update)
+  (keymap-local-set "M-d m" #'rustic-cargo-add-missing-dependencies)
+  (keymap-local-set "M-t t" #'rustic-cargo-test-run)
+  (keymap-local-set "M-t c" #'rustic-cargo-current-test)
+  (keymap-local-set "M-D" #'rustic-cargo-doc))
+
+(add-hook 'rust-mode-hook 'mk/rust-local-keybinding-setup)
+(add-hook 'rust-ts-mode-hook 'mk/rust-local-keybinding-setup)
 
 (defun mk/add-rust-search-engine()
   "Add search engine in addition to mk/search-engines when in rust."

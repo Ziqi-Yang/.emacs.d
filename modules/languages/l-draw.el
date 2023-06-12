@@ -28,16 +28,13 @@
 ;; github support rendering mermaid diagrams
 (use-package mermaid-mode
   :custom
-  (mermaid-flags "-w 1568 -H 1168")
-  ;; :config
-  ;; (mapBegin!
-  ;;   (mk/local-leader-def
-	;;     :states 'normal
-	;;     :keymaps 'mermaid-mode-map
-  ;;     "c" #'(mermaid-compile :which-key "compile current-file")
-  ;;     "o" #'(mermaid-open-browser :which-key "open in browser editor")
-  ;;     "d" #'(mermaid-open-doc :which-key "documentation")))
-  )
+  (mermaid-flags "-w 1568 -H 1168"))
 
+(defun mk/draw-local-keybinding-setup()
+  (keymap-local-set "M-c" #'mermaid-compile)
+  (keymap-local-set "M-o" #'mermaid-open-browser)
+  (keymap-local-set "M-d" #'mermaid-open-doc))
+
+(add-hook 'mermaid-mode-hook 'mk/draw-local-keybinding-setup)
 
 (provide 'l-draw)

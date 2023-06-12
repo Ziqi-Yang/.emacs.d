@@ -156,21 +156,17 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-;; @ local keyBindings
-;; (mapBegin!
-;;   (general-imap
-;;     :keymaps 'org-mode-map
-;;     "C-c t" #'(mk/hugo/complete-tag-at-point :which-key "complete tag"))
-;; 
-;;   (mk/local-leader-def
-;; 	  :states 'normal
-;; 	  :keymaps 'org-mode-map
-;; 	  "b" #'(org-babel-tangle :which-key "tangle")
-;;     "c" #'(org-toggle-checkbox :which-key "toggle checkbox")
-;;     "i" #'(org-toggle-inline-images :which-key "toggle image")
-;; 	  "e" #'(org-export-dispatch :which-key "export")
-;;     "t" #'(org-todo :which-key "todo")
-;;     "T" #'(org-set-tags-command :which-key "set tag")
-;;     "p" #'(org-priority :which-key "priority")))
+(defun mk/org-local-keybinding-setup()
+  (keymap-local-set "M-T" #'mk/hugo/complete-tag-at-point)
+  (keymap-local-set "M-b" #'org-babel-tangle)
+  (keymap-local-set "M-c" #'org-toggle-checkbox)
+  (keymap-local-set "M-i" #'org-toggle-inline-images)
+  (keymap-local-set "M-e" #'org-export-dispatch)
+  (keymap-local-set "M-t" #'org-todo)
+  (keymap-local-set "M-T" #'org-set-tags-command)
+  (keymap-local-set "M-p" #'org-priority))
+
+(add-hook 'org-mode-hook 'mk/org-local-keybinding-setup)
+
 
 (provide 'l-org)

@@ -21,12 +21,12 @@
 		:prefix "SPC m"
 		:non-normal-prefix "M-SPC m"))
 
-(defmacro mapBegin! (&rest expression)
+(defmacro mapBegin! (&rest expression)n
   "Used for defining keys. Keys are defined after package 'general' load up, so we
 don't need to add ':demand t' keyword to 'use-package' declearation."
   `(use-package general
      :config
-     ,@expression))
+     ,@expression)g)
 
 ;;; Evil Collection =========================================
 (use-package evil
