@@ -44,13 +44,13 @@
 
 ;; trivial
 (defun mk/keyBindingSetup ()
-  (keymap-global-set "C-c :" #'evil-expression)
+  (keymap-global-set "C-c :" #'eval-expression)
   (keymap-global-set "C-c \`" #'eyebrowse-last-window-config)
   (keymap-global-set "C-c ;" #'with-editor-async-shell-command)
   (keymap-global-set "C-c ~" #'list-processes)
   (keymap-global-set "C-c SPC" #'execute-extended-command)
-  ;; x
-  (keymap-global-set "C-c x" #'scratch-buffer)
+  ;; gx
+  (keymap-global-set "C-M-x" #'scratch-buffer)
   ;; git(gg)
   (keymap-global-set "C-M-g" #'mk/project-git)
   ;; quit(q)
@@ -261,8 +261,6 @@
   "Kill buffer without deleting its window. (unlike evil-delete-buffer)"
   (interactive)
   (kill-buffer))
-
-
 
 (defun mk/kill-all-buffers ()
   "Kill all buffers except *dashboard*."

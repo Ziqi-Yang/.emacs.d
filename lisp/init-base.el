@@ -158,6 +158,11 @@
   ([remap describe-command] . helpful-command)
   ([remap describe-key] . helpful-key))
 
+;; Jump =====================================================
+(use-package better-jumper
+  :config
+  (better-jumper-mode +1))
+
 ;;; fold ====================================================
 ;; @ buildin
 ;; evil buildin fold throught this package
@@ -300,7 +305,5 @@
 (use-package gcmh
   :straight t
   :hook (after-init . gcmh-mode))
-
-
 
 (provide 'init-base)
