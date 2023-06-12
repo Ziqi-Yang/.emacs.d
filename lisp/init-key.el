@@ -20,8 +20,12 @@
 (define-key global-map (kbd "M-<") 'insert-pair)
 (define-key global-map (kbd "M-'") 'insert-pair)
 
-;; Vim-like scrolling keybinding
+;; Vim-like  keybinding
 (progn
+  (keymap-global-set "C-w" #'backward-kill-word)
+  (keymap-global-set "C-M-#" #'kill-region)
+  (setq meow--kbd-kill-region "C-M-#")
+  
   (keymap-global-set "C-d" #'scroll-up)
   (keymap-global-set "C-M-!" #'delete-char)
   (setq meow--kbd-delete-char "C-M-!")
@@ -202,6 +206,8 @@
   (keymap-global-set "C-c s s" #'mk/better-consult-line)
   (keymap-global-set "C-c s c" #'list-colors-display)
   (keymap-global-set "C-c s i" #'consult-imenu)
+  (keymap-global-set "C-c s m" #'consult-mark)
+  (keymap-global-set "C-c s M" #'consult-global-mark)
   (keymap-global-set "C-c s I" #'consult-info)
   (keymap-global-set "C-c s p" #'mk/better-affe-grep)
   (keymap-global-set "C-c s P" #'consult-ripgrep)

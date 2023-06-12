@@ -5,7 +5,19 @@
 ;;; Trivil ==================================================
 ;; @ delete file by moving to trash
 ;; change the behavior of delete-file and delete-directory function
-;; (setq delete-by-moving-to-trash t) 
+;; (setq delete-by-moving-to-trash t)
+
+;;; jump back functionality (mark)
+(setq mark-ring-max 6
+  global-mark-ring-max 6)
+
+(defun xah/pop-local-mark-ring ()
+  "Move cursor to last mark position of current buffer.
+Call this repeatedly will cycle all positions in `mark-ring'.
+URL `http://xahlee.info/emacs/emacs/emacs_jump_to_previous_position.html'
+Version 2016-04-04"
+  (interactive)
+  (set-mark-command t))
 
 ;; @ save minibuffer history
 ;;; save minibuffer history
@@ -157,11 +169,6 @@
   ([remap describe-variable] . helpful-variable)
   ([remap describe-command] . helpful-command)
   ([remap describe-key] . helpful-key))
-
-;; Jump =====================================================
-(use-package better-jumper
-  :config
-  (better-jumper-mode +1))
 
 ;;; fold ====================================================
 ;; @ buildin

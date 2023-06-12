@@ -104,9 +104,10 @@
     '("`" . combobulate-avy-jump-defun)
 
     ;; M-; comment-dwim (toggle comment)
-    '("C-o" . better-jumper-jump-backward)
-    '("C-i" . better-jumper-jump-forward)
+    '("C-o" . xah/pop-local-mark-ring)
+    '("C-i" . pop-global-mark)
     '(":" . eval-expression)
+    '("C-m" . set-mark-command)
     '("C-M-h" . combobulate-navigate-beginning-of-defun)
     '("C-M-l" . combobulate-navigate-end-of-defun)
     '("C-S-h" . combobulate-navigate-up)
