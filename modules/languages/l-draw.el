@@ -29,14 +29,15 @@
 (use-package mermaid-mode
   :custom
   (mermaid-flags "-w 1568 -H 1168")
-  :config
-  (mapBegin!
-    (mk/local-leader-def
-	    :states 'normal
-	    :keymaps 'mermaid-mode-map
-      "c" #'(mermaid-compile :which-key "compile current-file")
-      "o" #'(mermaid-open-browser :which-key "open in browser editor")
-      "d" #'(mermaid-open-doc :which-key "documentation"))))
+  ;; :config
+  ;; (mapBegin!
+  ;;   (mk/local-leader-def
+	;;     :states 'normal
+	;;     :keymaps 'mermaid-mode-map
+  ;;     "c" #'(mermaid-compile :which-key "compile current-file")
+  ;;     "o" #'(mermaid-open-browser :which-key "open in browser editor")
+  ;;     "d" #'(mermaid-open-doc :which-key "documentation")))
+  )
 
 
 (provide 'l-draw)

@@ -46,9 +46,9 @@
 
 (with-temp-message ""
   (require 'init-base)
-  ;; (require 'init-key)
-  ;; (require 'evil)
   (require 'meow)
+  (require 'init-key)
+  ;; (require 'evil) ;; don't enable this module when enabling meow and init-key
   (require 'init-ui)
   (require 'editor)
   (require 'completion)

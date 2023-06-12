@@ -8,16 +8,16 @@
   :config
   (setq zig-format-on-save nil))
 
-(mapBegin!
-  (mk/local-leader-def
-    :states 'normal
-    :keymaps 'zig-mode-map
-    "c" #'zig-compile
-    "e" #'zig-build-exe
-    "l" #'zig-build-lib
-    "o" #'zig-build-obj
-    "t" #'zig-test-buffer
-    "r" #'zig-run
-    "f" #'zig-format-buffer))
+;; (mapBegin!
+;;   (mk/local-leader-def
+;;     :states 'normal
+;;     :keymaps 'zig-mode-map
+;;     "c" #'zig-compile
+;;     "e" #'zig-build-exe
+;;     "l" #'zig-build-lib
+;;     "o" #'zig-build-obj
+;;     "t" #'zig-test-buffer
+;;     "r" #'zig-run
+;;     "f" #'zig-format-buffer))
 
 (provide 'l-zig)

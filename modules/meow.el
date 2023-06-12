@@ -1,20 +1,27 @@
 ;;; meow.el --- meow model editing                   -*- lexical-binding: t; -*-
-
 ;; Copyright (C) 2023  Ziqi Yang
-
 ;; Author: Ziqi Yang <mr.ziqiyang@gmail.com>
+;; Comments:
+
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+  (setq meow-keypad-start-keys '((?h . ?h)
+                                  (?x . ?x)))
+  
+  ;; moiton  asdf
   (meow-motion-overwrite-define-key
     '("j" . meow-next)
     '("k" . meow-prev)
     '("<escape>" . ignore))
+  
+  ;; leader key 
   (meow-leader-define-key
     ;; SPC j/k will run the original command in MOTION state.
     '("j" . "H-j")
     '("k" . "H-k")
-    ;; Use SPC (0-9) for digit arguments.
+    
+    ;; USE SPC (0-9) for digit arguments.
     '("1" . meow-digit-argument)
     '("2" . meow-digit-argument)
     '("3" . meow-digit-argument)
@@ -25,8 +32,11 @@
     '("8" . meow-digit-argument)
     '("9" . meow-digit-argument)
     '("0" . meow-digit-argument)
+    
     '("/" . meow-keypad-describe-key)
     '("?" . meow-cheatsheet))
+  
+  ;; normal mode
   (meow-normal-define-key
     '("0" . meow-expand-0)
     '("9" . meow-expand-9)
@@ -78,7 +88,8 @@
     '("s" . meow-kill)
     '("t" . meow-till)
     '("u" . meow-undo)
-    '("U" . meow-undo-in-selection)
+    ;; '("U" . meow-undo-in-selection)
+    '("U" . undo-redo)
     '("v" . meow-visit)
     '("w" . meow-mark-word)
     '("W" . meow-mark-symbol)
@@ -88,7 +99,21 @@
     '("Y" . meow-sync-grab)
     '("z" . meow-pop-selection)
     '("'" . repeat)
-    '("<escape>" . ignore)))
+    '("<escape>" . ignore)
+    '("/" . combobulate-avy-jump)
+    '("`" . combobulate-avy-jump-defun)
+
+    ;; M-; comment-dwim (toggle comment)
+    '("C-M-h" . combobulate-navigate-beginning-of-defun)
+    '("C-M-l" . combobulate-navigate-end-of-defun)
+    '("C-S-h" . combobulate-navigate-up)
+    '("C-S-l" . combobulate-navigate-down)
+    '("C-M-d" . combobulate-mark-defun)
+    '("M-v" . er/expand-region)
+    '("C-." . embark-act)
+    '("C-S-v" . clipboard-yank)
+    '("C-S-c" . clipboard-kill-ring-save)
+    '("!" . hs-toggle-hiding)))
 
 (use-package meow
   :config

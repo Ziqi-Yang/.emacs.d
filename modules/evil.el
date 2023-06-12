@@ -166,7 +166,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
 (define-key minibuffer-local-map (kbd "C-y") 'mk/insert-clipboard-in-minibuffer)
 (define-key minibuffer-local-map (kbd "C-S-v") 'mk/insert-clipboard-in-minibuffer)
 
-;;; Main Key Mapping ========================================
+;;; Main Key Mapping =======================================
 (mapBegin!
   ;; continuous shift-right/left, cannot be defined in general map
   (define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)

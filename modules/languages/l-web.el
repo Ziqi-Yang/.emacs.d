@@ -52,22 +52,22 @@
     (mk/live-web-start)))
 
 ;;; Keybindings =============================================
-(defun mk/mapLocal-web ()
-	"Map local keybinding for modes that relates to web front end development."
-	(mapBegin!
-	 (mk/local-leader-def
-		 :states 'normal
-		 ;; :keymaps '(mhtml-mode html-mode) ;; no use :(
-		 "l" '(:ignore t :which-key "live-web")
-		 "ls" '(mk/live-web-start :which-key "start")
-		 "lk" '(mk/live-web-kill :which-key "kill")
-		 "ll" '(mk/live-web-toggle :which-key "toggle")
-		 )))
-(defun mk/add-web-local-map-hook (hook-list)
-	(dolist (mode hook-list)
-		(add-hook mode #'mk/mapLocal-web)))
-
-(mk/add-web-local-map-hook '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook))
-(mk/add-web-local-map-hook '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
+;; (defun mk/mapLocal-web ()
+;; 	"Map local keybinding for modes that relates to web front end development."
+;; 	(mapBegin!
+;; 	 (mk/local-leader-def
+;; 		 :states 'normal
+;; 		 ;; :keymaps '(mhtml-mode html-mode) ;; no use :(
+;; 		 "l" '(:ignore t :which-key "live-web")
+;; 		 "ls" '(mk/live-web-start :which-key "start")
+;; 		 "lk" '(mk/live-web-kill :which-key "kill")
+;; 		 "ll" '(mk/live-web-toggle :which-key "toggle")
+;; 		 )))
+;; (defun mk/add-web-local-map-hook (hook-list)
+;; 	(dolist (mode hook-list)
+;; 		(add-hook mode #'mk/mapLocal-web)))
+;; 
+;; (mk/add-web-local-map-hook '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook))
+;; (mk/add-web-local-map-hook '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
 
 (provide 'l-web)
