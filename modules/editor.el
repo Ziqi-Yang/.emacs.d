@@ -68,9 +68,7 @@
   :config
   (editorconfig-mode 1))
 
-(use-package apheleia
-  :config
-  (apheleia-global-mode +1))
+(use-package apheleia)
 
 ;; Other ====================================================
 

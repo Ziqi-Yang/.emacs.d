@@ -101,9 +101,9 @@
     '("z" . meow-pop-selection)
     '("'" . repeat)
     '("<escape>" . ignore)
+    
     '("/" . combobulate-avy-jump)
     '("`" . combobulate-avy-jump-defun)
-
     ;; M-; comment-dwim (toggle comment)
     '("C-o" . xah/pop-local-mark-ring)
     '("C-i" . pop-global-mark)

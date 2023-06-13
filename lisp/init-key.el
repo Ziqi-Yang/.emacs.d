@@ -31,6 +31,8 @@
 (progn ;; insert mode (actually all mode)
   (keymap-global-set "C-M-@" #'forward-char)
   (setq meow--kbd-forward-char "C-M-@")
+  (keymap-global-set "C-M-$" #'kill-line)
+  (setq meow--kbd-kill-line "C-M-$")
   
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'clipboard-yank)
@@ -86,13 +88,15 @@
 
   ;; code(c)
   (which-key-add-key-based-replacements "C-c c" "code")
-  (keymap-global-set "C-c c e" #'combobulate-envelop)
+  (keymap-global-set "C-c c E" #'combobulate-envelop)
   (keymap-global-set "C-c c a" #'eglot-code-actions)
   (keymap-global-set "C-c c R" #'eglot-rename)
   (keymap-global-set "C-c c i" #'eglot-code-action-organize-imports)
 
   ;; (keymap-global-set "C-c c f" #'editorconfig-format-buffer)
-  (keymap-global-set "C-c c f" #'apheleia-format-buffer)
+  (which-key-add-key-based-replacements "C-c c f" "format buffer")
+  (keymap-global-set "C-c c f f" #'apheleia-format-buffer)
+  (keymap-global-set "C-c c f F" #'eglot-format)
   (keymap-global-set "C-c c p" #'citre-ace-peek)
   (keymap-global-set "C-c c P" #'citre-peek)
 
@@ -100,13 +104,14 @@
   (keymap-global-set "C-c c c p" #'color-rg-search-project-with-type)
   (keymap-global-set "C-c c c b" #'color-rg-search-symbol-in-current-file)
 
+  (keymap-global-set "C-c c D" #'eldoc)
   (keymap-global-set "C-c c d" #'xref-find-definitions)
   (keymap-global-set "C-c c r" #'xref-find-references)
   (keymap-global-set "C-c c j" #'citre-jump)
   (keymap-global-set "C-c c k" #'citre-jump-back)
   (keymap-global-set "C-c c u" #'citre-update-this-tags-file)
   (keymap-global-set "C-c c U" #'mk/update-all-tags)
-  (keymap-global-set "C-c c E" #'consult-flymake) ;; show all errors
+  (keymap-global-set "C-c c e" #'consult-flymake) ;; show all errors
   (keymap-global-set "C-c c F" #'eglot-code-action-quickfix)
 
   (which-key-add-key-based-replacements "C-c c o" "other")
@@ -190,7 +195,7 @@
   (keymap-global-set "C-c p p" #'project-switch-project)
   (keymap-global-set "C-c p t" #'magit-todos-list)
   (keymap-global-set "C-c p e" #'flymake-show-project-diagnostics)
-  (keymap-global-set "C-c p s" #'project-shell)
+  (keymap-global-set "C-c p s" #'project-eshell)
   (keymap-global-set "C-c p k" #'project-kill-buffers)
   (keymap-global-set "C-c p c" #'mk/project-compile)
   (keymap-global-set "C-c p r" #'project-async-shell-command)
@@ -249,6 +254,7 @@
   (keymap-global-set "C-c w w" #'mk/ace-window-balance-window)
   (keymap-global-set "C-c w W" #'ace-window)
   (keymap-global-set "C-c w t" #'others/window-split-toggle)
+  (keymap-global-set "C-c w m" #'delete-window)
   (keymap-global-set "C-c w o" #'delete-other-windows)
   (keymap-global-set "C-c w m" #'maximize-window)
   (keymap-global-set "C-c w M" #'minimize-window)
