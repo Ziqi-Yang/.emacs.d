@@ -142,6 +142,18 @@
   (keymap-global-set "C-c F c" #'hs-hide-all)
   (keymap-global-set "C-c F C" #'outline-show-only-headings)
 
+  ;; easy GPG assistant
+  (which-key-add-key-based-replacements "C-c G" "epa")
+  (which-key-add-key-based-replacements "C-c G r" "region")
+  (keymap-global-set "C-c G l" #'epa-list-keys)
+  (keymap-global-set "C-c G r e" #'epa-encrypt-region)
+  (keymap-global-set "C-c G r d" #'epa-decrypt-region)
+  (keymap-global-set "C-c G r v" #'epa-verify-region)
+  (which-key-add-key-based-replacements "C-c G f" "file")
+  (keymap-global-set "C-c G f e" #'epa-encrypt-file)
+  (keymap-global-set "C-c G f d" #'epa-decrypt-file)
+  (keymap-global-set "C-c G f v" #'epa-verify-file)
+  
   ;; help(h)
   ;; SPC h SPC <character>
   (keymap-global-set "C-h M" #'woman)
