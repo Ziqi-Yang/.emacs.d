@@ -265,7 +265,7 @@ don't need to add ':demand t' keyword to 'use-package' declearation."
   ;; ((hllo world) meowking)
   ;; @ insert( map (no leader key
   (general-imap ;; insert
-	  ;; eivl(vim) default C-o can be useful when moving in evil insert mode
+	  ;; evil(vim) default C-o can be useful when moving in evil insert mode
     ;; emacs keybindings like C-f, C-b, M-f, M-b are also useful.
     "C-S-v" #'clipboard-yank
 

@@ -6,6 +6,7 @@
 ;; @ delete file by moving to trash
 ;; change the behavior of delete-file and delete-directory function
 ;; (setq delete-by-moving-to-trash t)
+(setq make-backup-files nil) ;; dont' automatically backup files in <fileName>~ format
 
 ;;; jump back functionality (mark)
 (setq mark-ring-max 6
@@ -234,17 +235,17 @@ Version 2016-04-04"
 (use-package color-rg
 	:straight (:host github :repo "manateelazycat/color-rg"))
 
-;; @ fuzzy finder
-(use-package affe
-  :straight (:host github :repo "minad/affe" :files ("*.el"))
-  :config
-  ;; Manual preview key for `affe-grep' 
-  (consult-customize affe-grep :preview-key '(:debounce 0.5 any))
-	;; use orderless 
-	(defun affe-orderless-regexp-compiler (input _type _ignorecase)
-		(setq input (orderless-pattern-compiler input))
-		(cons input (lambda (str) (orderless--highlight input str))))
-	(setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
+;; @ fuzzy finder ;; use consult-ripgrep instead
+;; (use-package affe
+;;   :straight (:host github :repo "minad/affe" :files ("*.el"))
+;;   :config
+;;   ;; Manual preview key for `affe-grep' 
+;;   (consult-customize affe-grep :preview-key '(:debounce 0.5 any))
+;; 	;; use orderless 
+;; 	(defun affe-orderless-regexp-compiler (input _type _ignorecase)
+;; 		(setq input (orderless-pattern-compiler input))
+;; 		(cons input (lambda (str) (orderless--highlight input str))))
+;; 	(setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
 
 ;;; Todo highlight ==========================================
 (use-package hl-todo

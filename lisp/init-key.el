@@ -53,8 +53,10 @@
   (keymap-global-set "C-c ;" #'with-editor-async-shell-command)
   (keymap-global-set "C-c ~" #'list-processes)
   (keymap-global-set "C-c SPC" #'execute-extended-command)
-  ;; gx
-  (keymap-global-set "C-M-x" #'scratch-buffer)
+  ;; gl
+  (keymap-global-set "C-M-l" #'recenter-top-bottom)
+  ;; gs
+  (keymap-global-set "C-M-s" #'scratch-buffer)
   ;; git(gg)
   (keymap-global-set "C-M-g" #'mk/project-git)
   ;; quit(q)
@@ -93,7 +95,8 @@
   (keymap-global-set "C-c c R" #'eglot-rename)
   (keymap-global-set "C-c c i" #'eglot-code-action-organize-imports)
 
-  (keymap-global-set "C-c c f" #'editorconfig-format-buffer)
+  ;; (keymap-global-set "C-c c f" #'editorconfig-format-buffer)
+  (keymap-global-set "C-c c f" #'apheleia-format-buffer)
   (keymap-global-set "C-c c p" #'citre-ace-peek)
   (keymap-global-set "C-c c P" #'citre-peek)
 
@@ -126,7 +129,6 @@
   ;; file(f)
   (which-key-add-key-based-replacements "C-c f" "file")
   (keymap-global-set "C-c f f" #'find-file)
-  (keymap-global-set "C-c f F" #'affe-find)
   (keymap-global-set "C-c f D" #'mk/delete-file)
   (keymap-global-set "C-c f R" #'rename-visited-file)
   (keymap-global-set "C-c f r" #'recentf-open)
@@ -206,11 +208,12 @@
   (keymap-global-set "C-c s s" #'mk/better-consult-line)
   (keymap-global-set "C-c s c" #'list-colors-display)
   (keymap-global-set "C-c s i" #'consult-imenu)
-  (keymap-global-set "C-c s m" #'consult-mark)
-  (keymap-global-set "C-c s M" #'consult-global-mark)
+  (keymap-global-set "C-c s I" #'consult-imenu-multi) ;; project wide
+  (keymap-global-set "C-c s m" #'consult-global-mark)
+  (keymap-global-set "C-c s M" #'consult-mark)
   (keymap-global-set "C-c s I" #'consult-info)
-  (keymap-global-set "C-c s p" #'mk/better-affe-grep)
-  (keymap-global-set "C-c s P" #'consult-ripgrep)
+  (keymap-global-set "C-c s p" #'mk/better-consult-ripgrep)
+  (keymap-global-set "C-c s P" #'mk/better-consult-git-grep)
   (keymap-global-set "C-c s b" #'consult-bookmark)
   (keymap-global-set "C-c s d" #'dictionary-search)
   (keymap-global-set "C-c s o" #'consult-outline)
@@ -480,10 +483,15 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
         (concat command-prefix (project-root (project-current)) " ~/.emacs.d/gitui_start.sh"))
       (message "Not in a project!"))))
 
-(defun mk/better-affe-grep()
+(defun mk/better-consult-ripgrep()
   "Use symbol at point as the default input of `affe-grep'."
   (interactive)
-  (affe-grep nil (thing-at-point 'symbol)))
+  (consult-ripgrep nil (thing-at-point 'symbol)))
+
+(defun mk/better-consult-git-grep()
+  "Use symbol at point as the default input of `affe-grep'."
+  (interactive)
+  (consult-git-grep nil (thing-at-point 'symbol)))
 
 (defun mk/better-consult-line()
   "Use symbol at point as the default input of `consult-line'."

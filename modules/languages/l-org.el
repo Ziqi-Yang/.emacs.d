@@ -148,13 +148,13 @@
 ;; 		org-tree-slide-email "mr.ziqiyang@gmail.com"))
 
 ;;; Keybindings =============================================
-(use-package evil-org
-  :straight (:host github :repo "Somelauw/evil-org-mode")
-  :after org
-  :hook ((org-mode . (lambda () (evil-org-mode))))
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+;; (use-package evil-org
+;;   :straight (:host github :repo "Somelauw/evil-org-mode")
+;;   :after org
+;;   :hook ((org-mode . (lambda () (evil-org-mode))))
+;;   :config
+;;   (require 'evil-org-agenda)
+;;   (evil-org-agenda-set-keys))
 
 (defun mk/org-local-keybinding-setup()
   (keymap-local-set "M-T" #'mk/hugo/complete-tag-at-point)
