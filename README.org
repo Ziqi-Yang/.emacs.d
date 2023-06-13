@@ -33,6 +33,10 @@ paru -S mermaid-cli
 
 # ctire
 sudo pacman -S ctags global # ctags and gtags(needed for finding reference)
+
+# formatter
+# use apheleia: https://github.com/radian-software/apheleia
+sudo pacman -S python-black prettier
 #+end_src
 
 (Now I don't use it)Requirements of =lsp-bridge=: https://github.com/manateelazycat/lsp-bridge

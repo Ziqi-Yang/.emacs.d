@@ -313,4 +313,11 @@ Version 2016-04-04"
   :straight t
   :hook (after-init . gcmh-mode))
 
+;; collect gc statics
+;; emacs-gc-stats-save-session -> ~/.emacs.d/emacs-gc-stats.eld
+;; emacs-gc-stats-clear
+;;(use-package emacs-gc-stats
+;;  :config
+;;  (emacs-gc-stats-mode +1))
+
 (provide 'init-base)

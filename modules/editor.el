@@ -54,7 +54,7 @@
 ;; 	;; (sp-pair "<#" "#>") ;; example, support multiple characters
 ;; 	)
 
-;;; Indentation =============================================
+;;; Indentation & format ====================================
 (use-package aggressive-indent 
 	;; :hook ((prog-mode . aggressive-indent-mode))
 	:config
@@ -67,6 +67,10 @@
 (use-package editorconfig
   :config
   (editorconfig-mode 1))
+
+(use-package apheleia
+  :config
+  (apheleia-global-mode +1))
 
 ;; Other ====================================================
 
