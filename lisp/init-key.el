@@ -1,11 +1,7 @@
 ;;; init-key.el --- keyBindings -*- lexical-binding: t -*-
 ;;; Commentary:
-;;; Code:
-
-;; (keymap-global-set "C-c ")
 ;; NOTE: global key bindings will be shadowwed by local keybindings
-;; NOTE: don't bind C-w, which will cause error to meow-kill
-
+;;; Code:
 
 ;; remove existing keybindings
 ;; (defun remove-elisp-mode-local-keybindings ()
