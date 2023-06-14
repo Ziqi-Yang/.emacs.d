@@ -95,8 +95,8 @@
 
   ;; (keymap-global-set "C-c c f" #'editorconfig-format-buffer)
   (which-key-add-key-based-replacements "C-c c f" "format buffer")
-  (keymap-global-set "C-c c f f" #'apheleia-format-buffer)
-  (keymap-global-set "C-c c f F" #'eglot-format)
+  (keymap-global-set "C-c c f F" #'apheleia-format-buffer)
+  (keymap-global-set "C-c c f f" #'eglot-format)
   (keymap-global-set "C-c c p" #'citre-ace-peek)
   (keymap-global-set "C-c c P" #'citre-peek)
 
@@ -196,9 +196,9 @@
   (keymap-global-set "C-c p t" #'magit-todos-list)
   (keymap-global-set "C-c p e" #'flymake-show-project-diagnostics)
   (keymap-global-set "C-c p s" #'project-eshell)
+  (keymap-global-set "C-c p S" #'project-async-shell-command)
   (keymap-global-set "C-c p k" #'project-kill-buffers)
   (keymap-global-set "C-c p c" #'mk/project-compile)
-  (keymap-global-set "C-c p r" #'project-async-shell-command)
   (keymap-global-set "C-c p P" #'project-forget-project)
 
   ;; proxy(P)
