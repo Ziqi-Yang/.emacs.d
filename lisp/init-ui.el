@@ -187,7 +187,7 @@
   :hook (compilation-filter . ansi-color-compilation-filter))
 
 ;;; Hi-lock =================================================
-;; highlight-symbol-at-point (which is integrated to `mk/evil-search-symbol-forward')
+;; to highlight-symbol-at-point (which is integrated to `mk/evil-search-symbol-forward')
 
 (setq hi-lock-face-defaults '("mk/face/hi-yellow" "mk/face/hi-pink" "hi-green" "hi-blue" "hi-salmon" "hi-aquamarine" "hi-black-b" "hi-blue-b" "hi-red-b" "hi-green-b" "hi-black-hb"))
 

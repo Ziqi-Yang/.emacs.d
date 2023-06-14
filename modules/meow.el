@@ -102,7 +102,8 @@
     '("z" . meow-pop-selection)
     '("'" . repeat)
     '("<escape>" . ignore)
-    
+
+    '("~" . upcase-dwim)
     '("/" . combobulate-avy-jump)
     '("`" . combobulate-avy-jump-defun)
     ;; M-; comment-dwim (toggle comment)

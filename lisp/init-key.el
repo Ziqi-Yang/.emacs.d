@@ -13,8 +13,8 @@
 (define-key global-map (kbd "M-[") 'insert-pair)
 (define-key global-map (kbd "M-{") 'insert-pair)
 (define-key global-map (kbd "M-\"") 'insert-pair)
-(define-key global-map (kbd "M-<") 'insert-pair)
 (define-key global-map (kbd "M-'") 'insert-pair)
+(define-key global-map (kbd "M-<") 'insert-pair)
 
 ;; Vim-like  keybinding
 (progn
@@ -49,8 +49,11 @@
   (keymap-global-set "C-c :" #'eval-expression)
   (keymap-global-set "C-c \`" #'eyebrowse-last-window-config)
   (keymap-global-set "C-c ;" #'with-editor-async-shell-command)
-  (keymap-global-set "C-c ~" #'list-processes)
   (keymap-global-set "C-c SPC" #'execute-extended-command)
+  (keymap-global-set "C-c ~" #'list-processes)
+  ;; highlight symbols ( SPC x h/H)
+  (keymap-global-set "C-x h" #'mk/highlight-symbol-buffer)
+  (keymap-global-set "C-x H" #'unhighlight-regexp)
   ;; gl
   (keymap-global-set "C-M-l" #'recenter-top-bottom)
   ;; gs
@@ -517,6 +520,11 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (interactive)
   (citre-update-this-tags-file)
   (citre-global-update-database))
+
+(defun mk/highlight-symbol-buffer()
+  "Highlight all the symbols is that is the same of the one at point"
+  (interactive)
+  (highlight-phrase (thing-at-point 'symbol)))
 
 ;; Evil Related
 ;;
