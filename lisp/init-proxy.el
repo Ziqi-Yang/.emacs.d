@@ -1,5 +1,7 @@
 ;;; init-proxy.el --- Toogle Proxy -*- lexical-binding: t -*-
 ;;; Commentary:
+;; origin: Centaur Emacs
+;; https://github.com/seagle0128/.emacs.d
 ;;; Code:
 
 (defcustom centaur-proxy "127.0.0.1:7890"

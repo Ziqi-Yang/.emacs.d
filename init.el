@@ -47,14 +47,15 @@
 (with-temp-message ""
   (require 'init-base)
   (require 'meow)
-  (require 'init-key)
   ;; (require 'evil) ;; don't enable this module when enabling meow and init-key
+  (require 'init-key)
   (require 'init-ui)
   (require 'editor)
   (require 'completion)
   (require 'file-browser)
   (require 'git)
   (require 'init-proxy)
+  (require 'mail)
   (require 'auto-insert)
   (require 'ai)
   (require 'info) ;; FIXME this file cannot be loaded

@@ -44,8 +44,8 @@
   (keymap-global-set "C-l" #'cape-line)
   (keymap-global-set "C-S-l" #'mk/cape-line-previous-buffer))
 
-;; trivial
 (defun mk/keyBindingSetup ()
+  ;; trivial
   (keymap-global-set "C-c :" #'eval-expression)
   (keymap-global-set "C-c \`" #'eyebrowse-last-window-config)
   (keymap-global-set "C-c ;" #'with-editor-async-shell-command)
@@ -54,6 +54,11 @@
   ;; highlight symbols ( SPC x h/H)
   (keymap-global-set "C-x h" #'mk/highlight-symbol-buffer)
   (keymap-global-set "C-x H" #'unhighlight-regexp)
+  ;; vc commands (git)
+  ;; C-x v (SPC x SPC v)
+  (keymap-global-set "C-x v p" #'vc-prepare-patch)
+  ;; diff (SPC x SPC d)
+  (keymap-global-set "C-x d" #'diff)
   ;; gl
   (keymap-global-set "C-M-l" #'recenter-top-bottom)
   ;; gs
@@ -209,7 +214,7 @@
   (keymap-global-set "C-c P h" #'proxy-http-toggle)
   (keymap-global-set "C-c P H" #'proxy-http-show)
   (keymap-global-set "C-c P s" #'proxy-socks-toggle)
-  (keymap-global-set "C-c P S" #'proxy-http-show)
+  (keymap-global-set "C-c P S" #'proxy-socks-show)
   (keymap-global-set "C-c P p" #'org-tree-slide-mode)
 
   ;; search & replace (s)
@@ -257,7 +262,8 @@
   (keymap-global-set "C-c w w" #'mk/ace-window-balance-window)
   (keymap-global-set "C-c w W" #'ace-window)
   (keymap-global-set "C-c w t" #'others/window-split-toggle)
-  (keymap-global-set "C-c w m" #'delete-window)
+  (keymap-global-set "C-c w q" #'delete-window)
+  (keymap-global-set "C-c w d" #'delete-window)
   (keymap-global-set "C-c w o" #'delete-other-windows)
   (keymap-global-set "C-c w m" #'maximize-window)
   (keymap-global-set "C-c w M" #'minimize-window)
@@ -267,8 +273,6 @@
   (keymap-global-set "C-c w =" #'balance-windows)
   (keymap-global-set "C-c w v" #'mk/split-window-vertically)
   (keymap-global-set "C-c w h" #'mk/split-window-horizontally)
-  (keymap-global-set "C-c w q" #'evil-window-delete)
-  (keymap-global-set "C-c w d" #'evil-window-delete)
   (keymap-global-set "C-c w L" #'buf-move-right)
   (keymap-global-set "C-c w H" #'buf-move-left)
   (keymap-global-set "C-c w J" #'buf-move-down)
