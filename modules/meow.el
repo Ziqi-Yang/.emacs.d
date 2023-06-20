@@ -103,8 +103,10 @@
     '("'" . repeat)
     '("<escape>" . ignore)
 
+    ;; ? < > 
     '("~" . upcase-dwim)
-    '("/" . combobulate-avy-jump)
+    '("/" . avy-goto-word-1)
+    ;; '("/" . combobulate-avy-jump)
     '("`" . combobulate-avy-jump-defun)
     ;; M-; comment-dwim (toggle comment)
     '("C-o" . xah/pop-local-mark-ring)

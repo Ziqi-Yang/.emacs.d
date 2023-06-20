@@ -10,16 +10,11 @@
 	;; :hook (server-after-make-frame .
   ;;         (lambda ()
   ;;           (progn
-  ;;             (setq treesit-font-lock-level 1)
-  ;;             (setq font-lock-maximum-decoration nil)
   ;;             (load-theme 'doom-one-light t))))
 	:init
 	;; (load-theme 'doom-solarized-light t)
   ;; (progn
-  ;;   (setq treesit-font-lock-level 1)
-  ;;   (setq font-lock-maximum-decoration nil)
 	;;   (load-theme 'doom-earl-grey t))
-  :config
   :config
   (doom-themes-visual-bell-config)
   (setq doom-themes-treemacs-theme "doom-one-light")
@@ -30,8 +25,6 @@
   :hook (server-after-make-frame .
           (lambda ()
             (progn
-              (setq treesit-font-lock-level 1)
-              (setq font-lock-maximum-decoration nil)
               (load-theme 'almost-mono-white t))))
   :config
   ;; (load-theme 'almost-mono-black t)
@@ -41,6 +34,17 @@
     (setq treesit-font-lock-level 1)
     (setq font-lock-maximum-decoration nil)
 	  (load-theme 'almost-mono-white t)))
+
+(defun mk/setup-font-lock()
+  "Set minimum font lock level for both treesit and font-lock"
+  (setq treesit-font-lock-level 1) ;; treesit
+  (setq font-lock-maximum-decoration 1) ;; font lock
+  ;; setup jit-lock
+  (setq jit-lock-chunk-size 4096
+    jit-lock-defer-time 0.25
+    jit-lock-stealth-time 1.25))
+
+(add-hook 'after-init-hook #'mk/setup-font-lock())
 
 ;; icon theme
 (defun mk/check-and-install-all-the-icons()

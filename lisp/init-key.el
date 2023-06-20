@@ -157,10 +157,12 @@
   (keymap-global-set "C-c G l" #'epa-list-keys)
   (keymap-global-set "C-c G r e" #'epa-encrypt-region)
   (keymap-global-set "C-c G r d" #'epa-decrypt-region)
+  (keymap-global-set "C-c G r s" #'epa-sign-region)
   (keymap-global-set "C-c G r v" #'epa-verify-region)
   (which-key-add-key-based-replacements "C-c G f" "file")
   (keymap-global-set "C-c G f e" #'epa-encrypt-file)
   (keymap-global-set "C-c G f d" #'epa-decrypt-file)
+  (keymap-global-set "C-c G f s" #'epa-sign-)
   (keymap-global-set "C-c G f v" #'epa-verify-file)
   
   ;; help(h)
