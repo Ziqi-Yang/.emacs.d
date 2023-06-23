@@ -104,9 +104,7 @@
 	;; Format: "(icon title help action face prefix suffix)"
 	(setq dashboard-navigator-buttons
 		`(((nil
-				 "Homepage" "Browse homepage" (lambda (&rest _) (browse-url "https://github.com/Ziqi-Yang")))
-				(nil
-					"Load Session" nil (lambda (&rest _) (desktop-read)))
+				 "Email" nil (lambda (&rest _) (mu4e)))
 				(nil
 					"Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
         ))))
