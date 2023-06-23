@@ -1,6 +1,6 @@
 #+title: README
 
-* Requirements
+* COMMENT Requirements
 Mainly Language Servers  
 Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to setup wakatime
 #+begin_src shell
@@ -37,6 +37,13 @@ sudo pacman -S ctags global # ctags and gtags(needed for finding reference)
 # formatter
 # use apheleia: https://github.com/radian-software/apheleia
 sudo pacman -S python-black prettier
+
+# mail
+# msmtp: send mail; offlineimap: imap receive email; mu: index email and provide mu4e package for email
+# python-pysocks is required for offlineiamp to support proxy
+sudo pacman -S msmtp offlineimap python-pysocks
+paru -S mu
+
 #+end_src
 
 (Now I don't use it)Requirements of =lsp-bridge=: https://github.com/manateelazycat/lsp-bridge

@@ -329,11 +329,11 @@ Version 2016-04-04"
   :straight t
   :hook (after-init . gcmh-mode))
 
-;; collect gc statics
-;; emacs-gc-stats-save-session -> ~/.emacs.d/emacs-gc-stats.eld
-;; emacs-gc-stats-clear
-;;(use-package emacs-gc-stats
-;;  :config
-;;  (emacs-gc-stats-mode +1))
+;; collect gc-statistics to help developers improve gc performance
+;; https://www.reddit.com/r/emacs/comments/14dej62/please_help_collecting_statistics_to_optimize/
+(use-package emacs-gc-stats
+  :config
+  (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
+  (emacs-gc-stats-mode +1))
 
 (provide 'init-base)

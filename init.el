@@ -31,8 +31,8 @@
 ;;   ;; To disable collection of benchmark data after init is done.
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-(setq user-full-name "Ziqi Yang"
-  user-mail-address "mr.ziqiyang@gmail.com"
+(setq user-full-name "Meow King"
+  user-mail-address "mr.meowking@anche.no"
   default-directory (expand-file-name "~/.emacs.d"))
 
 ;; add load path
