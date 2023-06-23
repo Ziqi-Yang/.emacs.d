@@ -104,7 +104,7 @@
 	;; Format: "(icon title help action face prefix suffix)"
 	(setq dashboard-navigator-buttons
 		`(((nil
-				 "Email" nil (lambda (&rest _) (mu4e)))
+				 ,(concat "Email [" (shell-command-to-string "~/myBin/get-mu-unread-emails-num") "]") nil (lambda (&rest _) (mu4e)))
 				(nil
 					"Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
         ))))

@@ -48,6 +48,4 @@
 (add-hook 'mu4e-main-mode-hook 'mk/mu4e-main-local-keybinding-setup)
 (add-hook 'mu4e-view-mode-hook 'mk/mu4e-view-local-keybinding-setup)
 
-
-
 (provide 'mail)
