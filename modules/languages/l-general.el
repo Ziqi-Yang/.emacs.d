@@ -15,7 +15,8 @@
 ;; currently, emacs lacks buildin rust mode, we directly enable rust-ts-mode
 ;; but(guess) I think though with ts support, it still lack some feature. For more feature, you
 ;; should use third-party rust-mode instead.
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+
+;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . mhtml-mode))
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
