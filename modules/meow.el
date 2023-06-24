@@ -103,7 +103,8 @@
     '("'" . repeat)
     '("<escape>" . ignore)
 
-    ;; ? < > 
+    ;; < >
+    '("?" . eldoc)
     '("~" . upcase-dwim)
     '("/" . avy-goto-word-1)
     ;; '("/" . combobulate-avy-jump)

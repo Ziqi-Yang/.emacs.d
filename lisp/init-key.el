@@ -51,6 +51,8 @@
   (keymap-global-set "C-c ;" #'with-editor-async-shell-command)
   (keymap-global-set "C-c SPC" #'execute-extended-command)
   (keymap-global-set "C-c ~" #'list-processes)
+  ;; vundo ( SPC x u)
+  (keymap-global-set "C-x C-u" #'vundo)
   ;; highlight symbols ( SPC x h/H)
   (keymap-global-set "C-x h" #'mk/highlight-symbol-buffer)
   (keymap-global-set "C-x H" #'unhighlight-regexp)
