@@ -31,9 +31,9 @@
   (mermaid-flags "-w 1568 -H 1168"))
 
 (defun mk/draw-local-keybinding-setup()
-  (keymap-local-set "M-c" #'mermaid-compile)
-  (keymap-local-set "M-o" #'mermaid-open-browser)
-  (keymap-local-set "M-d" #'mermaid-open-doc))
+  (keymap-local-set "C-c C-c c" #'mermaid-compile)
+  (keymap-local-set "C-c C-c b" #'mermaid-open-browser)
+  (keymap-local-set "C-c C-c d" #'mermaid-open-doc))
 
 (add-hook 'mermaid-mode-hook 'mk/draw-local-keybinding-setup)
 

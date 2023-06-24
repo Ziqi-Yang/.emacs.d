@@ -4,7 +4,7 @@
 ;;; Code:
 
 (defun mk/cc-local-keybinding-setup()
-  (keymap-local-set "M-m" #'woman))
+  (keymap-local-set "C-c C-c m" #'woman))
 
 (add-hook 'c-ts-mode-hook 'mk/cc-local-keybinding-setup)
 (add-hook 'c++-ts-mode-hook 'mk/cc-local-keybinding-setup)

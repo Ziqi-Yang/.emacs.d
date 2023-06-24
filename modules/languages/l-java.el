@@ -22,8 +22,8 @@
 ;;          (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
 
 (defun mk/java-local-keybinding-setup()
-  (keymap-local-set "M-d" #'mk/java-open-doc)
-  (keymap-local-set "M-t" #'mk/java-generate-tags))
+  (keymap-local-set "C-c C-c d" #'mk/java-open-doc)
+  (keymap-local-set "C-c C-c t" #'mk/java-generate-tags))
 
 (add-hook 'java-mode-hook 'mk/java-local-keybinding-setup)
 (add-hook 'java-ts-mode-hook 'mk/java-local-keybinding-setup)

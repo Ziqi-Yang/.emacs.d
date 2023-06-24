@@ -157,6 +157,7 @@
 ;;   (evil-org-agenda-set-keys))
 
 (defun mk/org-local-keybinding-setup()
+  ;; Cuz C-c C-c is binded by `org-ctrl-c-ctrl-c', we use M- here. 
   (keymap-local-set "M-T" #'mk/hugo/complete-tag-at-point)
   (keymap-local-set "M-b" #'org-babel-tangle)
   (keymap-local-set "M-c" #'org-toggle-checkbox)

@@ -9,13 +9,13 @@
   (setq zig-format-on-save nil))
 
 (defun mk/zig-local-keybinding-setup()
-  (keymap-local-set "M-c" #'zig-compile)
-  (keymap-local-set "M-e" #'zig-build-exe)
-  (keymap-local-set "M-l" #'zig-build-lib)
-  (keymap-local-set "M-o" #'zig-build-obj)
-  (keymap-local-set "M-t" #'zig-test-buffer)
-  (keymap-local-set "M-r" #'zig-run)
-  (keymap-local-set "M-f" #'zig-format-buffer))
+  (keymap-local-set "C-c C-c c" #'zig-compile)
+  (keymap-local-set "C-c C-c C-b" #'zig-build-exe)
+  (keymap-local-set "C-c C-c C-l" #'zig-build-lib)
+  (keymap-local-set "C-c C-c C-o" #'zig-build-obj)
+  (keymap-local-set "C-c C-c t" #'zig-test-buffer)
+  (keymap-local-set "C-c C-c r" #'zig-run)
+  (keymap-local-set "C-c C-c f" #'zig-format-buffer))
 
 (add-hook 'zig-mode-hook 'mk/zig-local-keybinding-setup)
 

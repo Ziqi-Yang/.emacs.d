@@ -52,9 +52,9 @@
     (mk/live-web-start)))
 
 (defun mk/web-local-keybinding-setup()
-  (keymap-local-set "M-s" #'mk/live-web-start)
-  (keymap-local-set "M-l" #'mk/live-web-toggle)
-  (keymap-local-set "M-k" #'mk/live-web-kill))
+  (keymap-local-set "C-c C-c s" #'mk/live-web-start)
+  (keymap-local-set "C-c C-c t" #'mk/live-web-toggle)
+  (keymap-local-set "C-c C-c k" #'mk/live-web-kill))
 
 (defun mk/add-web-local-map-hook (hook-list)
 	(dolist (mode hook-list)
