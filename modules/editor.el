@@ -4,6 +4,7 @@
 ;;; Code:
 
 (setq-default tab-width 2
+  indent-tabs-mode nil ;; use white spaces instead of tabs
 	evil-shift-width tab-width
 	scroll-margin 5
   scroll-step 1
