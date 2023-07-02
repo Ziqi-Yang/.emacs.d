@@ -26,3 +26,6 @@ rust-ts-mode
 
 (pt "fn pt<T>(_: &T) { println!(\"{}\", std::any::type_name::<T>()) }" q)
 
+rust-mode
+
+(pt "fn pt<T>(_: &T) { println!(\"{}\", std::any::type_name::<T>()) }" q)

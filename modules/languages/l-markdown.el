@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+
+;; C-c ' to edit code block like in org
+(use-package edit-indirect)
+
 (use-package markdown-mode
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)

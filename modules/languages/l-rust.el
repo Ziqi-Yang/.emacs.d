@@ -3,6 +3,7 @@
 ;; 
 ;;; Code:
 
+;; NOTE: currently rustic doesn't support rust-ts-mode
 (use-package rust-mode)
 (use-package rustic
   ;; provides useful keybindings beginning with 'C-c C-c'
