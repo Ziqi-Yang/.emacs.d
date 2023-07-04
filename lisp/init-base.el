@@ -305,10 +305,15 @@ Version 2016-04-04"
 ;; (add-hook 'prog-mode-hook #'mk/set-outline-minor-mode)
 
 ;;; Window Configuration ==================================
-(setq display-buffer-alist
-  '(("*compilation*"
-      (display-buffer-same-window)
-      (reusable-frames . nil))))
+(add-to-list 'display-buffer-alist
+  '("\\*compilation\\*"
+     (display-buffer-same-window)
+     (reusable-frames . nil)))
+
+;; (add-to-list 'display-buffer-alist ;; doesn't work for consult-man
+;;   '("\\*Man.*?\\*"
+;;      (display-buffer-same-window)
+;;      (reusable-frames . nil)))
 
 ;;; Environment Variables ===================================
 (defun mk/set-env()

@@ -204,7 +204,7 @@
         "make run"
         (cond
           ;; rust
-          ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
+          ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
             "cargo run")
           ;; emacs lisp 
           ((eq major-mode 'emacs-lisp-mode)

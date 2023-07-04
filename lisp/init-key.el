@@ -26,6 +26,7 @@
   (keymap-global-set "C-M-!" #'delete-char)
   (setq meow--kbd-delete-char "C-M-!")
   
+  (keymap-global-set "C-M-u" #'universal-argument)
   (keymap-global-set "C-u" #'scroll-down))
 
 (progn ;; insert mode (actually all mode)
@@ -228,17 +229,19 @@
   (which-key-add-key-based-replacements "C-c s" "search & replace")
   (which-key-add-key-based-replacements "C-c s a" "apropos")
   (keymap-global-set "C-c s a a" #'apropos)
+  (keymap-global-set "C-c s a i" #'mk/better-info-apropos)
+  (keymap-global-set "C-c s a I" #'info-apropos)
   (keymap-global-set "C-c s a c" #'apropos-command)
   (keymap-global-set "C-c s a d" #'apropos-documentation)
-  (keymap-global-set "C-c s a s" #'apropos-symbol)
   (keymap-global-set "C-c s a v" #'apropos-variable)
   (keymap-global-set "C-c s a f" #'apropos-function)
+  (keymap-global-set "C-c s a l" #'apropos-library)
   (keymap-global-set "C-c s s" #'mk/better-consult-line)
   (keymap-global-set "C-c s c" #'list-colors-display)
   (keymap-global-set "C-c s i" #'consult-imenu)
   (keymap-global-set "C-c s I" #'consult-imenu-multi) ;; project wide
-  (keymap-global-set "C-c s m" #'consult-global-mark)
-  (keymap-global-set "C-c s M" #'consult-mark)
+  (keymap-global-set "C-c s m" #'consult-man)
+  (keymap-global-set "C-c s M" #'consult-global-mark)
   (keymap-global-set "C-c s I" #'consult-info)
   (keymap-global-set "C-c s p" #'mk/better-consult-ripgrep)
   (keymap-global-set "C-c s P" #'mk/better-consult-git-grep)
@@ -525,6 +528,11 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   "Use symbol at point as the default input of `consult-line'."
   (interactive)
   (consult-line (thing-at-point 'symbol) nil))
+
+(defun mk/better-info-apropos()
+  "Use symbol at point as the default input of `affe-grep'."
+  (interactive)
+  (info-apropos (thing-at-point 'symbol)))
 
 (defun mk/update-all-tags()
   "Update both ctags and gtags file (for citre)."

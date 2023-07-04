@@ -119,7 +119,6 @@
     '("C-S-h" . combobulate-navigate-up)
     '("C-S-l" . combobulate-navigate-down)
     '("C-M-d" . combobulate-mark-defun)
-    '("M-v" . er/expand-region)
     '("C-." . embark-act)
     '("C-S-v" . clipboard-yank)
     '("C-S-c" . clipboard-kill-ring-save)

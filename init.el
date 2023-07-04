@@ -44,6 +44,7 @@
 (push (expand-file-name "modules" user-emacs-directory) load-path)
 (push (expand-file-name "modules/languages" user-emacs-directory) load-path)
 
+;; NOTE: module name should be unique(also to the built-in module)
 (with-temp-message ""
   (require 'init-base)
   (require 'meow)
@@ -58,8 +59,8 @@
   (require 'mail)
   (require 'auto-insert)
   (require 'ai)
-  (require 'info) ;; FIXME this file cannot be loaded
-  (require 'emacs-developer) ;; and If I comment this line, l-general file cannot be loaded
+  (require 'info-config)
+  (require 'emacs-developer)
   (require 'hugo))
 
 ;; load language

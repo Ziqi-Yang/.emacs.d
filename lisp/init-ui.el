@@ -31,13 +31,11 @@
   ;; (load-theme 'almost-mono-gray t)
   ;; (load-theme 'almost-mono-cream t)
   (progn
-    (setq treesit-font-lock-level 1)
-    (setq font-lock-maximum-decoration nil)
 	  (load-theme 'almost-mono-white t)))
 
 (defun mk/setup-font-lock()
   "Set minimum font lock level for both treesit and font-lock"
-  (setq treesit-font-lock-level 1) ;; treesit
+  ;; (setq treesit-font-lock-level 1) ;; treesit NOTE change back to 1
   (setq font-lock-maximum-decoration 1) ;; font lock
   ;; setup jit-lock
   (setq jit-lock-chunk-size 4096
