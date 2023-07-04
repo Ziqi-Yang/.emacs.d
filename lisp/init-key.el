@@ -536,7 +536,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
 
 (defun mk/better-consult-man()
   (interactive)
-  (consult-man (thing-at-point 'symbol))
+  (consult-man (concat (thing-at-point 'symbol) "#3")) ;; default: library apis
   ;; this ugly trick here is because I have problem with
   ;; configuring man buffer in `display-buffer-alist'
   (other-window 1)
