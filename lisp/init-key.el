@@ -41,7 +41,7 @@
   (keymap-global-set "C-S-<return>" #'tempel-insert)
   (keymap-global-set "C-j" #'complete-symbol)
   (keymap-global-set "C-k" #'cape-dabbrev)
-  (keymap-global-set "C-f" #'cape-file)
+  (keymap-global-set "C-S-f" #'cape-file)
   (keymap-global-set "C-l" #'cape-line)
   (keymap-global-set "C-S-l" #'mk/cape-line-previous-buffer))
 
@@ -240,7 +240,7 @@
   (keymap-global-set "C-c s c" #'list-colors-display)
   (keymap-global-set "C-c s i" #'consult-imenu)
   (keymap-global-set "C-c s I" #'consult-imenu-multi) ;; project wide
-  (keymap-global-set "C-c s m" #'consult-man)
+  (keymap-global-set "C-c s m" #'mk/better-consult-man)
   (keymap-global-set "C-c s M" #'consult-global-mark)
   (keymap-global-set "C-c s I" #'consult-info)
   (keymap-global-set "C-c s p" #'mk/better-consult-ripgrep)
@@ -533,6 +533,14 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   "Use symbol at point as the default input of `affe-grep'."
   (interactive)
   (info-apropos (thing-at-point 'symbol)))
+
+(defun mk/better-consult-man()
+  (interactive)
+  (consult-man (thing-at-point 'symbol))
+  ;; this ugly trick here is because I have problem with
+  ;; configuring man buffer in `display-buffer-alist'
+  (other-window 1)
+  (delete-other-windows))
 
 (defun mk/update-all-tags()
   "Update both ctags and gtags file (for citre)."

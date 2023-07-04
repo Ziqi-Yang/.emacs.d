@@ -310,7 +310,8 @@ Version 2016-04-04"
      (display-buffer-same-window)
      (reusable-frames . nil)))
 
-;; (add-to-list 'display-buffer-alist ;; doesn't work for consult-man
+;; Tried a lot of method, still doesn't work for man / consult-man
+;; (add-to-list 'display-buffer-alist
 ;;   '("\\*Man.*?\\*"
 ;;      (display-buffer-same-window)
 ;;      (reusable-frames . nil)))
