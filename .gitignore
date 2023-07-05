@@ -11,4 +11,5 @@
 /tree-sitter
 /openai-api-key.txt
 /elpa
-/emacs-gc-stats.eld
+
+*.eld
