@@ -50,7 +50,7 @@
   (keymap-global-set "C-c :" #'eval-expression)
   (keymap-global-set "C-c \`" #'eyebrowse-last-window-config)
   (keymap-global-set "C-c ;" #'with-editor-async-shell-command)
-  (keymap-global-set "C-c SPC" #'execute-extended-command)
+  (keymap-global-set "C-c SPC" #'which-key-show-major-mode)
   (keymap-global-set "C-c ~" #'list-processes)
   ;; vundo ( SPC x u)
   (keymap-global-set "C-x C-u" #'vundo)
