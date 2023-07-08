@@ -296,6 +296,12 @@
   (which-key-mode)
   (mk/keyBindingSetup))
 
+;;; Trivial Settings ========================================
+(defun mk/Custom-mode-keybinding-setup()
+  (keymap-local-set "<return>" #'widget-button-press))
+
+(add-hook 'Custom-mode-hook 'mk/Custom-mode-keybinding-setup)
+
 ;;; Trivial Functions =======================================
 (defun mk/kill-buffer()
   "Kill buffer without deleting its window. (unlike evil-delete-buffer)"
@@ -490,7 +496,6 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (if (solaire-mode-real-buffer-p)
     (balance-windows)
     (maximize-window)))
-
 
 (defun mk/switch-to-compilation-buffer()
   "Switch to compilation buffer"
