@@ -289,13 +289,6 @@ Version 2016-04-04"
 ;;; Peek ====================================================
 (use-package peek
   :straight (:type git :host sourcehut :repo "meow_king/peek")
-  ;; it seems like making keybindings for `peek-mode-keymap' here will
-  ;; make `global-peek-mode' not able to be automatically enabled in `config' section
-  ;; :bind
-  ;; ;; default bindings
-  ;; (:map peek-mode-keymap
-  ;;   ("M-n" . peek-next-lineh)
-  ;;   ("M-p" . peek-prev-line))
 
   :custom
   ;; only list some mostly-want-changed settings 
@@ -312,20 +305,21 @@ Version 2016-04-04"
   :config
   (global-peek-mode 1)
 
-  ;; Keybindings 
-  ;; `keymap-global-set' was introduced in emacs 29
-  (keymap-global-set "C-x P p" #'peek-overlay-dwim)
-  (keymap-global-set "C-x P d" #'peek-xref-definition-dwim)
-  (keymap-global-set "C-x P m" #'peek-overlay-eldoc-message-toggle-stauts)
-  (keymap-global-set "C-c c d" #'eldoc)
+  ;; Keybindings
+  ;; default keybindings in peek-mode-keymap
+  (define-key peek-mode-keymap (kbd "M-n") 'peek-next-line)
+  (define-key peek-mode-keymap (kbd "M-p") 'peek-prev-line)
 
-  ;; ;; Eldoc display setting
-  ;; ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
-  ;; ;;   other eldoc display functions.
-  ;; (setq eldoc-display-functions
-  ;;   (remove 'eldoc-display-in-buffer 'eldoc-display-functions))
-  ;; ;; Or simply set peek-display-eldoc as the only display function of eldoc-display-functions
-  (setq eldoc-display-functions '(peek-display-eldoc)))
+  ;; or you can use `keymap-global-set', which is introduced in emacs 29
+  ;; (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
+  ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition-dwim)
+  ;; (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
+  ;; (global-set-key (kbd "C-c c d") #'eldoc)
+
+  ;; Eldoc display setting
+  ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
+  ;;   other eldoc display functions.
+  (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer))
 
 
 ;;; outline minor mode ======================================

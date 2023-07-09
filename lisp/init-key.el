@@ -218,12 +218,17 @@
   (keymap-global-set "C-c p P" #'project-forget-project)
 
   ;; proxy(P)
-  (which-key-add-key-based-replacements "C-c P" "proxy")
+  (which-key-add-key-based-replacements "C-c P" "Proxy& Peek& Presentation")
   (keymap-global-set "C-c P h" #'proxy-http-toggle)
   (keymap-global-set "C-c P H" #'proxy-http-show)
   (keymap-global-set "C-c P s" #'proxy-socks-toggle)
   (keymap-global-set "C-c P S" #'proxy-socks-show)
-  (keymap-global-set "C-c P p" #'org-tree-slide-mode)
+  
+  (keymap-global-set "C-c P p" #'peek-overlay-dwim)
+  (keymap-global-set "C-c P x" #'peek-xref-definition-dwim)
+  (keymap-global-set "C-c P m" #'peek-overlay-eldoc-message-toggle-stauts)
+  
+  (keymap-global-set "C-c P s" #'org-tree-slide-mode)
 
   ;; search & replace (s)
   (which-key-add-key-based-replacements "C-c s" "search & replace")
