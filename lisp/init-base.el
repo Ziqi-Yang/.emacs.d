@@ -319,7 +319,11 @@ Version 2016-04-04"
   ;; Eldoc display setting
   ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
   ;;   other eldoc display functions.
-  (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer))
+  (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
+
+  ;; (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
+  ;; (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable)
+  )
 
 
 ;;; outline minor mode ======================================
@@ -399,9 +403,10 @@ Version 2016-04-04"
 
 ;; collect gc-statistics to help developers improve gc performance
 ;; https://www.reddit.com/r/emacs/comments/14dej62/please_help_collecting_statistics_to_optimize/
-(use-package emacs-gc-stats
-  :config
-  (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
-  (emacs-gc-stats-mode +1))
+;; (use-package emacs-gc-stats
+;;   :config
+;;   (setq emacs-gc-stats-remind t) ; can also be a number of days
+;;   (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
+;;   (emacs-gc-stats-mode +1))
 
 (provide 'init-base)
