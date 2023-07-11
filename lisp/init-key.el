@@ -256,7 +256,7 @@
   (keymap-global-set "C-c s O" #'mk/search-online)
   (keymap-global-set "C-c s t" #'hl-todo-occur)
   (keymap-global-set "C-c s T" #'hl-todo-rgrep)
-  (keymap-global-set "C-c s r" #'query-replace)
+  (keymap-global-set "C-c s r" #'mk/better-better-query-replace)
 
   ;; straight (S)
   (which-key-add-key-based-replacements "C-c S" "straight")
@@ -543,6 +543,17 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   "Use symbol at point as the default input of `affe-grep'."
   (interactive)
   (info-apropos (thing-at-point 'symbol)))
+
+(defun mk/better-better-query-replace (from to)
+  "Perform a query-replace with default FROM and TO strings as the symbol at
+point."
+  (interactive
+    (let* ((symbol (thing-at-point 'symbol))
+            (from (read-string "Replace: " symbol))
+            (to (read-string "With: " symbol)))
+      (list from to)))
+  (backward-char)  ; flaw: symbol at point-min
+  (query-replace from to))
 
 (defun mk/better-consult-man()
   (interactive)
