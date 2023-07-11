@@ -206,7 +206,9 @@
           "cargo run")
         ;; emacs lisp 
         ((eq major-mode 'emacs-lisp-mode)
-          (concat "emacs -Q -l " (buffer-file-name) " <open-file>"))
+          (concat "emacs --debug-init --init-directory=~/.emacs.d_test/ -l "
+            (project-root (project-current)) "test/init.el"
+            " ~/temp/test.el"))
         ;; c
         ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
           (let ((executable-file-path

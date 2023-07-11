@@ -321,9 +321,8 @@ Version 2016-04-04"
   ;;   other eldoc display functions.
   (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
 
-  ;; (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
-  ;; (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable)
-  )
+  (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
+  (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable))
 
 
 ;;; outline minor mode ======================================

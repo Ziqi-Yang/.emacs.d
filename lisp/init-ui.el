@@ -71,6 +71,11 @@
 																			 (or (solaire-mode-real-buffer-p)
 																				 (equal (buffer-name) "*dashboard*")))))
 
+;;; 80 column indicator =====================================
+(global-display-fill-column-indicator-mode 1)
+;; need to explicit set value to 80 (due to olivetti mode?)
+(setq-default display-fill-column-indicator-column 80)
+
 ;;; Dashboard ===============================================
 
 ;; (add-hook 'dashboard-mode-hook '(lambda () (progn (setq buffer-face-mode-face '(:family "Zpix" :height 120))
