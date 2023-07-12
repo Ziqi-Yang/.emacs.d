@@ -13,7 +13,8 @@
     sendmail-program "/usr/bin/msmtp"
     ;; mail-specify-envelope-from t
     ;; message-sendmail-envelope-from 'header
-    ))
+    message-auto-save-directory "~/mail_save"
+    message-default-mail-headers "Cc: \nBcc: \n"))
 
 (add-hook 'after-init-hook #'mk/setup-mail)
 

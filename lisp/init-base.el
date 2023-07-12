@@ -395,7 +395,21 @@ Version 2016-04-04"
   (define-key vundo-mode-map (kbd "C-g") #'vundo-quit)
   (define-key vundo-mode-map (kbd "RET") #'vundo-confirm))
 
-;;; Hack Garbage Collector ==================================
+;;; Navigation ==================================================================
+(defun mk/push-point-to-xref-marker-stack (&rest r)
+  (xref-push-marker-stack (point-marker)))
+
+(defun mk/funcs-go-back-setup()
+  (dolist (func '(find-function
+                   consult-line
+                   consult-imenu
+                   consult-ripgrep
+                   consult-git-grep))
+    (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
+
+(add-hook 'after-init-hook 'mk/funcs-go-back-setup)
+
+;;; Hack Garbage Collector ======================================================
 (use-package gcmh
   :straight t
   :hook (after-init . gcmh-mode))
