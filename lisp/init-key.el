@@ -225,7 +225,7 @@
   (keymap-global-set "C-c P S" #'proxy-socks-show)
   
   (keymap-global-set "C-c P p" #'peek-overlay-dwim)
-  (keymap-global-set "C-c P x" #'peek-xref-definition-dwim)
+  (keymap-global-set "C-c P x" #'peek-xref-definition)
   (keymap-global-set "C-c P m" #'peek-overlay-eldoc-message-toggle-stauts)
   
   (keymap-global-set "C-c P s" #'org-tree-slide-mode)
@@ -256,14 +256,15 @@
   (keymap-global-set "C-c s O" #'mk/search-online)
   (keymap-global-set "C-c s t" #'hl-todo-occur)
   (keymap-global-set "C-c s T" #'hl-todo-rgrep)
-  (keymap-global-set "C-c s r" #'mk/better-better-query-replace)
+  (keymap-global-set "C-c s r" #'mk/better-query-replace)
 
   ;; straight (S)
   (which-key-add-key-based-replacements "C-c S" "straight")
   (keymap-global-set "C-c S r" #'straight-remove-unused-repos)
   (keymap-global-set "C-c S b" #'straight-rebuild-package)
   (keymap-global-set "C-c S B" #'straight-rebuild-all)
-  (keymap-global-set "C-c S p" #'straight-pull-all)
+  (keymap-global-set "C-c S P" #'straight-pull-all)
+  (keymap-global-set "C-c S p" #'straight-pull-package)
   (keymap-global-set "C-c S f" #'straight-freeze-versions)
 
   ;; toggle (t)
@@ -544,7 +545,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (interactive)
   (info-apropos (thing-at-point 'symbol)))
 
-(defun mk/better-better-query-replace (from to)
+(defun mk/better-query-replace (from to)
   "Perform a query-replace with default FROM and TO strings as the symbol at
 point."
   (interactive
@@ -552,7 +553,7 @@ point."
             (from (read-string "Replace: " symbol))
             (to (read-string "With: " symbol)))
       (list from to)))
-  (backward-char)  ; flaw: symbol at point-min
+  (forward-line -1)  ; flaw: symbol at point-min
   (query-replace from to))
 
 (defun mk/better-consult-man()

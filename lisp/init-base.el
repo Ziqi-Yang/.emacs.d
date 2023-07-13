@@ -293,9 +293,13 @@ Version 2016-04-04"
   :custom
   ;; only list some mostly-want-changed settings 
   (peek-overlay-window-size 11) ;; lines
-  ;; one line before the place found by `xref-find-definitions' will also appear in peek window 
-  (peek-xref-surrounding-above-lines 1)
+  ;; one line before the place found by `peek-definition' will also appear
+  ;; in peek window. Note `peek-definition' is the underlying function of
+  ;; `peek-xref-definition'
+  (peek-definition-surrounding-above-lines 1)
   (peek-overlay-position 'above) ;; or below
+  
+  (peek-live-update t) ;; live update peek view of a marked region
 
   (peek-enable-eldoc-message-integration t) ;; enable `eldoc-message-function' integration
   (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
@@ -312,7 +316,7 @@ Version 2016-04-04"
 
   ;; or you can use `keymap-global-set', which is introduced in emacs 29
   ;; (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
-  ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition-dwim)
+  ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition)
   ;; (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
   ;; (global-set-key (kbd "C-c c d") #'eldoc)
 
@@ -401,6 +405,7 @@ Version 2016-04-04"
 
 (defun mk/funcs-go-back-setup()
   (dolist (func '(find-function
+                   mk/better-query-replace
                    consult-line
                    consult-imenu
                    consult-ripgrep
