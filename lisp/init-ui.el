@@ -84,7 +84,6 @@
   :config
 	;; configuration for emacsclient
 	;; (set-face-background 'dashboard-banner-logo-title nil) ;; solaire-mode integration
-	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	;; icons display in the emacsclient
 	(add-hook 'server-after-make-frame-hook  '(lambda () (dashboard-refresh-buffer)))
   (dashboard-setup-startup-hook)
@@ -95,14 +94,13 @@
 		dashboard-set-navigator t
 		dashboard-set-init-info t
 		dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
-		dashboard-banner-logo-title "Bocchi the rock!"
+		dashboard-banner-logo-title "El Psy Kongaroo"
 		dashboard-items '((recents  . 5)
 											 ;; (bookmarks . 5)
 											 (projects . 5)
 											 (agenda . 5)
 											 ;; (registers . 5)
-											 )
-		)
+											 ))
 
 	;; Format: "(icon title help action face prefix suffix)"
 	(setq dashboard-navigator-buttons
@@ -111,6 +109,7 @@
 				(nil
 					"Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
         ))))
+
 
 ;;; font settings ===========================================
 ;; Set the font face based on platform
