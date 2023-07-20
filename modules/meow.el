@@ -85,7 +85,7 @@
     '("q" . meow-quit)
     '("Q" . meow-goto-line)
     '("r" . meow-replace)
-    '("R" . meow-swap-grab)
+    ;; '("R" . meow-swap-grab)
     '("s" . meow-kill)
     '("t" . meow-till)
     '("u" . meow-undo)

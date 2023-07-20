@@ -197,7 +197,7 @@
   (keymap-global-set "C-c o =" #'project-dired)
   (keymap-global-set "C-c o s" #'dired-sidebar-toggle-sidebar)
   (keymap-global-set "C-c o a" '(lambda () (interactive) (find-file "~/notes/agenda.org")))
-  (keymap-global-set "C-c o e" #'project-eshell)
+  (keymap-global-set "C-c o e" #'eww-list-bookmarks)
   (keymap-global-set "C-c o r" '(lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
   (keymap-global-set "C-c o d" #'dashboard-open)
   (keymap-global-set "C-c o D" #'mk/draw-diagram)
@@ -550,11 +550,12 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
 point."
   (interactive
     (let* ((symbol (thing-at-point 'symbol))
-            (from (read-string "Replace: " symbol))
+            (reg (rx-to-string `(seq symbol-start ,symbol symbol-end)))
+            (from (read-string "Replace: " reg))
             (to (read-string "With: " symbol)))
       (list from to)))
   (forward-line -1)  ; flaw: symbol at point-min
-  (query-replace from to))
+  (query-replace-regexp from to))
 
 (defun mk/better-consult-man()
   (interactive)

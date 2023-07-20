@@ -59,6 +59,7 @@
   (require 'mail)
   (require 'auto-insert)
   (require 'ai)
+  (require 'browser)
   (require 'info-config)
   (require 'emacs-developer)
   (require 'hugo))
