@@ -144,6 +144,16 @@ Version 2016-04-04"
 ;; use buildin prokect.el for project ability
 ;; @ enable consult to find file in project
 ;; (use-package consult-project-extra)
+(defun mk/setup-project.el ()
+  "Project.el settings."
+  (setq project-switch-commands
+    (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
+  (add-to-list 'project-switch-commands '(project-find-regexp "find regexp" "G"))
+  
+  (add-to-list 'project-switch-commands '(consult-ripgrep "Consult rg" "r"))
+  (add-to-list 'project-switch-commands '(consult-git-grep "Consult git grep" "g")))
+
+(add-hook 'after-init-hook #'mk/setup-project.el)
 
 ;;; Window ==================================================
 ;; @ jump
