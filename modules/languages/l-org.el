@@ -16,6 +16,7 @@
 	  org-pretty-entities t
 	  org-imenu-depth 4
 	  org-fold-catch-invisible-edits 'smart
+    org-return-follows-link t
 	  org-yank-adjusted-subtrees t 
 	  org-image-actual-width nil ;; don't use actual image size
 	  org-log-done 'time
@@ -163,16 +164,18 @@
   (keymap-local-set "<tab>" #'org-cycle)
   (keymap-local-set "C-S-<return>" #'org-insert-subheading)
   
-  (keymap-local-set "C-c C-c t" #'org-todo)
-  (keymap-local-set "C-c C-c T" #'org-set-tags-command)
+  (keymap-local-set "C-c C-c" #'org-ctrl-c-ctrl-c)
   
-  (keymap-local-set "C-c C-c c" #'org-toggle-checkbox)
-  (keymap-local-set "C-c C-c i" #'org-toggle-inline-images)
+  (keymap-local-set "C-c M-c t" #'org-todo)
+  (keymap-local-set "C-c M-c T" #'org-set-tags-command)
   
-  (keymap-local-set "C-c C-c h" #'mk/hugo/complete-tag-at-point)
-  (keymap-local-set "C-c C-c b" #'org-babel-tangle)
-  (keymap-local-set "C-c C-c e" #'org-export-dispatch)
-  (keymap-local-set "C-c C-c p" #'org-priority))
+  (keymap-local-set "C-c M-c c" #'org-toggle-checkbox)
+  (keymap-local-set "C-c M-c i" #'org-toggle-inline-images)
+  
+  (keymap-local-set "C-c M-c h" #'mk/hugo/complete-tag-at-point)
+  (keymap-local-set "C-c M-c b" #'org-babel-tangle)
+  (keymap-local-set "C-c M-c e" #'org-export-dispatch)
+  (keymap-local-set "C-c M-c p" #'org-priority))
 
 (add-hook 'org-mode-hook 'mk/org-local-keybinding-setup)
 

@@ -1,6 +1,0 @@
-[submodule "modules/languages/typst-mode"]
-	path = modules/languages/typst-mode
-	url = git@github.com:Ziqi-Yang/typst-mode.el.git
-[submodule "modules/lsp-bridge"]
-	path = modules/lsp-bridge
-	url = git@github.com:manateelazycat/lsp-bridge.git

@@ -9,7 +9,7 @@
   (setq meow-keypad-start-keys '((?h . ?h)
                                   (?x . ?x)))
   
-  ;; moiton  asdf
+  ;; motion
   (meow-motion-overwrite-define-key
     '("j" . meow-next)
     '("k" . meow-prev)

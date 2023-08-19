@@ -297,46 +297,49 @@ Version 2016-04-04"
 (use-package buffer-move)
 
 ;;; Peek ====================================================
-(use-package peek
-  :straight (:type git :host sourcehut :repo "meow_king/peek")
+;; (use-package peek
+;;   :straight (:type git :host sourcehut :repo "meow_king/peek")
 
-  :custom
-  ;; only list some mostly-want-changed settings 
-  (peek-overlay-window-size 11) ;; lines
-  ;; one line before the place found by `peek-definition' will also appear
-  ;; in peek window. Note `peek-definition' is the underlying function of
-  ;; `peek-xref-definition'
-  (peek-definition-surrounding-above-lines 1)
-  (peek-overlay-position 'above) ;; or below
+;;   :custom
+;;   ;; only list some mostly-want-changed settings 
+;;   (peek-overlay-window-size 11) ;; lines
+;;   ;; one line before the place found by `peek-definition' will also appear
+;;   ;; in peek window. Note `peek-definition' is the underlying function of
+;;   ;; `peek-xref-definition'
+;;   (peek-definition-surrounding-above-lines 1)
+;;   (peek-overlay-position 'above) ;; or below
   
-  (peek-live-update t) ;; live update peek view of a marked region
+;;   (peek-live-update t) ;; live update peek view of a marked region
 
-  (peek-enable-eldoc-message-integration t) ;; enable `eldoc-message-function' integration
-  (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
+;;   (peek-enable-eldoc-message-integration t) ;; enable `eldoc-message-function' integration
+;;   (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
 
-  (peek-enable-eldoc-display-integration t) ;; enable `eldoc-display-functons'  integration
+;;   (peek-enable-eldoc-display-integration t) ;; enable `eldoc-display-functons'  integration
 
-  :config
-  (global-peek-mode 1)
+;;   :config
+;;   (global-peek-mode 1)
 
-  ;; Keybindings
-  ;; default keybindings in peek-mode-keymap
-  (define-key peek-mode-keymap (kbd "M-n") 'peek-next-line)
-  (define-key peek-mode-keymap (kbd "M-p") 'peek-prev-line)
+;;   ;; Keybindings
+;;   ;; default keybindings in peek-mode-keymap
+;;   (define-key peek-mode-keymap (kbd "M-n") 'peek-next-line)
+;;   (define-key peek-mode-keymap (kbd "M-p") 'peek-prev-line)
 
-  ;; or you can use `keymap-global-set', which is introduced in emacs 29
-  ;; (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
-  ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition)
-  ;; (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
-  ;; (global-set-key (kbd "C-c c d") #'eldoc)
+;;   ;; or you can use `keymap-global-set', which is introduced in emacs 29
+;;   ;; (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
+;;   ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition)
+;;   ;; (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
+;;   ;; (global-set-key (kbd "C-c c d") #'eldoc)
 
-  ;; Eldoc display setting
-  ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
-  ;;   other eldoc display functions.
-  (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
+;;   ;; Eldoc display setting
+;;   ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
+;;   ;;   other eldoc display functions.
+;;   (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
 
-  (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
-  (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable))
+;;   (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
+;;   (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable))
+
+;; (use-package peek-collection
+;;   :straight (:type git :host sourcehut :repo "meow_king/peek-collection"))
 
 
 ;;; outline minor mode ======================================
