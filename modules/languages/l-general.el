@@ -207,8 +207,7 @@
         ;; emacs lisp 
         ((eq major-mode 'emacs-lisp-mode)
           (concat "emacs --debug-init --init-directory=~/.emacs.d_test/ -l "
-            (project-root (project-current)) "test/init.el"
-            " ~/temp/test.el"))
+            (project-root (project-current)) "test/init.el" " test/0.el"))
         ;; c
         ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
           (let ((executable-file-path

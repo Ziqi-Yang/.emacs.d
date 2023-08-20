@@ -227,6 +227,7 @@
   (keymap-global-set "C-c P p" #'peek-overlay-dwim)
   (keymap-global-set "C-c P x" #'peek-xref-definition)
   (keymap-global-set "C-c P m" #'peek-overlay-eldoc-message-toggle-stauts)
+  (keymap-global-set "C-c P d" #'peek-collection-dict)
   
   (keymap-global-set "C-c P s" #'org-tree-slide-mode)
 
