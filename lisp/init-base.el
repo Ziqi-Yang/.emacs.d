@@ -418,6 +418,9 @@ Version 2016-04-04"
   (setenv "GTAGSOBJDIRPREFIX" "/home/zarkli/.cache/gtags/"))
 (add-hook 'emacs-startup-hook #'mk/set-env)
 
+;;; Terminal ====================================================================
+(use-package vterm)
+
 ;;; My custom functions ===================================
 (defun mk/base/copy-string-to-clipboard (str)
   ;; note this function only works in GUI version emacs
