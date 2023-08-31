@@ -16,6 +16,31 @@
 (define-key global-map (kbd "M-'") 'insert-pair)
 (define-key global-map (kbd "M-<") 'insert-pair)
 
+(defmacro mk/define&set-keymap (prefix keymap-name definition)
+  "Macro for defining a keymap.
+PREFIX: prefix for the keymap, like \"C-c t\"
+KEYMAP-NAME: like mk/test-keymap
+DEFINITION example:
+  '((\"a\" . consult-buffer)
+     (\"b\" . consult-line))
+return value: KEYMAP-NAME callable (not keymap)
+Example:
+  (mk/define&set-main-keymap
+    mk/test-keymap
+    '((\"a\" . consult-buffer)
+       (\"b\" . consult-line)))"
+  `(progn
+     (defvar ,keymap-name
+       (let ((keymap (make-sparse-keymap)))
+         (dolist (entry ,definition)
+           (let ((key (car entry))
+                  (command (cdr entry)))
+             (define-key keymap (kbd key) command)))
+         keymap))
+     (defalias ',keymap-name ,keymap-name)
+     (global-set-key (kbd ,prefix) ',keymap-name)
+     ',keymap-name))
+
 ;; Vim-like  keybinding
 (progn
   (keymap-global-set "C-w" #'backward-kill-word)
@@ -49,9 +74,14 @@
   ;; trivial
   (keymap-global-set "C-c :" #'eval-expression)
   (keymap-global-set "C-c \`" #'eyebrowse-last-window-config)
-  (keymap-global-set "C-c ;" #'with-editor-async-shell-command)
+  (keymap-global-set "C-c ;" #'async-shell-command)
   (keymap-global-set "C-c SPC" #'which-key-show-major-mode)
   (keymap-global-set "C-c ~" #'list-processes)
+  ;; C-h (SPC h) ================================================================
+  ;; help (h) SPC h SPC <character>
+  (keymap-global-set "C-h M" #'woman)
+  (keymap-global-set "C-h I" #'consult-info) ;; original: describe-input-method
+  ;; C-x (SPC x) ================================================================
   ;; vundo ( SPC x u)
   (keymap-global-set "C-x C-u" #'vundo)
   ;; highlight symbols ( SPC x h/H)
@@ -63,239 +93,250 @@
   ;; vc commands (git)
   ;; C-x v (SPC x SPC v)
   (keymap-global-set "C-x v p" #'vc-prepare-patch)
+  (keymap-global-set "C-x v H" #'diff-hl-show-hunk)
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)
-  ;; gl
-  (keymap-global-set "C-M-l" #'recenter-top-bottom)
-  ;; gs
-  (keymap-global-set "C-M-s" #'scratch-buffer)
-  ;; git(gg)
-  (keymap-global-set "C-M-g" #'mk/project-git)
-  ;; quit(q)
-  (keymap-global-set "C-c q" #'kill-emacs)
-  ;; z
-  (which-key-add-key-based-replacements "C-c z" "trivial")
-  (keymap-global-set "C-c z t" #'mk/translate)
-  (keymap-global-set "C-c z c" #'jinx-correct)
-  (keymap-global-set "C-c z p" #'mk/copy-path-smart)
-  (keymap-global-set "C-c z s" #'desktop-save-in-desktop-dir)
-  (keymap-global-set "C-c z l" #'desktop-load-file)
+  ;; C-M- (SPC g) ===============================================================
+  (keymap-global-set "C-M-l" #'recenter-top-bottom) ;; gl
+  (keymap-global-set "C-M-s" #'scratch-buffer) ;; gs
+  (keymap-global-set "C-M-g" #'mk/project-git) ;; gg
 
   ;; buffer(b)
-  (which-key-add-key-based-replacements "C-c b" "buffer")
-  (keymap-global-set "C-c b a" #'consult-buffer)
-  (keymap-global-set "C-c b b" #'mk/consult-buffer-no-hidden)
-  (keymap-global-set "C-c b c" #'mk/switch-to-compilation-buffer)
-  (keymap-global-set "C-c b r" #'mk/reload-buffer)
-  (keymap-global-set "C-c b B" #'consult-buffer)
-  (keymap-global-set "C-c b p" #'mk/smart-buffer-switch-no-hidden)
-  (keymap-global-set "C-c b P" #'mk/smart-buffer-switch)
-  (keymap-global-set "C-c b d" #'mk/kill-buffer)
-  (keymap-global-set "C-c b k" #'mk/kill-buffer)
-  (keymap-global-set "C-c b K" #'mk/kill-all-buffers)
+  (mk/define&set-keymap
+    "C-c b" keymap/buffer
+    '(("b" . mk/consult-buffer-no-hidden)
+       ("B" . consult-buffer)
+       ("c" . mk/switch-to-compilation-buffer)
+       ("r" . mk/reload-buffer)
+       ("p" . mk/smart-buffer-switch-no-hidden)
+       ("P" . mk/smart-buffer-switch)
+       ("d" . mk/kill-buffer)
+       ("k" . mk/kill-buffer)
+       ("K" . mk/kill-all-buffers)))
 
   ;; bookmark(B)
-  (which-key-add-key-based-replacements "C-c B" "bookmark")
-  (keymap-global-set "C-c B b" #'bookmark-jump)
-  (keymap-global-set "C-c B c" #'bookmark-set)
-  (keymap-global-set "C-c B d" #'bookmark-delete)
+  (mk/define&set-keymap
+    "C-c B" keymap/bookmark
+    '(("b" . bookmark-jump)
+       ("c" . bookmark-set)
+       ("d" . bookmark-delete)))
 
   ;; code(c)
-  (which-key-add-key-based-replacements "C-c c" "code")
-  (keymap-global-set "C-c c E" #'combobulate-envelop)
-  (keymap-global-set "C-c c a" #'eglot-code-actions)
-  (keymap-global-set "C-c c R" #'eglot-rename)
-  (keymap-global-set "C-c c i" #'eglot-code-action-organize-imports)
-
-  ;; (keymap-global-set "C-c c f" #'editorconfig-format-buffer)
-  (which-key-add-key-based-replacements "C-c c f" "format buffer")
-  (keymap-global-set "C-c c f F" #'apheleia-format-buffer)
-  (keymap-global-set "C-c c f f" #'eglot-format)
-  (keymap-global-set "C-c c p" #'citre-ace-peek)
-  (keymap-global-set "C-c c P" #'citre-peek)
-
-  (which-key-add-key-based-replacements "C-c c c" "color-rg")
-  (keymap-global-set "C-c c c p" #'color-rg-search-project-with-type)
-  (keymap-global-set "C-c c c b" #'color-rg-search-symbol-in-current-file)
-
-  (keymap-global-set "C-c c D" #'eldoc)
-  (keymap-global-set "C-c c d" #'xref-find-definitions)
-  (keymap-global-set "C-c c r" #'xref-find-references)
-  (keymap-global-set "C-c c j" #'citre-jump)
-  (keymap-global-set "C-c c k" #'citre-jump-back)
-  (keymap-global-set "C-c c u" #'citre-update-this-tags-file)
-  (keymap-global-set "C-c c U" #'mk/update-all-tags)
-  (keymap-global-set "C-c c e" #'consult-flymake) ;; show all errors
-  (keymap-global-set "C-c c F" #'eglot-code-action-quickfix)
-
-  (which-key-add-key-based-replacements "C-c c o" "other")
-  (keymap-global-set "C-c c o c" #'citre-create-tags-file)
-  (keymap-global-set "C-c c o e" #'citre-edit-tags-file-recipe)
-
-  ;; Combobulate(C)
-  ;;  (which-key-add-key-based-replacements "C-c C" "Combobulate")
-  ;;  (keymap-global-set "C-c C" #'combobulate)
+  (mk/define&set-keymap
+    "C-c c" keymap/code
+    `(("a" . eglot-code-actions)
+       ("c" . ,(mk/define&set-keymap
+                 "C-c c c" mk/code-color-rg-keymap
+                 '(("b" . color-rg-search-symbol-in-current-file)
+                    ("p" . color-rg-search-project-with-type))))
+       ("d" . xref-find-definitions)
+       ("D" . eldoc)
+       ("e" . consult-flymake)
+       ("E" . combobulate-envelop)
+       ("f" . ,(mk/define&set-keymap
+                 "C-c c f" mk/code-format-keymap
+                 '(("f" . eglot-format)
+                    ("F" . apheleia-format-buffer))))
+       ("F" . eglot-code-action-quickfix)
+       ("j" . citre-jump)
+       ("k" . citre-jump-back)
+       ("i" . eglot-code-action-organize-imports)
+       ("o" . ,(mk/define&set-keymap
+                 "C-c c o" mk/code-other-keymap
+                 '(("c" . citre-create-tags-file)
+                    ("e" . citre-edit-tags-file-recipe))))
+       ("p" . citre-ace-peek)
+       ("P" . citre-peek)
+       ("r" . xref-find-references)
+       ("R" . eglot-rename)
+       ("u" . citre-update-this-tags-file)
+       ("U" . mk/update-all-tags)))
 
   ;; emoji(e)
-  (which-key-add-key-based-replacements "C-h e" "emoji")
-  (keymap-global-set "C-c e" #'emoji-insert)
-  (keymap-global-set "C-h r" #'emoji-recent)
+  (mk/define&set-keymap
+    "C-c e" keymap/emoji
+    '(("e" . emoji-insert)
+       ("r" . emoji-recent)))
 
   ;; file(f)
-  (which-key-add-key-based-replacements "C-c f" "file")
-  (keymap-global-set "C-c f f" #'find-file)
-  (keymap-global-set "C-c f D" #'mk/delete-file)
-  (keymap-global-set "C-c f R" #'rename-visited-file)
-  (keymap-global-set "C-c f r" #'recentf-open)
-  (keymap-global-set "C-c f p" #'project-find-file)
-  (keymap-global-set "C-c f z" #'zoxide-find-file)
+  (mk/define&set-keymap
+    "C-c f" keymap/file
+    '(("D" . mk/delete-file)
+       ("f" . find-file)
+       ("p" . project-find-file)
+       ("r" . recentf-open)
+       ("R" . rename-visited-file)
+       ("z" . zoxide-find-file)))
 
   ;; fold(F)
-  (which-key-add-key-based-replacements "C-c F" "fold")
-  (keymap-global-set "C-c F o" #'hs-show-all)
-  (keymap-global-set "C-c F O" #'outline-show-all)
-  (keymap-global-set "C-c F c" #'hs-hide-all)
-  (keymap-global-set "C-c F C" #'outline-show-only-headings)
+  (mk/define&set-keymap
+    "C-c F" keymap/fold
+    '(("c" . hs-hide-all)
+       ("C" . outline-show-only-headings)
+       ("o" . hs-show-all)
+       ("O" . outline-show-all)))
 
   ;; easy GPG assistant
-  (which-key-add-key-based-replacements "C-c G" "epa")
-  (which-key-add-key-based-replacements "C-c G r" "region")
-  (keymap-global-set "C-c G l" #'epa-list-keys)
-  (keymap-global-set "C-c G r e" #'epa-encrypt-region)
-  (keymap-global-set "C-c G r d" #'epa-decrypt-region)
-  (keymap-global-set "C-c G r s" #'epa-sign-region)
-  (keymap-global-set "C-c G r v" #'epa-verify-region)
-  (which-key-add-key-based-replacements "C-c G f" "file")
-  (keymap-global-set "C-c G f e" #'epa-encrypt-file)
-  (keymap-global-set "C-c G f d" #'epa-decrypt-file)
-  (keymap-global-set "C-c G f s" #'epa-sign-)
-  (keymap-global-set "C-c G f v" #'epa-verify-file)
+  (mk/define&set-keymap
+    "C-c G" keymap/epa
+    `(("l" . epa-list-keys)
+       ("r" . ,(mk/define&set-keymap
+                 "C-c G r" mk/epa-region-keymap
+                 '(("e" . epa-encrypt-region)
+                    ("d" . epa-decrypt-region)
+                    ("s" . epa-sign-region)
+                    ("v" . epa-verify-region))))
+       ("f" . ,(mk/define&set-keymap
+                 "C-c G f" mk/epa-file-keymap
+                 '(("e" . epa-encrypt-file)
+                    ("d" . epa-decrypt-file)
+                    ("s" . epa-sign-file)
+                    ("v" . epa-verify-file))))))
   
-  ;; help(h)
-  ;; SPC h SPC <character>
-  (keymap-global-set "C-h M" #'woman)
-
   ;; Hugo(H)
-  (which-key-add-key-based-replacements "C-c H" "help")
-  (keymap-global-set "C-c H h" #'mk/hugo/cd-project)
-  (keymap-global-set "C-c H p" #'mk/hugo/toggle-preview)
-  (keymap-global-set "C-c H t" #'mk/hugo/find-blog-using-tag-search)
-  (keymap-global-set "C-c H d" #'mk/hugo/goto-draft)
-  (keymap-global-set "C-c H b" #'mk/hugo/build)
-  (keymap-global-set "C-c H f" #'mk/hugo/edit-or-create)
+  (mk/define&set-keymap
+    "C-c H" keymap/hugo
+    '(("h" . mk/hugo/cd-project)
+       ("p" . mk/hugo/toggle-preview)
+       ("t" . mk/hugo/find-blog-using-tag-search)
+       ("d" . mk/hugo/goto-draft)
+       ("b" . mk/hugo/build)
+       ("f" . mk/hugo/edit-or-create)))
 
   ;; narrow(n)
-  (which-key-add-key-based-replacements "C-c n" "narrow")
-  (keymap-global-set "C-c n n" #'narrow-to-region)
-  (keymap-global-set "C-c n p" #'narrow-to-page)
-  (keymap-global-set "C-c n d" #'narrow-to-defun)
-  (keymap-global-set "C-c n w" #'widen)
+  (mk/define&set-keymap
+    "C-c n" keymap/narrow
+    '(("n" . narrow-to-region)
+       ("p" . narrow-to-page)
+       ("d" . narrow-to-defun)
+       ("w" . widen)))
 
   ;; open(o)
-  (which-key-add-key-based-replacements "C-c o" "open")
-  (keymap-global-set "C-c o -" #'dired-jump)
-  (keymap-global-set "C-c o =" #'project-dired)
-  (keymap-global-set "C-c o s" #'dired-sidebar-toggle-sidebar)
-  (keymap-global-set "C-c o a" '(lambda () (interactive) (find-file "~/notes/agenda.org")))
-  (keymap-global-set "C-c o e" #'eww-list-bookmarks)
-  (keymap-global-set "C-c o r" '(lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
-  (keymap-global-set "C-c o d" #'dashboard-open)
-  (keymap-global-set "C-c o D" #'mk/draw-diagram)
-  (keymap-global-set "C-c o A" '(lambda () (interactive) (find-file "~/Documents/dotfiles/docs/unclassified.org")))
-  (keymap-global-set "C-c o t" #'mk/open-terminal-smart)
-  (keymap-global-set "C-c o T" #'mk/open-terminal-here)
+  (mk/define&set-keymap
+    "C-c o" keymap/open
+    '(("-" . dired-jump)
+       ("=" . project-dired)
+       ("s" . dired-sidebar-toggle-sidebar)
+       ("a" . org-agenda)
+       ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))
+       ("e" . eww-list-bookmarks)
+       ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
+       ("d" . dashboard-open)
+       ("D" . mk/draw-diagram)
+       ("t" . mk/open-terminal-smart)
+       ("T" . mk/open-terminal-here)))
 
   ;; project(p)
-  (which-key-add-key-based-replacements "C-c p" "project")
-  (keymap-global-set "C-c p A" #'project-remember-projects-under)
-  (keymap-global-set "C-c p p" #'project-switch-project)
-  (keymap-global-set "C-c p t" #'magit-todos-list)
-  (keymap-global-set "C-c p e" #'flymake-show-project-diagnostics)
-  (keymap-global-set "C-c p s" #'project-eshell)
-  (keymap-global-set "C-c p S" #'project-async-shell-command)
-  (keymap-global-set "C-c p k" #'project-kill-buffers)
-  (keymap-global-set "C-c p c" #'mk/project-compile)
-  (keymap-global-set "C-c p P" #'project-forget-project)
+  (mk/define&set-keymap
+    "C-c p" keymap/project
+    '(("A" . project-remember-projects-under)
+       ("c" . mk/project-compile)
+       ("p" . project-switch-project)
+       ("P" . project-forget-project)
+       ("e" . flymake-show-project-diagnostics)
+       ("s" . project-eshell)
+       ("S" . project-async-shell-command)
+       ("k" . project-kill-buffers)))
 
-  ;; proxy(P)
-  (which-key-add-key-based-replacements "C-c P" "Proxy& Peek& Presentation")
-  (keymap-global-set "C-c P h" #'proxy-http-toggle)
-  (keymap-global-set "C-c P H" #'proxy-http-show)
-  (keymap-global-set "C-c P s" #'proxy-socks-toggle)
-  (keymap-global-set "C-c P S" #'proxy-socks-show)
-  
-  (keymap-global-set "C-c P p" #'peek-overlay-dwim)
-  (keymap-global-set "C-c P x" #'peek-xref-definition)
-  (keymap-global-set "C-c P m" #'peek-overlay-eldoc-message-toggle-stauts)
-  (keymap-global-set "C-c P d" #'peek-collection-dict)
-  
-  (keymap-global-set "C-c P s" #'org-tree-slide-mode)
+  ;; peek (p)
+  (mk/define&set-keymap
+    "C-c P" keymap/peek
+    '(("h" . peek-overlay-dwim)
+       ("x" . peek-xref-definition)
+       ("m" . peek-overlay-eldoc-message-toggle-stauts)
+       ("d" . peek-collection-dict)))
 
   ;; search & replace (s)
-  (which-key-add-key-based-replacements "C-c s" "search & replace")
-  (which-key-add-key-based-replacements "C-c s a" "apropos")
-  (keymap-global-set "C-c s a a" #'apropos)
-  (keymap-global-set "C-c s a i" #'mk/better-info-apropos)
-  (keymap-global-set "C-c s a I" #'info-apropos)
-  (keymap-global-set "C-c s a c" #'apropos-command)
-  (keymap-global-set "C-c s a d" #'apropos-documentation)
-  (keymap-global-set "C-c s a v" #'apropos-variable)
-  (keymap-global-set "C-c s a f" #'apropos-function)
-  (keymap-global-set "C-c s a l" #'apropos-library)
-  (keymap-global-set "C-c s s" #'mk/better-consult-line)
-  (keymap-global-set "C-c s c" #'list-colors-display)
-  (keymap-global-set "C-c s i" #'consult-imenu)
-  (keymap-global-set "C-c s I" #'consult-imenu-multi) ;; project wide
-  (keymap-global-set "C-c s m" #'mk/better-consult-man)
-  (keymap-global-set "C-c s M" #'consult-global-mark)
-  (keymap-global-set "C-c s I" #'consult-info)
-  (keymap-global-set "C-c s p" #'mk/better-consult-ripgrep)
-  (keymap-global-set "C-c s P" #'mk/better-consult-git-grep)
-  (keymap-global-set "C-c s b" #'consult-bookmark)
-  (keymap-global-set "C-c s d" #'dictionary-search)
-  (keymap-global-set "C-c s o" #'consult-outline)
-  (keymap-global-set "C-c s O" #'mk/search-online)
-  (keymap-global-set "C-c s t" #'hl-todo-occur)
-  (keymap-global-set "C-c s T" #'hl-todo-rgrep)
-  (keymap-global-set "C-c s r" #'mk/better-query-replace)
+  (mk/define&set-keymap
+    "C-c s" keymap/search-replace
+    `(("a" . ,(mk/define&set-keymap
+                "C-c s a" mk/search-apropos-keymap
+                '(("a" . apropos)
+                   ("c" . apropos-command)
+                   ("d" . apropos-documentation)
+                   ("v" . apropos-variable)
+                   ("f" . apropos-function)
+                   ("l" . apropos-library)
+                   ("i" . mk/better-info-apropos)
+                   ("I" . info-apropos))))
+       ("s" . mk/better-consult-line)
+       ("c" . list-colors-display)
+       ("i" . consult-imenu)
+       ("I" . consult-imenu-multi)
+       ("m" . mk/better-consult-man)
+       ("M" . consult-global-mark)
+       ("p" . mk/better-consult-ripgrep)
+       ("P" . mk/better-consult-git-grep)
+       ("b" . consult-bookmark)
+       ("d" . dictionary-search)
+       ("o" . consult-outline)
+       ("O" . mk/search-online)
+       ("t" . hl-todo-occur)
+       ("T" . hl-todo-rgrep)
+       ("r" . mk/better-query-replace)))
 
   ;; straight (S)
-  (which-key-add-key-based-replacements "C-c S" "straight")
-  (keymap-global-set "C-c S r" #'straight-remove-unused-repos)
-  (keymap-global-set "C-c S b" #'straight-rebuild-package)
-  (keymap-global-set "C-c S B" #'straight-rebuild-all)
-  (keymap-global-set "C-c S P" #'straight-pull-all)
-  (keymap-global-set "C-c S p" #'straight-pull-package)
-  (keymap-global-set "C-c S f" #'straight-freeze-versions)
+  (mk/define&set-keymap
+    "C-c S" keymap/package
+    '(("r" . straight-remove-unused-repos)
+       ("b" . straight-rebuild-package)
+       ("B" . straight-rebuild-all)
+       ("f" . straight-freeze-versions)
+       ("p" . straight-pull-package)
+       ("P" . straight-pull-all)))
 
   ;; toggle (t)
-  (which-key-add-key-based-replacements "C-c t" "toggle")
-  (keymap-global-set "C-c t w" #'whitespace-mode)
-  (keymap-global-set "C-c t h" #'mk/unhighlight-search)
-  (keymap-global-set "C-c t t" #'consult-theme)
+  (mk/define&set-keymap
+    "C-c t" keymap/toggle
+    '(("w" . whitespace-mode)
+       ("h" . mk/unhighlight-search)
+       ("t" . consult-theme)))
 
   ;; window(w)
-  (which-key-add-key-based-replacements "C-c w" "window")
-  (keymap-global-set "C-c w w" #'mk/ace-window-balance-window)
-  (keymap-global-set "C-c w W" #'ace-window)
-  (keymap-global-set "C-c w t" #'others/window-split-toggle)
-  (keymap-global-set "C-c w q" #'delete-window)
-  (keymap-global-set "C-c w d" #'delete-window)
-  (keymap-global-set "C-c w o" #'delete-other-windows)
-  (keymap-global-set "C-c w m" #'maximize-window)
-  (keymap-global-set "C-c w M" #'minimize-window)
-  (keymap-global-set "C-c w b" #'balance-windows)
-  (keymap-global-set "C-c w +" #'maximize-window)
-  (keymap-global-set "C-c w -" #'minimize-window)
-  (keymap-global-set "C-c w =" #'balance-windows)
-  (keymap-global-set "C-c w v" #'mk/split-window-vertically)
-  (keymap-global-set "C-c w h" #'mk/split-window-horizontally)
-  (keymap-global-set "C-c w L" #'buf-move-right)
-  (keymap-global-set "C-c w H" #'buf-move-left)
-  (keymap-global-set "C-c w J" #'buf-move-down)
-  (keymap-global-set "C-c w K" #'buf-move-up))
+  (mk/define&set-keymap
+    "C-c w" keymap/window
+    '(("w" . mk/ace-window-balance-window)
+       ("W" . ace-window)
+       ("t" . others/window-split-toggle)
+       ("d" . delete-window)
+       ("q" . delete-window)
+       ("o" . delete-other-windows)
+       ("m" . maximize-window)
+       ("M" . minimize-window)
+       ("b" . balance-windows)
+       ("+" . maximize-window)
+       ("-" . minimize-window)
+       ("=" . balance-windows)
+       ("v" . mk/split-window-vertically)
+       ("h" . mk/split-window-horizontally)
+       ("L" . buf-move-right)
+       ("H" . buf-move-left)
+       ("J" . buf-move-down)
+       ("K" . buf-move-up)))
 
+  ;; proxy (x)
+  (mk/define&set-keymap
+    "C-c x" mk/proxy-keymap
+    '(("h" . proxy-http-toggle)
+       ("H" . proxy-http-show)
+       ("s" . proxy-socks-toggle)
+       ("S" . proxy-socks-show)))
+
+  ;; trivial (z)
+  (mk/define&set-keymap
+    "C-c z" keymap/trivial
+    '(("t" . mk/translate)
+       ("c" . jinx-correct)
+       ("q" . save-buffers-kill-emacs)
+       ("Q" . kill-emacs)
+       ;; ("s" . desktop-save-in-desktop-dir)
+       ;; ("l" . desktop-load-file)
+       ("p" . mk/copy-path-smart))))
+
+;; for tapping key which begins with a character other than SPC 
+;; so `meow-keypad' won't appear
 (use-package which-key
+  :defer 1
   :init
   (setq which-key-idle-delay 0.5)
   (setq which-key-side-window-max-height 0.3)
@@ -476,7 +517,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
       (progn
         ;; directly call Firefox instead of using browse-url to make parameters("?a=b") can be passed to local url
         ;; (browse-url url)
-        (call-process "firefox" nil 0 nil url)
+        (call-process "firefox-developer-edition" nil 0 nil url)
         (call-process "swaymsg" nil 0 nil "workspace" "3")
         (message "open url: %s" url))
       (message "Invalid search engine!"))))

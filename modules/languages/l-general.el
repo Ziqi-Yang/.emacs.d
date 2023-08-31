@@ -71,6 +71,7 @@
 	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
 	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
   (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
+  (mk/add-eglot-ensure '(kotlin-ts-mode-hook))
   (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
 
 	(with-eval-after-load 'eglot
@@ -160,7 +161,11 @@
   :config
   (breadcrumb-mode))
 
-;;; Spell Checker
+;;; Syntax Checker ==========================================
+;; flymake is integrated with eglot, so we only need to enable it for emacs lisp mode
+(add-hook 'emacs-lisp-mode-hook #'flymake-mode)
+
+;;; Spell Checker ===========================================
 ;; @ ispell
 (setq ispell-program-name "hunspell"
   ispell-dictionary "en_US" ;; M-: (message "%s" (ispell-valid-dictionary-list))

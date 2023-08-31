@@ -296,13 +296,52 @@ Version 2016-04-04"
 ;;; Buffer Move (swap window) ===============================
 (use-package buffer-move)
 
+;;; Sideline ================================================
+(use-package sideline
+  :defer 1
+  :init
+  (setq sideline-flymake-display-mode 'point)
+  (setq sideline-backends-right '((sideline-flymake . up)
+                                   ;; (mk/sideline-eldoc . down)
+                                   ))
+  :config
+  (global-sideline-mode))
+
+(use-package sideline-flymake)
+
+;; This package does badly (2023.08.30
+;; (use-package sideline-eldoc
+;;   :straight (:type git :host github :repo "ginqi7/sideline-eldoc"))
+
+;; if run the following code on non-emacs-lisp mode using eldoc, then text-read-only error occurs
+;; (defvar mk/sideline-eldoc--message "")
+
+;; (defun mk/sideline-eldoc--set-message (str &rest args)
+;;   "Extract eldoc message format STR with ARGS."
+;;   (when str
+;;     (message str)
+;;     (setq mk/sideline-eldoc--message (apply #'format str args))))
+
+;; (defun mk/sideline-eldoc (command)
+;;   "Eldoc backend for sideline."
+;;   (cl-case command
+;;     (`candidates
+;;       (cons :async
+;;         (lambda (callback &rest _)
+;;           (progn
+;;             (remove-text-properties 0 (length mk/sideline-eldoc--message)
+;;               '(read-only t) mk/sideline-eldoc--message)
+;;             (funcall callback (split-string mk/sideline-eldoc--message "\n"))))))))
+
+;; (setq eldoc-message-function #'mk/sideline-eldoc--set-message)
+
 ;;; Peek ====================================================
 (use-package peek
   :straight (:type git :host sourcehut :repo "meow_king/peek")
 
   :custom
-  ;; only list some mostly-want-changed settings 
-  (peek-overlay-window-size 11) ;; lines
+  ;; only list some mostly-want-changed settings
+  (peek-overlay-window-size 11) ; lines
   ;; one line before the place found by `peek-definition' will also appear
   ;; in peek window. Note `peek-definition' is the underlying function of
   ;; `peek-xref-definition'
@@ -311,9 +350,9 @@ Version 2016-04-04"
   
   (peek-live-update t) ;; live update peek view of a marked region
 
-  (peek-enable-eldoc-message-integration t) ;; enable `eldoc-message-function' integration
   (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
 
+  (peek-enable-eldoc-message-integration nil) ;; disable (defaut) `eldoc-message-function' integration
   (peek-enable-eldoc-display-integration t) ;; enable `eldoc-display-functons'  integration
 
   :config
@@ -335,8 +374,9 @@ Version 2016-04-04"
   ;;   other eldoc display functions.
   (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
 
-  (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
-  (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable))
+  ;; (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
+  ;; (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable)
+  )
 
 (use-package peek-collection
   :straight (:type git :host sourcehut :repo "meow_king/peek-collection"))

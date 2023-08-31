@@ -77,12 +77,17 @@
   (require 'l-latex)
   (require 'l-shell)
   (require 'l-draw)
+  (require 'l-kotlin)
+  (require 'l-lua)
   ;; (require 'l-typst)
   (require 'l-general)) ;; l-general must loaded after l-rust
 
 ;; remove old version native-compiled files
-(native-compile-prune-cache) 
+(native-compile-prune-cache)
 
-(provide 'init)
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+(provide 'init)
+
+;;; init.el ends here
