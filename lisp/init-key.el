@@ -93,7 +93,6 @@ Example:
   ;; vc commands (git)
   ;; C-x v (SPC x SPC v)
   (keymap-global-set "C-x v p" #'vc-prepare-patch)
-  (keymap-global-set "C-x v H" #'diff-hl-show-hunk)
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)
   ;; C-M- (SPC g) ===============================================================
@@ -210,8 +209,8 @@ Example:
   ;; open(o)
   (mk/define&set-keymap
     "C-c o" keymap/open
-    '(("-" . dired-jump)
-       ("=" . project-dired)
+    '(("-" . vterm)
+       ("=" . others/project-vterm)
        ("s" . dired-sidebar-toggle-sidebar)
        ("a" . org-agenda)
        ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))
@@ -230,7 +229,7 @@ Example:
        ("p" . project-switch-project)
        ("P" . project-forget-project)
        ("e" . flymake-show-project-diagnostics)
-       ("s" . project-eshell)
+       ("s" . others/project-vterm)
        ("S" . project-async-shell-command)
        ("k" . project-kill-buffers)))
 
@@ -622,6 +621,16 @@ point."
   "Highlight all the symbols is that is the same of the one at point"
   (interactive)
   (highlight-phrase (thing-at-point 'symbol)))
+
+(defun others/project-vterm ()
+  (interactive)
+  (defvar vterm-buffer-name)
+  (let* ((default-directory (project-root     (project-current t)))
+          (vterm-buffer-name (project-prefixed-buffer-name "vterm"))
+          (vterm-buffer (get-buffer vterm-buffer-name)))
+    (if (and vterm-buffer (not current-prefix-arg))
+      (pop-to-buffer vterm-buffer  (bound-and-true-p display-comint-buffer-action))
+      (vterm))))
 
 ;; Evil Related
 ;;
