@@ -92,6 +92,8 @@ Example:
   (keymap-global-set "C-x M" #'compose-mail)
   ;; vc commands (git)
   ;; C-x v (SPC x SPC v)
+  ;; vc-next-action is useful, and can be used to commit. see info:emacs#Basic VC Editing
+  ;; try use vc-next-action on vc-root-diff buffer
   (keymap-global-set "C-x v p" #'vc-prepare-patch)
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)

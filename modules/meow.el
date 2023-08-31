@@ -104,6 +104,8 @@
     '("<escape>" . ignore)
 
     ;; < >
+    '("<" . indent-rigidly-left)
+    '(">" . indent-rigidly-right)
     '("?" . eldoc)
     '("~" . upcase-dwim)
     '("/" . avy-goto-word-1)
@@ -116,11 +118,8 @@
     '("C-i" . xref-go-forward)
     '(":" . async-shell-command)
     '("C-m" . set-mark-command)
-    '("C-M-h" . combobulate-navigate-beginning-of-defun)
-    '("C-M-l" . combobulate-navigate-end-of-defun)
-    '("C-S-h" . combobulate-navigate-up)
-    '("C-S-l" . combobulate-navigate-down)
-    '("C-M-d" . combobulate-mark-defun)
+    '("C-M-h" . backward-sexp)
+    '("C-M-l" . forward-sexp)
     '("C-." . embark-act)
     '("C-S-v" . clipboard-yank)
     '("C-S-c" . clipboard-kill-ring-save)
