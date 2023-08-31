@@ -125,10 +125,6 @@ Example:
   (mk/define&set-keymap
     "C-c c" keymap/code
     `(("a" . eglot-code-actions)
-       ("c" . ,(mk/define&set-keymap
-                 "C-c c c" mk/code-color-rg-keymap
-                 '(("b" . color-rg-search-symbol-in-current-file)
-                    ("p" . color-rg-search-project-with-type))))
        ("d" . xref-find-definitions)
        ("D" . eldoc)
        ("e" . consult-flymake)
@@ -246,9 +242,19 @@ Example:
        ("m" . peek-overlay-eldoc-message-toggle-stauts)
        ("d" . peek-collection-dict)))
 
-  ;; search & replace (s)
+  ;; replace (r)
   (mk/define&set-keymap
-    "C-c s" keymap/search-replace
+    "C-c r" mk/replace-keymap
+    '(("r" . mk/better-query-replace)
+       ("i" . color-rg-search-input-in-current-file)
+       ("I" . color-rg-search-input-in-project)
+       ("b" . color-rg-search-symbol-in-current-file) ;; buffer
+       ("d" . color-rg-search-symbol-with-type) ;; directory
+       ("p" . color-rg-search-project-with-type))) ;; project
+
+  ;; search (s)
+  (mk/define&set-keymap
+    "C-c s" keymap/search
     `(("a" . ,(mk/define&set-keymap
                 "C-c s a" mk/search-apropos-keymap
                 '(("a" . apropos)
@@ -272,8 +278,7 @@ Example:
        ("o" . consult-outline)
        ("O" . mk/search-online)
        ("t" . hl-todo-occur)
-       ("T" . hl-todo-rgrep)
-       ("r" . mk/better-query-replace)))
+       ("T" . hl-todo-rgrep)))
 
   ;; straight (S)
   (mk/define&set-keymap
