@@ -94,6 +94,8 @@
 	;; install markdown-mode to rich the doc
 	)
 
+(use-package eglot-hierarchy ;; TODO change the repo address back to dolmens/eglot-hierarchy
+  :straight (:host github :repo "Ziqi-Yang/eglot-hierarchy"))
 
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -217,6 +219,9 @@
         ((eq major-mode 'emacs-lisp-mode)
           (concat "emacs --debug-init --init-directory=~/.emacs.d_test/ -l "
             (project-root (project-current)) "test/init.el" " test/0.el"))
+        ;; cpp
+        ((or (eq major-mode 'c++-mode) (eq major-mode 'c++-ts-mode))
+          (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
         ;; c
         ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
           (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))

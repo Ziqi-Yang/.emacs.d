@@ -133,15 +133,19 @@ Example:
        ("e" . consult-flymake)
        ("E" . combobulate-envelop)
        ("f" . ,(mk/define&set-keymap
-                 "C-c c f" mk/code-format-keymap
+                 "C-c c f" keymap/code-format
                  '(("f" . eglot-format)
                     ("F" . apheleia-format-buffer))))
        ("F" . eglot-code-action-quickfix)
+       ("h" . ,(mk/define&set-keymap
+                 "C-c c h" keymap/code-hierarchy
+                 '(("t" . eglot-hierarchy-type-hierarchy)
+                    ("c" . eglot-hierarchy-call-hierarchy))))
        ("j" . citre-jump)
        ("k" . citre-jump-back)
        ("i" . eglot-code-action-organize-imports)
        ("o" . ,(mk/define&set-keymap
-                 "C-c c o" mk/code-other-keymap
+                 "C-c c o" keymap/code-other
                  '(("c" . citre-create-tags-file)
                     ("e" . citre-edit-tags-file-recipe))))
        ("p" . citre-ace-peek)
@@ -162,6 +166,7 @@ Example:
     "C-c f" keymap/file
     '(("D" . mk/delete-file)
        ("f" . find-file)
+       ("F" . others/sudo-find-file)
        ("p" . project-find-file)
        ("r" . recentf-open)
        ("R" . rename-visited-file)
@@ -638,6 +643,18 @@ point."
       (pop-to-buffer vterm-buffer  (bound-and-true-p display-comint-buffer-action))
       (vterm))))
 
+(defun others/sudo-find-file (file)
+  "Open FILE as root."
+  (interactive "FOpen file as root: ")
+  (when (file-writable-p file)
+    (user-error "File is user writeable, aborting sudo"))
+  (find-file (if (file-remote-p file)
+               (concat "/" (file-remote-p file 'method) ":"
+                 (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                 "|sudo:root@"
+                 (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+               (concat "/sudo:root@localhost:" file))))
+
 ;; Evil Related
 ;;
 ;; (defun mk/evil-search-symbol-forward ()
@@ -677,3 +694,5 @@ point."
 ;;   (evil-visual-restore))
 
 (provide 'init-key)
+
+;;; init-key.el ends here
