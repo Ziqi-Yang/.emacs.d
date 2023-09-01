@@ -22,7 +22,8 @@
 (defun mk/add-rust-search-engine()
   "Add search engine in addition to mk/search-engines when in rust."
   (push '("crate.io" . "https://crates.io/crates/%s") mk/search-engines)
-  (push '("docs.rs" . "file:///home/zarkli/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/share/doc/rust/html/std/index.html?search=%s") mk/search-engines))
+  (push '("docs.rs" . "https://docs.rs/%s/") mk/search-engines)
+  (push '("rust-std" . "file:///home/zarkli/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/share/doc/rust/html/std/index.html?search=%s") mk/search-engines))
 (add-hook 'toml-ts-mode-hook 'mk/add-rust-search-engine)
 ;; (add-hook 'rust-ts-mode-hook 'mk/add-rust-search-engine)
 (add-hook 'rust-mode-hook 'mk/add-rust-search-engine)

@@ -17,6 +17,7 @@
 (use-package web-mode)
 (define-derived-mode vue-mode web-mode "Vue")
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 
 ;; eglot for vue-mode
 (with-eval-after-load 'eglot

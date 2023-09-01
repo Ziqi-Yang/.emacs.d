@@ -50,6 +50,8 @@ Example:
   (keymap-global-set "C-d" #'scroll-up)
   (keymap-global-set "C-M-!" #'delete-char)
   (setq meow--kbd-delete-char "C-M-!")
+
+  (keymap-global-set "M-:" #'comment-box)
   
   (keymap-global-set "C-M-u" #'universal-argument)
   (keymap-global-set "C-u" #'scroll-down))
@@ -235,10 +237,10 @@ Example:
        ("S" . project-async-shell-command)
        ("k" . project-kill-buffers)))
 
-  ;; peek (p)
+  ;; peek (P)
   (mk/define&set-keymap
     "C-c P" keymap/peek
-    '(("h" . peek-overlay-dwim)
+    '(("p" . peek-overlay-dwim)
        ("x" . peek-xref-definition)
        ("m" . peek-overlay-eldoc-message-toggle-stauts)
        ("d" . peek-collection-dict)))
@@ -602,8 +604,10 @@ point."
             (from (read-string "Replace: " reg))
             (to (read-string "With: " symbol)))
       (list from to)))
-  (forward-line -1)  ; flaw: symbol at point-min
-  (query-replace-regexp from to))
+  ;; (save-excursion
+  ;;   (beginning-of-buffer)
+  ;;   (query-replace-regexp from to))
+  (message-box "Use meow-edit functionality instead!"))
 
 (defun mk/better-consult-man()
   (interactive)

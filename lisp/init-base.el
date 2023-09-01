@@ -294,7 +294,7 @@ Version 2016-04-04"
 	:after (doom-modeline dashboard))
 
 ;;; Buffer Move (swap window) ===============================
-(use-package buffer-move)
+(use-package buffer-move :defer 1)
 
 ;;; Sideline ================================================
 (use-package sideline
@@ -307,7 +307,7 @@ Version 2016-04-04"
   :config
   (global-sideline-mode))
 
-(use-package sideline-flymake)
+(use-package sideline-flymake :defer 1)
 
 ;; This package does badly (2023.08.30
 ;; (use-package sideline-eldoc

@@ -29,8 +29,8 @@
 
 	;; make sure it works in daemon mode
 	(add-hook 'server-after-make-frame-hook
-		'(lambda () (unless (display-graphic-p)
-									(diff-hl-margin-mode))))
+		#'(lambda () (unless (display-graphic-p)
+									 (diff-hl-margin-mode))))
 	(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 	(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 

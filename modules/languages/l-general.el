@@ -199,12 +199,16 @@
 (defun mk/set-compile-command ()
   "Define compile command for every mode."
   (setq-local compile-command
-    (let* ((base-path
-             (if (project-current)
-               (project-root (project-current)) ;; have problem with git submodule
-               (file-name-directory buffer-file-name)))
-            (makefile-exist-p
-              (file-exists-p (expand-file-name "Makefile" base-path))))
+    (when-let* ( ;; to make sure buffer has corresponding file, and prevent
+                 ;; error when loading lisp-interaction-mode at emacs startup
+                 (buffer-file-name) 
+                 (base-path ;; project root when in a project; current directory when not
+                   (if (project-current)
+                     (project-root (project-current)) ;; have problem with git submodule
+                     (file-name-directory buffer-file-name)))
+                 (relative-file-name (file-relative-name buffer-file-name base-path))
+                 (relative-bare-file-name (file-name-sans-extension relative-file-name))
+                 (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path))))
       (cond
         ;; rust
         ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
@@ -215,11 +219,10 @@
             (project-root (project-current)) "test/init.el" " test/0.el"))
         ;; c
         ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
-          (let ((executable-file-path
-                  (abbreviate-file-name
-                    (file-name-sans-extension (buffer-file-name)))))
-            (concat
-              "make " executable-file-path " && " executable-file-path)))
+          (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
+        ;; kotlin
+        ((eq major-mode 'kotlin-ts-mode)
+          (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))
         ;; zig
         ((eq major-mode 'zig-mode)
           "zig build")

@@ -103,7 +103,6 @@
     '("'" . repeat)
     '("<escape>" . ignore)
 
-    ;; < >
     '("<" . indent-rigidly-left)
     '(">" . indent-rigidly-right)
     '("?" . eldoc)

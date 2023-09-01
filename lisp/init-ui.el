@@ -48,10 +48,10 @@
 (defun mk/check-and-install-all-the-icons()
   "Check and install all-the-icons font if in emacs GUI(client and single)."
   (interactive)
-  (if (display-graphic-p)
+  (when (display-graphic-p)
     (when (not (member "all-the-icons" (font-family-list)))
-      (all-the-icons-install-fonts t))
-    nil))
+      (all-the-icons-install-fonts t))))
+
 (use-package all-the-icons
   :config
   (mk/check-and-install-all-the-icons)
@@ -85,7 +85,7 @@
 	;; configuration for emacsclient
 	;; (set-face-background 'dashboard-banner-logo-title nil) ;; solaire-mode integration
 	;; icons display in the emacsclient
-	(add-hook 'server-after-make-frame-hook  '(lambda () (dashboard-refresh-buffer)))
+	(add-hook 'server-after-make-frame-hook  #'(lambda () (dashboard-refresh-buffer)))
   (dashboard-setup-startup-hook)
 	(setq dashboard-projects-backend 'project-el
 		dashboard-center-content t
