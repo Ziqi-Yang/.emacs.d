@@ -22,6 +22,7 @@
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(yaml\\|yml\\)\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(c\\|h\\)\\'" . c-ts-mode))
 
 ;; manual(use script) build(recommend, since more language are included, but you need need to manualy hook the extra langauge. For build script, see above information), or use nf/treesit-install-all-languages for those languages defined in treesit-auto
 (defun nf/treesit-install-all-languages ()
@@ -94,8 +95,8 @@
 	;; install markdown-mode to rich the doc
 	)
 
-(use-package eglot-hierarchy ;; TODO change the repo address back to dolmens/eglot-hierarchy
-  :straight (:host github :repo "Ziqi-Yang/eglot-hierarchy"))
+(use-package eglot-hierarchy
+  :straight (:host github :repo "dolmens/eglot-hierarchy"))
 
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -200,42 +201,42 @@
 ;; since configuration files for some mode doesn't exist, so I put it all here
 (defun mk/set-compile-command ()
   "Define compile command for every mode."
-  (setq-local compile-command
-    (when-let* ( ;; to make sure buffer has corresponding file, and prevent
-                 ;; error when loading lisp-interaction-mode at emacs startup
-                 (buffer-file-name) 
-                 (base-path ;; project root when in a project; current directory when not
-                   (if (project-current)
-                     (project-root (project-current)) ;; have problem with git submodule
-                     (file-name-directory buffer-file-name)))
-                 (relative-file-name (file-relative-name buffer-file-name base-path))
-                 (relative-bare-file-name (file-name-sans-extension relative-file-name))
-                 (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path))))
-      (cond
-        ;; rust
-        ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
-          "cargo run")
-        ;; emacs lisp 
-        ((eq major-mode 'emacs-lisp-mode)
-          (concat "emacs --debug-init --init-directory=~/.emacs.d_test/ -l "
-            (project-root (project-current)) "test/init.el" " test/0.el"))
-        ;; cpp
-        ((or (eq major-mode 'c++-mode) (eq major-mode 'c++-ts-mode))
-          (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
-        ;; c
-        ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
-          (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
-        ;; kotlin
-        ((eq major-mode 'kotlin-ts-mode)
-          (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))
-        ;; zig
-        ((eq major-mode 'zig-mode)
-          "zig build")
-        ;; python
-        ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
-          (concat "python " (buffer-file-name)))
-        ;; other
-        (t "make run")))))
+  ;; to make sure buffer has corresponding file, and prevent
+  ;; error when loading lisp-interaction-mode at emacs startup
+  (when buffer-file-name
+    (setq-local compile-command
+      (let* ((base-path ;; project root when in a project; current directory when not
+               (if (project-current)
+                 (project-root (project-current)) ;; have problem with git submodule
+                 (file-name-directory buffer-file-name)))
+              (relative-file-name (file-relative-name buffer-file-name base-path))
+              (relative-bare-file-name (file-name-sans-extension relative-file-name))
+              (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path))))
+        (cond
+          ;; rust
+          ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
+            "cargo run")
+          ;; emacs lisp 
+          ((eq major-mode 'emacs-lisp-mode)
+            (concat "emacs --debug-init --init-directory=~/.emacs.d_test/ -l "
+              (project-root (project-current)) "test/init.el" " test/0.el"))
+          ;; cpp
+          ((or (eq major-mode 'c++-mode) (eq major-mode 'c++-ts-mode))
+            (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
+          ;; c
+          ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
+            (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
+          ;; kotlin
+          ((eq major-mode 'kotlin-ts-mode)
+            (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))
+          ;; zig
+          ((eq major-mode 'zig-mode)
+            "zig build")
+          ;; python
+          ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
+            (concat "python " (buffer-file-name)))
+          ;; other
+          (t "make run"))))))
 
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
 

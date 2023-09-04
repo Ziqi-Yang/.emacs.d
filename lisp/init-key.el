@@ -225,7 +225,7 @@ Example:
        ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))
        ("e" . eww-list-bookmarks)
        ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
-       ("d" . dashboard-open)
+       ("d" . dired-jump)
        ("D" . mk/draw-diagram)
        ("t" . mk/open-terminal-smart)
        ("T" . mk/open-terminal-here)))
@@ -340,6 +340,7 @@ Example:
     "C-c z" keymap/trivial
     '(("t" . mk/translate)
        ("c" . jinx-correct)
+       ("C" . list-colors-display)
        ("q" . save-buffers-kill-emacs)
        ("Q" . kill-emacs)
        ;; ("s" . desktop-save-in-desktop-dir)

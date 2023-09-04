@@ -462,6 +462,8 @@ Version 2016-04-04"
 (defun mk/funcs-go-back-setup()
   (dolist (func '(find-function
                    mk/better-query-replace
+                   meow-beginning-of-thing
+                   meow-end-of-thing
                    consult-line
                    consult-imenu
                    consult-ripgrep
