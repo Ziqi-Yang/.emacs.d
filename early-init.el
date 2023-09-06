@@ -42,7 +42,7 @@
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (menu-bar-mode -1)
-(pixel-scroll-mode -1)
+(pixel-scroll-precision-mode 1)
 (set-fringe-mode 3) ;; diff-hl make use of fringe
 
 ;; Emacs 29 alpha background
