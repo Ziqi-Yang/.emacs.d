@@ -10,7 +10,6 @@
   scroll-step 1
 	select-enable-clipboard nil)  ; make register indepentent from clipboard
 
-
 ;; @ remember cursor position
 (use-package saveplace
   :ensure nil
@@ -27,11 +26,11 @@
 	:config
 	(global-highlight-parentheses-mode)
 	(setq highlight-parentheses-colors nil
-				highlight-parentheses-highlight-adjacent t
-				highlight-parentheses-attributes '((:weight ultra-bold :background "#ecf0f1"
-																										:box
-																										( :line-width (1 . -1)
-																											:color ,(face-attribute 'shadow :foreground))))))
+		highlight-parentheses-highlight-adjacent t
+		highlight-parentheses-attributes '((:weight ultra-bold :background "#808080"
+																				 :box
+																				 ( :line-width (1 . -1)
+																					 :color ,(face-attribute 'shadow :foreground))))))
 
 (use-package paren 
 	:custom

@@ -16,7 +16,7 @@
 ;; but(guess) I think though with ts support, it still lack some feature. For more feature, you
 ;; should use third-party rust-mode instead.
 
-;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . mhtml-mode))
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
@@ -213,6 +213,8 @@
               (relative-bare-file-name (file-name-sans-extension relative-file-name))
               (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path))))
         (cond
+          (makefile-exist
+            "make ")
           ;; rust
           ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
             "cargo run")
@@ -236,7 +238,7 @@
           ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
             (concat "python " (buffer-file-name)))
           ;; other
-          (t "make run"))))))
+          (t "make "))))))
 
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
 
