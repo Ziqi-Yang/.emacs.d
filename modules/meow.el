@@ -3,6 +3,16 @@
 ;; Author: Ziqi Yang <mr.ziqiyang@gmail.com>
 ;; Comments:
 
+(defun mk/mark-line-visible ()
+  "Mark the visible part of the current line."
+  (interactive)
+  (back-to-indentation) ;; go to the non-whitespace line beginning
+  (push-mark (point))
+  ;; go to the last non-whitespace line end
+  (move-end-of-line nil)
+  (re-search-backward "^\\|[^[:space:]]")
+  (forward-char)
+  (activate-mark))
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -11,6 +21,7 @@
   
   ;; motion
   (meow-motion-overwrite-define-key
+    '("<tab>" . completion-at-point)
     '("j" . meow-next)
     '("k" . meow-prev)
     '("<escape>" . ignore))
@@ -95,11 +106,12 @@
     '("w" . meow-mark-word)
     '("W" . meow-mark-symbol)
     '("x" . meow-line)
-    '("X" . consult-goto-line)
+    '("X" . mk/mark-line-visible)
     ;; '("X" . meow-goto-line)
     '("y" . meow-save)
     '("Y" . meow-sync-grab)
     '("z" . meow-pop-selection)
+    '("Z" . consult-goto-line)
     '("'" . repeat)
     '("<escape>" . ignore)
 

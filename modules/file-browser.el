@@ -33,9 +33,11 @@ one specified by listing header."
     (call-interactively #'find-file)))
 
 (defun mk/dired-local-keybinding-setup()
-  (keymap-local-set "M-s" #'dired-isearch-filenames)
-  (keymap-local-set "M-f" #'mk/dired-find-file))
+  (keymap-local-set "/" #'dired-isearch-filenames)
+  (keymap-local-set "M-f" #'mk/dired-find-file)
+  (keymap-local-set "h" #'dired-up-directory)
+  (keymap-local-set "l" #'dired-find-file))
 
-(add-hook 'dired-mode-hook 'mk/dired-local-keybinding-setup)
+(add-hook 'dired-mode-hook #'mk/dired-local-keybinding-setup)
 
 (provide 'file-browser)

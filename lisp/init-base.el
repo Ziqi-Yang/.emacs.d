@@ -353,7 +353,7 @@ Version 2016-04-04"
   (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
 
   (peek-enable-eldoc-message-integration nil) ;; disable (defaut) `eldoc-message-function' integration
-  (peek-enable-eldoc-display-integration t) ;; enable `eldoc-display-functons'  integration
+  (peek-enable-eldoc-display-integration nil) ;; enable `eldoc-display-functons'  integration
 
   :config
   (global-peek-mode 1)
@@ -372,7 +372,7 @@ Version 2016-04-04"
   ;; Eldoc display setting
   ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
   ;;   other eldoc display functions.
-  (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
+  ;; (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
 
   ;; (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
   ;; (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable)
