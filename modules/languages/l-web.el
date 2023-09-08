@@ -6,18 +6,50 @@
 ;;; html 
 ;; in insert mode: C-j or C-<return> to expand
 (use-package emmet-mode
-	:hook ((html-mode . emmet-mode)))
+	:hook ((web-mode . emmet-mode)))
 
 ;;; Css =====================================================
 (use-package rainbow-mode
-	:hook ( ((mhtml-mode html-mode css-mode) . rainbow-mode) )) ;; TODO more specific mode
+	:hook ( ((mhtml-mode html-mode css-mode web-mode) . rainbow-mode) )) ;; TODO more specific mode
 
 ;;; Vue =====================================================
 ;; @ Custom vue mode based on web-mode
-(use-package web-mode)
+(use-package web-mode
+  :custom
+  (web-mode-markup-indentation 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-code-indent-offset 2)
+  (web-mode-enable-part-face t)
+  (web-mode-enable-comment-interpolation t)
+  (web-mode-enable-heredoc-fontification t)
+  (web-mode-enable-current-element-highlight t)
+  (web-mode-enable-current-column-highlight t)
+  
+  :config
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+
+(defun mk/setup-web-mode-for-emacs-client ()
+  "Setup some values of web mode for emacs cliet.
+Due to web-mode bug for emacs client, some customizable values need to be set after emacs client reload.  `display-graphic-p'."
+  (if (display-graphic-p)
+    (setq web-mode-enable-auto-closing t
+      web-mode-enable-auto-pairing t
+      web-mode-enable-auto-indentation t
+      web-mode-enable-auto-opening t
+      web-mode-enable-auto-quoting t
+      web-mode-enable-css-colorization t)))
+
+(add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client)
+
 (define-derived-mode vue-mode web-mode "Vue")
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 
 ;; eglot for vue-mode
 (with-eval-after-load 'eglot

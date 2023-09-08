@@ -24,7 +24,7 @@
 	;; can selete entry with M-<number> <ret>
   ;; (vertico-flat-mode)
   ;; (setq vertico-flat-max-lines 8)
-  ;; (vertico-grid-mode)
+  (vertico-grid-mode -1)
 	(vertico-indexed-mode)
 	;; configure display per command
 	(vertico-multiform-mode)

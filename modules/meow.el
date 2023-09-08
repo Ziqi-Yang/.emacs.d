@@ -14,6 +14,19 @@
   (forward-char)
   (activate-mark))
 
+(defun others/delete-enclosing-parentheses (&optional arg)
+  "Delete the innermost enclosing parentheses around point.
+With a prefix argument ARG N, delete the Nth level of enclosing parentheses,
+where 1 is the innermost level."
+  (interactive "*p")
+  (save-excursion
+    (backward-up-list arg)
+    (let ((beg (point)))
+      (forward-list)
+      (delete-char -1)
+      (goto-char beg)
+      (delete-char 1))))
+
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (setq meow-keypad-start-keys '((?h . ?h)
@@ -125,6 +138,7 @@
     ;; M-; comment-dwim (toggle comment)
     ;; '("C-o" . xah/pop-local-mark-ring)
     ;; '("C-i" . pop-global-mark)
+    '("M-d" . others/delete-enclosing-parentheses)
     '("C-o" . xref-go-back)
     '("C-i" . xref-go-forward)
     '(":" . async-shell-command)
