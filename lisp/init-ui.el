@@ -46,21 +46,24 @@
 (add-hook 'after-init-hook #'mk/setup-font-lock())
 
 ;; icon theme
-(defun mk/check-and-install-all-the-icons()
-  "Check and install all-the-icons font if in emacs GUI(client and single)."
-  (interactive)
-  (when (display-graphic-p)
-    (when (not (member "all-the-icons" (font-family-list)))
-      (all-the-icons-install-fonts t))))
 
-(use-package all-the-icons
-  :config
-  (mk/check-and-install-all-the-icons)
-  (add-hook 'server-after-make-frame-hook #'mk/check-and-install-all-the-icons))
+(use-package nerd-icons)
 
-(use-package all-the-icons-completion
-	:after all-the-icons
-	:hook (after-init . all-the-icons-completion-mode))
+;; (defun mk/check-and-install-all-the-icons()
+;;   "Check and install all-the-icons font if in emacs GUI(client and single)."
+;;   (interactive)
+;;   (when (display-graphic-p)
+;;     (when (not (member "all-the-icons" (font-family-list)))
+;;       (all-the-icons-install-fonts t))))
+
+;; (use-package all-the-icons
+;;   :config
+;;   (mk/check-and-install-all-the-icons)
+;;   (add-hook 'server-after-make-frame-hook #'mk/check-and-install-all-the-icons))
+
+;; (use-package all-the-icons-completion
+;; 	:after all-the-icons
+;; 	:hook (after-init . all-the-icons-completion-mode))
 
 ;;; dim unreal buffer =======================================
 (use-package solaire-mode
@@ -154,7 +157,7 @@
 ;;; mode line ===============================================
 ;; @ doom modeline
 (use-package doom-modeline
-	:after all-the-icons
+  :after nerd-icons
   :init (doom-modeline-mode 1))
 
 ;;; Navigation Highlight ====================================

@@ -283,6 +283,9 @@ Version 2016-04-04"
 			 ("NOTE" . "#3498db")
 			 ("STUB"   . "#f39c12"))))
 
+(use-package consult-todo
+  :straight (:type git :host github :repo "liuyinz/consult-todo"))
+
 ;;; Persistent Scrctch Buffer ===============================
 ;; (use-package persistent-scratch
 ;; 	:config

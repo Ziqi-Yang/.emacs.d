@@ -111,6 +111,7 @@ Example:
   (mk/define&set-keymap
     "C-c b" keymap/buffer
     '(("b" . mk/consult-buffer-no-hidden)
+       ("o" . switch-to-buffer-other-window)
        ("B" . consult-buffer)
        ("c" . mk/switch-to-compilation-buffer)
        ("r" . mk/reload-buffer)
@@ -169,10 +170,12 @@ Example:
     "C-c f" keymap/file
     '(("D" . mk/delete-file)
        ("f" . find-file)
-       ("F" . others/sudo-find-file)
+       ("F" . mk/find-file-other-window)
        ("p" . project-find-file)
+       ("P" . mk/project-find-file-other-window)
        ("r" . recentf-open)
        ("R" . rename-visited-file)
+       ("s" . others/sudo-find-file)
        ("z" . zoxide-find-file)))
 
   ;; fold(F)
@@ -288,8 +291,13 @@ Example:
        ("d" . dictionary-search)
        ("o" . consult-outline)
        ("O" . mk/search-online)
-       ("t" . hl-todo-occur)
-       ("T" . hl-todo-rgrep)))
+       ("t" . ,(mk/define&set-keymap
+                 "C-c s t" keymap/search-todo
+                 '(("t" . consult-todo)
+                    ("T" . consult-todo-all)
+                    ("p" . consult-todo-project)
+                    ("d" . consult-todo-dir)
+                    ("T" . hl-todo-rgrep))))))
 
   ;; straight (S)
   (mk/define&set-keymap
@@ -585,25 +593,37 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
         (concat command-prefix (project-root (project-current)) " ~/.emacs.d/gitui_start.sh"))
       (message "Not in a project!"))))
 
-(defun mk/better-consult-ripgrep()
-  "Use symbol at point as the default input of `affe-grep'."
-  (interactive)
-  (consult-ripgrep nil (thing-at-point 'symbol)))
+(defun mk/better-consult-ripgrep (arg)
+  "Use symbol at point as the default input of `affe-grep'.
+ARG: prefix argument.  Use prefix argument when you want no default input."
+  (interactive "P")
+  (if arg
+    (call-interactively #'consult-ripgrep)
+    (consult-ripgrep nil (thing-at-point 'symbol))))
 
-(defun mk/better-consult-git-grep()
-  "Use symbol at point as the default input of `affe-grep'."
-  (interactive)
-  (consult-git-grep nil (thing-at-point 'symbol)))
+(defun mk/better-consult-git-grep (arg)
+  "Use symbol at point as the default input of `affe-grep'.
+ARG: prefix argument.  Use prefix argument when you want no default input."
+  (interactive "P")
+  (if arg
+    (call-interactively #'consult-git-grep)
+    (consult-git-grep nil (thing-at-point 'symbol))))
 
-(defun mk/better-consult-line()
-  "Use symbol at point as the default input of `consult-line'."
-  (interactive)
-  (consult-line (thing-at-point 'symbol) nil))
+(defun mk/better-consult-line (arg)
+  "Use symbol at point as the default input of `consult-line'.
+ARG: prefix argument.  Use prefix argument when you want no default input."
+  (interactive "P")
+  (if arg
+    (call-interactively #'consult-line)
+    (consult-line (thing-at-point 'symbol) nil)))
 
-(defun mk/better-info-apropos()
-  "Use symbol at point as the default input of `affe-grep'."
-  (interactive)
-  (info-apropos (thing-at-point 'symbol)))
+(defun mk/better-info-apropos (arg)
+  "Use symbol at point as the default input of `affe-grep'.
+ARG: prefix argument.  Use prefix argument when you want no default input."
+  (interactive "P")
+  (if arg
+    (call-interactively #'info-apropos)
+    (info-apropos (thing-at-point 'symbol))))
 
 (defun mk/better-query-replace (from to)
   "Perform a query-replace with default FROM and TO strings as the symbol at
@@ -619,9 +639,12 @@ point."
   ;;   (query-replace-regexp from to))
   (message-box "Use meow-edit functionality instead!"))
 
-(defun mk/better-consult-man()
-  (interactive)
-  (consult-man (concat (thing-at-point 'symbol) "#3")) ;; default: library apis
+(defun mk/better-consult-man (arg)
+  (interactive "P")
+  (if arg
+    (call-interactively #'consult-man)
+    (consult-man (concat (thing-at-point 'symbol) "#3")))
+  ;; default: library apis
   ;; this ugly trick here is because I have problem with
   ;; configuring man buffer in `display-buffer-alist'
   (other-window 1)
@@ -659,6 +682,21 @@ point."
                  "|sudo:root@"
                  (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                (concat "/sudo:root@localhost:" file))))
+
+(defun mk/project-find-file-other-window ()
+  "Open a window at right for file selected by `project-find-file'."
+  (interactive)
+  (split-window-right)
+  (other-window 1)
+  (project-find-file))
+
+(defun mk/find-file-other-window ()
+  "Open a window at right for file selected by `find-file'."
+  (interactive)
+  (split-window-right)
+  (other-window 1)
+  (call-interactively #'find-file))
+
 
 ;; Evil Related
 ;;
