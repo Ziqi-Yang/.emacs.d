@@ -133,7 +133,10 @@ Example:
     "C-c c" keymap/code
     `(("a" . eglot-code-actions)
        ("d" . xref-find-definitions)
-       ("D" . eldoc)
+       ;; eldoc: use ? (binding in meow.el)
+       ("D" . ,(mk/define&set-keymap
+                 "C-c c D" keymap/code-debug
+                 '(("v" . mk/debug-with-valgrind))))
        ("e" . consult-flymake)
        ("E" . combobulate-envelop)
        ("f" . ,(mk/define&set-keymap
