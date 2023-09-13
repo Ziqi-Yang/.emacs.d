@@ -4,6 +4,7 @@
 ;;; Code:
 
 (defun mk/cc-local-keybinding-setup()
+  (keymap-local-set "RET" #'newline-and-indent)
   (keymap-local-set "C-c C-c m" #'mk/better-consult-man) 
   (keymap-local-set "C-c C-c f" #'ff-find-other-file)
   (keymap-local-set "C-c C-c p" #'c-ts-prototype-copy-proto))
@@ -13,6 +14,8 @@
 
 (add-hook 'c-ts-mode-hook 'mk/cc-local-keybinding-setup)
 (add-hook 'c++-ts-mode-hook 'mk/cc-local-keybinding-setup)
+
+(setq c-ts-mode-indent-style 'linux)
 
 (provide 'l-cc)
 

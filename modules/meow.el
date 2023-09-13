@@ -157,7 +157,7 @@ where 1 is the innermost level."
     '("M-d" . others/delete-enclosing-parentheses)
     '("C-o" . xref-go-back)
     '("C-i" . xref-go-forward)
-    '("C-I" . mk/better-back-to-indentation)
+    '("C-S-i" . mk/better-back-to-indentation)
     '(":" . async-shell-command)
     '("C-m" . set-mark-command)
     '("C-M-h" . backward-sexp)

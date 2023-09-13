@@ -52,6 +52,7 @@
                                               (window-width . 0.5)))
            (:not grid)))))
   :config
+  ;; FIXME why after a while, the completion style goes back to grid again?
   (vertico-grid-mode -1))
 
 ;; Configure directory extension.
@@ -197,15 +198,12 @@
 ;; add completion etension
 ;; FIXME it seems like this package doesn't work well with citre (may be citre's problem)
 (use-package cape
-	:hook ((prog-mode . mk/setup-cape))
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (defun mk/setup-cape()
-    (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-keyword)
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-    ))
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 ;;; Snippet =================================================
 ;; @ Tempel
