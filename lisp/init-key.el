@@ -6,7 +6,7 @@
 ;; remove existing keybindings
 ;; (defun remove-elisp-mode-local-keybindings ()
 ;;   (keymap-local-unset "C-c C-b" t))
-;; 
+;;
 ;; (add-hook 'emacs-lisp-mode-hook 'remove-elisp-mode-local-keybindings)
 
 ;; native approach to surround text
@@ -46,24 +46,24 @@ Example:
   (keymap-global-set "C-w" #'backward-kill-word)
   (keymap-global-set "C-M-#" #'kill-region)
   (setq meow--kbd-kill-region "C-M-#")
-  
+
   (keymap-global-set "C-d" #'scroll-up)
   (keymap-global-set "C-M-!" #'delete-char)
   (setq meow--kbd-delete-char "C-M-!")
 
   (keymap-global-set "M-:" #'comment-box)
-  
+
   (keymap-global-set "C-M-u" #'universal-argument)
   (keymap-global-set "C-u" #'scroll-down))
 
 (progn ;; insert mode (actually all mode)
   (keymap-global-set "<tab>" #'completion-at-point)
-  
+
   (keymap-global-set "C-M-@" #'forward-char)
   (setq meow--kbd-forward-char "C-M-@")
   (keymap-global-set "C-M-$" #'kill-line)
   (setq meow--kbd-kill-line "C-M-$")
-  
+
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/tempel-complete-or-next)
@@ -104,8 +104,8 @@ Example:
   (keymap-global-set "C-x d" #'diff)
   ;; C-M- (SPC g) ===============================================================
   (keymap-global-set "C-M-l" #'recenter-top-bottom) ;; gl
-  (keymap-global-set "C-M-s" #'scratch-buffer) ;; gs
-  (keymap-global-set "C-M-g" #'mk/project-git) ;; gg
+  (keymap-global-set "C-M-s" #'scratch-buffer)      ;; gs
+  (keymap-global-set "C-M-g" #'mk/project-git)      ;; gg
 
   ;; buffer(b)
   (mk/define&set-keymap
@@ -143,7 +143,8 @@ Example:
        ("E" . combobulate-envelop)
        ("f" . ,(mk/define&set-keymap
                  "C-c c f" keymap/code-format
-                 '(("f" . eglot-format)
+                 '(("f" . mk/refresh-file)
+                    ("e" . eglot-format)
                     ("F" . apheleia-format-buffer))))
        ("F" . eglot-code-action-quickfix)
        ("h" . ,(mk/define&set-keymap
@@ -207,7 +208,7 @@ Example:
                     ("d" . epa-decrypt-file)
                     ("s" . epa-sign-file)
                     ("v" . epa-verify-file))))))
-  
+
   ;; Hugo(H)
   (mk/define&set-keymap
     "C-c H" keymap/hugo
@@ -268,8 +269,8 @@ Example:
        ("i" . color-rg-search-input-in-current-file)
        ("I" . color-rg-search-input-in-project)
        ("b" . color-rg-search-symbol-in-current-file) ;; buffer
-       ("d" . color-rg-search-symbol-with-type) ;; directory
-       ("p" . color-rg-search-project-with-type))) ;; project
+       ("d" . color-rg-search-symbol-with-type)       ;; directory
+       ("p" . color-rg-search-project-with-type)))    ;; project
 
   ;; search (s)
   (mk/define&set-keymap
@@ -366,7 +367,7 @@ Example:
        ;; ("l" . desktop-load-file)
        ("p" . mk/copy-path-smart))))
 
-;; for tapping key which begins with a character other than SPC 
+;; for tapping key which begins with a character other than SPC
 ;; so `meow-keypad' won't appear
 (use-package which-key
   :defer 1
@@ -384,6 +385,33 @@ Example:
 (add-hook 'Custom-mode-hook 'mk/Custom-mode-keybinding-setup)
 
 ;;; Trivial Functions =======================================
+(defun others/indent-buffer ()
+  "Automatic format current buffer."
+  (interactive)
+  (if (derived-mode-p 'python-mode)
+    (message "Don't indent python buffer, it will mess up the code syntax.")
+    (save-excursion
+      (indent-region (point-min) (point-max) nil)
+      (delete-trailing-whitespace)
+      (untabify (point-min) (point-max)))))
+
+(defun others/indent-comment-buffer ()
+  "Indent comment of buffer."
+  (interactive)
+  (others/indent-comment-region (point-min) (point-max)))
+
+(defun others/indent-comment-region (start end)
+  "Indent region.
+START END."
+  (interactive "r")
+  (save-excursion
+    (setq end (copy-marker end))
+    (goto-char start)
+    (while (< (point) end)
+      (if (comment-search-forward end t)
+        (comment-indent)
+        (goto-char end)))))
+
 (defun mk/kill-buffer()
   "Kill buffer without deleting its window. (unlike evil-delete-buffer)"
   (interactive)
@@ -469,12 +497,12 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   "Split window horizontally & Move to spawned window."
   (interactive)
   (split-window-horizontally)
-  (other-window 1)) 
+  (other-window 1))
 
 (defun mk/split-window-vertically ()
   (interactive)
   (split-window-vertically)
-  (other-window 1)) 
+  (other-window 1))
 
 (defun mk/delete-file ()
   "Delete the current buffer file."
@@ -502,7 +530,7 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
       (kill-buffer old-buffer))))
 
 (defun others/window-split-toggle ()
-  "Toggle window layout: vertical <-> horizontal"
+  "Toggle window layout: vertical <-> horizontal."
   (interactive)
   (if (eq (length (window-list)) 2)
     (let ((func (if (window-full-height-p)
@@ -523,6 +551,29 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   (interactive)
   ;; (find-file (buffer-file-name))
   (revert-buffer nil t))
+
+(defun mk/better-emacs-lisp-byte-compile-and-load ()
+  (interactive)
+  ;; erase byte compile buffer
+  (when (get-buffer byte-compile-log-buffer)
+    (kill-buffer byte-compile-log-buffer))
+  (emacs-lisp-byte-compile-and-load))
+
+(defun mk/refresh-file ()
+  "Refresh current file.  Indentation / Save / Load and other stuffs."
+  (interactive)
+  (unless (fboundp 'apheleia--get-formatters)
+    (require 'apheleia-core))
+  (let ((formatter (apheleia--get-formatters)))
+    (if formatter
+      (apheleia-format-buffer formatter)
+      (others/indent-buffer)
+      (others/indent-comment-buffer)))
+  (save-buffer)
+  (cond
+    ((eq major-mode 'emacs-lisp-mode)
+      (mk/better-emacs-lisp-byte-compile-and-load))
+    (t)))
 
 (defun mk/project-compile()
   "Save & Compile Project."
@@ -717,7 +768,7 @@ point."
 ;;     ((evil-normal-state-p)
 ;;       (highlight-symbol-at-point)
 ;;       (evil-search-word-forward 1 (symbol-at-point)))))
-;; 
+;;
 ;; (defun mk/evil-search-symbol-backward ()
 ;;   "Symbol instead of word in normal state. This function aims to replace the default '*' binding in evil."
 ;;   (interactive)
@@ -726,7 +777,7 @@ point."
 ;;     ((evil-normal-state-p)
 ;;       (highlight-symbol-at-point)
 ;;       (evil-search-word-backward 1 (symbol-at-point)))))
-;; 
+;;
 ;; (defun mk/unhighlight-search()
 ;;   "Unhighlight all symbols highlighted by `highlight-symbol-at-point' in `mk/evil-search-symbol-*'"
 ;;   (interactive)
@@ -737,7 +788,7 @@ point."
 ;;   (evil-shift-left (region-beginning) (region-end))
 ;;   (evil-normal-state)
 ;;   (evil-visual-restore))
-;; 
+;;
 ;; (defun djoyner/evil-shift-right-visual ()
 ;;   "Continuous evil shift-right."
 ;;   (interactive)

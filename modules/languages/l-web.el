@@ -51,9 +51,11 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 (define-derived-mode vue-mode web-mode "Vue")
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
 
-;; eglot for vue-mode
+;; eglot server programs configuration
 (with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(vue-mode . ("vls" "--stdio"))))
+  (add-to-list 'eglot-server-programs '(vue-mode . ("vls" "--stdio")))
+  (add-to-list 'eglot-server-programs
+    '((typescript-ts-mode) "typescript-language-server" "--stdio")))
 
 ;;; Trivial =================================================
 (defun mk/live-web-start()
@@ -61,12 +63,12 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
   (interactive)
   (condition-case nil	(delete-process "live-web")	(error nil))
   (if (project-current) ;;; start browser-sync in the project root if in a project
-      (start-process-shell-command "live-web"
-                                   "*my-buffer*"
-                                   (concat "browser-sync start --server " (project-root (project-current)) " --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
     (start-process-shell-command "live-web"
-                                 "*my-buffer*"
-                                 "browser-sync start --server --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
+      "*my-buffer*"
+      (concat "browser-sync start --server " (project-root (project-current)) " --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
+    (start-process-shell-command "live-web"
+      "*my-buffer*"
+      "browser-sync start --server --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
   (message "live web start"))
 
 (defun mk/live-web-kill()

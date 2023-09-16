@@ -3,7 +3,6 @@
 ;;
 ;;; Code:
 
-
 (defun mk/emacs-lisp-local-keybindings-setup()
   "Set up local keybindings for scratch buffer(lisp interaction mode)"
   (keymap-local-set "C-j" #'complete-symbol)
@@ -13,3 +12,5 @@
 (add-hook 'emacs-lisp-mode-hook 'mk/emacs-lisp-local-keybindings-setup)
 
 (provide 'l-lisp)
+
+;;; 'l-lisp.el ends here

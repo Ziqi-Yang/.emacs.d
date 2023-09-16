@@ -74,7 +74,13 @@
 
 (use-package combobulate
 	:straight (:host github :repo "mickeynp/combobulate")
-  :hook ((prog-mode . combobulate-mode)))
+  :hook ((python-ts-mode . combobulate-mode)
+          (js-ts-mode . combobulate-mode)
+          (css-ts-mode . combobulate-mode)
+          (yaml-ts-mode . combobulate-mode)
+          (json-ts-mode . combobulate-mode)
+          (typescript-ts-mode . combobulate-mode)
+          (tsx-ts-mode . combobulate-mode)))
 
 ;;; Focus ===================================================
 ;; focus mode, dim other text color

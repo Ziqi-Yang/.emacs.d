@@ -12,4 +12,5 @@
 /openai-api-key.txt
 /elpa
 
+*.elc
 *.eld

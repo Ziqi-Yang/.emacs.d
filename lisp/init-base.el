@@ -260,6 +260,10 @@ Version 2016-04-04"
 (use-package color-rg
 	:straight (:host github :repo "manateelazycat/color-rg"))
 
+(use-package symbol-overlay
+  :defer 1)
+
+
 ;; @ fuzzy finder ;; use consult-ripgrep instead
 ;; (use-package affe
 ;;   :straight (:host github :repo "minad/affe" :files ("*.el"))
