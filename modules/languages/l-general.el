@@ -178,10 +178,7 @@
 ;; @ dictionary
 (setq dictionary-server "localhost")
 (setq switch-to-buffer-obey-display-actions t)
-(add-to-list 'display-buffer-alist
-  '("^\\*Dictionary\\*" display-buffer-in-side-window
-     (side . left)
-     (window-width . 100)))
+
 
 ;; @ Just-in-time spell checking
 ;; (use-package jit-spell

@@ -125,12 +125,7 @@
     (lambda (map)
       (which-key--show-keymap "Embark" map nil nil 'no-paging)
       #'which-key--hide-popup-ignore-command)
-    embark-become-indicator embark-action-indicator)
-
-  (add-to-list 'display-buffer-alist
-    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-       nil
-       (window-parameters (mode-line-format . none)))))
+    embark-become-indicator embark-action-indicator))
 
 ;; @ Interact at Consult 
 (use-package embark-consult

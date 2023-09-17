@@ -209,4 +209,30 @@
   "Custom face for hi-lock mode."
   :group 'hi-lock-faces)
 
+;;; Display Buffer Alist ========================================================
+;; dictionary
+(add-to-list 'display-buffer-alist
+  '("^\\*Dictionary\\*" display-buffer-in-side-window
+     (side . left)
+     (window-width . 100)))
+
+;; tree sitter
+(add-to-list 'display-buffer-alist
+  '("^\\*tree-sitter explorer for [^z-a]+\\*"
+     display-buffer-in-side-window
+     (side . right)
+     (window-width . 70)))
+
+;; compilation
+(add-to-list 'display-buffer-alist
+  '("\\*compilation\\*"
+     (display-buffer-same-window)
+     (reusable-frames . nil)))
+
+;; embark
+(add-to-list 'display-buffer-alist
+  '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+     nil
+     (window-parameters (mode-line-format . none))))
+
 (provide 'init-ui)

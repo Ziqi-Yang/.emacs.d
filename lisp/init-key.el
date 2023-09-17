@@ -89,8 +89,8 @@ Example:
   ;; vundo ( SPC x u)
   (keymap-global-set "C-x C-u" #'vundo)
   ;; highlight symbols ( SPC x h/H)
-  (keymap-global-set "C-x h" #'mk/highlight-symbol-buffer)
-  (keymap-global-set "C-x H" #'unhighlight-regexp)
+  (keymap-global-set "C-x h" #'symbol-overlay-put)
+  (keymap-global-set "C-x H" #'symbol-overlay-remove-all)
   ;; Mail (SPC x SPC m)
   (keymap-global-set "C-x m" #'mu4e)
   (keymap-global-set "C-x M" #'compose-mail)
@@ -265,7 +265,7 @@ Example:
   ;; replace (r)
   (mk/define&set-keymap
     "C-c r" mk/replace-keymap
-    '(("r" . mk/better-query-replace)
+    '(("r" . symbol-overlay-put)
        ("i" . color-rg-search-input-in-current-file)
        ("I" . color-rg-search-input-in-project)
        ("b" . color-rg-search-symbol-in-current-file) ;; buffer
@@ -319,7 +319,7 @@ Example:
   (mk/define&set-keymap
     "C-c t" keymap/toggle
     '(("w" . whitespace-mode)
-       ("h" . mk/unhighlight-search)
+       ("c" . rainbow-mode)
        ("t" . consult-theme)))
 
   ;; window(w)
@@ -557,11 +557,14 @@ it can also be achieved by binding tempel-next in tempel-map to the same key as 
   ;; erase byte compile buffer
   (when (get-buffer byte-compile-log-buffer)
     (kill-buffer byte-compile-log-buffer))
-  (emacs-lisp-byte-compile-and-load))
+  (emacs-lisp-byte-compile-and-load)
+  ;; remove byte-compile file
+  (delete-file (byte-compile-dest-file buffer-file-name)))
 
-(defun mk/refresh-file ()
-  "Refresh current file.  Indentation / Save / Load and other stuffs."
-  (interactive)
+(defun mk/refresh-file (arg)
+  "Refresh current file.  Indentation / Save / Load and other stuffs.
+ARG: prefix argument."
+  (interactive "P")
   (unless (fboundp 'apheleia--get-formatters)
     (require 'apheleia-core))
   (let ((formatter (apheleia--get-formatters)))
@@ -683,19 +686,19 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
     (call-interactively #'info-apropos)
     (info-apropos (thing-at-point 'symbol))))
 
-(defun mk/better-query-replace (from to)
-  "Perform a query-replace with default FROM and TO strings as the symbol at
-point."
-  (interactive
-    (let* ((symbol (thing-at-point 'symbol))
-            (reg (rx-to-string `(seq symbol-start ,symbol symbol-end)))
-            (from (read-string "Replace: " reg))
-            (to (read-string "With: " symbol)))
-      (list from to)))
-  ;; (save-excursion
-  ;;   (beginning-of-buffer)
-  ;;   (query-replace-regexp from to))
-  (message-box "Use meow-edit functionality instead!"))
+;; (defun mk/better-query-replace (from to)
+;;   "Perform a query-replace with default FROM and TO strings as the symbol at
+;; point."
+;;   (interactive
+;;     (let* ((symbol (thing-at-point 'symbol))
+;;             (reg (rx-to-string `(seq symbol-start ,symbol symbol-end)))
+;;             (from (read-string "Replace: " reg))
+;;             (to (read-string "With: " symbol)))
+;;       (list from to)))
+;;   ;; (save-excursion
+;;   ;;   (beginning-of-buffer)
+;;   ;;   (query-replace-regexp from to))
+;;   (message-box "Use meow-edit functionality instead!"))
 
 (defun mk/better-consult-man (arg)
   (interactive "P")

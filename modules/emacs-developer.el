@@ -11,4 +11,10 @@
 
 ;; https://elpa.gnu.org/packages/persist.html
 
+;;; tree-sitter
+(use-package ts-query-highlight
+  :straight (:type git :host sourcehut :repo "meow_king/ts-query-highlight")
+  :config
+  (setq ts-query-highlight-dabbrev-expand-function 'cape-dabbrev))
+
 (provide 'emacs-developer)

@@ -263,7 +263,6 @@ Version 2016-04-04"
 (use-package symbol-overlay
   :defer 1)
 
-
 ;; @ fuzzy finder ;; use consult-ripgrep instead
 ;; (use-package affe
 ;;   :straight (:host github :repo "minad/affe" :files ("*.el"))
@@ -405,18 +404,6 @@ Version 2016-04-04"
 ;;       (eval `(rx bol ,comment-symbol (*? not-newline) (>= 10 "=") (* blank) eol)))))
 
 ;; (add-hook 'prog-mode-hook #'mk/set-outline-minor-mode)
-
-;;; Window Configuration ==================================
-(add-to-list 'display-buffer-alist
-  '("\\*compilation\\*"
-     (display-buffer-same-window)
-     (reusable-frames . nil)))
-
-;; Tried a lot of method, still doesn't work for man / consult-man
-;; (add-to-list 'display-buffer-alist
-;;   '("\\*Man.*?\\*"
-;;      (display-buffer-same-window)
-;;      (reusable-frames . nil)))
 
 ;;; Environment Variables ===================================
 (defun mk/set-env()
