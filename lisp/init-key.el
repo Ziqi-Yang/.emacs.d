@@ -68,7 +68,7 @@ Example:
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/tempel-complete-or-next)
   (keymap-global-set "C-S-<return>" #'tempel-insert)
-  (keymap-global-set "C-j" #'complete-symbol)
+  (keymap-global-set "C-j" #'completion-at-point)
   (keymap-global-set "C-k" #'cape-dabbrev)
   (keymap-global-set "C-S-f" #'cape-file)
   (keymap-global-set "C-l" #'cape-line)

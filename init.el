@@ -81,6 +81,7 @@
   (require 'l-latex)
   (require 'l-shell)
   (require 'l-draw)
+  (require 'l-makefile)
   (require 'l-kotlin)
   (require 'l-lua)
   ;; (require 'l-typst)

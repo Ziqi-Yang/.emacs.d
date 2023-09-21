@@ -471,6 +471,11 @@ Version 2016-04-04"
   :straight t
   :hook (after-init . gcmh-mode))
 
+
+;;; License =====================================================================
+(use-package lice
+  :straight (:type git :host github :repo "buzztaiki/lice-el"))
+
 ;; collect gc-statistics to help developers improve gc performance
 ;; https://www.reddit.com/r/emacs/comments/14dej62/please_help_collecting_statistics_to_optimize/
 ;; (use-package emacs-gc-stats
@@ -480,3 +485,5 @@ Version 2016-04-04"
 ;;   (emacs-gc-stats-mode +1))
 
 (provide 'init-base)
+
+;;; init-base.el ends here

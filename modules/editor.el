@@ -99,6 +99,7 @@
 
 ;;; Auto Insertion ============================================================
 (with-eval-after-load 'autoinsert
+  ;; Markdown
   (define-auto-insert
     'markdown-mode
     '(lambda ()
@@ -110,13 +111,15 @@
                "# " pname "\n\n"
                "![Static Badge](https://img.shields.io/badge/Made_with-Emacs-purple)" "  \n\n"
                
-               "[Project](https://sr.ht/~meow_king/" pname "/) FIXME  \n"
+               "[Project](https://git.sr.ht/~meow_king/" pname "/) FIXME  \n"
                "[Public Inbox](https://lists.sr.ht/~meow_king/public-inbox): General Consults  \n"
                "[Sending a Patch](https://lists.sr.ht/~meow_king/dev)  \n"
                "[Discussion](https://lists.sr.ht/~meow_king/discussion): Questions and Feedback  \n"
-               "[Tickets](https://sr.ht/~meow_king/" pname "/trackers) FIXME  \n"))
+               "[Tickets](https://todo.sr.ht/~meow_king/" pname "/trackers) FIXME  \n"))
            (insert
              "# " (file-name-base buffer-file-name))))))
+
+  ;; Emacs Lisp Mode
   (define-auto-insert
     'emacs-lisp-mode
     '(lambda ()

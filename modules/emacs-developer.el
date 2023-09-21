@@ -18,3 +18,5 @@
   (setq ts-query-highlight-dabbrev-expand-function 'cape-dabbrev))
 
 (provide 'emacs-developer)
+
+;;; emacs-developer.el ends here
