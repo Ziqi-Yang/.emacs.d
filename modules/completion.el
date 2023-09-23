@@ -127,7 +127,7 @@
       #'which-key--hide-popup-ignore-command)
     embark-become-indicator embark-action-indicator))
 
-;; @ Interact at Consult 
+;; @ Interact at Consult
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
@@ -144,11 +144,14 @@
 									             (109 "Macros" font-lock-function-name-face)
 									             (112 "Packages" font-lock-constant-face)
 									             (116 "Types" font-lock-type-face)
-									             (118 "Variables" font-lock-variable-name-face)))))
+									             (118 "Variables" font-lock-variable-name-face)))
+                           (typst-ts-mode :topLevel "Headings" :types
+                             ((?h "Headings" typst-ts-markup-header-face)
+                               (?f "Functions" font-lock-function-name-face)))))
   :config
   ;; integrated with xref
   (setq xref-show-xrefs-function #'consult-xref)
-  (consult-customize consult-recent-file :preview-key nil)) ;; disable preview for recent file  
+  (consult-customize consult-recent-file :preview-key nil)) ;; disable preview for recent file
 
 ;; NOTE: disable these to using lsp-bridge
 ;;; Corfu: In Region Completion  ============================
@@ -160,7 +163,7 @@
 ;;   :custom
 ;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
 ;;   (corfu-auto nil)               ;; Disable auto completion
-;;   (corfu-on-exact-match 'quit) 
+;;   (corfu-on-exact-match 'quit)
 ;; 	(corfu-auto-delay 0)           ;; Enable auto completion
 ;; 	(corfu-auto-prefix 2)          ;; Enable auto completion
 ;;   :init

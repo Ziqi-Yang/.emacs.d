@@ -60,12 +60,12 @@ Version 2016-04-04"
 ;;         persp-set-last-persp-for-new-frames t
 ;;         ;; persp-switch-to-added-buffer nil
 ;;         persp-kill-foreign-buffer-behaviour 'kill
-;;         persp-remove-buffers-from-nil-persp-behaviour nil)) 
-;; TODO try tabspace 
+;;         persp-remove-buffers-from-nil-persp-behaviour nil))
+;; TODO try tabspace
 
 ;; @ switch workspace
 (use-package eyebrowse
-  :config 
+  :config
 	(define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
 	(define-key eyebrowse-mode-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
 	(define-key eyebrowse-mode-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
@@ -78,9 +78,9 @@ Version 2016-04-04"
   ) ;; use *scratch* buffer (use string to provide it with custom buffer name)
 
 ;; (use-package tabspaces
-;;   ;; use this next line only if you also use straight, otherwise ignore it. 
+;;   ;; use this next line only if you also use straight, otherwise ignore it.
 ;;   :straight (:type git :host github :repo "mclear-tools/tabspaces")
-;;   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
+;;   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
 ;;   :commands (tabspaces-switch-or-create-workspace
 ;;               tabspaces-open-or-create-project-and-workspace)
 ;;   :custom
@@ -99,7 +99,7 @@ Version 2016-04-04"
 ;; 	(desktop-save t)
 ;; 	:init
 ;; 	(if (display-graphic-p)
-;; 		;; non-daemon emacs 
+;; 		;; non-daemon emacs
 ;; 		(progn
 ;; 			(add-hook 'after-init-hook '(lambda () (desktop-save-mode t)))
 ;; 			;; Manually read by clicking on dashboard icon instead
@@ -134,7 +134,7 @@ Version 2016-04-04"
 ;; 				 (desktop-save ,save-path t))))) ;; save session without lock
 
 ;;; text scale change on the fly ============================
-(use-package default-text-scale 
+(use-package default-text-scale
 	:bind (("C--" . default-text-scale-decrease)
 				  ("C-=" . default-text-scale-increase))
   :defer 1
@@ -149,7 +149,7 @@ Version 2016-04-04"
   (setq project-switch-commands
     (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
   (add-to-list 'project-switch-commands '(project-find-regexp "find regexp" "G"))
-  
+
   (add-to-list 'project-switch-commands '(consult-ripgrep "Consult rg" "r"))
   (add-to-list 'project-switch-commands '(consult-git-grep "Consult git grep" "g")))
 
@@ -163,6 +163,12 @@ Version 2016-04-04"
   (aw-scope 'frame)
   (aw-keys '(?a ?s ?d ?c ?n ?j ?k ?l ?i))
   (aw-minibuffer-flag t))
+
+(use-package popper
+  :defer 1
+  :init
+  (popper-mode +1)
+  (popper-echo-mode +1))
 
 ;; @ remember window layout for different scino
 ;; (use-package winner
@@ -203,8 +209,8 @@ Version 2016-04-04"
   "Calling hs-hide-level based on line numbers."
   (interactive)
   (hs-minor-mode)
-  (set-display-table-slot standard-display-table 
-    'selective-display 
+  (set-display-table-slot standard-display-table
+    'selective-display
     (string-to-vector " ❡❡❡"))
   (let ((n (car (buffer-line-statistics)))
          (l3 200)
@@ -219,7 +225,7 @@ Version 2016-04-04"
       ((> n l1) (hs-hide-all))     ;; also hide long comment
       ((> n l2) (hs-hide-level 1)) ;; show root function
       ((> n l3) (hs-hide-level 2)))))
-(use-package hideshow 
+(use-package hideshow
 	:hook ((prog-mode . mk/hs-hide-level-samrt)))
 
 ;; @ vimmish-fold
@@ -237,14 +243,24 @@ Version 2016-04-04"
 
 ;;; save file utility =======================================
 ;; when change window, lose focus & idle ...
-(use-package super-save
-  :defer t
-	:hook (after-init . super-save-mode)
+;; (use-package super-save
+;;   :defer t
+;; 	:hook (after-init . super-save-mode)
+;;   :config
+;;   (setq
+;;     auto-save-default nil ;; disable built-in auto-save mode
+;;     super-save-auto-save-when-idle t
+;;     super-save-idle-duration 0.5)) ;; 0.5s idle
+
+(use-package auto-save
+  :straight (:type git :host github :repo "manateelazycat/auto-save")
+  :defer 1
   :config
-  (setq
-    auto-save-default nil ;; disable built-in auto-save mode
-    super-save-auto-save-when-idle t
-    super-save-idle-duration 0.5)) ;; 0.5s idle
+  (auto-save-enable)
+  (setq auto-save-silent t
+    auto-save-idle 0.2
+    ;; avoid deleting markdown tailing two space
+    auto-save-delete-trailing-whitespace nil))
 
 ;;; Waketime ================================================
 (use-package wakatime-mode
@@ -267,9 +283,9 @@ Version 2016-04-04"
 ;; (use-package affe
 ;;   :straight (:host github :repo "minad/affe" :files ("*.el"))
 ;;   :config
-;;   ;; Manual preview key for `affe-grep' 
+;;   ;; Manual preview key for `affe-grep'
 ;;   (consult-customize affe-grep :preview-key '(:debounce 0.5 any))
-;; 	;; use orderless 
+;; 	;; use orderless
 ;; 	(defun affe-orderless-regexp-compiler (input _type _ignorecase)
 ;; 		(setq input (orderless-pattern-compiler input))
 ;; 		(cons input (lambda (str) (orderless--highlight input str))))
@@ -280,7 +296,8 @@ Version 2016-04-04"
 	:hook ((after-init . global-hl-todo-mode))
 	:init
 	(setq hl-todo-keyword-faces
-		'(("TODO"   . "#2ecc71")
+		'(("DONE" . "#b3b3b3")
+       ("TODO"   . "#2ecc71")
 			 ("FIXME"  . "#e74c3c")
 			 ("DEBUG"  . "#9b59b6")
 			 ("NOTE" . "#3498db")
@@ -353,7 +370,7 @@ Version 2016-04-04"
   ;; `peek-xref-definition'
   (peek-definition-surrounding-above-lines 1)
   (peek-overlay-position 'above) ;; or below
-  
+
   (peek-live-update t) ;; live update peek view of a marked region
 
   (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point

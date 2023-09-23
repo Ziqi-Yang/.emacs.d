@@ -64,6 +64,10 @@ Example:
   (keymap-global-set "C-M-$" #'kill-line)
   (setq meow--kbd-kill-line "C-M-$")
 
+  (keymap-global-set "C-`" #'popper-toggle)
+  (keymap-global-set "M-`" #'popper-cyclce)
+  (keymap-global-set "C-M-`" #'popper-toggle-type)
+
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/tempel-complete-or-next)
@@ -297,6 +301,8 @@ Example:
        ("d" . dictionary-search)
        ("o" . consult-outline)
        ("O" . mk/search-online)
+       ("r" . consult-register)
+       ("R" . consult-register-store)
        ("t" . ,(mk/define&set-keymap
                  "C-c s t" keymap/search-todo
                  '(("t" . consult-todo)
@@ -330,6 +336,7 @@ Example:
        ("W" . mk/ace-window-balance-window)
        ("t" . others/window-split-toggle)
        ("d" . delete-window)
+       ("f" . fit-window-to-buffer)
        ("q" . delete-window)
        ("o" . delete-other-windows)
        ("m" . maximize-window)
@@ -759,7 +766,6 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
   (split-window-right)
   (other-window 1)
   (call-interactively #'find-file))
-
 
 ;; Evil Related
 ;;
