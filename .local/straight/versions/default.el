@@ -83,7 +83,7 @@
  ("tempel-collection" . "3b2b209a7e3871d85e7219c6f1701db6c16dc824")
  ("treesit-auto" . "bac3b9d1d61a4d759f87c80de7be3b808d19cbf6")
  ("ts-query-highlight" . "fea63ef4edd82665bbe962ece2fa98a75730bcf6")
- ("typst-ts-mode" . "31e7c28db2962f92736568202fd25dd0b5b39b91")
+ ("typst-ts-mode" . "439deb4b07e926c69950a7b3ed916315356a50dd")
  ("use-package" . "a6e856418d2ebd053b34e0ab2fda328abeba731c")
  ("vertico" . "81bec39151f0a2fc6cad541f2290b4ab6282e6e2")
  ("vundo" . "24271862a2f746be038306eafe20f5eff55c4566")

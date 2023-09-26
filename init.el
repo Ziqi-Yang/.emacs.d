@@ -65,6 +65,7 @@
   (require 'browser)
   (require 'info-config)
   (require 'my-debug)
+  (require 'adbkeyboard)
   (require 'emacs-developer)
   (require 'hugo))
 

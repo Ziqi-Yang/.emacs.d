@@ -96,7 +96,10 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 		(add-hook mode #'mk/web-local-keybinding-setup)))
 
 (mk/add-web-local-map-hook '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook))
-(mk/add-web-local-map-hook '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
+
+(mk/add-web-local-map-hook '(web-mode-hook html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
 
 
 (provide 'l-web)
+
+;;; l-web.el ends here

@@ -41,6 +41,9 @@ Example:
      (global-set-key (kbd ,prefix) ',keymap-name)
      ',keymap-name))
 
+;; Minibuffer
+(define-key minibuffer-local-map (kbd "C-<return>") #'(lambda () (interactive) (insert "\n")))
+
 ;; Vim-like  keybinding
 (progn
   (keymap-global-set "C-w" #'backward-kill-word)
@@ -372,7 +375,9 @@ Example:
        ("r" . restart-emacs)
        ;; ("s" . desktop-save-in-desktop-dir)
        ;; ("l" . desktop-load-file)
-       ("p" . mk/copy-path-smart))))
+       ("p" . mk/copy-path-smart)
+       ("z" . mk/adb-sent-marked-content)
+       ("x" . mk/adb--delete-char))))
 
 ;; for tapping key which begins with a character other than SPC
 ;; so `meow-keypad' won't appear

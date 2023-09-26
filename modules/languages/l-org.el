@@ -68,7 +68,7 @@
     ;; + src
     ;; by default, number=none is passed, we can use "-n"("#+BEGIN_SRC rust -n") to enable it.
     org-latex-src-block-backend 'listings
-    )
+    org-src-fontify-natively t)
 
   (require 'ox-latex)
   (add-to-list 'org-latex-listings-langs '(jupyter-python "Python"))

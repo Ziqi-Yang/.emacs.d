@@ -29,3 +29,7 @@ rust-ts-mode
 rust-mode
 
 (pt "fn pt<T>(_: &T) { println!(\"{}\", std::any::type_name::<T>()) }" q)
+
+typst-ts-mode
+
+(font "#set text(font: \"LXGW WenKai\", size: 13pt) " q)
