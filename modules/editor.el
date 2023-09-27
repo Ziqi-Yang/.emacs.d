@@ -15,7 +15,20 @@
   :ensure nil
   :hook (after-init . save-place-mode))
 
-;;; Paren ===================================================
+;;; Indent Bar ==================================================================
+(use-package indent-bars
+  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :custom
+  (indent-bars-treesit-support t)
+  (indent-bars-no-descend-string t)
+  (indent-bars-treesit-ignore-blank-lines-types '("module"))
+  (indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
+				                        list list_comprehension
+				                        dictionary dictionary_comprehension
+				                        parenthesized_expression subscript)))
+  :hook ((python-base-mode yaml-mode web-mode) . indent-bars-mode))
+
+;;; Paren =======================================================================
 ;; @ color for all 
 ;; (use-package rainbow-delimiters
 ;;   :hook (prog-mode . rainbow-delimiters-mode))

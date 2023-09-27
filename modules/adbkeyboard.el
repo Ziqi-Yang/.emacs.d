@@ -16,12 +16,31 @@
 
 ;;; Code:
 
-(defun mk/adb-sent-marked-content (str)
+(defun mk/adb-send-message (str)
   (interactive (list (read-string "TEXT: ")))
+  (let* ((strlen (length str))
+          (sublen 10)
+          (index 0))
+    (while (length> str index)
+      (call-process-shell-command
+        (format
+          "adb shell am broadcast -a ADB_INPUT_B64 --es msg (echo -n '%s' | base64)"
+          (substring str index (min strlen (+ index sublen)))))
+      (setq index (+ index sublen))))
+  (sit-for .5)
+  (mk/adb-wechat-press-send-button))
+
+(defun mk/adb-send-messages ()
+  (interactive)
+  (let (str)
+    (while 1
+      (setq str (read-string "TEXT: "))
+      (mk/adb-send-message str))))
+
+(defun mk/adb-wechat-press-send-button ()
+  (interactive)
   (call-process-shell-command
-    (format
-      "adb shell am broadcast -a ADB_INPUT_B64 --es msg (echo -n '%s' | base64)"
-      str)))
+    "adb shell input tap 960 2246"))
 
 (defun mk/adb-switch-back-keyboard ()
   (interactive)

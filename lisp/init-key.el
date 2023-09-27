@@ -376,7 +376,8 @@ Example:
        ;; ("s" . desktop-save-in-desktop-dir)
        ;; ("l" . desktop-load-file)
        ("p" . mk/copy-path-smart)
-       ("z" . mk/adb-sent-marked-content)
+       ("z" . mk/adb-send-messages)
+       ("RET" . mk/adb-wechat-press-send-button)
        ("x" . mk/adb--delete-char))))
 
 ;; for tapping key which begins with a character other than SPC

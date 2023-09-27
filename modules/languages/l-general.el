@@ -226,6 +226,9 @@
           ;; c
           ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
             (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
+          ;; java
+          ((or (eq major-mode 'java-mode) (eq major-mode 'java-ts-mode))
+            (concat "./gradlew run"))
           ;; kotlin
           ((eq major-mode 'kotlin-ts-mode)
             (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))

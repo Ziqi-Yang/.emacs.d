@@ -28,12 +28,12 @@
 	;; configure display per command
 	(vertico-multiform-mode)
 
-  (setq completion-in-region-function
-    (lambda (&rest args)
-      (apply (if vertico-mode
-               #'consult-completion-in-region
-               #'completion--in-region)
-        args)))
+  ;; (setq completion-in-region-function
+  ;;   (lambda (&rest args)
+  ;;     (apply (if vertico-mode
+  ;;              #'consult-completion-in-region
+  ;;              #'completion--in-region)
+  ;;       args)))
 
   (defun mk/create-vertico-multiform-commands (commands common-properties)
     (let ((result '()))
@@ -150,36 +150,47 @@
                                (?f "Functions" font-lock-function-name-face)))))
   :config
   ;; integrated with xref
-  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-xrefs-function #'consult-xref
+    xref-show-definitions-function #'consult-xref)
   (consult-customize consult-recent-file :preview-key nil)) ;; disable preview for recent file
 
 ;; NOTE: disable these to using lsp-bridge
 ;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 ;; use vertico completion instead(since I don't use completion often)
-;; (use-package corfu
-;; 	:straight (:host github :repo "minad/corfu"
-;; 							:files ("*.el" "extensions/*.el"))
-;;   :custom
-;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-;;   (corfu-auto nil)               ;; Disable auto completion
-;;   (corfu-on-exact-match 'quit)
-;; 	(corfu-auto-delay 0)           ;; Enable auto completion
-;; 	(corfu-auto-prefix 2)          ;; Enable auto completion
-;;   :init
-;;   (global-corfu-mode)
-;; 	;; remembers selected candidates and sorts the candidates
-;; 	(corfu-history-mode)
-;; 	;; quick select, M-<number> <ret>
-;; 	(corfu-indexed-mode)
-;; 	;; popup info
-;; 	(corfu-popupinfo-mode))
+(use-package corfu
+	:straight (:host github :repo "minad/corfu"
+							:files ("*.el" "extensions/*.el"))
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-on-exact-match 'quit)
+  (corfu-auto nil)               ;; Disable auto completion
+	(corfu-auto-delay 0.5)           ;; Enable auto completion
+	(corfu-auto-prefix 2)          ;; Enable auto completion
+  :init
+  (global-corfu-mode)
+	;; remembers selected candidates and sorts the candidates
+	(corfu-history-mode)
+	;; quick select, M-<number> <ret>
+	(corfu-indexed-mode)
+	;; popup info
+	(corfu-popupinfo-mode)
+
+  ;; enable corfu completion in minibuffer
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+        corfu-popupinfo-delay nil)
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs
 	:ensure nil
   :init
-  (setq completion-cycle-threshold 3)
+  (setq completion-cycle-threshold 0)
   (setq read-extended-command-predicate
     #'command-completion-default-include-p)
   (setq tab-always-indent 'complete))
