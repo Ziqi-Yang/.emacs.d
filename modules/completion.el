@@ -186,6 +186,23 @@
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
 
+(use-package corfu-terminal
+  :straight (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
+  :after corfu
+  :config
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1)))
+
+(use-package corfu-candidate-overlay
+  :straight (:type git
+              :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
+              :files (:defaults "*.el"))
+  :after corfu
+  :config
+  ;; enable corfu-candidate-overlay mode globally
+  ;; this relies on having corfu-auto set to nil
+  (corfu-candidate-overlay-mode +1))
+
 ;; @ corfu recommended defualt configuration
 (use-package emacs
 	:ensure nil

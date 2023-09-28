@@ -76,6 +76,7 @@ Example:
   (keymap-global-set "C-<return>" #'mk/tempel-complete-or-next)
   (keymap-global-set "C-S-<return>" #'tempel-insert)
   (keymap-global-set "C-j" #'completion-at-point)
+  (keymap-global-set "C-S-j" #'corfu-candidate-overlay-complete-at-point)
   (keymap-global-set "C-k" #'cape-dabbrev)
   (keymap-global-set "C-S-f" #'cape-file)
   (keymap-global-set "C-l" #'cape-line)
