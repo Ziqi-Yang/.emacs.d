@@ -175,6 +175,7 @@
 	(corfu-indexed-mode)
 	;; popup info
 	(corfu-popupinfo-mode)
+  (setq corfu-popupinfo-delay (cons 0.2 0.2))
 
   ;; enable corfu completion in minibuffer
   (defun corfu-enable-in-minibuffer ()
@@ -198,10 +199,11 @@
               :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
               :files (:defaults "*.el"))
   :after corfu
-  :config
   ;; enable corfu-candidate-overlay mode globally
   ;; this relies on having corfu-auto set to nil
-  (corfu-candidate-overlay-mode +1))
+  :hook (after-init . corfu-candidate-overlay-mode)
+  :config
+  (set-face-foreground 'corfu-candidate-overlay-face "DarkGray"))
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs
@@ -236,16 +238,8 @@
 (use-package tempel
 	:custom
 	(tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
-	:hook ((prog-mode . tempel-setup-capf)
-				  (text-mode . tempel-setup-capf))
+  (tempel-trigger-prefix "<")
   :init
-  ;; Setup completion at point
-  (defun tempel-setup-capf ()
-    ;; NOTE: We add	`tempel-expand' *before* the main programming mode Capf,
-		;; such	that it will be tried first.
-    (setq-local completion-at-point-functions
-      (cons #'tempel-expand
-        completion-at-point-functions)))
   (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
   (add-hook 'text-mode-hook #'tempel-abbrev-mode))
 

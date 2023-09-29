@@ -5,6 +5,7 @@
 
 (defun mk/emacs-lisp-local-keybindings-setup()
   "Set up local keybindings for scratch buffer(lisp interaction mode)"
+  (keymap-local-set "TAB" #'completion-at-point)
   (keymap-local-set "C-j" #'completion-at-point)
   (keymap-local-set "C-i" #'eval-print-last-sexp))
 

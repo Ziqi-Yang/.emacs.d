@@ -47,6 +47,24 @@ Version 2016-04-04"
 	  custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 ;;; workspace ===============================================
+(use-package tab-bar
+  :ensure t
+  :defer 2
+  :custom
+  (tab-bar-select-tab-modifiers '(meta))
+  ;; :custom-face ;; don't use custom-face
+  :config
+  (tab-bar-mode 1)                           ;; enable tab bar
+  (custom-set-faces
+    '(tab-bar ((t (:inherit mode-line :box nil))))
+    '(tab-bar-tab ((t (:inherit mode-line :foreground "gainsboro" :box nil))))
+    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil)))))
+  (setq tab-bar-show 1 ;; hide bar if <= 1 tabs open
+    tab-bar-close-button-show nil ;; hide tab close / X button
+    tab-bar-new-tab-choice "*dashboard*" ;; buffer to show in new tabs
+    tab-bar-tab-hints t ;; show tab numbers
+    tab-bar-format '(tab-bar-format-tabs tab-bar-separator)))
+
 ;; @ persp-mode
 ;; poor document, conflict with vertico-posframe when manually recover, too hard to use
 ;; (use-package persp-mode
@@ -64,18 +82,18 @@ Version 2016-04-04"
 ;; TODO try tabspace
 
 ;; @ switch workspace
-(use-package eyebrowse
-  :config
-	(define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
-	(define-key eyebrowse-mode-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
-	(define-key eyebrowse-mode-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
-	(define-key eyebrowse-mode-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
-	(define-key eyebrowse-mode-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
-	(define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
-	(eyebrowse-mode t)
-	(setq eyebrowse-wrap-around t) ;; makes workspaces a loop
-	;; (setq eyebrowse-new-workspace "*dashboard*")
-  ) ;; use *scratch* buffer (use string to provide it with custom buffer name)
+;; (use-package eyebrowse
+;;   :config
+;; 	(define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+;; 	(define-key eyebrowse-mode-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+;; 	(define-key eyebrowse-mode-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+;; 	(define-key eyebrowse-mode-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+;; 	(define-key eyebrowse-mode-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+;; 	(define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+;; 	(eyebrowse-mode t)
+;; 	(setq eyebrowse-wrap-around t) ;; makes workspaces a loop
+;; 	;; (setq eyebrowse-new-workspace "*dashboard*")
+;;   ) ;; use *scratch* buffer (use string to provide it with custom buffer name)
 
 ;; (use-package tabspaces
 ;;   ;; use this next line only if you also use straight, otherwise ignore it.

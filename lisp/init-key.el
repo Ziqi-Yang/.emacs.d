@@ -60,8 +60,6 @@ Example:
   (keymap-global-set "C-u" #'scroll-down))
 
 (progn ;; insert mode (actually all mode)
-  (keymap-global-set "<tab>" #'completion-at-point)
-
   (keymap-global-set "C-M-@" #'forward-char)
   (setq meow--kbd-forward-char "C-M-@")
   (keymap-global-set "C-M-$" #'kill-line)
@@ -73,8 +71,8 @@ Example:
 
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'clipboard-yank)
-  (keymap-global-set "C-<return>" #'mk/tempel-complete-or-next)
-  (keymap-global-set "C-S-<return>" #'tempel-insert)
+  (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
+  (keymap-global-set "C-S-<return>" #'corfu-candidate-overlay-complete-at-point)
   (keymap-global-set "C-j" #'completion-at-point)
   (keymap-global-set "C-S-j" #'corfu-candidate-overlay-complete-at-point)
   (keymap-global-set "C-k" #'cape-dabbrev)
@@ -85,7 +83,7 @@ Example:
 (defun mk/keyBindingSetup ()
   ;; trivial
   (keymap-global-set "C-c :" #'eval-expression)
-  (keymap-global-set "C-c \`" #'eyebrowse-last-window-config)
+  (keymap-global-set "C-c \`" #'tab-switch)
   (keymap-global-set "C-c ;" #'async-shell-command)
   (keymap-global-set "C-c SPC" #'which-key-show-major-mode)
   (keymap-global-set "C-c ~" #'list-processes)
@@ -94,6 +92,7 @@ Example:
   (keymap-global-set "C-h M" #'woman)
   (keymap-global-set "C-h I" #'consult-info) ;; original: describe-input-method
   ;; C-x (SPC x) ================================================================
+  ;; tab related (SPC x SPC t)
   ;; vundo ( SPC x u)
   (keymap-global-set "C-x C-u" #'vundo)
   ;; highlight symbols ( SPC x h/H)
@@ -499,13 +498,17 @@ START END."
     (consult-project-buffer)
     (consult-buffer)))
 
-(defun mk/tempel-complete-or-next ()
-  "This function combines tempel-complete and tempel-next. Though it can also be achieved by
-it can also be achieved by binding tempel-next in tempel-map to the same key as tempel-complete."
+(defun mk/completion-at-point-with-tempel ()
+  "`Completion-at-point' function with tempel support.
+When tempel-trigger-prefix is before the point, then use temple, else `completion-at-point'."
   (interactive)
-  (if (not tempel--active)
-    (call-interactively 'tempel-complete)
-    (call-interactively 'tempel-next)))
+  (if tempel--active
+    (call-interactively 'tempel-next)
+    (if (and tempel-trigger-prefix
+          (length> tempel-trigger-prefix 0)
+          (looking-back tempel-trigger-prefix 1))
+      (call-interactively 'tempel-complete)
+      (completion-at-point))))
 
 (defun mk/split-window-horizontally ()
   "Split window horizontally & Move to spawned window."

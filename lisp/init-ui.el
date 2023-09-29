@@ -231,8 +231,27 @@
 
 ;; embark
 (add-to-list 'display-buffer-alist
-  '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-     nil
-     (window-parameters (mode-line-format . none))))
+  '("\\*Embark Actions\\*"
+     (display-buffer-in-tab)
+     (side . right)
+     (width . 0.3)))
+(add-to-list 'display-buffer-alist
+  '("\\*Embark Collect"
+     (display-buffer-in-side-window)
+     (side . bottom)
+     (height . 0.4)))
+;; (add-to-list 'display-buffer-alist
+;;   '("^\\*Embark Actions\\*"
+;;      display-buffer-in-side-window
+;;      (side . right)
+;;      (window-width . 70)))
+
+;; (add-to-list 'display-buffer-alist
+;;   '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+;;      display-buffer-in-side-window
+;;      (side . right)
+;;      (mode-line-format . none)))
 
 (provide 'init-ui)
+
+;;; init-ui.el ends here
