@@ -50,16 +50,21 @@ Example:
   (keymap-global-set "C-M-#" #'kill-region)
   (setq meow--kbd-kill-region "C-M-#")
 
-  (keymap-global-set "C-d" #'scroll-up)
+  (keymap-global-set "C-d" #'scroll-up-command)
   (keymap-global-set "C-M-!" #'delete-char)
   (setq meow--kbd-delete-char "C-M-!")
 
   (keymap-global-set "M-:" #'comment-box)
 
   (keymap-global-set "C-M-u" #'universal-argument)
-  (keymap-global-set "C-u" #'scroll-down))
+  (keymap-global-set "C-u" #'scroll-down-command))
 
 (progn ;; insert mode (actually all mode)
+  (keymap-global-set "M-<left>" #'tab-previous)
+  (keymap-global-set "M-<right>" #'tab-next)
+  (keymap-global-set "M-h" #'tab-previous)
+  (keymap-global-set "M-l" #'tab-next)
+  
   (keymap-global-set "C-M-@" #'forward-char)
   (setq meow--kbd-forward-char "C-M-@")
   (keymap-global-set "C-M-$" #'kill-line)
@@ -506,7 +511,8 @@ When tempel-trigger-prefix is before the point, then use temple, else `completio
     (call-interactively 'tempel-next)
     (if (and tempel-trigger-prefix
           (length> tempel-trigger-prefix 0)
-          (looking-back tempel-trigger-prefix 1))
+          ;; since my `tempel-trigger-prefix' is only one character "<", it works
+          (looking-back (concat "\\" tempel-trigger-prefix "[^[:space:]]*") 40))
       (call-interactively 'tempel-complete)
       (completion-at-point))))
 

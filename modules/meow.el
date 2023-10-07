@@ -3,6 +3,13 @@
 ;; Author: Ziqi Yang <mr.ziqiyang@gmail.com>
 ;; Comments:
 
+(defun mk/better-clipboard-kill-ring-save ()
+  "Copy region content or kill ring content to clipboard."
+  (interactive)
+  (if (use-region-p)
+    (call-interactively #'clipboard-kill-ring-save)
+    (gui-set-selection 'CLIPBOARD (current-kill 0))))
+
 (defun mk/mark-line-smart ()
   "Mark the visible part of the current line.
 If current point is on a non-whitespace character, then mark the whole visible
@@ -47,20 +54,20 @@ where 1 is the innermost level."
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (setq meow-keypad-start-keys '((?h . ?h)
                                   (?x . ?x)))
-  
+
   ;; motion
   (meow-motion-overwrite-define-key
     '("<tab>" . completion-at-point)
     '("j" . meow-next)
     '("k" . meow-prev)
     '("<escape>" . ignore))
-  
-  ;; leader key 
+
+  ;; leader key
   (meow-leader-define-key
     ;; SPC j/k will run the original command in MOTION state.
     '("j" . "H-j")
     '("k" . "H-k")
-    
+
     ;; USE SPC (0-9) for digit arguments.
     '("1" . meow-digit-argument)
     '("2" . meow-digit-argument)
@@ -72,10 +79,10 @@ where 1 is the innermost level."
     '("8" . meow-digit-argument)
     '("9" . meow-digit-argument)
     '("0" . meow-digit-argument)
-    
+
     '("/" . meow-keypad-describe-key)
     '("?" . meow-cheatsheet))
-  
+
   ;; normal mode
   (meow-normal-define-key
     '("0" . meow-expand-0)
@@ -164,7 +171,7 @@ where 1 is the innermost level."
     '("C-M-l" . forward-sexp)
     '("C-." . embark-act)
     '("C-S-v" . clipboard-yank)
-    '("C-S-c" . clipboard-kill-ring-save)
+    '("C-S-c" . mk/better-clipboard-kill-ring-save)
     '("!" . hs-toggle-hiding)))
 
 (use-package meow

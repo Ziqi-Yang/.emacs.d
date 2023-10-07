@@ -59,7 +59,9 @@
 		(add-hook mode #'eglot-ensure)))
 
 (progn
-	(setq-default eglot-events-buffer-size 0)  ;; NOTE disable log, improve performance
+  ;; performance improvemence: https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
+  (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess
+	(setq-default eglot-events-buffer-size 0) ;; disable log, improve performance
   ;; list of things that eglot won't change
 	(customize-set-variable 'eglot-stay-out-of '(imenu))
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown

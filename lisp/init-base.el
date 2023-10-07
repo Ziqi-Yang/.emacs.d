@@ -52,18 +52,19 @@ Version 2016-04-04"
   :defer 2
   :custom
   (tab-bar-select-tab-modifiers '(meta))
-  ;; :custom-face ;; don't use custom-face
+  (tab-bar-new-tab-to 'rightmost)
+  (tab-bar-show 1) ;; hide bar if <= 1 tabs open
+  (tab-bar-close-button-show nil) ;; hide tab close / X button
+  (tab-bar-new-tab-choice "*dashboard*") ;; buffer to show in new tabs
+  (tab-bar-tab-hints t) ;; show tab numbers
+  (tab-bar-format '(tab-bar-format-menu-bar tab-bar-format-tabs tab-bar-separator))
+  ;; don't use :custom-face
   :config
   (tab-bar-mode 1)                           ;; enable tab bar
   (custom-set-faces
     '(tab-bar ((t (:inherit mode-line :box nil))))
     '(tab-bar-tab ((t (:inherit mode-line :foreground "gainsboro" :box nil))))
-    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil)))))
-  (setq tab-bar-show 1 ;; hide bar if <= 1 tabs open
-    tab-bar-close-button-show nil ;; hide tab close / X button
-    tab-bar-new-tab-choice "*dashboard*" ;; buffer to show in new tabs
-    tab-bar-tab-hints t ;; show tab numbers
-    tab-bar-format '(tab-bar-format-tabs tab-bar-separator)))
+    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil))))))
 
 ;; @ persp-mode
 ;; poor document, conflict with vertico-posframe when manually recover, too hard to use
