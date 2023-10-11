@@ -1,4 +1,4 @@
-;;; meow.el --- meow model editing                   -*- lexical-binding: t; -*-
+;;; meow-keybindings.el --- meow model editing                   -*- lexical-binding: t; -*-
 ;; Copyright (C) 2023  Ziqi Yang
 ;; Author: Ziqi Yang <mr.ziqiyang@gmail.com>
 ;; Comments:
@@ -159,7 +159,6 @@ where 1 is the innermost level."
     ;; '("/" . combobulate-avy-jump)
     '("`" . combobulate-avy-jump-defun)
     ;; M-; comment-dwim (toggle comment)
-    ;; '("C-o" . xah/pop-local-mark-ring)
     ;; '("C-i" . pop-global-mark)
     '("M-d" . others/delete-enclosing-parentheses)
     '("C-o" . xref-go-back)
@@ -179,4 +178,4 @@ where 1 is the innermost level."
   (meow-setup)
   (meow-global-mode 1))
 
-(provide 'meow)
+(provide 'meow-keybindings)

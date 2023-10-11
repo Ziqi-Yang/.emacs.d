@@ -4,7 +4,7 @@
 ;;; Code:
 
 (use-package zig-mode
-  :straight (:type git :host github :repo "ziglang/zig-mode")
+  :elpaca (:type git :host github :repo "ziglang/zig-mode")
   :config
   (setq zig-format-on-save nil))
 

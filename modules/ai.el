@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defconst openai-api-key-path (expand-file-name "openai-api-key.txt" user-emacs-directory))
+;; (defconst openai-api-key-path (expand-file-name "openai-api-key.txt" user-emacs-directory))
 ;; (defvar openai-api-key)
 
 ;; (defun mk/get-openai-api-key ()
@@ -23,10 +23,10 @@
 ;;   (setq gptel-api-key #'mk/get-openai-api-key
 ;;     gptel-use-curl nil))
 
-(use-package mind-wave
-  :straight (:host github :repo "manateelazycat/mind-wave" :files ("*.el" "*.py"))
-  :config
-  (setq mind-wave-api-key-path openai-api-key-path
-    mind-wave-api-base "https://openai-proxy.animer.live/v1"))
+;; (use-package mind-wave
+;;   :straight (:host github :repo "manateelazycat/mind-wave" :files ("*.el" "*.py"))
+;;   :config
+;;   (setq mind-wave-api-key-path openai-api-key-path
+;;     mind-wave-api-base "https://openai-proxy.animer.live/v1"))
 
 (provide 'ai)

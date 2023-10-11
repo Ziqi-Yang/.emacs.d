@@ -7,27 +7,52 @@
 
 ;; (setq debug-on-error t)
 
-(define-obsolete-variable-alias
-  'native-comp-deferred-compilation-deny-list
-  'native-comp-jit-compilation-deny-list
-  "Renamed in emacs#95692f6")
+(defvar elpaca-installer-version 0.5)
+(defvar elpaca-directory (expand-file-name ".local/elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                        :ref nil
+                        :files (:defaults (:exclude "extensions"))
+                        :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+        (build (expand-file-name "elpaca/" elpaca-builds-directory))
+        (order (cdr elpaca-order))
+        (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (< emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+      (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                ((zerop (call-process "git" nil buffer t "clone"
+                          (plist-get order :repo) repo)))
+                ((zerop (call-process "git" nil buffer t "checkout"
+                          (or (plist-get order :ref) "--"))))
+                (emacs (concat invocation-directory invocation-name))
+                ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                          "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                ((require 'elpaca))
+                ((elpaca-generate-autoloads "elpaca" repo)))
+        (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+        (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-(setq straight-base-dir (expand-file-name ".local" user-emacs-directory))
-(defvar bootstrap-version)
-(let ((bootstrap-file
-        (expand-file-name ".local/straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-       (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-      (url-retrieve-synchronously
-        "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-        'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable :elpaca use-package keyword.
+  (elpaca-use-package-mode)
+  ;; Assume :elpaca t unless otherwise specified.
+  (setq elpaca-use-package-by-default t))
 
-(setq straight-use-package-by-default t)
-(straight-use-package 'use-package)
+;; Block until current queue processed.
+(elpaca-wait)
 
 ;; (use-package benchmark-init ;; when needed, enable it
 ;;   :config
@@ -50,8 +75,8 @@
 ;; NOTE: module name should be unique(also to the built-in module)
 (with-temp-message ""
   (require 'init-base)
-  (require 'meow)
-  ;; (require 'evil) ;; don't enable this module when enabling meow and init-key
+  (require 'meow-keybindings)
+  ;; ;; (require 'evil) ;; don't enable this module when enabling meow and init-key
   (require 'init-key)
   (require 'init-ui)
   (require 'editor)
@@ -61,7 +86,7 @@
   (require 'init-proxy)
   (require 'mail)
   (require 'auto-insert)
-  (require 'ai)
+  ;; (require 'ai)
   (require 'browser)
   (require 'info-config)
   (require 'my-debug)
@@ -88,8 +113,12 @@
   (require 'l-typst)
   (require 'l-general)) ;; l-general must loaded after l-rust
 
-;; remove old version native-compiled files
-(native-compile-prune-cache)
+;; remove old version native-compiled files in the end
+(use-package comp
+  :elpaca nil
+  :defer t
+  :config
+  (native-compile-prune-cache))
 
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)

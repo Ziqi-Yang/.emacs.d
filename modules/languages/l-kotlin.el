@@ -3,9 +3,8 @@
 ;; 
 ;;; Code:
 
-
 (use-package kotlin-ts-mode
-  :straight (:host gitlab :repo "bricka/emacs-kotlin-ts-mode")
+  :elpaca (:host gitlab :repo "bricka/emacs-kotlin-ts-mode")
   :mode "\\.kt\\'")
 
 (with-eval-after-load 'eglot

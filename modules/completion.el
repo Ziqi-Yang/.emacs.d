@@ -4,29 +4,29 @@
 
 ;;; Vertico =================================================
 (use-package vertico
-	:straight (:host github :repo "minad/vertico"
-							:files ("*.el" "extensions/*.el"))
-	:bind (:map vertico-map
-					("C-j" . vertico-next)
-					("C-k" . vertico-previous)
-					:map minibuffer-local-map
-					("M-h" . backward-kill-word)
-					("C-w" . backward-kill-word))
+  :elpaca (:host github :repo "minad/vertico"
+		   :files ("*.el" "extensions/*.el"))
+  :bind (:map vertico-map
+	      ("C-j" . vertico-next)
+	      ("C-k" . vertico-previous)
+	      :map minibuffer-local-map
+	      ("M-h" . backward-kill-word)
+	      ("C-w" . backward-kill-word))
   :init
   (vertico-mode)
 
   (setq vertico-cycle t
-	  vertico-resize t
-    read-file-name-completion-ignore-case t
-    read-buffer-completion-ignore-case t
-    completion-ignore-case t)
+	vertico-resize t
+	read-file-name-completion-ignore-case t
+	read-buffer-completion-ignore-case t
+	completion-ignore-case t)
 
-	;; can selete entry with M-<number> <ret>
+  ;; can selete entry with M-<number> <ret>
   ;; (vertico-flat-mode)
   ;; (setq vertico-flat-max-lines 8)
-	(vertico-indexed-mode)
-	;; configure display per command
-	(vertico-multiform-mode)
+  (vertico-indexed-mode)
+  ;; configure display per command
+  (vertico-multiform-mode)
 
   ;; (setq completion-in-region-function
   ;;   (lambda (&rest args)
@@ -42,50 +42,46 @@
       result))
 
   (setq vertico-multiform-commands
-    (append
-      '()
-      (mk/create-vertico-multiform-commands
-        '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
-        '(buffer
-           (vertico-buffer-display-action . (display-buffer-in-side-window
+	(append
+	 '()
+	 (mk/create-vertico-multiform-commands
+          '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
+          '(buffer
+            (vertico-buffer-display-action . (display-buffer-in-side-window
                                               (side . right)
                                               (window-width . 0.5)))
-           (:not grid)))))
-  :config
-  ;; FIXME why after a while, the completion style goes back to grid again?
-  (vertico-grid-mode -1))
+            (:not grid))))))
 
 ;; Configure directory extension.
-;; TODO don't know the actual working scenario
 (use-package vertico-directory
-  :straight nil
+  :elpaca nil
   :ensure nil
   :after vertico
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
-          ("RET" . vertico-directory-enter)
-          ("DEL" . vertico-directory-delete-char)
-          ("C-w" . vertico-directory-delete-word))
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("C-w" . vertico-directory-delete-word))
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs
-	:ensure nil
+  :elpaca nil
   :init
   (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
-            (replace-regexp-in-string
-              "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-              crm-separator)
-            (car args))
-      (cdr args)))
+		  (replace-regexp-in-string
+		   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+		   crm-separator)
+		  (car args))
+	  (cdr args)))
   (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
   (setq minibuffer-prompt-properties
-    '(read-only t cursor-intangible t face minibuffer-prompt))
+	'(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
   (setq read-extended-command-predicate
-    #'command-completion-default-include-p)
+	#'command-completion-default-include-p)
   (setq enable-recursive-minibuffers t))
 
 
@@ -111,8 +107,8 @@
 (use-package orderless
   :init
   (setq completion-styles '(orderless basic) ;; orderless, and basic as fallback
-    completion-category-defaults nil
-    completion-category-overrides '((file (styles basic partial-completion)))))
+	completion-category-defaults nil
+	completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;;; Embark ==================================================
 (use-package embark
@@ -120,12 +116,12 @@
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
-	;; Show Embark actions via which-key
+  ;; Show Embark actions via which-key
   (setq embark-action-indicator
-    (lambda (map)
-      (which-key--show-keymap "Embark" map nil nil 'no-paging)
-      #'which-key--hide-popup-ignore-command)
-    embark-become-indicator embark-action-indicator))
+	(lambda (map)
+	  (which-key--show-keymap "Embark" map nil nil 'no-paging)
+	  #'which-key--hide-popup-ignore-command)
+	embark-become-indicator embark-action-indicator))
 
 ;; @ Interact at Consult
 (use-package embark-consult
@@ -136,22 +132,22 @@
 (use-package consult
   :custom
   (consult-imenu-config '((java-ts-mode :toplevel "Method" :types
-                            ((?m "Method" font-lock-function-name-face)
-                              (?c "Class" font-lock-type-face)
-                              (?i "Interface" font-lock-type-face)))
-                           (emacs-lisp-mode :toplevel "Functions" :types
-									           ((102 "Functions" font-lock-function-name-face)
-									             (109 "Macros" font-lock-function-name-face)
-									             (112 "Packages" font-lock-constant-face)
-									             (116 "Types" font-lock-type-face)
-									             (118 "Variables" font-lock-variable-name-face)))
-                           (typst-ts-mode :topLevel "Headings" :types
-                             ((?h "Headings" typst-ts-markup-header-face)
-                               (?f "Functions" font-lock-function-name-face)))))
+					((?m "Method" font-lock-function-name-face)
+					 (?c "Class" font-lock-type-face)
+					 (?i "Interface" font-lock-type-face)))
+                          (emacs-lisp-mode :toplevel "Functions" :types
+					   ((102 "Functions" font-lock-function-name-face)
+					    (109 "Macros" font-lock-function-name-face)
+					    (112 "Packages" font-lock-constant-face)
+					    (116 "Types" font-lock-type-face)
+					    (118 "Variables" font-lock-variable-name-face)))
+                          (typst-ts-mode :topLevel "Headings" :types
+					 ((?h "Headings" typst-ts-markup-header-face)
+					  (?f "Functions" font-lock-function-name-face)))))
   :config
   ;; integrated with xref
   (setq xref-show-xrefs-function #'consult-xref
-    xref-show-definitions-function #'consult-xref)
+	xref-show-definitions-function #'consult-xref)
   (consult-customize consult-recent-file :preview-key nil)) ;; disable preview for recent file
 
 ;; NOTE: disable these to using lsp-bridge
@@ -159,22 +155,22 @@
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 ;; use vertico completion instead(since I don't use completion often)
 (use-package corfu
-	:straight (:host github :repo "minad/corfu"
-							:files ("*.el" "extensions/*.el"))
+  :elpaca (:host github :repo "minad/corfu"
+		   :files ("*.el" "extensions/*.el"))
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-on-exact-match 'quit)
   (corfu-auto nil)               ;; Disable auto completion
-	(corfu-auto-delay 0.5)           ;; Enable auto completion
-	(corfu-auto-prefix 2)          ;; Enable auto completion
+  (corfu-auto-delay 0.5)           ;; Enable auto completion
+  (corfu-auto-prefix 2)          ;; Enable auto completion
   :init
   (global-corfu-mode)
-	;; remembers selected candidates and sorts the candidates
-	(corfu-history-mode)
-	;; quick select, M-<number> <ret>
-	(corfu-indexed-mode)
-	;; popup info
-	(corfu-popupinfo-mode)
+  ;; remembers selected candidates and sorts the candidates
+  (corfu-history-mode)
+  ;; quick select, M-<number> <ret>
+  (corfu-indexed-mode)
+  ;; popup info
+  (corfu-popupinfo-mode)
   (setq corfu-popupinfo-delay (cons 0.2 0.2))
 
   ;; enable corfu completion in minibuffer
@@ -183,21 +179,21 @@
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
       ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
       (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-        corfu-popupinfo-delay nil)
+		  corfu-popupinfo-delay nil)
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
 
 (use-package corfu-terminal
-  :straight (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
+  :elpaca (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
   :after corfu
   :config
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
 
 (use-package corfu-candidate-overlay
-  :straight (:type git
-              :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
-              :files (:defaults "*.el"))
+  :elpaca (:type git
+		   :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
+		   :files (:defaults "*.el"))
   :after corfu
   ;; enable corfu-candidate-overlay mode globally
   ;; this relies on having corfu-auto set to nil
@@ -207,11 +203,11 @@
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs
-	:ensure nil
+  :elpaca nil
   :init
   (setq completion-cycle-threshold 0)
   (setq read-extended-command-predicate
-    #'command-completion-default-include-p)
+	#'command-completion-default-include-p)
   (setq tab-always-indent 'complete))
 
 ;; @ enable corfu in terminal emacs
@@ -236,8 +232,8 @@
 ;;; Snippet =================================================
 ;; @ Tempel
 (use-package tempel
-	:custom
-	(tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
+  :custom
+  (tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
   (tempel-trigger-prefix "<")
   :init
   (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
@@ -251,7 +247,7 @@
   "Collect all visible lines from the previously visited buffer and store them in a list."
   (interactive)
   (let ((previous-buffer (other-buffer))
-         (lines))
+        (lines))
     (with-current-buffer previous-buffer
       (save-excursion
         (goto-char (point-min))
@@ -267,9 +263,9 @@ The buffers returned by `cape-line-buffer-function' are scanned for lines.
 If INTERACTIVE is nil the function acts like a Capf."
   (interactive (list t))
   (if interactive
-    (cape-interactive #'mk/cape-line-previous-buffer)
+      (cape-interactive #'mk/cape-line-previous-buffer)
     `(,(pos-bol) ,(point)
-       ,(cape--table-with-properties (mk/get-lines-from-previous-buffer) :sort nil)
-       ,@cape--line-properties)))
+      ,(cape--table-with-properties (mk/get-lines-from-previous-buffer) :sort nil)
+      ,@cape--line-properties)))
 
 (provide 'completion)

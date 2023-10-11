@@ -99,7 +99,7 @@
 	)
 
 (use-package eglot-hierarchy
-  :straight (:host github :repo "dolmens/eglot-hierarchy"))
+  :elpaca (:host github :repo "dolmens/eglot-hierarchy"))
 
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -137,7 +137,7 @@
 
 ;;; citre ===================================================
 (use-package citre
-  :defer t
+  :defer 2
   :init
   (require 'citre-config)
   :config
@@ -163,7 +163,7 @@
 
 ;;; Breadcrumb ==============================================
 (use-package breadcrumb
-  :straight (:type git :host github :repo "joaotavora/breadcrumb")
+  :elpaca (:type git :host github :repo "joaotavora/breadcrumb")
   :config
   (breadcrumb-mode))
 
@@ -190,7 +190,7 @@
 
 ;; @ jinx
 (use-package jinx
-  :straight (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
+  :elpaca (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
   :init
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
   :config

@@ -5,27 +5,16 @@
 ;;; Trivil ==================================================
 ;; @ delete file by moving to trash
 ;; change the behavior of delete-file and delete-directory function
-;; (setq delete-by-moving-to-trash t)
+(setq delete-by-moving-to-trash t)
 (setq make-backup-files nil) ;; dont' automatically backup files in <fileName>~ format
-
-;;; jump back functionality (mark)
-(setq mark-ring-max 6
-  global-mark-ring-max 6)
-
-(defun xah/pop-local-mark-ring ()
-  "Move cursor to last mark position of current buffer.
-Call this repeatedly will cycle all positions in `mark-ring'.
-URL `http://xahlee.info/emacs/emacs/emacs_jump_to_previous_position.html'
-Version 2016-04-04"
-  (interactive)
-  (set-mark-command t))
 
 ;; @ save minibuffer history
 ;;; save minibuffer history
 ;; Persist history over Emacs restarts.
 (use-package savehist
+  :elpaca nil
   :init
-	;; Allow commands in minibuffers, will affect `dired-do-dired-do-find-regexp-and-replace' command:
+  ;; Allow commands in minibuffers, will affect `dired-do-dired-do-find-regexp-and-replace' command:
   (setq enable-recursive-minibuffers t)
   (savehist-mode 1))
 
@@ -34,21 +23,21 @@ Version 2016-04-04"
 
 ;;; clean directory =========================================
 (use-package no-littering
-	:init
-	(setq
-		no-littering-etc-directory (expand-file-name ".local/config/" user-emacs-directory)
-		no-littering-var-directory (expand-file-name ".local/data/" user-emacs-directory))
-	:config
-	(require 'recentf)
-	(add-to-list 'recentf-exclude no-littering-var-directory)
-	(add-to-list 'recentf-exclude no-littering-etc-directory)
-	(setq
-	  auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-	  custom-file (no-littering-expand-etc-file-name "custom.el")))
+  :init
+  (setq
+   no-littering-etc-directory (expand-file-name ".local/config/" user-emacs-directory)
+   no-littering-var-directory (expand-file-name ".local/data/" user-emacs-directory))
+  :config
+  (require 'recentf)
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory)
+  (setq
+   auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+   custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 ;;; workspace ===============================================
 (use-package tab-bar
-  :ensure t
+  :elpaca nil
   :defer 2
   :custom
   (tab-bar-select-tab-modifiers '(meta))
@@ -62,9 +51,9 @@ Version 2016-04-04"
   :config
   (tab-bar-mode 1)                           ;; enable tab bar
   (custom-set-faces
-    '(tab-bar ((t (:inherit mode-line :box nil))))
-    '(tab-bar-tab ((t (:inherit mode-line :foreground "gainsboro" :box nil))))
-    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil))))))
+   '(tab-bar ((t (:inherit mode-line :box nil))))
+   '(tab-bar-tab ((t (:inherit mode-line :foreground "gainsboro" :box nil))))
+   '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil))))))
 
 ;; @ persp-mode
 ;; poor document, conflict with vertico-posframe when manually recover, too hard to use
@@ -98,7 +87,7 @@ Version 2016-04-04"
 
 ;; (use-package tabspaces
 ;;   ;; use this next line only if you also use straight, otherwise ignore it.
-;;   :straight (:type git :host github :repo "mclear-tools/tabspaces")
+;;   :elpaca (:type git :host github :repo "mclear-tools/tabspaces")
 ;;   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
 ;;   :commands (tabspaces-switch-or-create-workspace
 ;;               tabspaces-open-or-create-project-and-workspace)
@@ -154,25 +143,28 @@ Version 2016-04-04"
 
 ;;; text scale change on the fly ============================
 (use-package default-text-scale
-	:bind (("C--" . default-text-scale-decrease)
-				  ("C-=" . default-text-scale-increase))
+  :bind (("C--" . default-text-scale-decrease)
+	        ("C-=" . default-text-scale-increase))
   :defer 1
-	:hook (after-init . default-text-scale-mode))
+  :hook (after-init . default-text-scale-mode))
 
 ;;; Project Utilities =======================================
 ;; use buildin prokect.el for project ability
 ;; @ enable consult to find file in project
 ;; (use-package consult-project-extra)
-(defun mk/setup-project.el ()
-  "Project.el settings."
+
+(use-package project
+  :elpaca nil
+  :defer 1
+  :config
   (setq project-switch-commands
     (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
   (add-to-list 'project-switch-commands '(project-find-regexp "find regexp" "G"))
-
   (add-to-list 'project-switch-commands '(consult-ripgrep "Consult rg" "r"))
   (add-to-list 'project-switch-commands '(consult-git-grep "Consult git grep" "g")))
 
-(add-hook 'after-init-hook #'mk/setup-project.el)
+;; (add-hook 'after-init-hook #'mk/setup-project.el)
+;; (elpaca nil (mk/setup-project.el))
 
 ;;; Window ==================================================
 ;; @ jump
@@ -195,6 +187,7 @@ Version 2016-04-04"
 
 ;;; Recent file =============================================
 (use-package recentf
+  :elpaca nil
   :defer t
   :hook (after-init . recentf-mode)
   :custom
@@ -214,7 +207,7 @@ Version 2016-04-04"
 ;; for eglot symbol, then all the symbols related to eglot can be found at the next
 ;; time
 (use-package helpful
-	:bind
+  :bind
   ([remap describe-function] . helpful-function)
   ([remap describe-symbol] . helpful-symbol)
   ([remap describe-variable] . helpful-variable)
@@ -229,23 +222,24 @@ Version 2016-04-04"
   (interactive)
   (hs-minor-mode)
   (set-display-table-slot standard-display-table
-    'selective-display
-    (string-to-vector " ❡❡❡"))
+			  'selective-display
+			  (string-to-vector " ❡❡❡"))
   (let ((n (car (buffer-line-statistics)))
-         (l3 500)
-         (l2 600)
-         (l1 700)
-         (l0 1000))
+        (l3 500)
+        (l2 600)
+        (l1 700)
+        (l0 1000))
     (cond
-      ((> n l0)
-        (hs-hide-all)
-        ;; (outline-show-only-headings)
-        )
-      ((> n l1) (hs-hide-all))     ;; also hide long comment
-      ((> n l2) (hs-hide-level 1)) ;; show root function
-      ((> n l3) (hs-hide-level 2)))))
+     ((> n l0)
+      (hs-hide-all)
+      ;; (outline-show-only-headings)
+      )
+     ((> n l1) (hs-hide-all))     ;; also hide long comment
+     ((> n l2) (hs-hide-level 1)) ;; show root function
+     ((> n l3) (hs-hide-level 2)))))
 (use-package hideshow
-	:hook ((prog-mode . mk/hs-hide-level-samrt)))
+  :elpaca nil
+  :hook ((prog-mode . mk/hs-hide-level-samrt)))
 
 ;; @ vimmish-fold
 ;; (use-package vimish-fold
@@ -258,7 +252,7 @@ Version 2016-04-04"
 ;; @ tree-sitter powered fold capability
 ;; TODO this pakcage(folk) is temporary, wait for news
 ;; (use-package ts-fold
-;;   :straight (:type git :host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support"))
+;;   :elpaca (:type git :host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support"))
 
 ;;; save file utility =======================================
 ;; when change window, lose focus & idle ...
@@ -272,19 +266,19 @@ Version 2016-04-04"
 ;;     super-save-idle-duration 0.5)) ;; 0.5s idle
 
 (use-package auto-save
-  :straight (:type git :host github :repo "manateelazycat/auto-save")
+  :elpaca (:type git :host github :repo "manateelazycat/auto-save")
   :defer 1
   :config
   (auto-save-enable)
   (setq auto-save-silent t
-    auto-save-idle 0.2
-    ;; avoid deleting markdown tailing two space
-    auto-save-delete-trailing-whitespace nil))
+	auto-save-idle 0.2
+	;; avoid deleting markdown tailing two space
+	auto-save-delete-trailing-whitespace nil))
 
 ;;; Waketime ================================================
 (use-package wakatime-mode
-	:config
-	(global-wakatime-mode))
+  :config
+  (global-wakatime-mode))
 
 ;;; Zoxide ==================================================
 (use-package zoxide)
@@ -293,14 +287,14 @@ Version 2016-04-04"
 ;; @ make search and replace very easy (even for project)
 ;; notice: in replace: !, y, n is the keybindings to replace all, replace current and not replace current
 (use-package color-rg
-	:straight (:host github :repo "manateelazycat/color-rg"))
+  :elpaca (:host github :repo "manateelazycat/color-rg"))
 
 (use-package symbol-overlay
   :defer 1)
 
 ;; @ fuzzy finder ;; use consult-ripgrep instead
 ;; (use-package affe
-;;   :straight (:host github :repo "minad/affe" :files ("*.el"))
+;;   :elpaca (:host github :repo "minad/affe" :files ("*.el"))
 ;;   :config
 ;;   ;; Manual preview key for `affe-grep'
 ;;   (consult-customize affe-grep :preview-key '(:debounce 0.5 any))
@@ -312,18 +306,18 @@ Version 2016-04-04"
 
 ;;; Todo highlight ==========================================
 (use-package hl-todo
-	:hook ((after-init . global-hl-todo-mode))
-	:init
-	(setq hl-todo-keyword-faces
-		'(("DONE" . "#b3b3b3")
-       ("TODO"   . "#2ecc71")
-			 ("FIXME"  . "#e74c3c")
-			 ("DEBUG"  . "#9b59b6")
-			 ("NOTE" . "#3498db")
-			 ("STUB"   . "#f39c12"))))
+  :hook ((after-init . global-hl-todo-mode))
+  :init
+  (setq hl-todo-keyword-faces
+	'(("DONE" . "#b3b3b3")
+	  ("TODO"   . "#2ecc71")
+	  ("FIXME"  . "#e74c3c")
+	  ("DEBUG"  . "#9b59b6")
+	  ("NOTE" . "#3498db")
+	  ("STUB"   . "#f39c12"))))
 
 (use-package consult-todo
-  :straight (:type git :host github :repo "liuyinz/consult-todo"))
+  :elpaca (:type git :host github :repo "liuyinz/consult-todo"))
 
 ;;; Persistent Scrctch Buffer ===============================
 ;; (use-package persistent-scratch
@@ -332,8 +326,8 @@ Version 2016-04-04"
 
 ;;; Show Key ================================================
 ;; for presentation usage
-(use-package keycast
-	:after (doom-modeline dashboard))
+;; (use-package keycast
+;;   :after (doom-modeline dashboard))
 
 ;;; Buffer Move (swap window) ===============================
 (use-package buffer-move :defer 1)
@@ -343,9 +337,10 @@ Version 2016-04-04"
   :defer 1
   :init
   (setq sideline-flymake-display-mode 'point)
-  (setq sideline-backends-right '((sideline-flymake . up)
-                                   ;; (mk/sideline-eldoc . down)
-                                   ))
+  (setq sideline-backends-right
+	'((sideline-flymake . up)
+          ;; (mk/sideline-eldoc . down)
+          ))
   :config
   (global-sideline-mode))
 
@@ -353,7 +348,7 @@ Version 2016-04-04"
 
 ;; This package does badly (2023.08.30
 ;; (use-package sideline-eldoc
-;;   :straight (:type git :host github :repo "ginqi7/sideline-eldoc"))
+;;   :elpaca (:type git :host github :repo "ginqi7/sideline-eldoc"))
 
 ;; if run the following code on non-emacs-lisp mode using eldoc, then text-read-only error occurs
 ;; (defvar mk/sideline-eldoc--message "")
@@ -379,7 +374,7 @@ Version 2016-04-04"
 
 ;;; Peek ====================================================
 (use-package peek
-  :straight (:type git :host sourcehut :repo "meow_king/peek")
+  :elpaca (:type git :host sourcehut :repo "meow_king/peek")
 
   :custom
   ;; only list some mostly-want-changed settings
@@ -421,7 +416,7 @@ Version 2016-04-04"
   )
 
 (use-package peek-collection
-  :straight (:type git :host sourcehut :repo "meow_king/peek-collection"))
+  :elpaca (:type git :host sourcehut :repo "meow_king/peek-collection"))
 
 
 ;;; outline minor mode ======================================
@@ -466,9 +461,9 @@ Version 2016-04-04"
 
   ;; Better contrasting highlight.
   (custom-set-faces
-    '(vundo-node ((t (:foreground "#808080"))))
-    '(vundo-stem ((t (:foreground "#808080"))))
-    '(vundo-highlight ((t (:foreground "#FFFF00")))))
+   '(vundo-node ((t (:foreground "#808080"))))
+   '(vundo-stem ((t (:foreground "#808080"))))
+   '(vundo-highlight ((t (:foreground "#FFFF00")))))
 
   ;; Use `HJKL` VIM-like motion, also Home/End to jump around.
   (define-key vundo-mode-map (kbd "l") #'vundo-forward)
@@ -491,26 +486,26 @@ Version 2016-04-04"
 
 (defun mk/funcs-go-back-setup()
   (dolist (func '(find-function
-                   mk/better-query-replace
-                   meow-beginning-of-thing
-                   meow-end-of-thing
-                   consult-line
-                   consult-imenu
-                   consult-ripgrep
-                   consult-git-grep))
+                  mk/better-query-replace
+                  meow-beginning-of-thing
+                  meow-end-of-thing
+                  consult-line
+                  consult-imenu
+                  consult-ripgrep
+                  consult-git-grep))
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
 
 (add-hook 'after-init-hook 'mk/funcs-go-back-setup)
 
 ;;; Hack Garbage Collector ======================================================
 (use-package gcmh
-  :straight t
+  :elpaca t
   :hook (after-init . gcmh-mode))
 
 
 ;;; License =====================================================================
 (use-package lice
-  :straight (:type git :host github :repo "buzztaiki/lice-el"))
+  :elpaca (:type git :host github :repo "buzztaiki/lice-el"))
 
 ;; collect gc-statistics to help developers improve gc performance
 ;; https://www.reddit.com/r/emacs/comments/14dej62/please_help_collecting_statistics_to_optimize/

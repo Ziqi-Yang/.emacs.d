@@ -388,7 +388,6 @@ Example:
 ;; for tapping key which begins with a character other than SPC
 ;; so `meow-keypad' won't appear
 (use-package which-key
-  :defer 1
   :init
   (setq which-key-idle-delay 0.5)
   (setq which-key-side-window-max-height 0.3)

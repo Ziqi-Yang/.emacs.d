@@ -5,7 +5,8 @@
 ;;; Common ==================================================
 
 (use-package org
-  :straight nil
+  :elpaca nil
+  :defer 1
 	:config
 	(setq
 	  org-directory "~/notes/"
@@ -85,14 +86,13 @@
        ("\\subsection{%s}" . "\\subsection*{%s}")
        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
        ("\\paragraph{%s}" . "\\paragraph*{%s}")
-       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  )
+       ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 (add-hook 'after-init-hook #'mk/org-export-latex-init)
 
 ;; @ beamer (latex presentation)
-(setq org-beamer-frame-level 2)
-(add-hook 'after-init-hook #'(lambda () (org-beamer-mode)))
+;; (setq org-beamer-frame-level 2)
+;; (add-hook 'after-init-hook #'(lambda () (org-beamer-mode)))
 
 ;;; Fancy face ==============================================
 ;; @ most of the stuffs
@@ -126,14 +126,14 @@
 ;; #+auto_tangle: t
 ;; #+PROPERTY: header-args :tangle install.sh ;; apply to every header
 (use-package org-auto-tangle
-  :defer t
+  :defer 2
   :hook (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))
 
 ;; ;; @ visibility
 (use-package org-appear
-  :straight (:includes org) ;; prevent org-appear from installing org
+  :elpaca (:includes org) ;; prevent org-appear from installing org
   :hook (org-mode . org-appear-mode)
   :config
   (setq org-appear-autolinks t)
