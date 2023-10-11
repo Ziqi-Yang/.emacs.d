@@ -319,16 +319,6 @@ Example:
                     ("d" . consult-todo-dir)
                     ("T" . hl-todo-rgrep))))))
 
-  ;; straight (S)
-  (mk/define&set-keymap
-    "C-c S" keymap/package
-    '(("r" . straight-remove-unused-repos)
-       ("b" . straight-rebuild-package)
-       ("B" . straight-rebuild-all)
-       ("f" . straight-freeze-versions)
-       ("p" . straight-pull-package)
-       ("P" . straight-pull-all)))
-
   ;; toggle (t)
   (mk/define&set-keymap
     "C-c t" keymap/toggle
@@ -360,13 +350,14 @@ Example:
        ("J" . buf-move-down)
        ("K" . buf-move-up)))
 
-  ;; proxy (x)
+  ;; utility (x)
   (mk/define&set-keymap
-    "C-c x" mk/proxy-keymap
+    "C-c x" keymap/command
     '(("h" . proxy-http-toggle)
        ("H" . proxy-http-show)
        ("s" . proxy-socks-toggle)
-       ("S" . proxy-socks-show)))
+       ("S" . proxy-socks-show)
+       ("p" . elpaca-manager)))
 
   ;; trivial (z)
   (mk/define&set-keymap

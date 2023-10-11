@@ -188,8 +188,7 @@
 ;;; Recent file =============================================
 (use-package recentf
   :elpaca nil
-  :defer t
-  :hook (after-init . recentf-mode)
+  :defer 1
   :custom
   (recentf-auto-cleanup 'never) ; "05:00am"
   (recentf-max-saved-items 300)

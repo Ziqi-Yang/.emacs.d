@@ -192,13 +192,11 @@
 
 (use-package corfu-candidate-overlay
   :elpaca (:type git
-		   :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
-		   :files (:defaults "*.el"))
+		        :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
+		        :files (:defaults "*.el"))
   :after corfu
-  ;; enable corfu-candidate-overlay mode globally
-  ;; this relies on having corfu-auto set to nil
-  :hook (after-init . corfu-candidate-overlay-mode)
   :config
+  (corfu-candidate-overlay-mode)
   (set-face-foreground 'corfu-candidate-overlay-face "DarkGray"))
 
 ;; @ corfu recommended defualt configuration
@@ -207,7 +205,7 @@
   :init
   (setq completion-cycle-threshold 0)
   (setq read-extended-command-predicate
-	#'command-completion-default-include-p)
+	  #'command-completion-default-include-p)
   (setq tab-always-indent 'complete))
 
 ;; @ enable corfu in terminal emacs

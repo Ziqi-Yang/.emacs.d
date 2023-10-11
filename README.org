@@ -45,7 +45,7 @@ sudo pacman -S msmtp offlineimap python-pysocks
 paru -S mu
 # enable my custom offlineimap systemd service at ~/.config/systemd/user/offlineimap.service
 # sync duration is 500s no matter success or failed (different from service provided by offlineimap pakcage)
-# systemctl --user daemon-reload
+# systemctl --user reload
 systemctl --user enable --now offlineimap.service
 #+end_src
 
