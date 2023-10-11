@@ -232,10 +232,10 @@ Version 2016-04-04"
     'selective-display
     (string-to-vector " ❡❡❡"))
   (let ((n (car (buffer-line-statistics)))
-         (l3 200)
-         (l2 400)
-         (l1 600)
-         (l0 800))
+         (l3 500)
+         (l2 600)
+         (l1 700)
+         (l0 1000))
     (cond
       ((> n l0)
         (hs-hide-all)
