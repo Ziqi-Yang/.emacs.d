@@ -242,6 +242,7 @@
 
 ;;; save file utility =======================================
 (custom-set-variables
+  '(auto-save-no-message t)
   '(auto-save-visited-mode t)
   '(auto-save-visited-interval 0.3))
 

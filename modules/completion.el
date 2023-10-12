@@ -5,21 +5,21 @@
 ;;; Vertico =================================================
 (use-package vertico
   :elpaca (:host github :repo "minad/vertico"
-		   :files ("*.el" "extensions/*.el"))
+		        :files ("*.el" "extensions/*.el"))
   :bind (:map vertico-map
-	      ("C-j" . vertico-next)
-	      ("C-k" . vertico-previous)
-	      :map minibuffer-local-map
-	      ("M-h" . backward-kill-word)
-	      ("C-w" . backward-kill-word))
+	        ("C-j" . vertico-next)
+	        ("C-k" . vertico-previous)
+	        :map minibuffer-local-map
+	        ("M-h" . backward-kill-word)
+	        ("C-w" . backward-kill-word))
   :init
   (vertico-mode)
 
   (setq vertico-cycle t
-	vertico-resize t
-	read-file-name-completion-ignore-case t
-	read-buffer-completion-ignore-case t
-	completion-ignore-case t)
+	  vertico-resize t
+	  read-file-name-completion-ignore-case t
+	  read-buffer-completion-ignore-case t
+	  completion-ignore-case t)
 
   ;; can selete entry with M-<number> <ret>
   ;; (vertico-flat-mode)
@@ -42,15 +42,14 @@
       result))
 
   (setq vertico-multiform-commands
-	(append
-	 '()
-	 (mk/create-vertico-multiform-commands
-          '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
-          '(buffer
-            (vertico-buffer-display-action . (display-buffer-in-side-window
+	  (append
+	    '()
+	    (mk/create-vertico-multiform-commands
+        '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
+        '(buffer
+           (vertico-buffer-display-action . (display-buffer-in-side-window
                                               (side . right)
-                                              (window-width . 0.5)))
-            (:not grid))))))
+                                              (window-width . 0.5))))))))
 
 ;; Configure directory extension.
 (use-package vertico-directory
