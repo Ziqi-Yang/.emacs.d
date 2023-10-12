@@ -240,39 +240,10 @@
   :elpaca nil
   :hook ((prog-mode . mk/hs-hide-level-samrt)))
 
-;; @ vimmish-fold
-;; (use-package vimish-fold
-;;   :after evil)
-
-;; (use-package evil-vimish-fold
-;;   :after vimish-fold
-;;   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
-
-;; @ tree-sitter powered fold capability
-;; TODO this pakcage(folk) is temporary, wait for news
-;; (use-package ts-fold
-;;   :elpaca (:type git :host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support"))
-
 ;;; save file utility =======================================
-;; when change window, lose focus & idle ...
-;; (use-package super-save
-;;   :defer t
-;; 	:hook (after-init . super-save-mode)
-;;   :config
-;;   (setq
-;;     auto-save-default nil ;; disable built-in auto-save mode
-;;     super-save-auto-save-when-idle t
-;;     super-save-idle-duration 0.5)) ;; 0.5s idle
-
-(use-package auto-save
-  :elpaca (:type git :host github :repo "manateelazycat/auto-save")
-  :defer 1
-  :config
-  (auto-save-enable)
-  (setq auto-save-silent t
-	auto-save-idle 0.2
-	;; avoid deleting markdown tailing two space
-	auto-save-delete-trailing-whitespace nil))
+(custom-set-variables
+  '(auto-save-visited-mode t)
+  '(auto-save-visited-interval 0.3))
 
 ;;; Waketime ================================================
 (use-package wakatime-mode
@@ -332,18 +303,18 @@
 (use-package buffer-move :defer 1)
 
 ;;; Sideline ================================================
-(use-package sideline
-  :defer 1
-  :init
-  (setq sideline-flymake-display-mode 'point)
-  (setq sideline-backends-right
-	'((sideline-flymake . up)
-          ;; (mk/sideline-eldoc . down)
-          ))
-  :config
-  (global-sideline-mode))
+;; (use-package sideline
+;;   :defer 1
+;;   :init
+;;   (setq sideline-flymake-display-mode 'point)
+;;   (setq sideline-backends-right
+;; 	'((sideline-flymake . up)
+;;           ;; (mk/sideline-eldoc . down)
+;;           ))
+;;   :config
+;;   (global-sideline-mode))
 
-(use-package sideline-flymake :defer 1)
+;; (use-package sideline-flymake :defer 1)
 
 ;; This package does badly (2023.08.30
 ;; (use-package sideline-eldoc
