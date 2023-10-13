@@ -126,7 +126,7 @@
 ;; #+auto_tangle: t
 ;; #+PROPERTY: header-args :tangle install.sh ;; apply to every header
 (use-package org-auto-tangle
-  :defer 2
+  :defer 1
   :hook (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))

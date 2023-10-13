@@ -23,8 +23,9 @@
 
 ;;; Diff-hl =================================================
 (use-package diff-hl
-	:hook ((after-init . global-diff-hl-mode))
+  :defer 1
   :config
+  (global-diff-hl-mode)
   ;; When Emacs runs in terminal, show the indicators in margin instead.
 
 	;; make sure it works in daemon mode

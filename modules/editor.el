@@ -13,8 +13,8 @@
 ;; @ remember cursor position
 (use-package saveplace
   :elpaca nil
-  :defer 1
-  :hook (after-init . save-place-mode))
+  :config
+  (save-place-mode))
 
 ;;; Indent Bar ==================================================================
 ;; (use-package indent-bars
@@ -40,11 +40,11 @@
   :config
   (global-highlight-parentheses-mode)
   (setq highlight-parentheses-colors nil
-	highlight-parentheses-highlight-adjacent t
-	highlight-parentheses-attributes '((:weight ultra-bold :background "#808080"
-						    :box
-						    ( :line-width (1 . -1)
-						      :color ,(face-attribute 'shadow :foreground))))))
+	  highlight-parentheses-highlight-adjacent t
+	  highlight-parentheses-attributes '((:weight ultra-bold :background "#808080"
+						                             :box
+						                             ( :line-width (1 . -1)
+						                               :color ,(face-attribute 'shadow :foreground))))))
 
 (use-package paren
   :elpaca nil

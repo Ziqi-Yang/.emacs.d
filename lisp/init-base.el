@@ -38,7 +38,7 @@
 ;;; workspace ===============================================
 (use-package tab-bar
   :elpaca nil
-  :defer 2
+  :defer 1
   :custom
   (tab-bar-select-tab-modifiers '(meta))
   (tab-bar-new-tab-to 'rightmost)
@@ -51,9 +51,9 @@
   :config
   (tab-bar-mode 1)                           ;; enable tab bar
   (custom-set-faces
-   '(tab-bar ((t (:inherit mode-line :box nil))))
-   '(tab-bar-tab ((t (:inherit mode-line :foreground "gainsboro" :box nil))))
-   '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil))))))
+    '(tab-bar ((t (:inherit mode-line :box nil))))
+    '(tab-bar-tab ((t (:inherit mode-line :foreground "gainsboro" :box nil))))
+    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil))))))
 
 ;; @ persp-mode
 ;; poor document, conflict with vertico-posframe when manually recover, too hard to use
@@ -146,7 +146,8 @@
   :bind (("C--" . default-text-scale-decrease)
 	        ("C-=" . default-text-scale-increase))
   :defer 1
-  :hook (after-init . default-text-scale-mode))
+  :config
+  (default-text-scale-mode))
 
 ;;; Project Utilities =======================================
 ;; use buildin prokect.el for project ability
@@ -277,15 +278,17 @@
 
 ;;; Todo highlight ==========================================
 (use-package hl-todo
-  :hook ((after-init . global-hl-todo-mode))
+  :defer 1
   :init
   (setq hl-todo-keyword-faces
-	'(("DONE" . "#b3b3b3")
-	  ("TODO"   . "#2ecc71")
-	  ("FIXME"  . "#e74c3c")
-	  ("DEBUG"  . "#9b59b6")
-	  ("NOTE" . "#3498db")
-	  ("STUB"   . "#f39c12"))))
+	  '(("DONE" . "#b3b3b3")
+	     ("TODO"   . "#2ecc71")
+	     ("FIXME"  . "#e74c3c")
+	     ("DEBUG"  . "#9b59b6")
+	     ("NOTE" . "#3498db")
+	     ("STUB"   . "#f39c12")))
+  :config
+  (global-hl-todo-mode))
 
 (use-package consult-todo
   :elpaca (:type git :host github :repo "liuyinz/consult-todo"))
@@ -470,8 +473,8 @@
 
 ;;; Hack Garbage Collector ======================================================
 (use-package gcmh
-  :elpaca t
-  :hook (after-init . gcmh-mode))
+  :config
+  (gcmh-mode))
 
 
 ;;; License =====================================================================

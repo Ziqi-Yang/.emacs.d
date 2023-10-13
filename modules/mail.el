@@ -21,7 +21,7 @@
 (use-package mu4e
   ;; installing 'mu' though 'pacman -S mu' will automatically add package 'mu4e' into emacs site-package
   :elpaca nil
-  :defer 2
+  :defer 1
   :config
   (setq mu4e-mu-binary (executable-find "mu")
     mu4e-confirm-quit nil

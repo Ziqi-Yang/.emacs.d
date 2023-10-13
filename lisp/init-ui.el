@@ -66,14 +66,15 @@
 ;; 	:hook (after-init . all-the-icons-completion-mode))
 
 ;;; dim unreal buffer =======================================
-(use-package solaire-mode
-  :hook ((after-init . solaire-global-mode ))
-  :config
-  ;; https://github.com/hlissner/emacs-solaire-mode/issues/28#issuecomment-968126872
-  ;; disable solaire mode in dashboard, since the banner background doesn't change(one way:
-  (setq solaire-mode-real-buffer-fn '(lambda ()
-				       (or (solaire-mode-real-buffer-p)
-					   (equal (buffer-name) "*dashboard*")))))
+;; (use-package solaire-mode
+;;   :defer 1
+;;   :config
+;;   (solaire-global-mode)
+;;   ;; https://github.com/hlissner/emacs-solaire-mode/issues/28#issuecomment-968126872
+;;   ;; disable solaire mode in dashboard, since the banner background doesn't change(one way:
+;;   (setq solaire-mode-real-buffer-fn '(lambda ()
+;; 				                               (or (solaire-mode-real-buffer-p)
+;; 					                               (equal (buffer-name) "*dashboard*")))))
 
 ;;; 80 column indicator =====================================
 (global-display-fill-column-indicator-mode 1)
@@ -163,10 +164,8 @@
 ;;; Navigation Highlight ====================================
 (use-package beacon
   :defer 1
-  :hook ((after-init . (lambda () (beacon-mode 1)))
-	 ;; disable in org-tree-slide
-	 (org-tree-slide-play . (lambda () (beacon-mode -1)))
-	 (org-tree-slide-stop . (lambda () (beacon-mode 1)))))
+  :config
+  (beacon-mode 1))
 
 ;;; Center Area =============================================
 (use-package olivetti

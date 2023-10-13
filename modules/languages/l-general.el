@@ -23,7 +23,6 @@
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(yaml\\|yml\\)\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-mode))
-(add-to-list 'auto-mode-alist '("\\.\\(c\\|h\\)\\'" . c-ts-mode))
 
 ;; manual(use script) build(recommend, since more language are included, but you need need to manualy hook the extra langauge. For build script, see above information), or use nf/treesit-install-all-languages for those languages defined in treesit-auto
 (defun nf/treesit-install-all-languages ()
@@ -37,8 +36,9 @@
 
 ;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
 (use-package treesit-auto
-	:hook (after-init . global-treesit-auto-mode)
+  :defer 1
   :config
+  (global-treesit-auto-mode)
   (setq treesit-auto-install nil))
 
 ;;; Lsp =====================================================
@@ -137,7 +137,7 @@
 
 ;;; citre ===================================================
 (use-package citre
-  :defer 2
+  :defer 1
   :init
   (require 'citre-config)
   :config

@@ -353,11 +353,14 @@ Example:
   ;; utility (x)
   (mk/define&set-keymap
     "C-c x" keymap/command
-    '(("h" . proxy-http-toggle)
+    `(("h" . proxy-http-toggle)
        ("H" . proxy-http-show)
        ("s" . proxy-socks-toggle)
        ("S" . proxy-socks-show)
-       ("p" . elpaca-manager)))
+       ("p" . ,(mk/define&set-keymap
+                 "C-c s t" keymap/package-manager
+                 '(("p" . elpaca-manager)
+                    ("u" . elpaca-update-all))))))
 
   ;; trivial (z)
   (mk/define&set-keymap
