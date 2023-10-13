@@ -19,7 +19,6 @@
 
 ;; @ side bar
 (use-package dired-sidebar
-  :defer 1
   :init
   (add-hook 'dired-sidebar-mode-hook
     (lambda ()

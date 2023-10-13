@@ -2,10 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package package-lint :defer 1)
-;; (use-package polymode :defer 1)
-;; (use-package posframe :defer 1)
-;; (use-package quick-peek :defer 1)
+(use-package package-lint)
+;; (use-package polymode)
+;; (use-package posframe)
+;; (use-package quick-peek)
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; M-x package-refresh-contents to refresh package-archive-contents
 

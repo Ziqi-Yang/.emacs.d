@@ -6,7 +6,6 @@
 ;;; Theme ===================================================
 ;; @ editor theme
 ;; (use-package doom-themes
-;; 	:defer t
 ;; 	;; :hook (server-after-make-frame .
 ;;   ;;         (lambda ()
 ;;   ;;           (progn
@@ -24,9 +23,9 @@
 (use-package almost-mono-themes
   :elpaca (:host github :repo "Ziqi-Yang/almost-mono-themes")
   :hook (server-after-make-frame .
-				 (lambda ()
-				   (progn
-				     (load-theme 'almost-mono-gray t))))
+				  (lambda ()
+				    (progn
+				      (load-theme 'almost-mono-gray t))))
   :config
   ;; (load-theme 'almost-mono-black t)
   (load-theme 'almost-mono-gray t)
@@ -67,7 +66,6 @@
 
 ;;; dim unreal buffer =======================================
 ;; (use-package solaire-mode
-;;   :defer 1
 ;;   :config
 ;;   (solaire-global-mode)
 ;;   ;; https://github.com/hlissner/emacs-solaire-mode/issues/28#issuecomment-968126872
@@ -163,7 +161,6 @@
 
 ;;; Navigation Highlight ====================================
 (use-package beacon
-  :defer 1
   :config
   (beacon-mode 1))
 

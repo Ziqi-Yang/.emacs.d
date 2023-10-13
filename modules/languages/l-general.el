@@ -36,7 +36,6 @@
 
 ;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
 (use-package treesit-auto
-  :defer 1
   :config
   (global-treesit-auto-mode)
   (setq treesit-auto-install nil))
@@ -137,7 +136,6 @@
 
 ;;; citre ===================================================
 (use-package citre
-  :defer 1
   :init
   (require 'citre-config)
   :config

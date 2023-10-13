@@ -48,7 +48,6 @@
 
 (use-package paren
   :elpaca nil
-  :defer 1
   :custom
   (show-paren-when-point-inside-paren t)
   :init

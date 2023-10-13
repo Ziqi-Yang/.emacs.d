@@ -116,7 +116,6 @@
 ;; remove old version native-compiled files in the end
 (use-package comp
   :elpaca nil
-  :defer t
   :config
   (native-compile-prune-cache))
 

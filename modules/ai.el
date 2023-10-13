@@ -17,7 +17,6 @@
 ;;       key)))
 
 ;; (use-package gptel
-;;   :defer t
 ;;   :straight (:host github :repo "karthink/gptel" :files ("*.el"))
 ;;   :config
 ;;   (setq gptel-api-key #'mk/get-openai-api-key

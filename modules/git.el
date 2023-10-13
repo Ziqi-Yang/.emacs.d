@@ -18,12 +18,10 @@
 ;; (use-package forge 
 ;;   :disabled)
 
-;; (use-package magit-todos
-;;   :defer t)
+;; (use-package magit-todos)
 
 ;;; Diff-hl =================================================
 (use-package diff-hl
-  :defer 1
   :config
   (global-diff-hl-mode)
   ;; When Emacs runs in terminal, show the indicators in margin instead.

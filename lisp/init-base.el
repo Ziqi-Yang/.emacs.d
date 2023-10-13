@@ -38,7 +38,6 @@
 ;;; workspace ===============================================
 (use-package tab-bar
   :elpaca nil
-  :defer 1
   :custom
   (tab-bar-select-tab-modifiers '(meta))
   (tab-bar-new-tab-to 'rightmost)
@@ -145,7 +144,6 @@
 (use-package default-text-scale
   :bind (("C--" . default-text-scale-decrease)
 	        ("C-=" . default-text-scale-increase))
-  :defer 1
   :config
   (default-text-scale-mode))
 
@@ -156,7 +154,6 @@
 
 (use-package project
   :elpaca nil
-  :defer 1
   :config
   (setq project-switch-commands
     (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
@@ -177,7 +174,6 @@
   (aw-minibuffer-flag t))
 
 (use-package popper
-  :defer 1
   :init
   (popper-mode +1)
   (popper-echo-mode +1))
@@ -189,7 +185,6 @@
 ;;; Recent file =============================================
 (use-package recentf
   :elpaca nil
-  :defer 1
   :custom
   (recentf-auto-cleanup 'never) ; "05:00am"
   (recentf-max-saved-items 300)
@@ -261,8 +256,7 @@
 (use-package color-rg
   :elpaca (:host github :repo "manateelazycat/color-rg"))
 
-(use-package symbol-overlay
-  :defer 1)
+(use-package symbol-overlay)
 
 ;; @ fuzzy finder ;; use consult-ripgrep instead
 ;; (use-package affe
@@ -278,7 +272,6 @@
 
 ;;; Todo highlight ==========================================
 (use-package hl-todo
-  :defer 1
   :init
   (setq hl-todo-keyword-faces
 	  '(("DONE" . "#b3b3b3")
@@ -304,11 +297,10 @@
 ;;   :after (doom-modeline dashboard))
 
 ;;; Buffer Move (swap window) ===============================
-(use-package buffer-move :defer 1)
+(use-package buffer-move)
 
 ;;; Sideline ================================================
 ;; (use-package sideline
-;;   :defer 1
 ;;   :init
 ;;   (setq sideline-flymake-display-mode 'point)
 ;;   (setq sideline-backends-right
@@ -318,7 +310,7 @@
 ;;   :config
 ;;   (global-sideline-mode))
 
-;; (use-package sideline-flymake :defer 1)
+;; (use-package sideline-flymake)
 
 ;; This package does badly (2023.08.30
 ;; (use-package sideline-eldoc

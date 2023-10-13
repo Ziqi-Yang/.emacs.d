@@ -194,7 +194,6 @@
 		        :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
 		        :files (:defaults "*.el"))
   :after corfu
-  :defer 1
   :config
   (corfu-candidate-overlay-mode)
   (set-face-foreground 'corfu-candidate-overlay-face "DarkGray"))

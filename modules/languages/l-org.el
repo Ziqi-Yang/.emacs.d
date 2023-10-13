@@ -6,7 +6,6 @@
 
 (use-package org
   :elpaca nil
-  :defer 1
 	:config
 	(setq
 	  org-directory "~/notes/"
@@ -126,7 +125,6 @@
 ;; #+auto_tangle: t
 ;; #+PROPERTY: header-args :tangle install.sh ;; apply to every header
 (use-package org-auto-tangle
-  :defer 1
   :hook (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))
