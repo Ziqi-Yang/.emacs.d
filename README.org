@@ -8,6 +8,9 @@ Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to se
 # cc python rust shell go js/ts html css
 sudo pacman -S ripgrep
 sudo pacman -S clang pyright rust-analyzer bash-language-server gopls typescript-language-server vscode-html-languageserver vscode-css-languageserver
+
+# python (use pylsp since it can works with venv
+sudo pacman -S python-lsp-server python-mccabe python-pycodestyle python-pydocstyle python-pyflakes python-pylint python-rope autopep8 flake8 yapf python-whatthepatch
 # vue
 paru -S nodejs-vls
 sudo pacman -S --asdeps openmp python llvm # clang optional dependences

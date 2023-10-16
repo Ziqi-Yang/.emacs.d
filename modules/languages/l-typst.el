@@ -19,6 +19,9 @@
   :custom
   (typst-ts-mode-watch-options "--open"))
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(typst-ts-mode . ("typst-lsp"))))
+
 (provide 'l-typst)
 
 ;;; l-typst.el ends here

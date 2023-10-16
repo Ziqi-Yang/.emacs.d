@@ -112,6 +112,7 @@ Example:
   ;; try use vc-next-action on vc-root-diff buffer, or on vc-dir buffer (first
   ;; mark using (prefix) m/M, then v (add), then v (commit)
   (keymap-global-set "C-x v p" #'vc-prepare-patch)
+  (keymap-global-set "C-x v b p" #'mk/print-current-branch-name)
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)
   ;; C-M- (SPC g) ===============================================================
@@ -504,8 +505,8 @@ When tempel-trigger-prefix is before the point, then use temple, else `completio
     (call-interactively 'tempel-next)
     (if (and tempel-trigger-prefix
           (length> tempel-trigger-prefix 0)
-          ;; since my `tempel-trigger-prefix' is only one character "<", it works
-          (looking-back (concat "\\" tempel-trigger-prefix "[^[:space:]]*") 40))
+          ;; TODO
+          (looking-back (rx-to-string `(seq ,tempel-trigger-prefix (* (not space)))) nil))
       (call-interactively 'tempel-complete)
       (completion-at-point))))
 
@@ -776,43 +777,9 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
   (other-window 1)
   (call-interactively #'find-file))
 
-;; Evil Related
-;;
-;; (defun mk/evil-search-symbol-forward ()
-;;   "Symbol instead of word in normal state. This function aims to replace the default '*' binding in evil."
-;;   (interactive)
-;;   (cond
-;;     ;; visual mode use package `evil-visualstar`
-;;     ((evil-normal-state-p)
-;;       (highlight-symbol-at-point)
-;;       (evil-search-word-forward 1 (symbol-at-point)))))
-;;
-;; (defun mk/evil-search-symbol-backward ()
-;;   "Symbol instead of word in normal state. This function aims to replace the default '*' binding in evil."
-;;   (interactive)
-;;   (cond
-;;     ;; visual mode use package `evil-visualstar`
-;;     ((evil-normal-state-p)
-;;       (highlight-symbol-at-point)
-;;       (evil-search-word-backward 1 (symbol-at-point)))))
-;;
-;; (defun mk/unhighlight-search()
-;;   "Unhighlight all symbols highlighted by `highlight-symbol-at-point' in `mk/evil-search-symbol-*'"
-;;   (interactive)
-;;   (unhighlight-regexp t))
-;; (defun djoyner/evil-shift-left-visual ()
-;;   "Continuous evil shift-left."
-;;   (interactive)
-;;   (evil-shift-left (region-beginning) (region-end))
-;;   (evil-normal-state)
-;;   (evil-visual-restore))
-;;
-;; (defun djoyner/evil-shift-right-visual ()
-;;   "Continuous evil shift-right."
-;;   (interactive)
-;;   (evil-shift-right (region-beginning) (region-end))
-;;   (evil-normal-state)
-;;   (evil-visual-restore))
+(defun mk/print-current-branch-name ()
+  (interactive)
+  (message "Current Branch: %s" (car (vc-git-branches))))
 
 (provide 'init-key)
 

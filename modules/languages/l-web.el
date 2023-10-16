@@ -24,6 +24,7 @@
   (web-mode-enable-heredoc-fontification t)
   (web-mode-enable-current-element-highlight t)
   (web-mode-enable-current-column-highlight t)
+  (web-mode-enable-engine-detection t)
   
   :config
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))

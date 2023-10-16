@@ -20,6 +20,7 @@
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . mhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.j2\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(yaml\\|yml\\)\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-mode))
@@ -75,6 +76,7 @@
 	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
   (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
   (mk/add-eglot-ensure '(kotlin-ts-mode-hook))
+  ;; (mk/add-eglot-ensure '(typst-ts-mode-hook))
   (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
 
 	(with-eval-after-load 'eglot
@@ -194,6 +196,11 @@
   :config
   ;; (setq jinx-languages '("en_US.UTF-8" "zh_CN.UTF-8"))
   )
+
+;;; Debug =======================================================================
+(use-package dape
+  ;; Currently only on github
+  :elpaca (dape :type git :host github :repo "svaante/dape"))
 
 ;;; Compile command for each mode ===========================
 ;; since configuration files for some mode doesn't exist, so I put it all here

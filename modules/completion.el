@@ -169,8 +169,8 @@
   ;; quick select, M-<number> <ret>
   (corfu-indexed-mode)
   ;; popup info
-  (corfu-popupinfo-mode)
-  (setq corfu-popupinfo-delay (cons 0.2 0.2))
+  ;; (corfu-popupinfo-mode)
+  ;; (setq corfu-popupinfo-delay (cons 0.2 0.2))
 
   ;; enable corfu completion in minibuffer
   (defun corfu-enable-in-minibuffer ()

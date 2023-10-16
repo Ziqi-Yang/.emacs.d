@@ -108,6 +108,7 @@
   (require 'l-shell)
   (require 'l-draw)
   (require 'l-makefile)
+  (require 'l-python)
   (require 'l-kotlin)
   (require 'l-lua)
   (require 'l-typst)
