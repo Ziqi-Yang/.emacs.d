@@ -4,11 +4,11 @@
 ;;; Code:
 
 (setq-default tab-width 2
-	      indent-tabs-mode nil  ; use white spaces instead of tabs
-	      evil-shift-width tab-width
-	      scroll-margin 15
-	      scroll-step 1
-	      select-enable-clipboard nil)  ; make register indepentent from clipboard
+	indent-tabs-mode nil  ; use white spaces instead of tabs
+	evil-shift-width tab-width
+	scroll-margin 15
+	scroll-step 1
+	select-enable-clipboard nil)  ; make register indepentent from clipboard
 
 ;; @ remember cursor position
 (use-package saveplace
@@ -46,11 +46,14 @@
 						                             ( :line-width (1 . -1)
 						                               :color ,(face-attribute 'shadow :foreground))))))
 
+;; `show-parent-mode' when point is near a paren, highlight the matching paren
 (use-package paren
   :elpaca nil
   :custom
+  ;; directly near the inner of paren
   (show-paren-when-point-inside-paren t)
   :init
+  ;; close this mode (default is open)
   (setq show-paren-mode nil)) ;; use highlight-parentheses instead
 
 ;; @ use electronic pair
@@ -59,10 +62,10 @@
   :hook ((prog-mode) . electric-pair-mode)
   :config
   (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
-                              (?\{ . ?\})
-                              (?\[ . ?\])
-                              ;; (?\< . ?\>)
-                              )))
+                               (?\{ . ?\})
+                               (?\[ . ?\])
+                               ;; (?\< . ?\>)
+                               )))
 
 ;; (use-package smartparens
 ;;   :hook ((prog-mode org-mode lisp-interaction-mode-hook) . smartparens-mode)
@@ -80,6 +83,7 @@
   ;;   (add-to-list 'aggressive-indent-excluded-modes mode))
   )
 
+;; note: .editorconfig configuration can lead to delete trailing characters on save
 (use-package editorconfig
   :config
   (editorconfig-mode 1))

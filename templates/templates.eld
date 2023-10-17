@@ -19,7 +19,7 @@ typst-ts-mode
 markdown-mode
 
 (meta "+++
-title = \"" p """\"
+title = \"" (p (upcase-initials (s-replace-regexp (rx (or "-" "_")) " " (file-name-base buffer-file-name)))) """\"
 description = \"" p "\"
 date = " (format-time-string "%Y-%0m-%0d") "
 updated = " (format-time-string "%Y-%0m-%0d") "

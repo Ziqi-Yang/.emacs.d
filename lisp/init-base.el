@@ -210,31 +210,13 @@
   ([remap describe-key] . helpful-key))
 
 ;;; fold ====================================================
-;; @ buildin
-;; evil buildin fold throught this package
-(defun mk/hs-hide-level-samrt()
-  "Calling hs-hide-level based on line numbers."
-  (interactive)
-  (hs-minor-mode)
-  (set-display-table-slot standard-display-table
-			  'selective-display
-			  (string-to-vector " ❡❡❡"))
-  (let ((n (car (buffer-line-statistics)))
-        (l3 500)
-        (l2 600)
-        (l1 700)
-        (l0 1000))
-    (cond
-     ((> n l0)
-      (hs-hide-all)
-      ;; (outline-show-only-headings)
-      )
-     ((> n l1) (hs-hide-all))     ;; also hide long comment
-     ((> n l2) (hs-hide-level 1)) ;; show root function
-     ((> n l3) (hs-hide-level 2)))))
 (use-package hideshow
   :elpaca nil
-  :hook ((prog-mode . mk/hs-hide-level-samrt)))
+  :hook (prog-mode . hs-minor-mode)
+  :config
+  (set-display-table-slot standard-display-table
+		'selective-display
+		(string-to-vector " ❡❡❡")))
 
 ;;; save file utility =======================================
 (custom-set-variables
@@ -462,6 +444,13 @@
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
 
 (add-hook 'after-init-hook 'mk/funcs-go-back-setup)
+
+;;; Ediff =======================================================================
+(use-package ediff
+  :elpaca nil
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  (ediff-split-window-function 'split-window-horizontally))
 
 ;;; Hack Garbage Collector ======================================================
 (use-package gcmh

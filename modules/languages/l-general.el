@@ -214,6 +214,7 @@
                (if (project-current)
                  (project-root (project-current)) ;; have problem with git submodule
                  (file-name-directory buffer-file-name)))
+              (file-extension (file-name-extension buffer-file-name))
               (relative-file-name (file-relative-name buffer-file-name base-path))
               (relative-bare-file-name (file-name-sans-extension relative-file-name))
               (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path))))
@@ -244,7 +245,12 @@
             "zig build")
           ;; python
           ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
-            (concat "python " (buffer-file-name)))
+            (concat "python " relative-file-name))
+          ;; web
+          ((eq major-mode 'web-mode)
+            ;; format file
+            (pcase file-extension
+              ("j2" (concat "djlint " relative-file-name " --extension=html.j2 --reformat"))))
           ;; other
           (t "make "))))))
 

@@ -236,8 +236,8 @@
   (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
   (add-hook 'text-mode-hook #'tempel-abbrev-mode))
 
-(use-package tempel-collection
-  :after tempel)
+;; (use-package tempel-collection
+;;   :after tempel)
 
 ;;; Custom Cape Functions ===================================
 (defun mk/get-lines-from-previous-buffer ()

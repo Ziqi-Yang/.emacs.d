@@ -64,7 +64,7 @@ Example:
   (keymap-global-set "M-<right>" #'tab-next)
   (keymap-global-set "M-h" #'tab-previous)
   (keymap-global-set "M-l" #'tab-next)
-  
+
   (keymap-global-set "C-M-@" #'forward-char)
   (setq meow--kbd-forward-char "C-M-@")
   (keymap-global-set "C-M-$" #'kill-line)
@@ -112,6 +112,7 @@ Example:
   ;; try use vc-next-action on vc-root-diff buffer, or on vc-dir buffer (first
   ;; mark using (prefix) m/M, then v (add), then v (commit)
   (keymap-global-set "C-x v p" #'vc-prepare-patch)
+  (keymap-global-set "C-x v e" #'vc-ediff)
   (keymap-global-set "C-x v b p" #'mk/print-current-branch-name)
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)
@@ -200,9 +201,9 @@ Example:
   ;; fold(F)
   (mk/define&set-keymap
     "C-c F" keymap/fold
-    '(("c" . hs-hide-all)
-       ("C" . outline-show-only-headings)
-       ("o" . hs-show-all)
+    '(("h". mk/hs-hide-level-samrt)
+       ("H" . hs-show-all)
+       ("o" . outline-show-only-headings)
        ("O" . outline-show-all)))
 
   ;; easy GPG assistant
@@ -780,6 +781,24 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
 (defun mk/print-current-branch-name ()
   (interactive)
   (message "Current Branch: %s" (car (vc-git-branches))))
+
+(defun mk/hs-hide-level-samrt()
+  "Calling hs-hide-level based on line numbers."
+  (interactive)
+  (when hs-minor-mode
+    (let ((n (car (buffer-line-statistics)))
+           (l3 500)
+           (l2 600)
+           (l1 700)
+           (l0 1000))
+      (cond
+        ((> n l0)
+          (hs-hide-all)
+          ;; (outline-show-only-headings)
+          )
+        ((> n l1) (hs-hide-all))     ;; also hide long comment
+        ((> n l2) (hs-hide-level 1)) ;; show root function
+        ((> n l3) (hs-hide-level 2))))))
 
 (provide 'init-key)
 
