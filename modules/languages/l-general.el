@@ -23,7 +23,7 @@
 (add-to-list 'auto-mode-alist '("\\.j2\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(yaml\\|yml\\)\\'" . yaml-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-ts-mode))
 
 ;; manual(use script) build(recommend, since more language are included, but you need need to manualy hook the extra langauge. For build script, see above information), or use nf/treesit-install-all-languages for those languages defined in treesit-auto
 (defun nf/treesit-install-all-languages ()
@@ -251,6 +251,9 @@
             ;; format file
             (pcase file-extension
               ("j2" (concat "djlint " relative-file-name " --extension=html.j2 --reformat"))))
+          ((eq major-mode 'mermaid-ts-mode)
+            ;; see https://github.com/mermaid-js/mermaid-cli/issues/112#issuecomment-869401507
+            (concat "mmdc -c ~/.config/mermaid/config.json -i " relative-file-name " -o " relative-bare-file-name ".png && swayimg " relative-bare-file-name ".png"))
           ;; other
           (t "make "))))))
 

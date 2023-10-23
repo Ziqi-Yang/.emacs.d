@@ -219,10 +219,18 @@
 		(string-to-vector " ❡❡❡")))
 
 ;;; save file utility =======================================
+(defun mk/auto-save-visited-predicate ()
+  (and
+    (not (eq major-mode 'mu4e-compose-mode))
+    (not (and buffer-file-name ;; save-visited-file-mode only 
+           (member (file-name-base buffer-file-name)
+             '("git-rebase-todo"))))))
+
 (custom-set-variables
   '(auto-save-no-message t)
   '(auto-save-visited-mode t)
-  '(auto-save-visited-interval 0.3))
+  '(auto-save-visited-interval 0.3)
+  '(auto-save-visited-predicate #'mk/auto-save-visited-predicate))
 
 ;;; Waketime ================================================
 (use-package wakatime-mode
@@ -321,50 +329,50 @@
 ;; (setq eldoc-message-function #'mk/sideline-eldoc--set-message)
 
 ;;; Peek ====================================================
-(use-package peek
-  :elpaca (:type git :host sourcehut :repo "meow_king/peek")
+;; (use-package peek
+;;   :elpaca (:type git :host sourcehut :repo "meow_king/peek")
 
-  :custom
-  ;; only list some mostly-want-changed settings
-  (peek-overlay-window-size 11) ; lines
-  ;; one line before the place found by `peek-definition' will also appear
-  ;; in peek window. Note `peek-definition' is the underlying function of
-  ;; `peek-xref-definition'
-  (peek-definition-surrounding-above-lines 1)
-  (peek-overlay-position 'above) ;; or below
+;;   :custom
+;;   ;; only list some mostly-want-changed settings
+;;   (peek-overlay-window-size 11) ; lines
+;;   ;; one line before the place found by `peek-definition' will also appear
+;;   ;; in peek window. Note `peek-definition' is the underlying function of
+;;   ;; `peek-xref-definition'
+;;   (peek-definition-surrounding-above-lines 1)
+;;   (peek-overlay-position 'above) ;; or below
 
-  (peek-live-update t) ;; live update peek view of a marked region
+;;   (peek-live-update t) ;; live update peek view of a marked region
 
-  (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
+;;   (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
 
-  (peek-enable-eldoc-message-integration nil) ;; disable (defaut) `eldoc-message-function' integration
-  (peek-enable-eldoc-display-integration nil) ;; enable `eldoc-display-functons'  integration
+;;   (peek-enable-eldoc-message-integration nil) ;; disable (defaut) `eldoc-message-function' integration
+;;   (peek-enable-eldoc-display-integration nil) ;; enable `eldoc-display-functons'  integration
 
-  :config
-  (global-peek-mode 1)
+;;   :config
+;;   (global-peek-mode 1)
 
-  ;; Keybindings
-  ;; default keybindings in peek-mode-keymap
-  (define-key peek-mode-keymap (kbd "M-n") 'peek-next-line)
-  (define-key peek-mode-keymap (kbd "M-p") 'peek-prev-line)
+;;   ;; Keybindings
+;;   ;; default keybindings in peek-mode-keymap
+;;   (define-key peek-mode-keymap (kbd "M-n") 'peek-next-line)
+;;   (define-key peek-mode-keymap (kbd "M-p") 'peek-prev-line)
 
-  ;; or you can use `keymap-global-set', which is introduced in emacs 29
-  ;; (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
-  ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition)
-  ;; (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
-  ;; (global-set-key (kbd "C-c c d") #'eldoc)
+;;   ;; or you can use `keymap-global-set', which is introduced in emacs 29
+;;   ;; (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
+;;   ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition)
+;;   ;; (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
+;;   ;; (global-set-key (kbd "C-c c d") #'eldoc)
 
-  ;; Eldoc display setting
-  ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
-  ;;   other eldoc display functions.
-  ;; (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
+;;   ;; Eldoc display setting
+;;   ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
+;;   ;;   other eldoc display functions.
+;;   ;; (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
 
-  ;; (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
-  ;; (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable)
-  )
+;;   ;; (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
+;;   ;; (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable)
+;;   )
 
-(use-package peek-collection
-  :elpaca (:type git :host sourcehut :repo "meow_king/peek-collection"))
+;; (use-package peek-collection
+;;   :elpaca (:type git :host sourcehut :repo "meow_king/peek-collection"))
 
 
 ;;; outline minor mode ======================================

@@ -1,5 +1,7 @@
 ;;; mail.el --- Email Configuartion -*- lexical-binding: t -*-
 ;;; Commentary:
+;; msmtp settings: ~/.msmtprc
+;; offlineimap settings: ~/.config/offlineimap
 ;; I have difficulty using email itself to send email by Gmail SMTP server (whether using proxy setting via `proxy-http-toggle' command or proxcychains external command-line utility).
 ;; set firefox as default mail client:
 ;;   xdg-settings set default-url-scheme-handler mailto firefox.desktop
@@ -49,3 +51,5 @@
 (add-hook 'mu4e-view-mode-hook 'mk/mu4e-view-local-keybinding-setup)
 
 (provide 'mail)
+
+;;; mail.el ends here

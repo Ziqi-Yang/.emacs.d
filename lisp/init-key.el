@@ -42,7 +42,19 @@ Example:
      ',keymap-name))
 
 ;; Minibuffer
-(define-key minibuffer-local-map (kbd "C-<return>") #'(lambda () (interactive) (insert "\n")))
+(defun mk/minibuffer-insert-newline ()
+  "Insert a newline character in the minibuffer."
+  (interactive)
+  (insert "\n"))
+
+(defun mk/minibuffer-read-rx-expresion-to-regexp ()
+  "Read rx expression and inert the converted regexp into the current minibuffer"
+  (interactive)
+  (insert (rx-to-string (read--expression "Enter expression: " "(seq )"))))
+
+
+(define-key minibuffer-local-map (kbd "C-<return>") #'mk/minibuffer-insert-newline)
+(define-key minibuffer-local-map (kbd "C-r") #'mk/minibuffer-read-rx-expresion-to-regexp)
 
 ;; Vim-like  keybinding
 (progn
@@ -362,7 +374,8 @@ Example:
        ("p" . ,(mk/define&set-keymap
                  "C-c s t" keymap/package-manager
                  '(("p" . elpaca-manager)
-                    ("u" . elpaca-update-all))))))
+                    ("u" . elpaca-update)
+                    ("U" . elpaca-update-all))))))
 
   ;; trivial (z)
   (mk/define&set-keymap

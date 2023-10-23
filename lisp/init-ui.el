@@ -122,7 +122,7 @@
   ;; font faces only works in emacs GUI, terminal emcas should change terminal font instead
   (let ((default-font "Cascadia Code") ;; IBM Plex Mono
          (font-size 17)
-         (CJK-font "LXGW WenKai"))
+         (CJK-font "LXGW Neo XiHei Screen"))
     (when (display-graphic-p) 
       (when (member default-font (font-family-list))
 	      (set-face-attribute 'default nil :font (font-spec :family default-font :size font-size)))

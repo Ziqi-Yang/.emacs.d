@@ -26,9 +26,12 @@
 
 ;;; Mermaid =================================================
 ;; github support rendering mermaid diagrams
-(use-package mermaid-mode
-  :custom
-  (mermaid-flags "-w 1568 -H 1168"))
+;; (use-package mermaid-mode
+;;   :custom
+;;   (mermaid-flags "-w 1568 -H 1168"))
+
+(use-package mermaid-ts-mode
+  :elpaca (:type git :host github :repo "JonathanHope/mermaid-ts-mode"))
 
 (defun mk/draw-local-keybinding-setup()
   (keymap-local-set "C-c C-c c" #'mermaid-compile)
