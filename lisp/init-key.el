@@ -52,9 +52,19 @@ Example:
   (interactive)
   (insert (rx-to-string (read--expression "Enter expression: " "(seq )"))))
 
+(defun mk/minibuffer-find-file-zoxide ()
+  "Read rx expression and inert the converted regexp into the current minibuffer"
+  (interactive)
+  (delete-minibuffer-contents)
+  (insert (cl-flet ((test/func (apply-partially #'read-file-name "zoxide: ")))
+            (let ((zoxide-find-file-function #'test/func))
+              (zoxide-find-file))))
+  (exit-minibuffer))
 
 (define-key minibuffer-local-map (kbd "C-<return>") #'mk/minibuffer-insert-newline)
 (define-key minibuffer-local-map (kbd "C-r") #'mk/minibuffer-read-rx-expresion-to-regexp)
+(define-key minibuffer-local-map (kbd "C-u") #'delete-minibuffer-contents)
+(define-key minibuffer-local-map (kbd "C-z") #'mk/minibuffer-find-file-zoxide)
 
 ;; Vim-like  keybinding
 (progn
@@ -207,7 +217,8 @@ Example:
        ("P" . mk/project-find-file-other-window)
        ("r" . recentf-open)
        ("R" . rename-visited-file)
-       ("s" . others/sudo-find-file)
+       ("s" . sqlite-mode-open-file)
+       ("S" . others/sudo-find-file)
        ("z" . zoxide-find-file)))
 
   ;; fold(F)

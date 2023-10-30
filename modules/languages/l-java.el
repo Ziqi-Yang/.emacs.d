@@ -25,6 +25,10 @@
   (keymap-local-set "C-c C-c d" #'mk/java-open-doc)
   (keymap-local-set "C-c C-c t" #'mk/java-generate-tags))
 
+(use-package java-ts-mode
+  :elpaca nil
+  :custom (java-ts-mode-indent-offset 2))
+
 (add-hook 'java-mode-hook 'mk/java-local-keybinding-setup)
 (add-hook 'java-ts-mode-hook 'mk/java-local-keybinding-setup)
 

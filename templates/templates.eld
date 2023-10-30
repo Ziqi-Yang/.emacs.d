@@ -39,3 +39,6 @@ series = \"Features\" # TODO
 
 (more "<!-- more -->" q)
 
+java-ts-mode
+(pl "System.out.println(" q ")")
+

@@ -24,6 +24,7 @@
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(yaml\\|yml\\)\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
 
 ;; manual(use script) build(recommend, since more language are included, but you need need to manualy hook the extra langauge. For build script, see above information), or use nf/treesit-install-all-languages for those languages defined in treesit-auto
 (defun nf/treesit-install-all-languages ()
@@ -78,19 +79,6 @@
   (mk/add-eglot-ensure '(kotlin-ts-mode-hook))
   ;; (mk/add-eglot-ensure '(typst-ts-mode-hook))
   (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
-
-	(with-eval-after-load 'eglot
-		(add-hook 'eglot-managed-mode-hook
-			(lambda () ;; show diagnostics in the echo area
-				;; Show flymake diagnostics first.
-				(setq eldoc-documentation-functions
-					(cons #'flymake-eldoc-function
-						(remove #'flymake-eldoc-function eldoc-documentation-functions)))
-				;; Show all eldoc feedback.
-				(setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
-
-		;; to custom language server (like flags), add-to-list 'eglot-server-programs
-		)
 
 	;; corfu/orderless integration
 	(setq completion-category-overrides '((eglot (styles orderless))))
@@ -197,6 +185,22 @@
   ;; (setq jinx-languages '("en_US.UTF-8" "zh_CN.UTF-8"))
   )
 
+
+(defun mk/setup-flymake-eldoc ()
+  "Better setting for displaying flymake diagnostics in eldoc documentation."
+  (setq eldoc-documentation-functions
+	  (cons #'flymake-eldoc-function
+	    (remove #'flymake-eldoc-function eldoc-documentation-functions)))
+  (setq eldoc-documentation-strategy #'eldoc-documentation-compose))
+
+(add-hook 'flymake-mode-hook #'mk/setup-flymake-eldoc) ;; works in emacs lisp buffers
+;; since eglot set flymake, we need to add hook for eglot
+(with-eval-after-load 'eglot ;; works in eglot managed buffers
+  (add-hook 'eglot-managed-mode-hook #'mk/setup-flymake-eldoc))
+
+;; to custom language server (like flags), add-to-list 'eglot-server-programs
+
+
 ;;; Debug =======================================================================
 (use-package dape
   ;; Currently only on github
@@ -217,10 +221,13 @@
               (file-extension (file-name-extension buffer-file-name))
               (relative-file-name (file-relative-name buffer-file-name base-path))
               (relative-bare-file-name (file-name-sans-extension relative-file-name))
-              (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path))))
+              (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path)))
+              (gradlew-project (file-exists-p (expand-file-name "gradlew" base-path))))
         (cond
           (makefile-exist
             "make ")
+          (gradlew-project
+            "./gradlew run")
           ;; rust
           ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
             "cargo run")
@@ -253,7 +260,7 @@
               ("j2" (concat "djlint " relative-file-name " --extension=html.j2 --reformat"))))
           ((eq major-mode 'mermaid-ts-mode)
             ;; see https://github.com/mermaid-js/mermaid-cli/issues/112#issuecomment-869401507
-            (concat "mmdc -c ~/.config/mermaid/config.json -i " relative-file-name " -o " relative-bare-file-name ".png && swayimg " relative-bare-file-name ".png"))
+            (concat "mmdc -c ~/.config/mermaid/config.json -i " relative-file-name " -o " relative-bare-file-name ".svg && swayimg " relative-bare-file-name ".svg"))
           ;; other
           (t "make "))))))
 

@@ -222,21 +222,22 @@
 
 ;; compilation
 (add-to-list 'display-buffer-alist
-	     '("\\*compilation\\*"
-	       (display-buffer-same-window)
-	       (reusable-frames . nil)))
+	'("\\*compilation\\*"
+	   (display-buffer-same-window)
+	   (reusable-frames . nil)))
 
-;; embark
+;; ;; embark
 (add-to-list 'display-buffer-alist
-	     '("\\*Embark Actions\\*"
-	       (display-buffer-in-tab)
-	       (side . right)
-	       (width . 0.3)))
+	'("\\*Embark Actions\\*"
+	   (display-buffer-in-tab)
+	   (side . right)
+	   (width . 0.3)))
 (add-to-list 'display-buffer-alist
-	     '("\\*Embark Collect"
-	       (display-buffer-in-side-window)
-	       (side . bottom)
-	       (height . 0.4)))
+	'("\\*Embark Collect"
+	   (display-buffer-in-side-window)
+	   (side . bottom)
+	   (height . 0.4)))
+
 ;; (add-to-list 'display-buffer-alist
 ;;   '("^\\*Embark Actions\\*"
 ;;      display-buffer-in-side-window

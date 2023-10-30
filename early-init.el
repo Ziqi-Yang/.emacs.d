@@ -50,7 +50,7 @@
 
 (column-number-mode)
 (global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 'absolute)
 
 (setq
   inhibit-startup-message t

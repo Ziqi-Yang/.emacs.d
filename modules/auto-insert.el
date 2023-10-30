@@ -19,11 +19,11 @@
                "# " pname "\n\n"
                "![Static Badge](https://img.shields.io/badge/Made_with-Emacs-purple)" "  \n\n"
                
-               "[Project](https://git.sr.ht/~meow_king/" pname "/) FIXME  \n"
+               "[Project](https://sr.ht/~meow_king/" pname "/) FIXME  \n"
                "[Public Inbox](https://lists.sr.ht/~meow_king/public-inbox): General Consults  \n"
                "[Sending a Patch](https://lists.sr.ht/~meow_king/dev)  \n"
                "[Discussion](https://lists.sr.ht/~meow_king/discussion): Questions and Feedback  \n"
-               "[Tickets](https://todo.sr.ht/~meow_king/" pname "/trackers) FIXME  \n"))
+               "[Tickets](https://todo.sr.ht/~meow_king/" pname ") FIXME  \n"))
            (insert
              "# " (file-name-base buffer-file-name))))))
 
@@ -39,7 +39,7 @@
 ;; Copyright (C) 2023 Ziqi Yang <mr.meowking@anche.no>
 
 ;; Version: 0.1.0
-;; Author: Ziqi Yang <mr.meowking@anche.no>
+;; Author: Meow King <mr.meowking@anche.no>
 ;; Keywords: `finder-by-keywords' FIXME
 ;; URL: FIXME
 ;; License: GNU General Public License >= 3
