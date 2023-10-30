@@ -1,4 +1,4 @@
-;;; git.el --- git -*- lexical-binding: t -*-
+;;; my-vc.el --- version control -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -33,4 +33,11 @@
 	(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 	(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-(provide 'git)
+(use-package vc-dir
+  :elpaca nil
+  :config
+  (define-key vc-dir-mode-map (kbd "q") #'mk/kill-buffer))
+
+(provide 'my-vc)
+
+;;; my-vc.el ends here
