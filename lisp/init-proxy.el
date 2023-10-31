@@ -89,7 +89,7 @@
     (proxy-socks-enable)))
 
 ;;; start emacs with proxy setting ==========================
-;; (add-hook 'emacs-startup-hook (lambda () (proxy-http-enable)))
+(add-hook 'emacs-startup-hook (lambda () (proxy-http-enable)))
 
 (provide 'init-proxy)
 ;;; init-proxy.el ends here

@@ -465,6 +465,10 @@
   :config
   (gcmh-mode))
 
+;;; Bookmark Manage
+(use-package ebm
+  :elpaca (:type git :host sourcehut :repo "meow_king/ebm"))
+
 
 ;;; License =====================================================================
 (use-package lice

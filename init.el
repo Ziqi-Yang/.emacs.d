@@ -82,7 +82,7 @@
   (require 'editor)
   (require 'completion)
   (require 'file-browser)
-  (require 'git)
+  (require 'my-vc)
   (require 'init-proxy)
   (require 'mail)
   (require 'auto-insert)

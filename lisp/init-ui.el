@@ -215,15 +215,32 @@
 
 ;; tree sitter
 (add-to-list 'display-buffer-alist
-	     '("^\\*tree-sitter explorer for [^z-a]+\\*"
-	       display-buffer-in-side-window
-	       (side . right)
-	       (window-width . 70)))
+	'("^\\*tree-sitter explorer for [^z-a]+\\*"
+	   display-buffer-in-side-window
+	   (side . right)
+	   (window-width . 70)))
 
 ;; compilation
+;; hide when compilation starts, show when finished
 (add-to-list 'display-buffer-alist
 	'("\\*compilation\\*"
-	   (display-buffer-same-window)
+     (display-buffer-no-window)))
+
+(defun mk/switch-buffer-when-compilation-finished (compilation-buffer _msg)
+  (switch-to-buffer compilation-buffer))
+
+(add-hook 'compilation-finish-functions #'mk/switch-buffer-when-compilation-finished)
+
+;; help
+(add-to-list 'display-buffer-alist
+  `(,(rx "*helpful" (*? nonl) "*")
+     (display-buffer-same-window)
+	   (reusable-frames . nil)))
+
+;; sqlite
+(add-to-list 'display-buffer-alist
+  `(,(rx "*SQLite" (*? nonl) "*")
+     (display-buffer-same-window)
 	   (reusable-frames . nil)))
 
 ;; ;; embark

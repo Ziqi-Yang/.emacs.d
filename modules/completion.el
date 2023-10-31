@@ -117,36 +117,41 @@
   :config
   ;; Show Embark actions via which-key
   (setq embark-action-indicator
-	(lambda (map)
-	  (which-key--show-keymap "Embark" map nil nil 'no-paging)
-	  #'which-key--hide-popup-ignore-command)
-	embark-become-indicator embark-action-indicator))
+	  (lambda (map)
+	    (which-key--show-keymap "Embark" map nil nil 'no-paging)
+	    #'which-key--hide-popup-ignore-command)
+	  embark-become-indicator embark-action-indicator))
 
 ;; @ Interact at Consult
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+(use-package embark-collection
+  :elpaca (:type git :host sourcehut :repo "meow_king/embark-collection")
+  :config
+  (embark-collection-register-commands))
+
 ;;; Consult =================================================
 (use-package consult
   :custom
   (consult-imenu-config '((java-ts-mode :toplevel "Method" :types
-					((?m "Method" font-lock-function-name-face)
-					 (?c "Class" font-lock-type-face)
-					 (?i "Interface" font-lock-type-face)))
-                          (emacs-lisp-mode :toplevel "Functions" :types
-					   ((102 "Functions" font-lock-function-name-face)
-					    (109 "Macros" font-lock-function-name-face)
-					    (112 "Packages" font-lock-constant-face)
-					    (116 "Types" font-lock-type-face)
-					    (118 "Variables" font-lock-variable-name-face)))
-                          (typst-ts-mode :topLevel "Headings" :types
-					 ((?h "Headings" typst-ts-markup-header-face)
-					  (?f "Functions" font-lock-function-name-face)))))
+					                  ((?m "Method" font-lock-function-name-face)
+					                    (?c "Class" font-lock-type-face)
+					                    (?i "Interface" font-lock-type-face)))
+                           (emacs-lisp-mode :toplevel "Functions" :types
+					                   ((102 "Functions" font-lock-function-name-face)
+					                     (109 "Macros" font-lock-function-name-face)
+					                     (112 "Packages" font-lock-constant-face)
+					                     (116 "Types" font-lock-type-face)
+					                     (118 "Variables" font-lock-variable-name-face)))
+                           (typst-ts-mode :topLevel "Headings" :types
+					                   ((?h "Headings" typst-ts-markup-header-face)
+					                     (?f "Functions" font-lock-function-name-face)))))
   :config
   ;; integrated with xref
   (setq xref-show-xrefs-function #'consult-xref
-	xref-show-definitions-function #'consult-xref)
+	  xref-show-definitions-function #'consult-xref)
   (consult-customize consult-recent-file :preview-key nil)) ;; disable preview for recent file
 
 ;; NOTE: disable these to using lsp-bridge
@@ -189,14 +194,14 @@
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
 
-(use-package corfu-candidate-overlay
-  :elpaca (:type git
-		        :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
-		        :files (:defaults "*.el"))
-  :after corfu
-  :config
-  (corfu-candidate-overlay-mode)
-  (set-face-foreground 'corfu-candidate-overlay-face "DarkGray"))
+;; (use-package corfu-candidate-overlay
+;;   :elpaca (:type git
+;; 		        :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
+;; 		        :files (:defaults "*.el"))
+;;   :after corfu
+;;   :config
+;;   (corfu-candidate-overlay-mode)
+;;   (set-face-foreground 'corfu-candidate-overlay-face "DarkGray"))
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs

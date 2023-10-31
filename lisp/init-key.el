@@ -21,13 +21,13 @@
 PREFIX: prefix for the keymap, like \"C-c t\"
 KEYMAP-NAME: like mk/test-keymap
 DEFINITION example:
-  '((\"a\" . consult-buffer)
+  \='((\"a\" . consult-buffer)
      (\"b\" . consult-line))
 return value: KEYMAP-NAME callable (not keymap)
 Example:
   (mk/define&set-main-keymap
     mk/test-keymap
-    '((\"a\" . consult-buffer)
+    \='((\"a\" . consult-buffer)
        (\"b\" . consult-line)))"
   `(progn
      (defvar ,keymap-name
@@ -117,6 +117,7 @@ Example:
   ;; C-h (SPC h) ================================================================
   ;; help (h) SPC h SPC <character>
   (keymap-global-set "C-h M" #'woman)
+  (keymap-global-set "C-h c" #'helpful-callable)
   (keymap-global-set "C-h I" #'consult-info) ;; original: describe-input-method
   ;; C-x (SPC x) ================================================================
   ;; tab related (SPC x SPC t)
@@ -160,7 +161,11 @@ Example:
   ;; bookmark(B)
   (mk/define&set-keymap
     "C-c B" keymap/bookmark
-    '(("b" . bookmark-jump)
+    `(("e" . ,(mk/define&set-keymap
+                "C-c B e" keymap/ebm
+                '(("c" . ebm-create)
+                   ("v" . ebm-view-database))))
+       ("b" . bookmark-jump)
        ("c" . bookmark-set)
        ("d" . bookmark-delete)))
 
@@ -286,7 +291,8 @@ Example:
        ("c" . mk/project-compile)
        ("p" . project-switch-project)
        ("P" . project-forget-project)
-       ("e" . flymake-show-project-diagnostics)
+       ("e" . mk/open-emacs.d)
+       ("E" . flymake-show-project-diagnostics)
        ("s" . others/project-vterm)
        ("S" . project-async-shell-command)
        ("k" . project-kill-buffers)))
@@ -805,6 +811,10 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
 (defun mk/print-current-branch-name ()
   (interactive)
   (message "Current Branch: %s" (car (vc-git-branches))))
+
+(defun mk/open-emacs.d ()
+  (interactive)
+  (project-switch-project user-emacs-directory))
 
 (defun mk/hs-hide-level-samrt()
   "Calling hs-hide-level based on line numbers."
