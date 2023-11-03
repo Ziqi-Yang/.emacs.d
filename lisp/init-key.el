@@ -41,31 +41,6 @@ Example:
      (global-set-key (kbd ,prefix) ',keymap-name)
      ',keymap-name))
 
-;; Minibuffer
-(defun mk/minibuffer-insert-newline ()
-  "Insert a newline character in the minibuffer."
-  (interactive)
-  (insert "\n"))
-
-(defun mk/minibuffer-read-rx-expresion-to-regexp ()
-  "Read rx expression and inert the converted regexp into the current minibuffer"
-  (interactive)
-  (insert (rx-to-string (read--expression "Enter expression: " "(seq )"))))
-
-(defun mk/minibuffer-find-file-zoxide ()
-  "Read rx expression and inert the converted regexp into the current minibuffer"
-  (interactive)
-  (delete-minibuffer-contents)
-  (insert (cl-flet ((test/func (apply-partially #'read-file-name "zoxide: ")))
-            (let ((zoxide-find-file-function #'test/func))
-              (zoxide-find-file))))
-  (exit-minibuffer))
-
-(define-key minibuffer-local-map (kbd "C-<return>") #'mk/minibuffer-insert-newline)
-(define-key minibuffer-local-map (kbd "C-r") #'mk/minibuffer-read-rx-expresion-to-regexp)
-(define-key minibuffer-local-map (kbd "C-u") #'delete-minibuffer-contents)
-(define-key minibuffer-local-map (kbd "C-z") #'mk/minibuffer-find-file-zoxide)
-
 ;; Vim-like  keybinding
 (progn
   (keymap-global-set "C-w" #'backward-kill-word)
@@ -124,8 +99,11 @@ Example:
   ;; vundo ( SPC x u)
   (keymap-global-set "C-x C-u" #'vundo)
   ;; highlight symbols ( SPC x h/H)
-  (keymap-global-set "C-x h" #'symbol-overlay-put)
-  (keymap-global-set "C-x H" #'symbol-overlay-remove-all)
+  ;; meow built-in functionality is enough for doing search / replace job
+  ;; (keymap-global-set "C-x h" #'symbol-overlay-put)
+  ;; (keymap-global-set "C-x H" #'symbol-overlay-remove-all)
+  (keymap-global-set "C-x h" #'highlight-regexp)
+  (keymap-global-set "C-x H" #'unhighlight-regexp)
   ;; Mail (SPC x SPC m)
   (keymap-global-set "C-x m" #'mu4e)
   (keymap-global-set "C-x M" #'compose-mail)
@@ -224,6 +202,7 @@ Example:
        ("R" . rename-visited-file)
        ("s" . sqlite-mode-open-file)
        ("S" . others/sudo-find-file)
+       ("v" . view-file)
        ("z" . zoxide-find-file)))
 
   ;; fold(F)
@@ -354,6 +333,9 @@ Example:
   (mk/define&set-keymap
     "C-c t" keymap/toggle
     '(("w" . whitespace-mode)
+       ("r" . read-only-mode)
+       ("v" . view-mode)
+       ("m" . meow-temp-normal)
        ("c" . rainbow-mode)
        ("t" . consult-theme)))
 
@@ -389,8 +371,9 @@ Example:
        ("s" . proxy-socks-toggle)
        ("S" . proxy-socks-show)
        ("p" . ,(mk/define&set-keymap
-                 "C-c s t" keymap/package-manager
+                 "C-c x p" keymap/package-manager
                  '(("p" . elpaca-manager)
+                    ("t" . elpaca-try)
                     ("u" . elpaca-update)
                     ("U" . elpaca-update-all))))))
 

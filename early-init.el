@@ -47,6 +47,9 @@
 
 ;; Emacs 29 alpha background
 (push (cons 'alpha-background 92) default-frame-alist)
+;; Maximize window (so variables like frame-pixel-height can detect window height properly)
+;; though it seems like the value of `frame-pixel-height' in `server-after-make-frame-hook' is not set properly
+(push (cons 'fullscreen 'maxmized) default-frame-alist) 
 
 (column-number-mode)
 (global-display-line-numbers-mode 1)

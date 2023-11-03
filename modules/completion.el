@@ -3,6 +3,49 @@
 ;;; Code:
 
 ;;; Vertico =================================================
+(defvar mk/v/vertico-last-layout nil)
+(defun mk/create-vertico-multiform-commands (commands common-properties)
+  (let ((result '()))
+    (dolist (cmd commands)
+      (setq result (append result (list (cons cmd common-properties)))))
+    result))
+
+(defun mk/vertico-setup-multiform-commands (&optional frame)
+  "Use with `frame-local'.
+FRAME: nil for current selected frame."
+  (let* ((frame (if frame frame (selected-frame)))
+          (horizontal (with-selected-frame frame
+                        (> (frame-pixel-width) (frame-pixel-height))))
+          (layout (if horizontal 'horizontal 'vertical))
+          (display-buffer-actions (if horizontal
+                                    '(display-buffer-in-side-window
+                                       (side . right)
+                                       (window-width . 0.5))
+                                    '(display-buffer-below-selected
+                                       ;; (window-height . fit-window-to-buffer)
+                                       ;; (window-min-height . 10)
+                                       ;; (inhibit-same-window . t)
+                                       (side . bottom)
+                                       (window-width . 0.5)))))
+    ;; (message "> %s %s" (frame-pixel-width) (frame-pixel-height))
+    (unless (eq mk/v/vertico-last-layout layout)
+      (setq mk/v/vertico-last-layout layout)
+      (setq vertico-multiform-commands
+        (mk/create-vertico-multiform-commands
+          '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
+          `(buffer
+             (vertico-buffer-display-action . ,display-buffer-actions)))))))
+
+(defun mk/vertico-setup-multiform-commands-focus-change-function ()
+  ;; (message "> %s %s" (selected-frame) (frame-focus-state))
+  ;; (when (frame-focus-state)
+  ;;   )
+  (let ((current-focused-frame (catch 'focused-frame
+                                 (dolist (frame (frame-list))
+                                   (when (frame-focus-state frame)
+                                     (throw 'focused-frame frame))))))
+    (mk/vertico-setup-multiform-commands current-focused-frame)))
+
 (use-package vertico
   :elpaca (:host github :repo "minad/vertico"
 		        :files ("*.el" "extensions/*.el"))
@@ -35,21 +78,8 @@
   ;;              #'completion--in-region)
   ;;       args)))
 
-  (defun mk/create-vertico-multiform-commands (commands common-properties)
-    (let ((result '()))
-      (dolist (cmd commands)
-        (setq result (append result (list (cons cmd common-properties)))))
-      result))
-
-  (setq vertico-multiform-commands
-	  (append
-	    '()
-	    (mk/create-vertico-multiform-commands
-        '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
-        '(buffer
-           (vertico-buffer-display-action . (display-buffer-in-side-window
-                                              (side . right)
-                                              (window-width . 0.5))))))))
+  (mk/vertico-setup-multiform-commands)
+  (add-function :after after-focus-change-function #'mk/vertico-setup-multiform-commands-focus-change-function))
 
 ;; Configure directory extension.
 (use-package vertico-directory
@@ -58,9 +88,9 @@
   :after vertico
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
-              ("RET" . vertico-directory-enter)
-              ("DEL" . vertico-directory-delete-char)
-              ("C-w" . vertico-directory-delete-word))
+          ("RET" . vertico-directory-enter)
+          ("DEL" . vertico-directory-delete-char)
+          ("C-w" . vertico-directory-delete-word))
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
@@ -70,17 +100,17 @@
   :init
   (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
-		  (replace-regexp-in-string
-		   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-		   crm-separator)
-		  (car args))
-	  (cdr args)))
+		        (replace-regexp-in-string
+		          "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+		          crm-separator)
+		        (car args))
+	    (cdr args)))
   (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
   (setq minibuffer-prompt-properties
-	'(read-only t cursor-intangible t face minibuffer-prompt))
+	  '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
   (setq read-extended-command-predicate
-	#'command-completion-default-include-p)
+	  #'command-completion-default-include-p)
   (setq enable-recursive-minibuffers t))
 
 

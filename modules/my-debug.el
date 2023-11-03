@@ -6,7 +6,7 @@
   (let ((find-file-advice (lambda (file-name) file-name)))
     (advice-add 'find-file :override find-file-advice)
     (unwind-protect
-      (setq res (project-find-file t))
+      (project-find-file t)
       (advice-remove 'find-file find-file-advice))))
 
 (defun mk/debug-with-valgrind ()

@@ -5,7 +5,7 @@
 ;; straight.el
 ;; (setq straight-repository-branch "develop")
 
-;; (setq debug-on-error t)
+(setq debug-on-error t)
 
 (defvar elpaca-installer-version 0.5)
 (defvar elpaca-directory (expand-file-name ".local/elpaca/" user-emacs-directory))
@@ -83,6 +83,7 @@
   (require 'completion)
   (require 'file-browser)
   (require 'my-vc)
+  (require 'my-minibuffer)
   (require 'init-proxy)
   (require 'mail)
   (require 'auto-insert)

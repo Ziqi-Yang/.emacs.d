@@ -246,8 +246,6 @@
 (use-package color-rg
   :elpaca (:host github :repo "manateelazycat/color-rg"))
 
-(use-package symbol-overlay)
-
 ;; @ fuzzy finder ;; use consult-ripgrep instead
 ;; (use-package affe
 ;;   :elpaca (:host github :repo "minad/affe" :files ("*.el"))
@@ -481,6 +479,7 @@
 ;;   (setq emacs-gc-stats-remind t) ; can also be a number of days
 ;;   (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
 ;;   (emacs-gc-stats-mode +1))
+
 
 (provide 'init-base)
 
