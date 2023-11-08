@@ -334,6 +334,7 @@ Example:
     "C-c t" keymap/toggle
     '(("w" . whitespace-mode)
        ("r" . read-only-mode)
+       ("R" . mk/global-read-only-mode)
        ("v" . view-mode)
        ("m" . meow-temp-normal)
        ("c" . rainbow-mode)
@@ -816,6 +817,25 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
         ((> n l1) (hs-hide-all))     ;; also hide long comment
         ((> n l2) (hs-hide-level 1)) ;; show root function
         ((> n l3) (hs-hide-level 2))))))
+
+(defun mk/global-read-only-mode ()
+  "`find-file-hook'."
+  (interactive)
+  (if (memq 'read-only-mode (default-value 'find-file-hook)) ;; diff-hl change the local value
+    (progn
+      ;; will remove all buffer's read-only-mode including those originally supposed to be
+      (dolist (buf (buffer-list))
+        (unless (string-match-p (rx (or " " "*") (* anychar)) (buffer-name buf))
+          (with-current-buffer buf
+            (read-only-mode -1))))
+      (remove-hook 'find-file-hook #'read-only-mode))
+    
+    ;; add read-only-mode to all already existed normal buffers
+    (dolist (buf (buffer-list))
+      (unless (string-match-p (rx (or " " "*") (* anychar)) (buffer-name buf))
+        (with-current-buffer buf
+          (read-only-mode 1))))
+    (add-hook 'find-file-hook #'read-only-mode)))
 
 (provide 'init-key)
 

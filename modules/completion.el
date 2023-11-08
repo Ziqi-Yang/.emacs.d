@@ -190,7 +190,7 @@ FRAME: nil for current selected frame."
 ;; use vertico completion instead(since I don't use completion often)
 (use-package corfu
   :elpaca (:host github :repo "minad/corfu"
-		   :files ("*.el" "extensions/*.el"))
+		        :files ("*.el" "extensions/*.el"))
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-on-exact-match 'quit)
@@ -213,7 +213,7 @@ FRAME: nil for current selected frame."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
       ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
       (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-		  corfu-popupinfo-delay nil)
+		    corfu-popupinfo-delay nil)
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
 

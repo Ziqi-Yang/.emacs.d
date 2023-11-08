@@ -1,0 +1,20 @@
+*Built-in*
+
+| Function                   | Key                   |
+|----------------------------+-----------------------|
+| go to definition           | C-<click>             |
+| go to implementation(s)    | C-M-<click>           |
+| close recent opened window | S-ESC                 |
+| toggle preview window      | M-S-<left> or <right> |
+
+
+*Custom*
+
+| Function              | Key     |
+|-----------------------+---------|
+| direction(r, l, u, d) | <Emacs> |
+| back                  | C-o     |
+| forward               | C-i     |
+| open next line        | S-RET   |
+| open previous line    | M-S-RET |
+| kill word             | C-w     |
