@@ -93,7 +93,8 @@
   (require 'my-debug)
   (require 'adbkeyboard)
   (require 'emacs-developer)
-  (require 'hugo))
+  (require 'hugo)
+  (require 'emacs30))
 
 ;; load language
 (with-temp-message ""

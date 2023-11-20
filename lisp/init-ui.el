@@ -123,7 +123,7 @@
   (let ((default-font "Cascadia Code") ;; IBM Plex Mono, Cascadia Code
          (font-size 17)
          (CJK-font "LXGW Neo XiHei Screen"))
-    (when (display-graphic-p) 
+    (when (display-graphic-p)
       (when (member default-font (font-family-list))
 	      (set-face-attribute 'default nil :font (font-spec :family default-font :size font-size)))
       ;; @ fixed-pitch font ;; i.e. Monospaced font
@@ -165,21 +165,21 @@
   (beacon-mode 1))
 
 ;;; Center Area =============================================
-(use-package olivetti
-  ;; :hook ((text-mode         . olivetti-mode)
-  ;;         (prog-mode         . olivetti-mode)
-  ;;         (Info-mode         . olivetti-mode)
-  ;;         (org-mode          . olivetti-mode)
-  ;;         (markdown-mode     . olivetti-mode))
-  :custom
-  (olivetti-body-width 111))
+;; (use-package olivetti
+;;   ;; :hook ((text-mode         . olivetti-mode)
+;;   ;;         (prog-mode         . olivetti-mode)
+;;   ;;         (Info-mode         . olivetti-mode)
+;;   ;;         (org-mode          . olivetti-mode)
+;;   ;;         (markdown-mode     . olivetti-mode))
+;;   :custom
+;;   (olivetti-body-width 111))
 
-(use-package auto-olivetti
-  :elpaca (:type git :host sourcehut :repo "ashton314/auto-olivetti")
-  :custom
-  (auto-olivetti-enabled-modes '(text-mode prog-mode))
-  :config
-  (auto-olivetti-mode))
+;; (use-package auto-olivetti
+;;   :elpaca (:type git :host sourcehut :repo "ashton314/auto-olivetti")
+;;   :custom
+;;   (auto-olivetti-enabled-modes '(text-mode prog-mode))
+;;   :config
+;;   (auto-olivetti-mode))
 
 ;;; Cursor ==================================================
 ;; @ disable cursor blink

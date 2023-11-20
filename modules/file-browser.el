@@ -39,6 +39,6 @@ one specified by listing header."
   (keymap-set dired-mode-map "/" #'dired-isearch-filenames)
   (keymap-set dired-mode-map "M-f" #'mk/dired-find-file)
 
-  (keymap-set dired-mode-map "<tab>" #'dired-subtree-toggle))
+  (keymap-set dired-mode-map "<tab>" #'dired-subtree-cycle))
 
 (provide 'file-browser)

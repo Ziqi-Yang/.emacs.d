@@ -43,7 +43,7 @@ Example:
 
 ;; Vim-like  keybinding
 (progn
-  (keymap-global-set "C-w" #'backward-kill-word)
+  (keymap-global-set "C-w" #'mk/backward-delete-word)
   (keymap-global-set "C-M-#" #'kill-region)
   (setq meow--kbd-kill-region "C-M-#")
 
@@ -262,7 +262,7 @@ Example:
        ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))
        ("e" . eww-list-bookmarks)
        ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
-       ("d" . dired-jump)
+       ("d" . mk/open-dired-smart)
        ("D" . mk/draw-diagram)
        ("t" . mk/open-terminal-smart)
        ("T" . mk/open-terminal-here)))
@@ -798,11 +798,26 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
   (other-window 1)
   (call-interactively #'find-file))
 
+(defun mk/open-dired-smart()
+  "Open smart considering whether it's in a project."
+  (interactive)
+  (if (project-current)
+    (project-dired)
+    (dired-jump)))
+
+(defun mk/backward-delete-word (&optional arg)
+  "Like `backward-kill-word', but don't modify kill-ring.
+ARG: number of words to kill"
+  (interactive "p")
+  (delete-region (point) (progn (backward-word arg) (point))))
+
 (defun mk/print-current-branch-name ()
+  "Print current branch name."
   (interactive)
   (message "Current Branch: %s" (car (vc-git-branches))))
 
 (defun mk/open-emacs.d ()
+  "Open emacs.d project."
   (interactive)
   (project-switch-project user-emacs-directory))
 
