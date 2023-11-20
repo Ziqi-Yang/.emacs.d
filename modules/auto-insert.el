@@ -66,6 +66,28 @@
 (provide '%s)
 
 ;;; %s ends here
-" fname fbname fname))))))
+" fname fbname fname)))))
+
+  ;; Java ts Mode
+  (define-auto-insert
+    'java-ts-mode
+    '(lambda ()
+       (when-let*
+         ((p (project-current))
+           (pr (project-root p))
+           (d (file-name-directory buffer-file-name))
+           (dr (file-relative-name d pr))
+           (dr-package (substring dr (+ 5 (string-search "java" dr))))
+           (package-name (string-replace "/" "." (substring dr-package 0 -1)))
+           (fn (file-name-nondirectory (file-name-sans-extension buffer-file-name))))
+         (insert
+           (format "package %s;
+
+public class %s {
+  public static void main(String[] args) {
+    System.out.println(String.format(\"%%s\", \"El Psy Kongaroo\"));
+  }
+}" package-name fn))))))
 
 (provide 'auto-insert)
+;;; auto-insert.el ends here

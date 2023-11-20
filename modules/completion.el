@@ -31,10 +31,15 @@ FRAME: nil for current selected frame."
     (unless (eq mk/v/vertico-last-layout layout)
       (setq mk/v/vertico-last-layout layout)
       (setq vertico-multiform-commands
-        (mk/create-vertico-multiform-commands
-          '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
-          `(buffer
-             (vertico-buffer-display-action . ,display-buffer-actions)))))))
+        (append
+          (mk/create-vertico-multiform-commands
+            '(mk/completion-at-point-with-tempel cape-dabbrev cape-file cape-line mk/cape-line-previous-buffer)
+            '(grid))
+          ;; display buffer according to layout
+          (mk/create-vertico-multiform-commands
+            '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
+            `(buffer
+               (vertico-buffer-display-action . ,display-buffer-actions))))))))
 
 (defun mk/vertico-setup-multiform-commands-focus-change-function ()
   ;; (message "> %s %s" (selected-frame) (frame-focus-state))
@@ -64,19 +69,19 @@ FRAME: nil for current selected frame."
 	  read-buffer-completion-ignore-case t
 	  completion-ignore-case t)
 
-  ;; can selete entry with M-<number> <ret>
   ;; (vertico-flat-mode)
-  ;; (setq vertico-flat-max-lines 8)
+  ;; (setq vertico-flat-max-lines 2)
+  ;; use prefix argument to select candidate
   (vertico-indexed-mode)
   ;; configure display per command
   (vertico-multiform-mode)
 
-  ;; (setq completion-in-region-function
-  ;;   (lambda (&rest args)
-  ;;     (apply (if vertico-mode
-  ;;              #'consult-completion-in-region
-  ;;              #'completion--in-region)
-  ;;       args)))
+  (setq completion-in-region-function
+    (lambda (&rest args)
+      (apply (if vertico-mode
+               #'consult-completion-in-region
+               #'completion--in-region)
+        args)))
 
   (mk/vertico-setup-multiform-commands)
   (add-function :after after-focus-change-function #'mk/vertico-setup-multiform-commands-focus-change-function))
@@ -188,41 +193,41 @@ FRAME: nil for current selected frame."
 ;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 ;; use vertico completion instead(since I don't use completion often)
-(use-package corfu
-  :elpaca (:host github :repo "minad/corfu"
-		        :files ("*.el" "extensions/*.el"))
-  :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-on-exact-match 'quit)
-  (corfu-auto nil)               ;; Disable auto completion
-  (corfu-auto-delay 0.5)           ;; Enable auto completion
-  (corfu-auto-prefix 2)          ;; Enable auto completion
-  :init
-  (global-corfu-mode)
-  ;; remembers selected candidates and sorts the candidates
-  (corfu-history-mode)
-  ;; quick select, M-<number> <ret>
-  (corfu-indexed-mode)
-  ;; popup info
-  ;; (corfu-popupinfo-mode)
-  ;; (setq corfu-popupinfo-delay (cons 0.2 0.2))
+;; (use-package corfu
+;;   :elpaca (:host github :repo "minad/corfu"
+;; 		        :files ("*.el" "extensions/*.el"))
+;;   :custom
+;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+;;   (corfu-on-exact-match 'quit)
+;;   (corfu-auto nil)               ;; Disable auto completion
+;;   (corfu-auto-delay 0.5)           ;; Enable auto completion
+;;   (corfu-auto-prefix 2)          ;; Enable auto completion
+;;   :init
+;;   (global-corfu-mode)
+;;   ;; remembers selected candidates and sorts the candidates
+;;   (corfu-history-mode)
+;;   ;; quick select, M-<number> <ret>
+;;   (corfu-indexed-mode)
+;;   ;; popup info
+;;   ;; (corfu-popupinfo-mode)
+;;   ;; (setq corfu-popupinfo-delay (cons 0.2 0.2))
 
-  ;; enable corfu completion in minibuffer
-  (defun corfu-enable-in-minibuffer ()
-    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-    (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
-      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-		    corfu-popupinfo-delay nil)
-      (corfu-mode 1)))
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
+;;   ;; enable corfu completion in minibuffer
+;;   (defun corfu-enable-in-minibuffer ()
+;;     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+;;     (when (where-is-internal #'completion-at-point (list (current-local-map)))
+;;       ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+;;       (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+;; 		    corfu-popupinfo-delay nil)
+;;       (corfu-mode 1)))
+;;   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
 
-(use-package corfu-terminal
-  :elpaca (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
-  :after corfu
-  :config
-  (unless (display-graphic-p)
-    (corfu-terminal-mode +1)))
+;; (use-package corfu-terminal
+;;   :elpaca (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
+;;   :after corfu
+;;   :config
+;;   (unless (display-graphic-p)
+;;     (corfu-terminal-mode +1)))
 
 ;; (use-package corfu-candidate-overlay
 ;;   :elpaca (:type git
@@ -237,7 +242,8 @@ FRAME: nil for current selected frame."
 (use-package emacs
   :elpaca nil
   :init
-  (setq completion-cycle-threshold 0)
+  ;; (setq completion-cycle-threshold 0)
+  ;; Hide commands in M-x which do not apply to the current mode.
   (setq read-extended-command-predicate
 	  #'command-completion-default-include-p)
   (setq tab-always-indent 'complete))

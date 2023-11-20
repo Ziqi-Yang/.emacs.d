@@ -61,7 +61,10 @@ Example:
   (keymap-global-set "M-<right>" #'tab-next)
   (keymap-global-set "M-h" #'tab-previous)
   (keymap-global-set "M-l" #'tab-next)
-
+  
+  (keymap-global-set "S-<return>" #'meow-open-below)
+  (keymap-global-set "M-S-<return>" #'meow-open-above)
+  
   (keymap-global-set "C-M-@" #'forward-char)
   (setq meow--kbd-forward-char "C-M-@")
   (keymap-global-set "C-M-$" #'kill-line)
@@ -92,6 +95,7 @@ Example:
   ;; C-h (SPC h) ================================================================
   ;; help (h) SPC h SPC <character>
   (keymap-global-set "C-h M" #'woman)
+  (keymap-global-set "C-h d" #'shortdoc)
   (keymap-global-set "C-h c" #'helpful-callable)
   (keymap-global-set "C-h I" #'consult-info) ;; original: describe-input-method
   ;; C-x (SPC x) ================================================================
@@ -298,6 +302,7 @@ Example:
   (mk/define&set-keymap
     "C-c s" keymap/search
     `(("a" . ,(mk/define&set-keymap
+                ;; note `shortdoc' is also great for searching functions (I set it to `C-h d')
                 "C-c s a" mk/search-apropos-keymap
                 '(("a" . apropos)
                    ("c" . apropos-command)
@@ -327,7 +332,8 @@ Example:
                     ("T" . consult-todo-all)
                     ("p" . consult-todo-project)
                     ("d" . consult-todo-dir)
-                    ("T" . hl-todo-rgrep))))))
+                    ("T" . hl-todo-rgrep))))
+       ("y" . consult-yank-from-kill-ring)))
 
   ;; toggle (t)
   (mk/define&set-keymap

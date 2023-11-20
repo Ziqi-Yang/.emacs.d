@@ -32,12 +32,13 @@ one specified by listing header."
   (let ((default-directory (dired-current-directory)))
     (call-interactively #'find-file)))
 
-(defun mk/dired-local-keybinding-setup()
-  (keymap-local-set "/" #'dired-isearch-filenames)
-  (keymap-local-set "M-f" #'mk/dired-find-file)
-  (keymap-local-set "h" #'dired-up-directory)
-  (keymap-local-set "l" #'dired-find-file))
+(with-eval-after-load 'dired
+  (keymap-set dired-mode-map "h" #'dired-up-directory)
+  (keymap-set dired-mode-map "l" #'dired-find-file)
+  
+  (keymap-set dired-mode-map "/" #'dired-isearch-filenames)
+  (keymap-set dired-mode-map "M-f" #'mk/dired-find-file)
 
-(add-hook 'dired-mode-hook #'mk/dired-local-keybinding-setup)
+  (keymap-set dired-mode-map "<tab>" #'dired-subtree-toggle))
 
 (provide 'file-browser)

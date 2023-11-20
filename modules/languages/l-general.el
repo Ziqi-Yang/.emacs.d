@@ -24,7 +24,7 @@
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(yaml\\|yml\\)\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-ts-mode))
-;; (add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
+(add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
 
 ;; manual(use script) build(recommend, since more language are included, but you need need to manualy hook the extra langauge. For build script, see above information), or use nf/treesit-install-all-languages for those languages defined in treesit-auto
 (defun nf/treesit-install-all-languages ()
@@ -67,7 +67,7 @@
 	(customize-set-variable 'eglot-stay-out-of '(imenu))
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
 	;; see outer files(like header files) as in project temporarily
-	(customize-set-variable 'eglot-extend-to-xref t) 
+	(customize-set-variable 'eglot-extend-to-xref t)
 
 	(mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
 	(mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
@@ -250,6 +250,12 @@
           ;; zig
           ((eq major-mode 'zig-mode)
             "zig build")
+          ;; js
+          ((or (eq major-mode 'js-mode) (eq major-mode 'js-ts-mode))
+            (concat "node " relative-file-name))
+          ;; d2
+          ((eq major-mode 'd2-mode)
+            (concat "d2 -p 8888 -l elk -w " relative-file-name))
           ;; python
           ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
             (concat "python " relative-file-name))

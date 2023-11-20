@@ -57,7 +57,6 @@ where 1 is the innermost level."
 
   ;; motion
   (meow-motion-overwrite-define-key
-    '("<tab>" . completion-at-point)
     '("j" . meow-next)
     '("k" . meow-prev)
     '("<escape>" . ignore))
@@ -151,6 +150,7 @@ where 1 is the innermost level."
     '("'" . repeat)
     '("<escape>" . ignore)
 
+    '("<tab>" . completion-at-point)
     '("<" . indent-rigidly-left)
     '(">" . indent-rigidly-right)
     '("?" . eldoc)

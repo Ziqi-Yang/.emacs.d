@@ -1,11 +1,12 @@
 *Built-in*
 
-| Function                   | Key                   |
-|----------------------------+-----------------------|
-| go to definition           | C-<click>             |
-| go to implementation(s)    | C-M-<click>           |
-| close recent opened window | S-ESC                 |
-| toggle preview window      | M-S-<left> or <right> |
+| Function                   | Key                    |
+|----------------------------+------------------------|
+| go to definition           | C-<click>              |
+| go to implementation(s)    | C-M-<click>            |
+| close recent opened window | S-ESC                  |
+| toggle preview window      | M-S-<left> or <right>  |
+| Find in file               | C-S-f on selected text |
 
 
 *Custom*

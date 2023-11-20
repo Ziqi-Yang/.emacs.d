@@ -120,7 +120,7 @@
 (defun mk/setup-font-faces ()
   "Setup Fonts."
   ;; font faces only works in emacs GUI, terminal emcas should change terminal font instead
-  (let ((default-font "Cascadia Code") ;; IBM Plex Mono
+  (let ((default-font "Cascadia Code") ;; IBM Plex Mono, Cascadia Code
          (font-size 17)
          (CJK-font "LXGW Neo XiHei Screen"))
     (when (display-graphic-p) 
@@ -231,6 +231,12 @@
 ;; sqlite
 (add-to-list 'display-buffer-alist
   `(,(rx "*SQLite" (*? nonl) "*")
+     (display-buffer-same-window)
+	   (reusable-frames . nil)))
+
+;; sqlite
+(add-to-list 'display-buffer-alist
+  `(,(rx "*Shortdoc" (*? nonl) "*")
      (display-buffer-same-window)
 	   (reusable-frames . nil)))
 
