@@ -10,11 +10,11 @@
 ;; (add-hook 'emacs-lisp-mode-hook 'remove-elisp-mode-local-keybindings)
 
 ;; native approach to surround text
-(define-key global-map (kbd "M-[") 'insert-pair)
-(define-key global-map (kbd "M-{") 'insert-pair)
-(define-key global-map (kbd "M-\"") 'insert-pair)
-(define-key global-map (kbd "M-'") 'insert-pair)
-(define-key global-map (kbd "M-<") 'insert-pair)
+(keymap-global-set "M-[" #'insert-pair)
+(keymap-global-set "M-{" #'insert-pair)
+(keymap-global-set "M-\"" #'insert-pair)
+(keymap-global-set "M-'" #'insert-pair)
+(keymap-global-set "M-<" #'insert-pair)
 
 (defmacro mk/define&set-keymap (prefix keymap-name definition)
   "Macro for defining a keymap.
@@ -61,6 +61,8 @@ Example:
   (keymap-global-set "M-<right>" #'tab-next)
   (keymap-global-set "M-h" #'tab-previous)
   (keymap-global-set "M-l" #'tab-next)
+
+  (keymap-global-set "C-/" #'undo-only)
   
   (keymap-global-set "S-<return>" #'meow-open-below)
   (keymap-global-set "M-S-<return>" #'meow-open-above)
@@ -263,7 +265,8 @@ Example:
        ("e" . eww-list-bookmarks)
        ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
        ("d" . mk/open-dired-smart)
-       ("D" . mk/draw-diagram)
+       ("D" . dired-jump)
+       ("r" . mk/draw-diagram)
        ("t" . mk/open-terminal-smart)
        ("T" . mk/open-terminal-here)))
 
@@ -291,7 +294,7 @@ Example:
   ;; replace (r)
   (mk/define&set-keymap
     "C-c r" mk/replace-keymap
-    '(("r" . symbol-overlay-put)
+    '(("r" . query-replace-regexp)
        ("i" . color-rg-search-input-in-current-file)
        ("I" . color-rg-search-input-in-project)
        ("b" . color-rg-search-symbol-in-current-file) ;; buffer

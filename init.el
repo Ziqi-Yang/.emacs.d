@@ -1,5 +1,6 @@
 ;;; init.el --- The main init entry for Emacs -*- lexical-binding: t -*-
-;; Commentary:
+;;; Commentary:
+
 ;;; Code:
 
 ;; straight.el
@@ -63,10 +64,10 @@
   user-mail-address "mr.meowking@anche.no"
   default-directory (expand-file-name "~/.emacs.d"))
 
-;; add load path
-;; adding "~/.npm-global/bin/" cause vls for vue-mode error, maybe the system vls and
-;; vls here are different
-;; (add-to-list (expand-file-name "~/.npm-global/bin/") exec-path)
+(add-to-list 'exec-path (expand-file-name "~/myBin/"))
+(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+;; for compile to work
+(setenv "PATH" (concat (format "%s:%s:" (expand-file-name "~/myBin/") (expand-file-name "~/.local/bin")) (getenv "PATH")))
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "modules" user-emacs-directory) load-path)

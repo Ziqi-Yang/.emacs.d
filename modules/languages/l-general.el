@@ -264,9 +264,12 @@
             ;; format file
             (pcase file-extension
               ("j2" (concat "djlint " relative-file-name " --extension=html.j2 --reformat"))))
+          ;; ((eq major-mode 'mermaid-ts-mode)
+          ;;   ;; see https://github.com/mermaid-js/mermaid-cli/issues/112#issuecomment-869401507
+          ;;   (concat "mmdc -c ~/.config/mermaid/config.json -i " relative-file-name " -o " relative-bare-file-name ".svg && swayimg " relative-bare-file-name ".svg"))
           ((eq major-mode 'mermaid-ts-mode)
-            ;; see https://github.com/mermaid-js/mermaid-cli/issues/112#issuecomment-869401507
-            (concat "mmdc -c ~/.config/mermaid/config.json -i " relative-file-name " -o " relative-bare-file-name ".svg && swayimg " relative-bare-file-name ".svg"))
+            ;; https://sr.ht/~meow_king/mermaid-open/
+            (concat "mermaid-open -v " relative-file-name " --no-open | xargs firefox-developer-edition "))
           ;; other
           (t "make "))))))
 

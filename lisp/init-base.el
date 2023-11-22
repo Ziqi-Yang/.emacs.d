@@ -407,17 +407,21 @@
     (insert str)
     (clipboard-kill-region (point-min) (point-max))))
 
+(defun mk/vundo-hook ()
+  (meow-mode -1))
+
 ;;; undo
 (use-package vundo
   :config
+  (add-hook 'vundo-mode-hook #'mk/vundo-hook)
   ;; Take less on-screen space.
   (setq vundo-compact-display t)
 
   ;; Better contrasting highlight.
   (custom-set-faces
-   '(vundo-node ((t (:foreground "#808080"))))
-   '(vundo-stem ((t (:foreground "#808080"))))
-   '(vundo-highlight ((t (:foreground "#FFFF00")))))
+    '(vundo-node ((t (:foreground "#808080"))))
+    '(vundo-stem ((t (:foreground "#808080"))))
+    '(vundo-highlight ((t (:foreground "#FFFF00")))))
 
   ;; Use `HJKL` VIM-like motion, also Home/End to jump around.
   (define-key vundo-mode-map (kbd "l") #'vundo-forward)
@@ -428,8 +432,8 @@
   (define-key vundo-mode-map (kbd "<down>") #'vundo-next)
   (define-key vundo-mode-map (kbd "k") #'vundo-previous)
   (define-key vundo-mode-map (kbd "<up>") #'vundo-previous)
-  (define-key vundo-mode-map (kbd "<home>") #'vundo-stem-root)
-  (define-key vundo-mode-map (kbd "<end>") #'vundo-stem-end)
+  (define-key vundo-mode-map (kbd "a") #'vundo-stem-root)
+  (define-key vundo-mode-map (kbd "e") #'vundo-stem-end)
   (define-key vundo-mode-map (kbd "q") #'vundo-quit)
   (define-key vundo-mode-map (kbd "C-g") #'vundo-quit)
   (define-key vundo-mode-map (kbd "RET") #'vundo-confirm))

@@ -121,7 +121,7 @@
   "Setup Fonts."
   ;; font faces only works in emacs GUI, terminal emcas should change terminal font instead
   (let ((default-font "Cascadia Code") ;; IBM Plex Mono, Cascadia Code
-         (font-size 17)
+         (font-size 15)
          (CJK-font "LXGW Neo XiHei Screen"))
     (when (display-graphic-p)
       (when (member default-font (font-family-list))
