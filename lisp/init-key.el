@@ -10,7 +10,16 @@
 ;; (add-hook 'emacs-lisp-mode-hook 'remove-elisp-mode-local-keybindings)
 
 ;; native approach to surround text
-(keymap-global-set "M-[" #'insert-pair)
+(defun mk/set-surround-brackets-keybinding ()
+  (when (display-graphic-p)
+    ;; this line causes error in terminal
+    ;; -- since Emacs maps win + .. to meta - [ in terminal Emacs
+    ;; when I switch workspace in sway or do something else, it will automatically insert brackets
+    (keymap-global-set "M-[" #'insert-pair)))
+
+(add-hook 'after-init-hook #'mk/set-surround-brackets-keybinding)
+(add-hook 'server-after-make-frame-hook #'mk/set-surround-brackets-keybinding)
+
 (keymap-global-set "M-{" #'insert-pair)
 (keymap-global-set "M-\"" #'insert-pair)
 (keymap-global-set "M-'" #'insert-pair)
@@ -79,7 +88,7 @@ Example:
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
-  (keymap-global-set "C-S-<return>" #'corfu-candidate-overlay-complete-at-point)
+  ;; (keymap-global-set "C-S-<return>" #'corfu-candidate-overlay-complete-at-point)
   (keymap-global-set "C-j" #'completion-at-point)
   (keymap-global-set "C-S-j" #'corfu-candidate-overlay-complete-at-point)
   (keymap-global-set "C-k" #'cape-dabbrev)
@@ -123,6 +132,8 @@ Example:
   (keymap-global-set "C-x v b p" #'mk/print-current-branch-name)
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)
+  ;; smerge
+  ;; use C-c ^
   ;; C-M- (SPC g) ===============================================================
   (keymap-global-set "C-M-l" #'recenter-top-bottom) ;; gl
   (keymap-global-set "C-M-s" #'scratch-buffer)      ;; gs
@@ -263,6 +274,7 @@ Example:
        ("a" . org-agenda)
        ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))
        ("e" . eww-list-bookmarks)
+       ("E" . mk/browse-emacs-devel)
        ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
        ("d" . mk/open-dired-smart)
        ("D" . dired-jump)
@@ -294,7 +306,8 @@ Example:
   ;; replace (r)
   (mk/define&set-keymap
     "C-c r" mk/replace-keymap
-    '(("r" . query-replace-regexp)
+    '(("r" . query-replace)
+       ("R" . query-replace-regexp)
        ("i" . color-rg-search-input-in-current-file)
        ("I" . color-rg-search-input-in-project)
        ("b" . color-rg-search-symbol-in-current-file) ;; buffer
@@ -382,7 +395,8 @@ Example:
        ("S" . proxy-socks-show)
        ("p" . ,(mk/define&set-keymap
                  "C-c x p" keymap/package-manager
-                 '(("p" . elpaca-manager)
+                 '(("d" . elpaca-delete)
+                    ("p" . elpaca-manager)
                     ("t" . elpaca-try)
                     ("u" . elpaca-update)
                     ("U" . elpaca-update-all))))))
@@ -718,6 +732,12 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
   (if arg
     (call-interactively #'consult-line)
     (consult-line (thing-at-point 'symbol) nil)))
+
+(defun mk/browse-emacs-devel()
+  "Use eww to browse the emacs devel thread."
+  (interactive)
+  (eww (format "https://lists.gnu.org/archive/html/emacs-devel/%s/threads.html"
+         (format-time-string "%Y-%0m"))))
 
 (defun mk/better-info-apropos (arg)
   "Use symbol at point as the default input of `affe-grep'.

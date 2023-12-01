@@ -4,25 +4,28 @@
 ;;; Code:
 
 ;;; PlantUML ================================================
-;; TODO try plantuml-emacs: https://github.com/ginqi7/plantuml-emacs
-(use-package plantuml-mode
-  :mode ("\\.plantuml\\'" . plantuml-mode)
-  :init
-  ;; enable plantuml babel support
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-  (org-babel-do-load-languages 'org-babel-load-languages
-    (append org-babel-load-languages
-      '((plantuml . t))))
-  :config
-  (setq org-plantuml-exec-mode 'plantuml)
-  (setq org-plantuml-executable-path "plantuml")
-  (setq plantuml-executable-path "plantuml")
-  (setq plantuml-default-exec-mode 'executable)
-  ;; set default babel header arguments
-  (setq org-babel-default-header-args:plantuml
-    '((:exports . "results")
-       (:results . "file")
-       )))
+;; TODO also try plantuml-emacs: https://github.com/ginqi7/plantuml-emacs
+;; (use-package plantuml-mode
+;;   :mode ("\\.plantuml\\'" . plantuml-mode)
+;;   :init
+;;   ;; enable plantuml babel support
+;;   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+;;   (org-babel-do-load-languages 'org-babel-load-languages
+;;     (append org-babel-load-languages
+;;       '((plantuml . t))))
+;;   :config
+;;   (setq org-plantuml-exec-mode 'plantuml)
+;;   (setq org-plantuml-executable-path "plantuml")
+;;   (setq plantuml-executable-path "plantuml")
+;;   (setq plantuml-default-exec-mode 'executable)
+;;   ;; set default babel header arguments
+;;   (setq org-babel-default-header-args:plantuml
+;;     '((:exports . "results")
+;;        (:results . "file")
+;;        )))
+
+;; (use-package plantuml-mode
+;;   :elpaca (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
 
 ;;; Mermaid =================================================
 ;; github support rendering mermaid diagrams

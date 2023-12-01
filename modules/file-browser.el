@@ -31,15 +31,25 @@
   :custom
   (dired-subtree-cycle-depth 5)
   :custom-face
-  (dired-subtree-depth-1-face ((t (:background "gray25"))))
-  (dired-subtree-depth-2-face ((t (:background "gray30"))))
-  (dired-subtree-depth-3-face ((t (:background "gray35"))))
-  (dired-subtree-depth-4-face ((t (:background "gray40"))))
-  (dired-subtree-depth-5-face ((t (:background "gray45"))))
-  (dired-subtree-depth-6-face ((t (:background "gray50")))))
+  (dired-subtree-depth-1-face ((t (:background "gray50"))))
+  (dired-subtree-depth-2-face ((t (:background "gray45"))))
+  (dired-subtree-depth-3-face ((t (:background "gray40"))))
+  (dired-subtree-depth-4-face ((t (:background "gray35"))))
+  (dired-subtree-depth-5-face ((t (:background "gray30"))))
+  (dired-subtree-depth-6-face ((t (:background "gray25")))))
+
+
+(defun others/set-dired-font-face ()
+  (face-remap-add-relative 'default :height 90))
 
 ;; @ side bar
 (use-package dired-sidebar
+  :custom
+  (dired-sidebar-use-custom-font t)
+  :hook
+  (dired-sidebar-mode . others/set-dired-font-face)
+  ;; :custom-face
+  ;; (dired-sidebar-face ((t (:font (font-spec :family default-font :size font-size)))))
   :init
   (add-hook 'dired-sidebar-mode-hook
     (lambda ()
@@ -69,6 +79,8 @@ one specified by listing header."
   
   (keymap-set dired-mode-map "/" #'dired-isearch-filenames)
   (keymap-set dired-mode-map "M-f" #'mk/dired-find-file)
+  ;; SPC f f doesn't work, since meow key pad mod translate key from global-map?
+  (keymap-set dired-mode-map "C-c f f" #'mk/dired-find-file)
 
   (keymap-set dired-mode-map "<tab>" #'dired-subtree-cycle))
 

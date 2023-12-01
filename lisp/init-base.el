@@ -25,15 +25,15 @@
 (use-package no-littering
   :init
   (setq
-   no-littering-etc-directory (expand-file-name ".local/config/" user-emacs-directory)
-   no-littering-var-directory (expand-file-name ".local/data/" user-emacs-directory))
+    no-littering-etc-directory (expand-file-name ".local/config/" user-emacs-directory)
+    no-littering-var-directory (expand-file-name ".local/data/" user-emacs-directory))
   :config
   (require 'recentf)
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory)
   (setq
-   auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-   custom-file (no-littering-expand-etc-file-name "custom.el")))
+    auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+    custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 ;;; workspace ===============================================
 (use-package tab-bar
@@ -444,13 +444,16 @@
 
 (defun mk/funcs-go-back-setup()
   (dolist (func '(find-function
-                  mk/better-query-replace
-                  meow-beginning-of-thing
-                  meow-end-of-thing
-                  consult-line
-                  consult-imenu
-                  consult-ripgrep
-                  consult-git-grep))
+                   query-replace-regexp
+                   mk/better-query-replace
+                   mk/mark-line-smart
+                   meow-line
+                   meow-beginning-of-thing
+                   meow-end-of-thing
+                   consult-line
+                   consult-imenu
+                   consult-ripgrep
+                   consult-git-grep))
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
 
 (add-hook 'after-init-hook 'mk/funcs-go-back-setup)

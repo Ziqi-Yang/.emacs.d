@@ -141,8 +141,8 @@ FRAME: nil for current selected frame."
 (use-package orderless
   :init
   (setq completion-styles '(orderless basic) ;; orderless, and basic as fallback
-	completion-category-defaults nil
-	completion-category-overrides '((file (styles basic partial-completion)))))
+	  completion-category-defaults nil
+	  completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;;; Embark ==================================================
 (use-package embark

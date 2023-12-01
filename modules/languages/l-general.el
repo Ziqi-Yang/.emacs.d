@@ -270,6 +270,8 @@
           ((eq major-mode 'mermaid-ts-mode)
             ;; https://sr.ht/~meow_king/mermaid-open/
             (concat "mermaid-open -v " relative-file-name " --no-open | xargs firefox-developer-edition "))
+          ((eq major-mode 'plantuml-mode) ;; it seems like that we need to manually run it
+            (concat "env PLANTUML_LIMIT_SIZE=327680 plantuml " relative-file-name " && imv " relative-bare-file-name ".png"))
           ;; other
           (t "make "))))))
 

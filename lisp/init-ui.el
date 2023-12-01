@@ -150,7 +150,7 @@
   )
 ;; run this hook after we have initialized the first time
 (add-hook 'after-init-hook 'mk/setup-font-faces)
-;; re-run this hook if we create a new frame from daemonized Emacs
+;; re-run this hook if we create a new frame from daeamonized Emacs
 (add-hook 'server-after-make-frame-hook 'mk/setup-font-faces)
 
 ;;; mode line ===============================================
