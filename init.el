@@ -123,6 +123,13 @@
   :config
   (native-compile-prune-cache))
 
+
+;; Don’t compact font caches during GC.
+(setq inhibit-compacting-font-caches t)
+
+(setq find-file-visit-truename t)
+
+;; disable functions
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 

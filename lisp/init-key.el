@@ -1,6 +1,9 @@
 ;;; init-key.el --- keyBindings -*- lexical-binding: t -*-
 ;;; Commentary:
-;; NOTE: global key bindings will be shadowwed by local keybindings
+;; NOTE: global key bindings will be shadowed by local keybindings
+;; TIPS:
+;; C-M-i: ispell-complete-word
+;; C-M-/: dabbrev-copmletion
 ;;; Code:
 
 ;; remove existing keybindings
@@ -89,9 +92,6 @@ Example:
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
   ;; (keymap-global-set "C-S-<return>" #'corfu-candidate-overlay-complete-at-point)
-  (keymap-global-set "C-j" #'completion-at-point)
-  (keymap-global-set "C-S-j" #'corfu-candidate-overlay-complete-at-point)
-  (keymap-global-set "C-k" #'cape-dabbrev)
   (keymap-global-set "C-S-f" #'cape-file)
   (keymap-global-set "C-l" #'cape-line)
   (keymap-global-set "C-S-l" #'mk/cape-line-previous-buffer))
@@ -121,7 +121,7 @@ Example:
   (keymap-global-set "C-x H" #'unhighlight-regexp)
   ;; Mail (SPC x SPC m)
   (keymap-global-set "C-x m" #'mu4e)
-  (keymap-global-set "C-x M" #'compose-mail)
+  (keymap-global-set "C-x M" #'mu4e-compose-new) ;; use this to replace `compose-mail' function
   ;; vc commands (git)
   ;; C-x v (SPC x SPC v)
   ;; vc-next-action is useful, and can be used to commit. see info:emacs#Basic VC Editing
@@ -397,9 +397,12 @@ Example:
                  "C-c x p" keymap/package-manager
                  '(("d" . elpaca-delete)
                     ("p" . elpaca-manager)
+                    ("b" . elpaca-browse)
+                    ("v" . elpaca-visit)
+                    ("l" . elpaca-log)
                     ("t" . elpaca-try)
-                    ("u" . elpaca-update)
-                    ("U" . elpaca-update-all))))))
+                    ("u" . mk/elpaca-update)
+                    ("U" . mk/elpaca-update-all))))))
 
   ;; trivial (z)
   (mk/define&set-keymap
@@ -777,6 +780,16 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
   (interactive)
   (citre-update-this-tags-file)
   (citre-global-update-database))
+
+(defun mk/elpaca-update()
+  (interactive)
+  (let ((current-prefix-arg 4)) ;; emulate C-u
+    (call-interactively #'elpaca-merge)))
+
+(defun mk/elpaca-update-all()
+  (interactive)
+  (let ((current-prefix-arg 4)) ;; emulate C-u
+    (call-interactively #'elpaca-merge-all)))
 
 (defun mk/highlight-symbol-buffer()
   "Highlight all the symbols is that is the same of the one at point."

@@ -16,10 +16,12 @@
     ;; mail-specify-envelope-from t
     ;; message-sendmail-envelope-from 'header
     message-auto-save-directory "~/mail_save"
-    message-default-mail-headers "Cc: \nBcc: \n"))
+    message-default-mail-headers "Cc: \nBcc: \n")
+  (add-hook 'message-send-hook 'others/sign-or-encrypt-message))
 
 (add-hook 'after-init-hook #'mk/setup-mail)
 
+;; https://www.djcbsoftware.nl/code/mu/mu4e/Getting-mail.html
 (use-package mu4e
   ;; installing 'mu' though 'pacman -S mu' will automatically add package 'mu4e' into emacs site-package
   :elpaca nil
@@ -49,6 +51,21 @@
 
 (add-hook 'mu4e-main-mode-hook 'mk/mu4e-main-local-keybinding-setup)
 (add-hook 'mu4e-view-mode-hook 'mk/mu4e-view-local-keybinding-setup)
+
+
+(defun others/sign-or-encrypt-message ()
+  "Use it with `message-send-hook'."
+  (let ((answer (read-from-minibuffer "Sign or encrypt?\nEmpty to do nothing.\n[s/e]: ")))
+    (cond
+      ((string-equal answer "s") (progn
+                                   (message "Signing message.")
+                                   (mml-secure-message-sign-pgpmime)))
+      ((string-equal answer "e") (progn
+                                   (message "Encrypt and signing message.")
+                                   (mml-secure-message-encrypt-pgpmime)))
+      (t (progn
+           (message "Dont signing or encrypting message.")
+           nil)))))
 
 (provide 'mail)
 

@@ -24,8 +24,8 @@
 ;;        (:results . "file")
 ;;        )))
 
-;; (use-package plantuml-mode
-;;   :elpaca (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
+(use-package plantuml-mode
+  :elpaca (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
 
 ;;; Mermaid =================================================
 ;; github support rendering mermaid diagrams
@@ -46,3 +46,5 @@
 (add-hook 'mermaid-mode-hook 'mk/draw-local-keybinding-setup)
 
 (provide 'l-draw)
+
+;;; l-draw.el ends here

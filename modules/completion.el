@@ -260,12 +260,22 @@ FRAME: nil for current selected frame."
 ;; add completion etension
 ;; FIXME it seems like this package doesn't work well with citre (may be citre's problem)
 (use-package cape
+  :custom
+  (cape-dabbrev-check-other-buffers nil)
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
-  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  ;; (add-to-list 'completion-at-point-functions #'cape-file)
+  ;; for performance, use manually use `dabbrev-completion' instead.
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  )
+
+(use-package dabbrev
+  :elpaca nil
+  :custom
+  (dabbrev-check-other-buffers nil)
+  :config
+  (add-to-list 'dabbrev-ignored-buffer-modes 'text-mode))
 
 ;;; Snippet =================================================
 ;; @ Tempel
