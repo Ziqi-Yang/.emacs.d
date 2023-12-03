@@ -71,6 +71,7 @@ line; else the surrounding white spaces."
 
   ;; normal mode
   (meow-normal-define-key
+    '("C-x )" . meow-end-or-call-kmacro)
     '("0" . meow-expand-0)
     '("9" . meow-expand-9)
     '("8" . meow-expand-8)
@@ -168,3 +169,5 @@ line; else the surrounding white spaces."
   (meow-global-mode 1))
 
 (provide 'meow-keybindings)
+
+;;; meow-keybindings.el ends here
