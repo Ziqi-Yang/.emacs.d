@@ -1,6 +1,9 @@
 ;;; l-java.el --- Java -*- lexical-binding: t -*-
 ;;; Commentary:
-;; 
+;;
+
+;; install jdt for eglot
+;; install google-java-format for apheleia format
 ;;; Code:
 
 (defun mk/java-open-doc()

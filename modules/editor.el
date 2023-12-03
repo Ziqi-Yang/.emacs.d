@@ -16,6 +16,10 @@
   :config
   (save-place-mode))
 
+;; Surround =========================
+(use-package surround
+  :elpaca (:type git :host github :repo "mkleehammer/surround"))
+
 ;;; Indent Bar ==================================================================
 ;; (use-package indent-bars
 ;;   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")

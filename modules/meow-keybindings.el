@@ -31,19 +31,6 @@ line; else the surrounding white spaces."
       (forward-char)))
   (activate-mark))
 
-(defun others/delete-enclosing-parentheses (&optional arg)
-  "Delete the innermost enclosing parentheses around point.
-With a prefix argument ARG N, delete the Nth level of enclosing parentheses,
-where 1 is the innermost level."
-  (interactive "*p")
-  (save-excursion
-    (backward-up-list arg)
-    (let ((beg (point)))
-      (forward-list)
-      (delete-char -1)
-      (goto-char beg)
-      (delete-char 1))))
-
 (defun mk/better-back-to-indentation ()
   "Back to indentation and enter into meow insert mode."
   (interactive)
@@ -126,7 +113,8 @@ where 1 is the innermost level."
     '("m" . meow-join)
     '("n" . meow-search)
     '("o" . meow-block)
-    '("O" . meow-to-block)
+    ;; '("O" . meow-to-block)
+    '("O" . expreg-expand)
     '("p" . meow-yank)
     '("q" . meow-quit)
     '("Q" . meow-goto-line)
@@ -160,7 +148,8 @@ where 1 is the innermost level."
     '("`" . combobulate-avy-jump-defun)
     ;; M-; comment-dwim (toggle comment)
     ;; '("C-i" . pop-global-mark)
-    '("M-d" . others/delete-enclosing-parentheses)
+    '("M-d" . surround-delete)
+    '("M-D" . surround-change)
     '("C-o" . xref-go-back)
     '("C-i" . xref-go-forward)
     '("C-S-i" . mk/better-back-to-indentation)

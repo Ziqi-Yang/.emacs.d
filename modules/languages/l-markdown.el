@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-
 ;; C-c ' to edit code block like in org
 (use-package edit-indirect)
 
@@ -13,3 +12,5 @@
 	(setq markdown-command "multimarkdown"))
 
 (provide 'l-markdown)
+
+;;; l-markdown.el ends here

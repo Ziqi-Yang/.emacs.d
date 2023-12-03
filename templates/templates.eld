@@ -42,3 +42,7 @@ series = \"Features\" # TODO
 java-ts-mode
 (pl "System.out.println(String.format(\"%s\", " q "));")
 
+zig-mode
+
+(pl "std.debug.print(\"{any}\", .{" q "});")
+

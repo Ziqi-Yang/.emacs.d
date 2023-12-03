@@ -93,7 +93,6 @@ Example:
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
   ;; (keymap-global-set "C-S-<return>" #'corfu-candidate-overlay-complete-at-point)
   (keymap-global-set "C-S-f" #'cape-file)
-  (keymap-global-set "C-l" #'cape-line)
   (keymap-global-set "C-S-l" #'mk/cape-line-previous-buffer))
 
 (defun mk/keyBindingSetup ()
@@ -268,8 +267,9 @@ Example:
   ;; open(o)
   (mk/define&set-keymap
     "C-c o" keymap/open
-    '(("-" . vterm)
-       ("=" . others/project-vterm)
+    '(
+       ;; ("-" . vterm)
+       ;; ("=" . others/project-vterm)
        ("s" . dired-sidebar-toggle-sidebar)
        ("a" . org-agenda)
        ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))

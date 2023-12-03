@@ -229,7 +229,7 @@
 (custom-set-variables
   '(auto-save-no-message t)
   '(auto-save-visited-mode t)
-  '(auto-save-visited-interval 0.3)
+  '(auto-save-visited-interval 1)
   '(auto-save-visited-predicate #'mk/auto-save-visited-predicate))
 
 ;;; Waketime ================================================
@@ -398,7 +398,7 @@
 (add-hook 'emacs-startup-hook #'mk/set-env)
 
 ;;; Terminal ====================================================================
-(use-package vterm)
+;; (use-package vterm)
 
 ;;; My custom functions ===================================
 (defun mk/base/copy-string-to-clipboard (str)
@@ -487,6 +487,10 @@
 ;;   (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
 ;;   (emacs-gc-stats-mode +1))
 
+
+;; expand region ===========
+(use-package expreg
+  :elpaca (:type git :host github :repo "casouri/expreg"))
 
 (provide 'init-base)
 

@@ -59,33 +59,41 @@
 	(dolist (mode hook-list)
 		(add-hook mode #'eglot-ensure)))
 
-(progn
+(with-eval-after-load 'eglot
+	;; NOTE
+	;; install markdown-mode to rich the doc
+  
   ;; performance improvemence: https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
   (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess
 	(setq-default eglot-events-buffer-size 0) ;; disable log, improve performance
   ;; list of things that eglot won't change
 	(customize-set-variable 'eglot-stay-out-of '(imenu))
+  (customize-set-variable 'eglot-extend-to-xref t)
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
 	;; see outer files(like header files) as in project temporarily
 	(customize-set-variable 'eglot-extend-to-xref t)
 
-	(mk/add-eglot-ensure '(c-mode-hook c-ts-mode-hook)) ;; c
-	(mk/add-eglot-ensure '(python-mode-hook python-ts-mode-hook)) ;; python
-	(mk/add-eglot-ensure '(rust-mode-hook rust-ts-mode-hook)) ;; rust
-	(mk/add-eglot-ensure '(go-ts-mode-hook go-mod-ts-mode-hook)) ;; go
-	(mk/add-eglot-ensure '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook)) ;; js/ts
-	(mk/add-eglot-ensure '(html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
-  (mk/add-eglot-ensure '(java-mode-hook java-ts-mode-hook)) ;; java (terrible)
-  (mk/add-eglot-ensure '(kotlin-ts-mode-hook))
-  ;; (mk/add-eglot-ensure '(typst-ts-mode-hook))
-  (mk/add-eglot-ensure '(zig-mode-hook)) ;; zig
+  (mk/add-eglot-ensure
+    '(c-mode-hook c-ts-mode-hook ;; c
+       python-mode-hook python-ts-mode-hook ;; python
+       rust-mode-hook rust-ts-mode-hook ;; rust
+       go-ts-mode-hook go-mod-ts-mode-hook ;; go
+       js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook ;;  js/ts
+       html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode
+       java-mode-hook java-ts-mode-hook ;; java
+       kotlin-ts-mode-hook ;; kotlin
+       zig-mode-hook ;; zig
+       ))
 
 	;; corfu/orderless integration
 	(setq completion-category-overrides '((eglot (styles orderless))))
 
-	;; NOTE
-	;; install markdown-mode to rich the doc
-	)
+
+  (setq-default eglot-workspace-configuration
+    ;; install python-lsp-server and python-lsp-ruff
+    ;; see https://github.com/python-lsp/python-lsp-server
+    ;; and https://github.com/charliermarsh/ruff
+    '((:pylsp . (:plugins ( :ruff (:enabled t)))))))
 
 (use-package eglot-hierarchy
   :elpaca (:host github :repo "dolmens/eglot-hierarchy"))
@@ -125,17 +133,24 @@
 ;; (add-hook 'acm-mode-hook #'evil-normalize-keymaps)
 
 ;;; citre ===================================================
+(defun mk/citre-eglot-integration()
+  "Disable some functionalities of citre for not messing up with eglot."
+  (setq-local citre-enable-imenu-integration nil)
+  (setq-local citre-enable-xref-integration nil))
+
 (use-package citre
   :init
   (require 'citre-config)
   :config
-  (setq-default citre-enable-imenu-integration nil) ;; disable imenu integration
+  (add-hook 'eglot-managed-mode-hook #'mk/citre-eglot-integration)
+  (add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
   (setq
     citre-default-create-tags-file-location 'global-cache
     citre-use-project-root-when-creating-tags t
     citre-prompt-language-for-ctags-command t
     citre-capf-substr-completion t
-    citre-auto-enable-citre-mode-modes '(prog-mode))
+    ;; for my custom MarkdownTAG
+    citre-auto-enable-citre-mode-modes '(prog-mode markdown-mode))
   (add-to-list 'completion-category-overrides
     '(citre (substring basic))) ;; it seems that citre only support substring
   ;; (setq evil-lookup-func #'citre-peek) ;; mapping key "K"
@@ -249,7 +264,7 @@
             (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))
           ;; zig
           ((eq major-mode 'zig-mode)
-            "zig build")
+            (concat "zig run " relative-file-name))
           ;; js
           ((or (eq major-mode 'js-mode) (eq major-mode 'js-ts-mode))
             (concat "node " relative-file-name))
