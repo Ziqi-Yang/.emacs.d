@@ -305,15 +305,20 @@ Example:
        ("d" . peek-collection-dict)))
 
   ;; replace (r)
+  ;; note: use emacs narrow function to to things better
   (mk/define&set-keymap
     "C-c r" mk/replace-keymap
-    '(("r" . query-replace)
+    `(("r" . substitute-target-in-buffer)
+       ("d" . substitute-target-in-defun)
        ("R" . query-replace-regexp)
-       ("i" . color-rg-search-input-in-current-file)
-       ("I" . color-rg-search-input-in-project)
-       ("b" . color-rg-search-symbol-in-current-file) ;; buffer
-       ("d" . color-rg-search-symbol-with-type)       ;; directory
-       ("p" . color-rg-search-project-with-type)))    ;; project
+       ("g" . ,(mk/define&set-keymap
+                 "C-c r g" mk/replace-colorrg-keymap
+                 '(("i" . color-rg-search-input-in-current-file)
+                    ("I" . color-rg-search-input-in-project)
+                    ("b" . color-rg-search-symbol-in-current-file) ;; buffer
+                    ("d" . color-rg-search-symbol-with-type)       ;; directory
+                    ("p" . color-rg-search-project-with-type)  ;; project
+                    )))))
 
   ;; search (s)
   (mk/define&set-keymap

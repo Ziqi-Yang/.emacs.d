@@ -118,6 +118,12 @@
 ;; 	(keyfreq-autosave-mode 1))
 
 
+;;; Replace =================================================
+(use-package substitute
+  :elpaca (:type git :host sourcehut :repo "protesilaos/substitute")
+  :config
+  (add-hook 'substitute-post-replace-functions #'substitute-report-operation))
+
 (provide 'editor)
 
 ;;; editor.el ends here
