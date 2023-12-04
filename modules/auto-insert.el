@@ -88,7 +88,33 @@ public class %s {
   public static void main(String[] args) {
     System.out.println(String.format(\"%%s\", \"El Psy Kongaroo\"));
   }
-}" package-name fn))))))
+}" package-name fn)))))
+
+  (define-auto-insert
+    'editorconfig-conf-mode
+    '(insert
+       "# https://EditorConfig.org
+# https://github.com/editorconfig/editorconfig/wiki/Projects-Using-EditorConfig
+
+# top-most EditorConfig file
+root = true
+
+# All Files
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+# Unix-style newlines with a newline ending every file
+end_of_line = lf
+insert_final_newline = true
+
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
+
+[*.java]
+indent_size = 2
+")))
 
 (provide 'auto-insert)
 ;;; auto-insert.el ends here

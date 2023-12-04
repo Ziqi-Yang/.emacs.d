@@ -1,7 +1,9 @@
 fundamental-mode ;; Available everywhere
+;; use 'a' to prefix so some template can work
 
 (today (format-time-string "%Y-%0m-%0d"))
-(filename (file-name-base buffer-file-name))
+(afile buffer-file-name)
+(afilename (file-name-nondirectory buffer-file-name))
 (filename-title (upcase-initials (s-replace-regexp (rx (or "-" "_")) " " (file-name-base buffer-file-name))))
 
 org-mode

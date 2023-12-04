@@ -37,3 +37,5 @@
 
 
 (provide 'l-java)
+
+;;; l-java.el ends here

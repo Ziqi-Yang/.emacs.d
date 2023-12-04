@@ -3,9 +3,6 @@
 
 ;;; Code:
 
-;; straight.el
-;; (setq straight-repository-branch "develop")
-
 ;; (setq debug-on-error t)
 
 (defvar elpaca-installer-version 0.6)
@@ -94,6 +91,7 @@
   (require 'adbkeyboard)
   (require 'emacs-developer)
   (require 'hugo)
+  (require 'my-advice-adds)
   (require 'emacs30))
 
 ;; load language

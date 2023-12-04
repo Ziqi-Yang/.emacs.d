@@ -31,12 +31,6 @@ line; else the surrounding white spaces."
       (forward-char)))
   (activate-mark))
 
-(defun mk/better-back-to-indentation ()
-  "Back to indentation and enter into meow insert mode."
-  (interactive)
-  (back-to-indentation)
-  (meow-insert))
-
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (setq meow-keypad-start-keys '((?h . ?h)
@@ -153,7 +147,6 @@ line; else the surrounding white spaces."
     '("M-D" . surround-change)
     '("C-o" . xref-go-back)
     '("C-i" . xref-go-forward)
-    '("C-S-i" . mk/better-back-to-indentation)
     '(":" . async-shell-command)
     '("C-m" . set-mark-command)
     '("C-M-h" . backward-sexp)

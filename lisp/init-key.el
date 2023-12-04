@@ -4,6 +4,7 @@
 ;; TIPS:
 ;; C-M-i: ispell-complete-word
 ;; C-M-/: dabbrev-copmletion
+;; C-x SPC: rectangle-mark-mode
 ;;; Code:
 
 ;; remove existing keybindings
