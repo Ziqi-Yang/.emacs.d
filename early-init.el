@@ -38,18 +38,18 @@
 	    (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
 
 ;;; UI settings =============================================
+(setq default-frame-alist '((fullscreen . maxmized) (alpha-background . 92)
+                             (vertical-scroll-bars)))
+(setq initial-frame-alist default-frame-alist)
+
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (menu-bar-mode -1)
 (pixel-scroll-precision-mode 1)
-(set-fringe-mode 3) ;; diff-hl make use of fringe
+;; set fringe width
+(set-fringe-mode 8) ;; diff-hl make use of fringe
 
-;; Emacs 29 alpha background
-(push (cons 'alpha-background 92) default-frame-alist)
-;; Maximize window (so variables like frame-pixel-height can detect window height properly)
-;; though it seems like the value of `frame-pixel-height' in `server-after-make-frame-hook' is not set properly
-(push (cons 'fullscreen 'maxmized) default-frame-alist)
 
 (column-number-mode)
 ;; (global-display-line-numbers-mode 1)

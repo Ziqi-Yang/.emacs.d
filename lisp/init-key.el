@@ -406,6 +406,8 @@ Example:
                  '(("d" . elpaca-delete)
                     ("p" . elpaca-manager)
                     ("b" . elpaca-browse)
+                    ("f" . elpaca-fetch)
+                    ("F" . elpaca-fetch-all)
                     ("v" . elpaca-visit)
                     ("l" . elpaca-log)
                     ("t" . elpaca-try)

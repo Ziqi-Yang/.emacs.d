@@ -20,18 +20,25 @@
 ;;   (doom-themes-treemacs-config)
 ;;   (doom-themes-org-config))
 
-(use-package almost-mono-themes
-  :elpaca (:host github :repo "Ziqi-Yang/almost-mono-themes")
-  :hook (server-after-make-frame .
-				  (lambda ()
-				    (progn
-				      (load-theme 'almost-mono-gray t))))
-  :config
-  ;; (load-theme 'almost-mono-black t)
-  (load-theme 'almost-mono-gray t)
-  ;; (load-theme 'almost-mono-cream t)
-  ;; (load-theme 'almost-mono-white t)
-  )
+;; (use-package almost-mono-themes
+;;   :elpaca (:host github :repo "Ziqi-Yang/almost-mono-themes")
+;;   :hook (server-after-make-frame .
+;; 				  (lambda ()
+;; 				    (progn
+;; 				      (load-theme 'almost-mono-gray t))))
+;;   :config
+;;   ;; (load-theme 'almost-mono-black t)
+;;   (load-theme 'almost-mono-gray t)
+;;   ;; (load-theme 'almost-mono-cream t)
+;;   ;; (load-theme 'almost-mono-white t)
+;;   )
+
+(defun mk/setup-theme()
+  "Load theme"
+  (load-theme 'modus-operandi t))
+
+(add-hook 'after-init-hook #'mk/setup-theme)
+(add-hook 'server-after-make-frame-hook #'mk/setup-theme)
 
 (defun mk/setup-font-lock()
   "Set minimum font lock level for both treesit and font-lock"
@@ -39,8 +46,8 @@
   (setq font-lock-maximum-decoration 1) ;; font lock
   ;; setup jit-lock
   (setq jit-lock-chunk-size 4096
-	;; jit-lock-defer-time 0.25
-	jit-lock-stealth-time 1.25))
+	  ;; jit-lock-defer-time 0.25
+	  jit-lock-stealth-time 1.25))
 
 (add-hook 'after-init-hook #'mk/setup-font-lock())
 
