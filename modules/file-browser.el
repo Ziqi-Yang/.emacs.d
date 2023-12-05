@@ -31,12 +31,16 @@
   :custom
   (dired-subtree-cycle-depth 5)
   :custom-face
-  (dired-subtree-depth-1-face ((t (:background "gray50"))))
-  (dired-subtree-depth-2-face ((t (:background "gray45"))))
-  (dired-subtree-depth-3-face ((t (:background "gray40"))))
-  (dired-subtree-depth-4-face ((t (:background "gray35"))))
-  (dired-subtree-depth-5-face ((t (:background "gray30"))))
-  (dired-subtree-depth-6-face ((t (:background "gray25")))))
+  (dired-subtree-depth-1-face ((((background dark)) (:background "gray50"))
+                                (t (:background "gray90"))))
+  (dired-subtree-depth-2-face ((((background dark)) (:background "gray45"))
+                                (t (:background "gray85"))))
+  (dired-subtree-depth-3-face ((((background dark)) (:background "gray40"))
+                                (t (:background "gray80"))))
+  (dired-subtree-depth-4-face ((((background dark)) (:background "gray30"))
+                                (t (:background "gray75"))))
+  (dired-subtree-depth-5-face ((((background dark)) (:background "gray25"))
+                                (t (:background "gray70")))))
 
 
 (defun others/set-dired-font-face ()

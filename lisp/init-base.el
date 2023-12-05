@@ -175,6 +175,9 @@
 
 (use-package popper
   :init
+  (setq popper-reference-buffers
+    '("\\*Messages\\*"
+       "note.txt"))
   (popper-mode +1)
   (popper-echo-mode +1))
 

@@ -54,6 +54,20 @@ Example:
      (global-set-key (kbd ,prefix) ',keymap-name)
      ',keymap-name))
 
+(use-package help
+  :elpaca nil
+  :config
+  (setq help-quick-sections
+    '(("VC"
+        (vc-next-action . "vc next action")
+        (smerge-keep-lower . "Smerge keep lower"))
+       ("Completion"
+         (ispell-complete-word . "ispell")
+         (dabbrev-completion . "dabbrev"))
+       ("Selection"
+         (rectangle-mark-mode . "rectangle")
+         (delete-rectangle . "del rectangle")))))
+
 ;; Vim-like  keybinding
 (progn
   (keymap-global-set "C-w" #'mk/backward-delete-word)
@@ -107,6 +121,7 @@ Example:
   (keymap-global-set "C-c ~" #'list-processes)
   ;; C-h (SPC h) ================================================================
   ;; help (h) SPC h SPC <character>
+  (keymap-global-set "C-h h" #'help-quick)
   (keymap-global-set "C-h M" #'woman)
   (keymap-global-set "C-h d" #'shortdoc)
   (keymap-global-set "C-h c" #'helpful-callable)

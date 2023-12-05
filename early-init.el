@@ -47,6 +47,8 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 (pixel-scroll-precision-mode 1)
+;; scrolling with an ordinary mouse to be almost as smooth as scrolling with a touchpad, on systems other than X:
+(setq pixel-scroll-precision-large-scroll-height 40.0)
 ;; set fringe width
 (set-fringe-mode 6) ;; diff-hl make use of fringe
 
