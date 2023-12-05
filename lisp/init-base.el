@@ -51,8 +51,8 @@
   (tab-bar-mode 1)                           ;; enable tab bar
   (custom-set-faces
     '(tab-bar ((t (:inherit mode-line :box nil))))
-    '(tab-bar-tab ((t (:inherit mode-line :foreground "gainsboro" :box nil))))
-    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "DarkGray" :box nil))))))
+    '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
+    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box nil))))))
 
 ;; @ persp-mode
 ;; poor document, conflict with vertico-posframe when manually recover, too hard to use

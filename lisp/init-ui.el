@@ -43,7 +43,7 @@
 (defun mk/setup-font-lock()
   "Set minimum font lock level for both treesit and font-lock"
   ;; (setq treesit-font-lock-level 1) ;; treesit NOTE change back to 1
-  (setq font-lock-maximum-decoration 1) ;; font lock
+  (setq font-lock-maximum-decoration 3) ;; font lock
   ;; setup jit-lock
   (setq jit-lock-chunk-size 4096
 	  ;; jit-lock-defer-time 0.25

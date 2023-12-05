@@ -45,7 +45,7 @@
   (global-highlight-parentheses-mode)
   (setq highlight-parentheses-colors nil
 	  highlight-parentheses-highlight-adjacent t
-	  highlight-parentheses-attributes '((:weight ultra-bold :background "#808080"
+	  highlight-parentheses-attributes '((:weight ultra-bold :background "lightGray"
 						                             :box
 						                             ( :line-width (1 . -1)
 						                               :color ,(face-attribute 'shadow :foreground))))))
@@ -96,15 +96,15 @@
 
 ;; Other ====================================================
 
-(use-package combobulate
-  :elpaca (:host github :repo "mickeynp/combobulate")
-  :hook ((python-ts-mode . combobulate-mode)
-          (js-ts-mode . combobulate-mode)
-          (css-ts-mode . combobulate-mode)
-          (yaml-ts-mode . combobulate-mode)
-          (json-ts-mode . combobulate-mode)
-          (typescript-ts-mode . combobulate-mode)
-          (tsx-ts-mode . combobulate-mode)))
+;; (use-package combobulate
+;;   :elpaca (:host github :repo "mickeynp/combobulate")
+;;   :hook ((python-ts-mode . combobulate-mode)
+;;           (js-ts-mode . combobulate-mode)
+;;           (css-ts-mode . combobulate-mode)
+;;           (yaml-ts-mode . combobulate-mode)
+;;           (json-ts-mode . combobulate-mode)
+;;           (typescript-ts-mode . combobulate-mode)
+;;           (tsx-ts-mode . combobulate-mode)))
 
 ;;; Focus ===================================================
 ;; focus mode, dim other text color

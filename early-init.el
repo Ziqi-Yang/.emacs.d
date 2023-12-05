@@ -48,7 +48,7 @@
 (menu-bar-mode -1)
 (pixel-scroll-precision-mode 1)
 ;; set fringe width
-(set-fringe-mode 8) ;; diff-hl make use of fringe
+(set-fringe-mode 6) ;; diff-hl make use of fringe
 
 
 (column-number-mode)
