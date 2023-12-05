@@ -274,6 +274,7 @@ FRAME: nil for current selected frame."
   :elpaca nil
   :custom
   (dabbrev-check-other-buffers nil)
+  (dabbrev-case-fold-search nil) ;; to make dabbrev completion match case
   :config
   (add-to-list 'dabbrev-ignored-buffer-modes 'text-mode))
 

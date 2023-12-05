@@ -66,11 +66,12 @@
   (keymap-set dired-sidebar-mode-map "h" #'dired-sidebar-up-directory)
   (keymap-set dired-sidebar-mode-map "l" #'dired-sidebar-find-file))
 
-(defun mk/dired-find-file ()
-  "Like `find-file' but with `default-directory' set to the
-one specified by listing header."
+(defun mk/smart-find-file ()
+  "Context intelligent Find file."
   (interactive)
-  (let ((default-directory (dired-current-directory)))
+  (if (derived-mode-p 'dired-mode)
+    (let ((default-directory (dired-current-directory)))
+      (call-interactively #'find-file))
     (call-interactively #'find-file)))
 
 (with-eval-after-load 'dired
@@ -78,10 +79,9 @@ one specified by listing header."
   (keymap-set dired-mode-map "l" #'dired-find-file)
   
   (keymap-set dired-mode-map "/" #'dired-isearch-filenames)
-  (keymap-set dired-mode-map "M-f" #'mk/dired-find-file)
-  ;; SPC f f doesn't work, since meow key pad mod translate key from global-map?
-  (keymap-set dired-mode-map "C-c f f" #'mk/dired-find-file)
 
   (keymap-set dired-mode-map "<tab>" #'dired-subtree-cycle))
 
 (provide 'file-browser)
+
+;;; file-browser.el ends here

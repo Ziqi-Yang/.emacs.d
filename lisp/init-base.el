@@ -487,6 +487,13 @@
 ;;   (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
 ;;   (emacs-gc-stats-mode +1))
 
+;;; eldoc headline (my package)
+(use-package eldoc-headline
+  :elpaca (:type git :host sourcehut :repo "meow_king/eldoc-headline")
+  :custom (eldoc-headline-disable-echo-area t)
+  :config
+  (eldoc-headline-mode 1))
+
 
 ;; expand region ===========
 (use-package expreg

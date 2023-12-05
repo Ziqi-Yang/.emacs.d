@@ -160,9 +160,22 @@
   :init (doom-modeline-mode 1))
 
 ;;; Navigation Highlight ====================================
-(use-package beacon
-  :config
-  (beacon-mode 1))
+;; (use-package beacon
+;;   :config
+;;   (beacon-mode 1))
+
+;; (use-package pulsar
+;;   :elpaca (:type git :host github :repo "protesilaos/pulsar")
+;;   :config
+;;   ;; integration with the `consult' package:
+;;   (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
+;;   (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry)
+
+;;   ;; integration with the built-in `imenu':
+;;   (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+;;   (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
+  
+;;   (pulsar-global-mode 1))
 
 ;;; Center Area =============================================
 ;; (use-package olivetti

@@ -75,6 +75,8 @@ Example:
   (keymap-global-set "M-h" #'tab-previous)
   (keymap-global-set "M-l" #'tab-next)
 
+  (keymap-global-set "C-h e" #'eldoc)
+
   (keymap-global-set "C-/" #'undo-only)
   
   (keymap-global-set "S-<return>" #'meow-open-below)
@@ -149,8 +151,8 @@ Example:
        ("r" . mk/reload-buffer)
        ("p" . mk/smart-buffer-switch-no-hidden)
        ("P" . mk/smart-buffer-switch)
-       ("d" . mk/kill-buffer)
-       ("k" . mk/kill-buffer)
+       ("d" . kill-current-buffer)
+       ("k" . kill-current-buffer)
        ("K" . mk/kill-all-buffers)))
 
   ;; bookmark(B)
@@ -211,7 +213,7 @@ Example:
   (mk/define&set-keymap
     "C-c f" keymap/file
     '(("D" . mk/delete-file)
-       ("f" . find-file)
+       ("f" . mk/smart-find-file)
        ("F" . mk/find-file-other-window)
        ("p" . project-find-file)
        ("P" . mk/project-find-file-other-window)
@@ -277,8 +279,8 @@ Example:
        ("e" . eww-list-bookmarks)
        ("E" . mk/browse-emacs-devel)
        ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
-       ("d" . mk/open-dired-smart)
-       ("D" . dired-jump)
+       ("d" . dired-jump)
+       ("D" . mk/open-dired-smart)
        ("r" . mk/draw-diagram)
        ("t" . mk/open-terminal-smart)
        ("T" . mk/open-terminal-here)))
@@ -470,11 +472,6 @@ START END."
       (if (comment-search-forward end t)
         (comment-indent)
         (goto-char end)))))
-
-(defun mk/kill-buffer()
-  "Kill buffer without deleting its window. (unlike evil-delete-buffer)"
-  (interactive)
-  (kill-buffer))
 
 (defun mk/kill-all-buffers ()
   "Kill all buffers except *dashboard*."
@@ -846,6 +843,14 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
   (if (project-current)
     (project-dired)
     (dired-jump)))
+
+(defun mk/smart-find-file ()
+  "Context intelligent Find file."
+  (interactive)
+  (if (derived-mode-p 'dired-mode)
+    (let ((default-directory (dired-current-directory)))
+      (call-interactively #'find-file))
+    (call-interactively #'find-file)))
 
 (defun mk/backward-delete-word (&optional arg)
   "Like `backward-kill-word', but don't modify kill-ring.

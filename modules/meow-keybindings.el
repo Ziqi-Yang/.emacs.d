@@ -161,6 +161,13 @@ line; else the surrounding white spaces."
   (meow-setup)
   (meow-global-mode 1))
 
+
+;; remap `q' in major modes
+(with-eval-after-load 'vc-dir
+  (define-key vc-dir-mode-map (kbd "q") #'kill-current-buffer))
+(with-eval-after-load 'image-mode
+  (define-key image-mode-map (kbd "q") #'kill-current-buffer))
+
 (provide 'meow-keybindings)
 
 ;;; meow-keybindings.el ends here

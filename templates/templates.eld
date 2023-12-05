@@ -48,3 +48,7 @@ zig-mode
 
 (pl "std.debug.print(\"{any}\", .{" q "});")
 
+
+js-ts-mode
+
+(pl "console.log(" q ")")

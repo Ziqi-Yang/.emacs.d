@@ -11,8 +11,12 @@
 ;; }
 ;;; Code:
 
-(setq python-shell-interpreter "ipython"
-  python-shell-interpreter-args "-i --simple-prompt --InteractiveShell.display_page=True")
+;; (setq python-shell-interpreter "ipython"
+;;   python-shell-interpreter-args "-i --simple-prompt --InteractiveShell.display_page=True")
+
+(with-eval-after-load
+  (setq python-shell-interpreter "python"
+    python-shell-interpreter-args "-i"))
 
 (provide 'l-python)
 ;;; l-python.el ends here

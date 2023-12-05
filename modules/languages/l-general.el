@@ -101,6 +101,7 @@
 ;; @ eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
 
+
 ;;; @ lsp-bridge ============================================
 ;; (use-package yasnippet
 ;;   :config
@@ -165,10 +166,10 @@
 ;;   )
 
 ;;; Breadcrumb ==============================================
-(use-package breadcrumb
-  :elpaca (:type git :host github :repo "joaotavora/breadcrumb")
-  :config
-  (breadcrumb-mode))
+;; (use-package breadcrumb
+;;   :elpaca (:type git :host github :repo "joaotavora/breadcrumb")
+;;   :config
+;;   (breadcrumb-mode))
 
 ;;; Syntax Checker ==========================================
 ;; flymake is integrated with eglot, so we only need to enable it for emacs lisp mode
@@ -215,7 +216,6 @@
 
 ;; to custom language server (like flags), add-to-list 'eglot-server-programs
 
-
 ;;; Debug =======================================================================
 (use-package dape
   ;; Currently only on github
@@ -223,8 +223,11 @@
 
 ;;; Compile command for each mode ===========================
 ;; since configuration files for some mode doesn't exist, so I put it all here
-(defun mk/set-compile-command ()
-  "Define compile command for every mode."
+(defun mk/set-compile-command (&optional major-mode-first)
+  "Define compile command for every mode.
+MAJOR-MODE-FIRST: respect more about major mode configuration than project
+configuration (like Makefile)."
+  (interactive (list t))
   ;; to make sure buffer has corresponding file, and prevent
   ;; error when loading lisp-interaction-mode at emacs startup
   (when buffer-file-name
@@ -239,8 +242,8 @@
               (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path)))
               (gradlew-project (file-exists-p (expand-file-name "gradlew" base-path))))
         (cond
-          (makefile-exist
-            "make ")
+          ((and (not major-mode-first) makefile-exist)
+            "make run")
           (gradlew-project
             "./gradlew run")
           ;; rust
@@ -287,6 +290,8 @@
             (concat "mermaid-open -v " relative-file-name " --no-open | xargs firefox-developer-edition "))
           ((eq major-mode 'plantuml-mode) ;; it seems like that we need to manually run it
             (concat "env PLANTUML_LIMIT_SIZE=327680 plantuml " relative-file-name " && imv " relative-bare-file-name ".png"))
+          ((and major-mode-first makefile-exist)
+            "make run")
           ;; other
           (t "make "))))))
 
@@ -296,3 +301,5 @@
 (setq project-vc-extra-root-markers '("Cargo.toml" ".project-root"))
 
 (provide 'l-general)
+
+;;; l-general.el ends here

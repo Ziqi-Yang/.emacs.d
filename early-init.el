@@ -52,7 +52,7 @@
 (push (cons 'fullscreen 'maxmized) default-frame-alist)
 
 (column-number-mode)
-(global-display-line-numbers-mode 1)
+;; (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'absolute)
 
 (setq
@@ -63,3 +63,4 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (provide 'early-init)
+;;; early-init.el ends here
