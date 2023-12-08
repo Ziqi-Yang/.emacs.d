@@ -453,6 +453,8 @@
                    meow-line
                    meow-beginning-of-thing
                    meow-end-of-thing
+                   isearch-forward
+                   isearch-backward
                    consult-line
                    consult-imenu
                    consult-ripgrep
@@ -469,9 +471,13 @@
   (ediff-split-window-function 'split-window-horizontally))
 
 ;;; Hack Garbage Collector ======================================================
-(use-package gcmh
-  :config
-  (gcmh-mode))
+;; emacs2023 conf discuss the emacs gc, and some user pointed out the way that gcmh
+;; done is not effective.
+;; https://emacsconf.org/2023/talks/gc/
+;;  -> Download --pad.md, which is https://media.emacsconf.org/2023/emacsconf-2023-gc--emacsgcstats-does-garbage-collection-actually-slow-down-emacs--ihor-radchenko--pad.md
+;; (use-package gcmh
+;;   :config
+;;   (gcmh-mode))
 
 ;;; Bookmark Manage
 (use-package ebm

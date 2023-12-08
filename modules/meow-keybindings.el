@@ -117,7 +117,7 @@ line; else the surrounding white spaces."
     ;; '("R" . meow-swap-grab)
     '("s" . meow-kill)
     '("t" . meow-till)
-    '("u" . meow-undo)
+    '("u" . undo-only)
     ;; '("U" . meow-undo-in-selection)
     '("U" . undo-redo)
     '("v" . meow-visit)
@@ -150,7 +150,7 @@ line; else the surrounding white spaces."
     '(":" . async-shell-command)
     '("C-m" . set-mark-command)
     '("C-M-h" . backward-sexp)
-    '("C-M-l" . forward-sexp)
+    '("C-M-l" . forward-sep)
     '("C-." . embark-act)
     '("C-S-v" . clipboard-yank)
     '("C-S-c" . mk/better-clipboard-kill-ring-save)
@@ -167,6 +167,39 @@ line; else the surrounding white spaces."
   (define-key vc-dir-mode-map (kbd "q") #'kill-current-buffer))
 (with-eval-after-load 'image-mode
   (define-key image-mode-map (kbd "q") #'kill-current-buffer))
+
+;;; Add things to meow-cheatsheet
+
+(define-advice meow-cheatsheet
+  (:after (&rest args) add-notes)
+  (let ((notes
+          '(("Completion" .
+              "Command | Keybinding | Description
+ispell-complete-word | C-M-i")
+             ("Selection Operation" .
+               "Command | Keybinding | Description
+dabbrev-copmletion | C-M-/ 
+rectangle-mark-mode | C-x SPC
+align-regexp | C-u M-x | align regexp whole line")
+             ("Miscellaneous" . "Command | Keybinding | Description
+table-insert
+table-capture"))))
+    (save-excursion
+      (with-current-buffer (current-buffer)
+        (setq buffer-read-only nil)
+        (goto-char (point-max))
+        (insert "\n\n" (propertize "My Custom Notes" 'font-lock-face 'org-level-1) "\n\n")
+        (dolist (note notes)
+          (insert (propertize (car note) 'font-lock-face 'org-level-2) "\n")
+          (let ((point-beg (point)))
+            (insert (cdr note))
+            ;; note that `table-capture' won't update point
+            (table-capture point-beg
+              (point)
+              "|" "$" 'left 20)
+            (goto-char (point-max))
+            (insert "\n")))
+        (setq buffer-read-only t)))))
 
 (provide 'meow-keybindings)
 

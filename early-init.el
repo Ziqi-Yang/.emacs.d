@@ -16,9 +16,11 @@
 ;; variable) to an unlimited size in "early-init.el", this helps improving the
 ;; startup time, but needs to be set down to a more reasonable value after Emacs
 ;; gets loaded. The use of `gcmh-mode' ensures reverting this value so we don't
-;; need to do it manually.
-(setq gc-cons-threshold most-positive-fixnum
-  ;; gc-cons-percentage 0.5
+;; need to do it manually. -- I changed this configuration, see my comments around
+;; my setup of gcmh
+(setq
+  gc-cons-threshold (* 50 1024 1024)
+  gc-cons-percentage 0.2
   read-process-output-max (* 10 1024 1024))
 
 ;; ;; @ time ;; discord, since dashboard owns the same function

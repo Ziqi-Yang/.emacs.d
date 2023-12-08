@@ -6,7 +6,7 @@
 (setq-default tab-width 2
 	indent-tabs-mode nil  ; use white spaces instead of tabs
 	evil-shift-width tab-width
-	scroll-margin 15
+	;; scroll-margin 15
 	scroll-step 1
 	select-enable-clipboard nil)  ; make register indepentent from clipboard
 
@@ -65,6 +65,7 @@
   :elpaca nil
   :hook ((prog-mode) . electric-pair-mode)
   :config
+  (add-hook 'web-mode-hook #'(lambda () (electric-pair-local-mode -1)))
   (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
                                (?\{ . ?\})
                                (?\[ . ?\])

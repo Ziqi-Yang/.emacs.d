@@ -89,11 +89,15 @@
 	(setq completion-category-overrides '((eglot (styles orderless))))
 
 
+  ;; how to configure eglot-workspace-configuration:
+  ;; https://paste.sr.ht/~meow_king/df83c4dd8541e54befe511ddaf0eeee7cb59eaba
   (setq-default eglot-workspace-configuration
     ;; install python-lsp-server and python-lsp-ruff
     ;; see https://github.com/python-lsp/python-lsp-server
     ;; and https://github.com/charliermarsh/ruff
-    '((:pylsp . (:plugins ( :ruff (:enabled t)))))))
+    '((:pylsp . (:plugins (:ruff (:enabled t)
+                            ;; :rope_autoimport doens't work ...
+                            ))))))
 
 (use-package eglot-hierarchy
   :elpaca (:host github :repo "dolmens/eglot-hierarchy"))

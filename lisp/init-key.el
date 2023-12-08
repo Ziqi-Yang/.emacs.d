@@ -2,9 +2,7 @@
 ;;; Commentary:
 ;; NOTE: global key bindings will be shadowed by local keybindings
 ;; TIPS:
-;; C-M-i: ispell-complete-word
-;; C-M-/: dabbrev-copmletion
-;; C-x SPC: rectangle-mark-mode
+;; meow-cheatsheet  (I've customed this command to also display my own notes)
 ;;; Code:
 
 ;; remove existing keybindings
@@ -54,20 +52,6 @@ Example:
      (global-set-key (kbd ,prefix) ',keymap-name)
      ',keymap-name))
 
-(use-package help
-  :elpaca nil
-  :config
-  (setq help-quick-sections
-    '(("VC"
-        (vc-next-action . "vc next action")
-        (smerge-keep-lower . "Smerge keep lower"))
-       ("Completion"
-         (ispell-complete-word . "ispell")
-         (dabbrev-completion . "dabbrev"))
-       ("Selection"
-         (rectangle-mark-mode . "rectangle")
-         (delete-rectangle . "del rectangle")))))
-
 ;; Vim-like  keybinding
 (progn
   (keymap-global-set "C-w" #'mk/backward-delete-word)
@@ -91,7 +75,7 @@ Example:
 
   (keymap-global-set "C-h e" #'eldoc)
 
-  (keymap-global-set "C-/" #'undo-only)
+  (keymap-global-set "C-/" #'avy-isearch)
   
   (keymap-global-set "S-<return>" #'meow-open-below)
   (keymap-global-set "M-S-<return>" #'meow-open-above)
@@ -121,7 +105,7 @@ Example:
   (keymap-global-set "C-c ~" #'list-processes)
   ;; C-h (SPC h) ================================================================
   ;; help (h) SPC h SPC <character>
-  (keymap-global-set "C-h h" #'help-quick)
+  (keymap-global-set "C-h h" #'meow-cheatsheet)
   (keymap-global-set "C-h M" #'woman)
   (keymap-global-set "C-h d" #'shortdoc)
   (keymap-global-set "C-h c" #'helpful-callable)
