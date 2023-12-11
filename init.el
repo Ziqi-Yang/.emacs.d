@@ -70,6 +70,22 @@
 (push (expand-file-name "modules" user-emacs-directory) load-path)
 (push (expand-file-name "modules/languages" user-emacs-directory) load-path)
 
+;; modern looking
+;; https://emacsconf.org/2023/talks/flat/
+;; with a little modifications
+(defun flat-style(theme &rest args)
+  (custom-set-faces
+    '(header-line
+       ((t (:inherit mode-line
+             :box (:style flat-button)))) t)
+    '(mode-line
+       ((t (:inherit mode-line
+             :box (:style flat-button)))) t)
+    '(mode-line-inactive
+       ((t (:inherit mode-line-inactive
+             :box (:style flat-button)))) t)))
+(advice-add 'load-theme :after #'flat-style)
+
 ;; NOTE: module name should be unique(also to the built-in module)
 (with-temp-message ""
   (require 'init-base)
