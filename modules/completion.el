@@ -73,12 +73,13 @@ FRAME: nil for current selected frame."
   ;; configure display per command
   (vertico-multiform-mode)
 
-  (setq completion-in-region-function
-    (lambda (&rest args)
-      (apply (if vertico-mode
-               #'consult-completion-in-region
-               #'completion--in-region)
-        args)))
+  ;; one downgrade here: https://github.com/minad/consult#miscellaneous
+  ;; (setq completion-in-region-function
+  ;;   (lambda (&rest args)
+  ;;     (apply (if vertico-mode
+  ;;              #'consult-completion-in-region
+  ;;              #'completion--in-region)
+  ;;       args)))
 
   (mk/vertico-setup-multiform-commands)
   (add-function :after after-focus-change-function #'mk/vertico-setup-multiform-commands-focus-change-function))
@@ -145,7 +146,8 @@ FRAME: nil for current selected frame."
   :init
   (setq completion-styles '(orderless basic)
     completion-category-defaults nil
-    completion-category-overrides nil)
+    completion-category-overrides nil
+    orderless-component-separator #'orderless-escapable-split-on-space)
   :config
   (with-eval-after-load 'eglot
     (add-to-list 'completion-category-overrides
@@ -204,34 +206,38 @@ FRAME: nil for current selected frame."
 ;;; Corfu: In Region Completion  ============================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 ;; use vertico completion instead(since I don't use completion often)
-;; (use-package corfu
-;;   :elpaca (:host github :repo "minad/corfu"
-;; 		        :files ("*.el" "extensions/*.el"))
-;;   :custom
-;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-;;   (corfu-on-exact-match 'quit)
-;;   (corfu-auto nil)               ;; Disable auto completion
-;;   (corfu-auto-delay 0.5)           ;; Enable auto completion
-;;   (corfu-auto-prefix 2)          ;; Enable auto completion
-;;   :init
-;;   (global-corfu-mode)
-;;   ;; remembers selected candidates and sorts the candidates
-;;   (corfu-history-mode)
-;;   ;; quick select, M-<number> <ret>
-;;   (corfu-indexed-mode)
-;;   ;; popup info
-;;   ;; (corfu-popupinfo-mode)
-;;   ;; (setq corfu-popupinfo-delay (cons 0.2 0.2))
-
-;;   ;; enable corfu completion in minibuffer
-;;   (defun corfu-enable-in-minibuffer ()
-;;     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-;;     (when (where-is-internal #'completion-at-point (list (current-local-map)))
-;;       ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
-;;       (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-;; 		    corfu-popupinfo-delay nil)
-;;       (corfu-mode 1)))
-;;   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
+(use-package corfu
+  :elpaca (:host github :repo "minad/corfu"
+		        :files ("*.el" "extensions/*.el"))
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-on-exact-match 'quit)
+  (corfu-auto nil)               ;; Disable auto completion
+  (corfu-auto-delay 0.5)
+  (corfu-auto-prefix 2)
+  :bind
+  ;; Configure SPC for separator insertion (default M-SPC)
+  (:map corfu-map ("SPC" . corfu-insert-separator))
+  :init
+  (global-corfu-mode)
+  ;;  displays a brief candidate documentation in the echo area
+  (corfu-echo-mode)
+  ;; remembers selected candidates and sorts the candidates
+  (corfu-history-mode)
+  ;; quick select, M-<number> <ret>
+  (corfu-indexed-mode)
+  ;; popup info
+  (corfu-popupinfo-mode)
+  (setq corfu-popupinfo-delay (cons 0.7 0.7))
+  :config
+  ;; when in terminal Emacs, use consult+vertico completion
+  (unless (display-graphic-p)
+    (setq completion-in-region-function
+      (lambda (&rest args)
+        (apply (if vertico-mode
+                 #'consult-completion-in-region
+                 #'completion--in-region)
+          args)))))
 
 ;; (use-package corfu-terminal
 ;;   :elpaca (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
@@ -240,23 +246,11 @@ FRAME: nil for current selected frame."
 ;;   (unless (display-graphic-p)
 ;;     (corfu-terminal-mode +1)))
 
-;; (use-package corfu-candidate-overlay
-;;   :elpaca (:type git
-;; 		        :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
-;; 		        :files (:defaults "*.el"))
-;;   :after corfu
-;;   :config
-;;   (corfu-candidate-overlay-mode)
-;;   (set-face-foreground 'corfu-candidate-overlay-face "DarkGray"))
-
 ;; @ corfu recommended defualt configuration
 (use-package emacs
   :elpaca nil
   :init
   ;; (setq completion-cycle-threshold 0)
-  ;; Hide commands in M-x which do not apply to the current mode.
-  (setq read-extended-command-predicate
-	  #'command-completion-default-include-p)
   (setq tab-always-indent 'complete))
 
 ;; @ enable corfu in terminal emacs

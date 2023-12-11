@@ -101,7 +101,8 @@ Example:
   (keymap-global-set "C-c :" #'eval-expression)
   (keymap-global-set "C-c \`" #'tab-switch)
   (keymap-global-set "C-c ;" #'async-shell-command)
-  (keymap-global-set "C-c SPC" #'which-key-show-major-mode)
+  ;; (keymap-global-set "C-c SPC" #'which-key-show-major-mode)
+  (keymap-global-set "C-c SPC" #'consult-mode-command) ;; use l/g/m to filter
   (keymap-global-set "C-c ~" #'list-processes)
   ;; C-h (SPC h) ================================================================
   ;; help (h) SPC h SPC <character>
@@ -145,7 +146,7 @@ Example:
     "C-c b" keymap/buffer
     '(("b" . mk/consult-buffer-no-hidden)
        ("o" . switch-to-buffer-other-window)
-       ("B" . consult-buffer)
+       ("B" . consult-buffer) ;; use SPC to filter hidden buffer 
        ("c" . mk/switch-to-compilation-buffer)
        ("r" . mk/reload-buffer)
        ("p" . mk/smart-buffer-switch-no-hidden)
@@ -336,11 +337,14 @@ Example:
                    ("i" . mk/better-info-apropos)
                    ("I" . info-apropos))))
        ("s" . mk/better-consult-line)
+       ("f". consult-focus-lines)
        ("c" . list-colors-display)
        ("i" . consult-imenu)
        ("I" . consult-imenu-multi)
        ("m" . mk/better-consult-man)
        ("M" . consult-global-mark)
+       ;; NOTE: to post filter to filter group (i.e. filename in this case)
+       ;; https://github.com/minad/consult/issues/799
        ("p" . mk/better-consult-ripgrep)
        ("P" . mk/better-consult-git-grep)
        ("b" . consult-bookmark)
