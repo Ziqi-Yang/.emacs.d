@@ -337,6 +337,7 @@ Example:
                    ("i" . mk/better-info-apropos)
                    ("I" . info-apropos))))
        ("s" . mk/better-consult-line)
+       ("S" . mk/better-consult-line-multi)
        ("f". consult-focus-lines)
        ("c" . list-colors-display)
        ("i" . consult-imenu)
@@ -346,7 +347,7 @@ Example:
        ;; NOTE: to post filter to filter group (i.e. filename in this case)
        ;; https://github.com/minad/consult/issues/799
        ("p" . mk/better-consult-ripgrep)
-       ("P" . mk/better-consult-git-grep)
+       ("P" . mk/consult-ripgrep-file-type)
        ("b" . consult-bookmark)
        ("d" . dictionary-search)
        ("o" . consult-outline)
@@ -517,20 +518,6 @@ START END."
           )
     (start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
     ))
-
-(defun mk/consult-buffer-no-hidden()
-  "Consult buffer without displaying hidden buffers."
-  (interactive)
-  (let* ((filters consult-buffer-filter)
-          (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
-    (consult-buffer)))
-
-(defun mk/consult-project-buffer-no-hidden()
-  "Consult project buffer without displaying hidden buffers."
-  (interactive)
-  (let* ((filters consult-buffer-filter)
-          (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
-    (consult-project-buffer)))
 
 (defun mk/smart-buffer-switch-no-hidden ()
   "Smart buffer switch according to project existence without showing hidden buffers."
@@ -720,30 +707,6 @@ ARG: prefix argument."
         (concat command-prefix (project-root (project-current)) " ~/.emacs.d/gitui_start.sh"))
       (message "Not in a project!"))))
 
-(defun mk/better-consult-ripgrep (arg)
-  "Use symbol at point as the default input of `affe-grep'.
-ARG: prefix argument.  Use prefix argument when you want no default input."
-  (interactive "P")
-  (if arg
-    (call-interactively #'consult-ripgrep)
-    (consult-ripgrep nil (thing-at-point 'symbol))))
-
-(defun mk/better-consult-git-grep (arg)
-  "Use symbol at point as the default input of `affe-grep'.
-ARG: prefix argument.  Use prefix argument when you want no default input."
-  (interactive "P")
-  (if arg
-    (call-interactively #'consult-git-grep)
-    (consult-git-grep nil (thing-at-point 'symbol))))
-
-(defun mk/better-consult-line (arg)
-  "Use symbol at point as the default input of `consult-line'.
-ARG: prefix argument.  Use prefix argument when you want no default input."
-  (interactive "P")
-  (if arg
-    (call-interactively #'consult-line)
-    (consult-line (thing-at-point 'symbol) nil)))
-
 (defun mk/browse-emacs-devel()
   "Use eww to browse the emacs devel thread."
   (interactive)
@@ -771,17 +734,6 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
 ;;   ;;   (beginning-of-buffer)
 ;;   ;;   (query-replace-regexp from to))
 ;;   (message-box "Use meow-edit functionality instead!"))
-
-(defun mk/better-consult-man (arg)
-  (interactive "P")
-  (if arg
-    (call-interactively #'consult-man)
-    (consult-man (concat (thing-at-point 'symbol) "#3")))
-  ;; default: library apis
-  ;; this ugly trick here is because I have problem with
-  ;; configuring man buffer in `display-buffer-alist'
-  (other-window 1)
-  (delete-other-windows))
 
 (defun mk/update-all-tags()
   "Update both ctags and gtags file (for citre)."

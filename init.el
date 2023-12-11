@@ -78,6 +78,7 @@
   (require 'init-ui)
   (require 'editor)
   (require 'completion)
+  (require 'custom-consult-collection)
   (require 'file-browser)
   (require 'my-vc)
   (require 'my-minibuffer)

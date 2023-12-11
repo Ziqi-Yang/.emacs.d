@@ -37,7 +37,7 @@ FRAME: nil for current selected frame."
             '(grid))
           ;; display buffer according to layout
           (mk/create-vertico-multiform-commands
-            '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info)
+            '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info mk/better-consult-line-multi mk/consult-ripgrep-file-type)
             `(buffer
                (vertico-buffer-display-action . ,display-buffer-actions))))))))
 
