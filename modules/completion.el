@@ -42,9 +42,6 @@ FRAME: nil for current selected frame."
                (vertico-buffer-display-action . ,display-buffer-actions))))))))
 
 (defun mk/vertico-setup-multiform-commands-focus-change-function ()
-  ;; (message "> %s %s" (selected-frame) (frame-focus-state))
-  ;; (when (frame-focus-state)
-  ;;   )
   (let ((current-focused-frame (catch 'focused-frame
                                  (dolist (frame (frame-list))
                                    (when (frame-focus-state frame)
@@ -103,6 +100,7 @@ FRAME: nil for current selected frame."
 (use-package emacs
   :elpaca nil
   :init
+  ;; Add prompt indicator to `completing-read-multiple'.
   (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
 		        (replace-regexp-in-string
@@ -111,11 +109,17 @@ FRAME: nil for current selected frame."
 		        (car args))
 	    (cdr args)))
   (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+  
+  ;; Do not allow the cursor in the minibuffer prompt
   (setq minibuffer-prompt-properties
 	  '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+  ;; Hide commands in M-x which do not work in the current mode
   (setq read-extended-command-predicate
 	  #'command-completion-default-include-p)
+
+  ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
 
 
@@ -136,13 +140,20 @@ FRAME: nil for current selected frame."
   :init
   (marginalia-mode))
 
-
 ;;; Orderless completion ====================================
 (use-package orderless
   :init
-  (setq completion-styles '(orderless basic) ;; orderless, and basic as fallback
-	  completion-category-defaults nil
-	  completion-category-overrides '((file (styles basic partial-completion)))))
+  (setq completion-styles '(orderless basic)
+    completion-category-defaults nil
+    completion-category-overrides nil)
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'completion-category-overrides
+      '(eglot (styles orderless basic))))
+
+  (with-eval-after-load 'citre
+    (add-to-list 'completion-category-overrides
+      '(citre (styles orderless basic)))))
 
 ;;; Embark ==================================================
 (use-package embark
@@ -318,3 +329,5 @@ If INTERACTIVE is nil the function acts like a Capf."
       ,@cape--line-properties)))
 
 (provide 'completion)
+
+;;; completion.el ends here

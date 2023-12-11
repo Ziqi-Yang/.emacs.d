@@ -85,10 +85,6 @@
        zig-mode-hook ;; zig
        ))
 
-	;; corfu/orderless integration
-	(setq completion-category-overrides '((eglot (styles orderless))))
-
-
   ;; how to configure eglot-workspace-configuration:
   ;; https://paste.sr.ht/~meow_king/df83c4dd8541e54befe511ddaf0eeee7cb59eaba
   (setq-default eglot-workspace-configuration
@@ -156,8 +152,6 @@
     citre-capf-substr-completion t
     ;; for my custom MarkdownTAG
     citre-auto-enable-citre-mode-modes '(prog-mode markdown-mode))
-  (add-to-list 'completion-category-overrides
-    '(citre (substring basic))) ;; it seems that citre only support substring
   ;; (setq evil-lookup-func #'citre-peek) ;; mapping key "K"
   )
 

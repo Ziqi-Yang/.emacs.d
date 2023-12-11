@@ -181,6 +181,9 @@ ispell-complete-word | C-M-i")
 dabbrev-copmletion | C-M-/ 
 rectangle-mark-mode | C-x SPC
 align-regexp | C-u M-x | align regexp whole line")
+             ("VC Operation" .
+               "Command | Keybinding | Description
+Smerge | C-c ^ | `=' diff; `o': merge below")
              ("Miscellaneous" . "Command | Keybinding | Description
 table-insert
 table-capture"))))

@@ -19,9 +19,17 @@
 ;; need to do it manually. -- I changed this configuration, see my comments around
 ;; my setup of gcmh
 (setq
-  gc-cons-threshold (* 50 1024 1024)
-  gc-cons-percentage 0.2
+  ;; set a high value before initialization, and it should be reduced to a
+  ;; proper value after init
+  gc-cons-threshold most-positive-fixnum 
+  gc-cons-percentage 0.3
   read-process-output-max (* 10 1024 1024))
+(defun mk/setup-gc()
+  (setq
+    gc-cons-threshold (* 50 1024 1024)
+    gc-cons-percentage 0.3
+    read-process-output-max (* 10 1024 1024)))
+(add-hook 'after-init-hook #'mk/setup-gc)
 
 ;; ;; @ time ;; discord, since dashboard owns the same function
 ;; (add-hook 'emacs-startup-hook
