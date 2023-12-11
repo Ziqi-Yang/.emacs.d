@@ -75,6 +75,8 @@ Example:
 
   (keymap-global-set "C-h e" #'eldoc)
 
+  (keymap-global-set "C-s" #'isearch-forward-regexp)
+  (keymap-global-set "C-r" #'isearch-backward-regexp)
   (keymap-global-set "C-/" #'avy-isearch)
   
   (keymap-global-set "S-<return>" #'meow-open-below)

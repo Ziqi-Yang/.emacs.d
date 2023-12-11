@@ -46,7 +46,8 @@ When ARG is non-nil, then search all buffer."
                             (when-let (root (consult--project-root))
                               (consult--buffer-query :sort 'visibility
                                 :directory (and (not arg) 'project)
-                                :as #'buffer-name))))))
+                                :as #'buffer-name)))))
+         (this-command #'consult-line-multi))
     (consult-line-multi query (thing-at-point 'symbol))))
 
 (defun mk/better-consult-man (arg)
@@ -109,7 +110,8 @@ When ARG is non-nil, then search all buffer."
 (defun mk/consult-ripgrep-file-type(ftype)
   "Consult-ripgrep with file type(FTYPE) support."
   (interactive "P")
-  (let ((consult-ripgrep-args (concat consult-ripgrep-args " -t " (mk/completing-rg-types))))
+  (let ((consult-ripgrep-args (concat consult-ripgrep-args " -t " (mk/completing-rg-types)))
+         (this-command #'mk/better-consult-ripgrep))
     (call-interactively #'mk/better-consult-ripgrep)))
 
 (provide 'custom-consult-collection)

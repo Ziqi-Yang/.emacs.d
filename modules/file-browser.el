@@ -34,13 +34,13 @@
   (dired-subtree-depth-1-face ((((background dark)) (:background "gray50"))
                                 (t (:background "gray90"))))
   (dired-subtree-depth-2-face ((((background dark)) (:background "gray45"))
-                                (t (:background "gray85"))))
+                                (t (:background "gray87"))))
   (dired-subtree-depth-3-face ((((background dark)) (:background "gray40"))
-                                (t (:background "gray80"))))
+                                (t (:background "gray84"))))
   (dired-subtree-depth-4-face ((((background dark)) (:background "gray30"))
-                                (t (:background "gray75"))))
+                                (t (:background "gray81"))))
   (dired-subtree-depth-5-face ((((background dark)) (:background "gray25"))
-                                (t (:background "gray70")))))
+                                (t (:background "gray78")))))
 
 
 (defun others/set-dired-font-face ()
