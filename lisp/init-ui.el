@@ -34,8 +34,10 @@
 ;;   )
 
 (defun mk/setup-theme()
-  "Load theme"
-  (load-theme 'modus-operandi t))
+  "Load theme."
+  (if (display-graphic-p)
+    (load-theme 'modus-operandi t)
+    (load-theme 'modus-vivendi t)))
 
 (add-hook 'after-init-hook #'mk/setup-theme)
 (add-hook 'server-after-make-frame-hook #'mk/setup-theme)
@@ -239,14 +241,23 @@
 ;; help
 (add-to-list 'display-buffer-alist
   `(,(rx "*helpful" (*? nonl) "*")
-     (display-buffer-same-window)
-	   (reusable-frames . nil)))
+	   display-buffer-in-side-window
+     (side . right)
+     (window-width . .5)))
 
 ;; help
 (add-to-list 'display-buffer-alist
   `("*Help*"
-     (display-buffer-same-window)
-	   (reusable-frames . nil)))
+     display-buffer-in-side-window
+     (side . right)
+     (window-width . .5)))
+
+;; man page
+(add-to-list 'display-buffer-alist
+  `(,(rx "*Man" (*? nonl) "*")
+     display-buffer-in-side-window
+     (side . right)
+     (window-width . .5)))
 
 ;; sqlite
 (add-to-list 'display-buffer-alist
@@ -254,11 +265,12 @@
      (display-buffer-same-window)
 	   (reusable-frames . nil)))
 
-;; sqlite
+;; shortdoc
 (add-to-list 'display-buffer-alist
   `(,(rx "*Shortdoc" (*? nonl) "*")
-     (display-buffer-same-window)
-	   (reusable-frames . nil)))
+     display-buffer-in-side-window
+     (side . right)
+     (window-width . .5)))
 
 ;; ;; embark
 (add-to-list 'display-buffer-alist
@@ -266,6 +278,7 @@
 	   (display-buffer-in-tab)
 	   (side . right)
 	   (width . 0.3)))
+
 (add-to-list 'display-buffer-alist
 	'("\\*Embark Collect"
 	   (display-buffer-in-side-window)

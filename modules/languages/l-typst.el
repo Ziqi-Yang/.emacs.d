@@ -15,7 +15,7 @@
 ;;   :straight (:type git :host github :repo "Ziqi-Yang/typst-mode.el"))
 
 (use-package typst-ts-mode
-  :elpaca (:type git :host sourcehut :repo "meow_king/typst-ts-mode")
+  :elpaca (:repo "~/proj/tree-sitter/typst-ts-mode")
   :custom
   (typst-ts-mode-watch-options "--open"))
 

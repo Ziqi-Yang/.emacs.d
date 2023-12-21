@@ -48,6 +48,12 @@ FRAME: nil for current selected frame."
                                      (throw 'focused-frame frame))))))
     (mk/vertico-setup-multiform-commands current-focused-frame)))
 
+;; Sort directories before files
+(defun vertico/sort-directories-first (files)
+  (setq files (vertico-sort-history-length-alpha files))
+  (nconc (seq-filter (lambda (x) (string-suffix-p "/" x)) files)
+    (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
+
 (use-package vertico
   :elpaca (:host github :repo "minad/vertico"
 		        :files ("*.el" "extensions/*.el"))
@@ -73,13 +79,9 @@ FRAME: nil for current selected frame."
   ;; configure display per command
   (vertico-multiform-mode)
 
-  ;; one downgrade here: https://github.com/minad/consult#miscellaneous
-  ;; (setq completion-in-region-function
-  ;;   (lambda (&rest args)
-  ;;     (apply (if vertico-mode
-  ;;              #'consult-completion-in-region
-  ;;              #'completion--in-region)
-  ;;       args)))
+  (setq vertico-multiform-categories
+    '((symbol (vertico-sort-function . vertico-sort-alpha))
+       (file (vertico-sort-function . vertico/sort-directories-first))))
 
   (mk/vertico-setup-multiform-commands)
   (add-function :after after-focus-change-function #'mk/vertico-setup-multiform-commands-focus-change-function))
@@ -231,6 +233,7 @@ FRAME: nil for current selected frame."
   (setq corfu-popupinfo-delay (cons 0.7 0.7))
   :config
   ;; when in terminal Emacs, use consult+vertico completion
+  ;; one downgrade here: https://github.com/minad/consult#miscellaneous
   (unless (display-graphic-p)
     (setq completion-in-region-function
       (lambda (&rest args)

@@ -108,7 +108,8 @@ When ARG is non-nil, then search all buffer."
     (completing-read "Select file type: " types)))
 
 (defun mk/consult-ripgrep-file-type(ftype)
-  "Consult-ripgrep with file type(FTYPE) support."
+  "Consult-ripgrep with file type(FTYPE) support.
+NOTE you can also use prefix argument to specify directory."
   (interactive "P")
   (let ((consult-ripgrep-args (concat consult-ripgrep-args " -t " (mk/completing-rg-types)))
          (this-command #'mk/better-consult-ripgrep))

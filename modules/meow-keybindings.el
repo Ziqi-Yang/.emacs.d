@@ -179,7 +179,7 @@ ispell-complete-word | C-M-i")
              ("Selection Operation" .
                "Command | Keybinding | Description
 dabbrev-copmletion | C-M-/ 
-rectangle-mark-mode | C-x SPC
+mk/trans-map/rectangle | C-x r r
 align-regexp | C-u M-x | align regexp whole line")
              ("VC Operation" .
                "Command | Keybinding | Description

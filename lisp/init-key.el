@@ -73,6 +73,10 @@ Example:
   (keymap-global-set "M-h" #'tab-previous)
   (keymap-global-set "M-l" #'tab-next)
 
+  (keymap-global-set "C-x r r" #'mk/trans-map/rectangle)
+  
+  (keymap-global-set "M-SPC" #'meow-last-buffer)
+
   (keymap-global-set "C-h e" #'eldoc)
 
   (keymap-global-set "C-s" #'isearch-forward-regexp)
@@ -218,7 +222,7 @@ Example:
        ("f" . mk/smart-find-file)
        ("F" . mk/find-file-other-window)
        ("p" . project-find-file)
-       ("P" . mk/project-find-file-other-window)
+       ("P" . project-find-dir)
        ("r" . recentf-open)
        ("R" . rename-visited-file)
        ("s" . sqlite-mode-open-file)
@@ -296,6 +300,7 @@ Example:
        ("P" . project-forget-project)
        ("e" . mk/open-emacs.d)
        ("E" . flymake-show-project-diagnostics)
+       ("v" . project-vc-dir)
        ("s" . others/project-vterm)
        ("S" . project-async-shell-command)
        ("k" . project-kill-buffers)))
@@ -348,8 +353,8 @@ Example:
        ("M" . consult-global-mark)
        ;; NOTE: to post filter to filter group (i.e. filename in this case)
        ;; https://github.com/minad/consult/issues/799
-       ("p" . mk/better-consult-ripgrep)
-       ("P" . mk/consult-ripgrep-file-type)
+       ("p" . mk/consult-ripgrep-file-type)
+       ("P" . mk/better-consult-ripgrep)
        ("b" . consult-bookmark)
        ("d" . dictionary-search)
        ("o" . consult-outline)
@@ -781,13 +786,6 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
                  "|sudo:root@"
                  (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                (concat "/sudo:root@localhost:" file))))
-
-(defun mk/project-find-file-other-window ()
-  "Open a window at right for file selected by `project-find-file'."
-  (interactive)
-  (split-window-right)
-  (other-window 1)
-  (project-find-file))
 
 (defun mk/find-file-other-window ()
   "Open a window at right for file selected by `find-file'."

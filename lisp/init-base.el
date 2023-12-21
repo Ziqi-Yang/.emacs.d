@@ -54,6 +54,7 @@
     '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
     '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box nil))))))
 
+
 ;; @ persp-mode
 ;; poor document, conflict with vertico-posframe when manually recover, too hard to use
 ;; (use-package persp-mode
