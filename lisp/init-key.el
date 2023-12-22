@@ -390,7 +390,7 @@ Example:
        ("w" . ace-window)
        ("W" . mk/ace-window-balance-window)
        ("t" . others/window-split-toggle)
-       ("d" . delete-window)
+       ("d" . ace-delete-window)
        ("f" . fit-window-to-buffer)
        ("q" . delete-window)
        ("o" . delete-other-windows)

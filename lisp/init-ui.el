@@ -238,6 +238,12 @@
 
 (add-hook 'compilation-finish-functions #'mk/switch-buffer-when-compilation-finished)
 
+;; git push
+(add-to-list 'display-buffer-alist
+  `((and . (,(rx "*vc-git" (*? nonl) "*") (major-mode . compilation-mode)))
+     (display-buffer-in-side-window)
+     (side . top)))
+
 ;; help
 (add-to-list 'display-buffer-alist
   `(,(rx "*helpful" (*? nonl) "*")
