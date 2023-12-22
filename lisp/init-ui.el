@@ -240,7 +240,8 @@
 
 ;; git push
 (add-to-list 'display-buffer-alist
-  `((and . (,(rx "*vc-git" (*? nonl) "*") (major-mode . compilation-mode)))
+  `(,(rx "*vc-git" (*? nonl) "*")
+     ;; (and . (,(rx "*vc-git" (*? nonl) "*") (major-mode . compilation-mode)))
      (display-buffer-in-side-window)
      (side . top)))
 
