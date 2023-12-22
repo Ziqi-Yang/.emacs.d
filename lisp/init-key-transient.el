@@ -35,6 +35,17 @@
      ("N" "number lines" rectangle-number-lines :transient nil)
      ("C" "copy to register" copy-rectangle-to-register :transient nil)]])
 
+(transient-define-prefix mk/trans-map/consult-info ()
+  "Consult Info Menu"
+  [["Consult Info"
+     ("a" "All" consult-info :transient nil)
+     ("e" "Emacs Related" mk/consult-info-emacs :transient nil)]])
+
+(defun mk/consult-info-emacs()
+  (interactive)
+  (let ((this-command 'consult-info))
+    (consult-info "emacs" "efaq" "elisp" "cl" "compat")))
+
 (provide 'init-key-transient)
 
 ;;; init-key-transient.el ends here

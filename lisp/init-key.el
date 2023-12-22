@@ -116,7 +116,7 @@ Example:
   (keymap-global-set "C-h M" #'woman)
   (keymap-global-set "C-h d" #'shortdoc)
   (keymap-global-set "C-h c" #'helpful-callable)
-  (keymap-global-set "C-h I" #'consult-info) ;; original: describe-input-method
+  (keymap-global-set "C-h I" #'mk/trans-map/consult-info) ;; original: describe-input-method
   ;; C-x (SPC x) ================================================================
   ;; tab related (SPC x SPC t)
   ;; vundo ( SPC x u)
@@ -176,13 +176,14 @@ Example:
   (mk/define&set-keymap
     "C-c c" keymap/code
     `(("a" . eglot-code-actions)
-       ("d" . xref-find-definitions)
-       ;; eldoc: use ? (binding in meow.el)
-       ("D" . ,(mk/define&set-keymap
+       ("B" . ,(mk/define&set-keymap
                  "C-c c D" keymap/code-debug
                  '(("d" . mk/gf-debug)
                     ("D" . mk/gdb-smart)
                     ("v" . mk/debug-with-valgrind))))
+       ("d" . xref-find-definitions)
+       ("D" . xref-find-definitions-other-window)
+       ;; eldoc: use ? (binding in meow.el)
        ("e" . consult-flymake)
        ("E" . combobulate-envelop)
        ("f" . ,(mk/define&set-keymap
@@ -347,14 +348,14 @@ Example:
        ("S" . mk/better-consult-line-multi)
        ("f". consult-focus-lines)
        ("c" . list-colors-display)
-       ("i" . consult-imenu)
+       ;; note you can input keys like `v' and add a space after it to filter
+       ("i" . consult-imenu) 
        ("I" . consult-imenu-multi)
        ("m" . mk/better-consult-man)
        ("M" . consult-global-mark)
        ;; NOTE: to post filter to filter group (i.e. filename in this case)
        ;; https://github.com/minad/consult/issues/799
        ("p" . mk/consult-ripgrep-file-type)
-       ("P" . mk/better-consult-ripgrep)
        ("b" . consult-bookmark)
        ("d" . dictionary-search)
        ("o" . consult-outline)
@@ -384,7 +385,8 @@ Example:
   ;; window(w)
   (mk/define&set-keymap
     "C-c w" keymap/window
-    '(("f" . other-frame)
+    '(("c" . mk/ace-copy-window)
+       ("f" . other-frame)
        ("w" . ace-window)
        ("W" . mk/ace-window-balance-window)
        ("t" . others/window-split-toggle)
@@ -394,16 +396,13 @@ Example:
        ("o" . delete-other-windows)
        ("m" . maximize-window)
        ("M" . minimize-window)
+       ("s" . ace-swap-window)
        ("b" . balance-windows)
        ("+" . maximize-window)
        ("-" . minimize-window)
        ("=" . balance-windows)
        ("v" . mk/split-window-vertically)
-       ("h" . mk/split-window-horizontally)
-       ("L" . buf-move-right)
-       ("H" . buf-move-left)
-       ("J" . buf-move-down)
-       ("K" . buf-move-up)))
+       ("h" . mk/split-window-horizontally)))
 
   ;; utility (x)
   (mk/define&set-keymap
@@ -843,6 +842,13 @@ ARG: number of words to kill"
         ((> n l2) (hs-hide-level 1)) ;; show root function
         ((> n l3) (hs-hide-level 2))))))
 
+(defun mk/ace-copy-window ()
+  "Ace delete window."
+  (interactive)
+  (aw-select " Ace - Copy Window"
+    #'aw-copy-window))
+
+
 (defun mk/global-read-only-mode ()
   "`find-file-hook'."
   (interactive)
@@ -855,7 +861,7 @@ ARG: number of words to kill"
             (read-only-mode -1))))
       (remove-hook 'find-file-hook #'read-only-mode))
     
-    ;; add read-only-mode to all already existed normal buffers
+    ;; add read-only-mode to all already existing normal buffers
     (dolist (buf (buffer-list))
       (unless (string-match-p (rx (or " " "*") (* anychar)) (buffer-name buf))
         (with-current-buffer buf

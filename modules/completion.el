@@ -37,7 +37,7 @@ FRAME: nil for current selected frame."
             '(grid))
           ;; display buffer according to layout
           (mk/create-vertico-multiform-commands
-            '(mk/better-consult-ripgrep mk/better-consult-git-grep mk/better-consult-line consult-line consult-line-multi consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info mk/better-consult-line-multi mk/consult-ripgrep-file-type)
+            '(mk/better-consult-git-grep mk/better-consult-line consult-line consult-line-multi consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info mk/better-consult-line-multi mk/consult-ripgrep-file-type)
             `(buffer
                (vertico-buffer-display-action . ,display-buffer-actions))))))))
 
@@ -202,7 +202,11 @@ FRAME: nil for current selected frame."
   ;; integrated with xref
   (setq xref-show-xrefs-function #'consult-xref
 	  xref-show-definitions-function #'consult-xref)
-  (consult-customize consult-recent-file :preview-key nil)) ;; disable preview for recent file
+  ;; disable preview for recent file
+  (consult-customize 
+    consult-info
+    consult-recent-file :preview-key nil) 
+  ) 
 
 ;; NOTE: disable these to using lsp-bridge
 ;;; Corfu: In Region Completion  ============================

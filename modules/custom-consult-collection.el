@@ -19,14 +19,11 @@
 
 ;;; Code:
 
-
-(defun mk/better-consult-ripgrep (arg)
-  "Use symbol at point as the default input of `consult-ripgrep'.
-ARG: prefix argument.  Use prefix argument when you want no default input."
-  (interactive "P")
-  (if arg
-    (call-interactively #'consult-ripgrep)
-    (consult-ripgrep nil (thing-at-point 'symbol))))
+(defvar mk/v/prog-filter-regexp
+  `(("java" . (:method
+                ,(rx (1+ word) "(" (*? nonl) (? ")" (*? nonl) "{") (*? nonl))))
+     ("python" . (:method
+                   ,(rx "def" (*? nonl) ":")))))
 
 (defun mk/better-consult-line (arg)
   "Use symbol at point as the default input of `consult-line'.
@@ -105,15 +102,21 @@ When ARG is non-nil, then search all buffer."
                            type minibuffer-completion-table
                            nil nil #'string=)))
                    (format "\t%s" desc))))))
-    (completing-read "Select file type: " types)))
+    (completing-read "File type[empty: all]: " types nil nil (nth 0 (split-string (symbol-name major-mode) "-")))))
 
-(defun mk/consult-ripgrep-file-type(ftype)
-  "Consult-ripgrep with file type(FTYPE) support.
+(defun mk/consult-ripgrep-file-type ()
+  "Consult-ripgrep with file type support.
 NOTE you can also use prefix argument to specify directory."
-  (interactive "P")
-  (let ((consult-ripgrep-args (concat consult-ripgrep-args " -t " (mk/completing-rg-types)))
-         (this-command #'mk/better-consult-ripgrep))
-    (call-interactively #'mk/better-consult-ripgrep)))
+  (interactive)
+  (let* ((type (mk/completing-rg-types))
+          (consult-ripgrep-args (concat consult-ripgrep-args
+                                  (when (and type (not (string-empty-p type)))
+                                    (concat " -t " type))))
+          (initial (plist-get (cdr (assoc type mk/v/prog-filter-regexp)) :method))
+          (this-command #'consult-ripgrep))
+    (if initial
+      (consult-ripgrep nil initial)
+      (consult-ripgrep nil (thing-at-point 'symbol)))))
 
 (provide 'custom-consult-collection)
 

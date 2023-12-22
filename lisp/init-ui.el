@@ -259,6 +259,13 @@
      (side . right)
      (window-width . .5)))
 
+;; info page
+(add-to-list 'display-buffer-alist
+  `("\\*info\\*"
+     display-buffer-in-side-window
+     (side . right)
+     (window-width . .5)))
+
 ;; sqlite
 (add-to-list 'display-buffer-alist
   `(,(rx "*SQLite" (*? nonl) "*")
