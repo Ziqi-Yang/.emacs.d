@@ -138,7 +138,6 @@ line; else the surrounding white spaces."
     '(">" . indent-rigidly-right)
     '("?" . eldoc)
     '("~" . upcase-dwim)
-    '("/" . avy-goto-word-1)
     ;; '("/" . combobulate-avy-jump)
     '("`" . combobulate-avy-jump-defun)
     ;; M-; comment-dwim (toggle comment)

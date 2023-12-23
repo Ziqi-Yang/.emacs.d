@@ -73,6 +73,8 @@ Example:
   (keymap-global-set "M-h" #'tab-previous)
   (keymap-global-set "M-l" #'tab-next)
 
+  (keymap-global-set "<backtab>" #'outline-toggle-children)
+
   (keymap-global-set "C-x r r" #'mk/trans-map/rectangle)
   
   (keymap-global-set "M-SPC" #'meow-last-buffer)
@@ -81,7 +83,8 @@ Example:
 
   (keymap-global-set "C-s" #'isearch-forward-regexp)
   (keymap-global-set "C-r" #'isearch-backward-regexp)
-  (keymap-global-set "C-/" #'avy-isearch)
+  (keymap-global-set "C-/" #'avy-goto-word-1)
+  (keymap-global-set "C-M-/" #'avy-isearch)
   
   (keymap-global-set "S-<return>" #'meow-open-below)
   (keymap-global-set "M-S-<return>" #'meow-open-above)
@@ -421,6 +424,7 @@ Example:
                     ("v" . elpaca-visit)
                     ("l" . elpaca-log)
                     ("t" . elpaca-try)
+                    ("s" . elpaca-status)
                     ("u" . mk/elpaca-update)
                     ("U" . mk/elpaca-update-all))))))
 
