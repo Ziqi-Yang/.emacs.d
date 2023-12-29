@@ -74,8 +74,6 @@ Example:
   (keymap-global-set "M-l" #'tab-next)
 
   (keymap-global-set "<backtab>" #'outline-cycle)
-
-  (keymap-global-set "C-x r r" #'mk/trans-map/rectangle)
   
   (keymap-global-set "M-SPC" #'meow-last-buffer)
 
@@ -103,7 +101,7 @@ Example:
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
   ;; cape-dabbrev has been integrated into completion-at-point function already
-  (keymap-global-set "C-S-k" #'dabbrev-completion)
+  (keymap-global-set "M-/" #'dabbrev-completion)
   (keymap-global-set "C-S-f" #'cape-file)
   (keymap-global-set "C-S-l" #'mk/cape-line-previous-buffer))
 
@@ -175,7 +173,8 @@ Example:
        ("P" . mk/smart-buffer-switch)
        ("d" . kill-current-buffer)
        ("k" . kill-current-buffer)
-       ("K" . mk/kill-all-buffers)))
+       ;; ("K" . mk/kill-all-buffers) ;; FIXME
+       ))
 
   ;; bookmark(B)
   (mk/define&set-keymap

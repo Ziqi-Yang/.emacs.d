@@ -100,27 +100,27 @@
   (add-hook 'server-after-make-frame-hook  #'(lambda () (dashboard-refresh-buffer)))
   (dashboard-setup-startup-hook)
   (setq dashboard-projects-backend 'project-el
-	dashboard-center-content t
-	dashboard-set-heading-icons t
-	dashboard-set-file-icons t
-	dashboard-set-navigator t
-	dashboard-set-init-info t
-	dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
-	dashboard-banner-logo-title "El Psy Kongaroo"
-	dashboard-items '((recents  . 5)
-			  ;; (bookmarks . 5)
-			  (projects . 5)
-			  (agenda . 5)
-			  ;; (registers . 5)
-			  ))
+	  dashboard-center-content t
+	  dashboard-set-heading-icons t
+	  dashboard-set-file-icons t
+	  dashboard-set-navigator t
+	  dashboard-set-init-info t
+	  dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
+	  dashboard-banner-logo-title "El Psy Kongaroo"
+	  dashboard-items '((recents  . 5)
+			                 ;; (bookmarks . 5)
+			                 (projects . 5)
+			                 ;; (agenda . 5)
+			                 ;; (registers . 5)
+			                 ))
 
   ;; Format: "(icon title help action face prefix suffix)"
   (setq dashboard-navigator-buttons
-	`(((nil
-	    ,(concat "Email [" (shell-command-to-string "~/myBin/get-mu-unread-emails-num") "]") nil (lambda (&rest _) (mu4e)))
-	   (nil
-	    "Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
-           ))))
+	  `(((nil
+	       ,(concat "Email [" (shell-command-to-string "~/myBin/get-mu-unread-emails-num") "]") nil (lambda (&rest _) (mu4e)))
+	      (nil
+	        "Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
+        ))))
 
 
 ;;; font settings ===========================================

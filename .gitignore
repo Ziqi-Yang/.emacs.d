@@ -11,6 +11,7 @@
 /tree-sitter
 /openai-api-key.txt
 /elpa
+/transient
 
 *.elc
 *.eld

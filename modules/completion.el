@@ -218,6 +218,7 @@ FRAME: nil for current selected frame."
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-on-exact-match 'quit)
+  (corfu-preview-current nil)
   (corfu-auto nil)               ;; Disable auto completion
   (corfu-auto-delay 0.5)
   (corfu-auto-prefix 2)
@@ -234,11 +235,11 @@ FRAME: nil for current selected frame."
   (corfu-indexed-mode)
   ;; popup info
   (corfu-popupinfo-mode)
-  (setq corfu-popupinfo-delay (cons 0.7 0.7))
-  :config
-  ;; when in terminal Emacs, use consult+vertico completion
+  (setq corfu-popupinfo-delay (cons 0.7 0.7)))
+
+(defun mk/setup-completion-at-point-func()
   ;; one downgrade here: https://github.com/minad/consult#miscellaneous
-  (unless (display-graphic-p)
+  (if (display-graphic-p)
     (setq completion-in-region-function
       (lambda (&rest args)
         (apply (if vertico-mode
@@ -246,12 +247,7 @@ FRAME: nil for current selected frame."
                  #'completion--in-region)
           args)))))
 
-;; (use-package corfu-terminal
-;;   :elpaca (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
-;;   :after corfu
-;;   :config
-;;   (unless (display-graphic-p)
-;;     (corfu-terminal-mode +1)))
+(add-hook 'after-init-hook #'mk/setup-completion-at-point-func)
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs
@@ -278,8 +274,8 @@ FRAME: nil for current selected frame."
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   ;; (add-to-list 'completion-at-point-functions #'cape-file)
-  ;; for performance (maybe), manually use `dabbrev-completion' instead.
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  )
 
 (use-package dabbrev
   :elpaca nil

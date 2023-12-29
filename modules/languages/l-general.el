@@ -71,7 +71,6 @@
   (customize-set-variable 'eglot-extend-to-xref t)
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
 	;; see outer files(like header files) as in project temporarily
-	(customize-set-variable 'eglot-extend-to-xref t)
 
   (mk/add-eglot-ensure
     '(c-mode-hook c-ts-mode-hook ;; c
