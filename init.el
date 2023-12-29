@@ -96,7 +96,9 @@
     (require 'init-ui)
     (require 'editor)
     (require 'completion)
-    (require 'custom-consult-collection))
+    (require 'custom-consult-collection)
+
+    (require 'l-general))
 
   (with-temp-message ""
     (require 'init-base)
@@ -124,26 +126,25 @@
     (require 'emacs30))
 
   ;; load languages
-  (unless 
-    (with-temp-message ""
-      (require 'l-markdown)
-      (require 'l-org)
-      (require 'l-web)
-      (require 'l-lisp)
-      (require 'l-rust)
-      (require 'l-cc)
-      (require 'l-java)
-      (require 'l-zig)
-      (require 'l-latex)
-      (require 'l-shell)
-      (require 'l-draw)
-      (require 'l-makefile)
-      (require 'l-python)
-      (require 'l-kotlin)
-      (require 'l-lua)
-      (require 'l-typst)
-      (require 'l-crystal)
-      (require 'l-general))))
+  (with-temp-message ""
+    (require 'l-markdown)
+    (require 'l-org)
+    (require 'l-web)
+    (require 'l-lisp)
+    (require 'l-rust)
+    (require 'l-cc)
+    (require 'l-java)
+    (require 'l-zig)
+    (require 'l-latex)
+    (require 'l-shell)
+    (require 'l-draw)
+    (require 'l-makefile)
+    (require 'l-python)
+    (require 'l-kotlin)
+    (require 'l-lua)
+    (require 'l-typst)
+    (require 'l-crystal)
+    (require 'l-general)))
 
 
 ;; l-general must loaded after l-rust

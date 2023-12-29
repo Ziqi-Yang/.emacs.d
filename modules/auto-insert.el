@@ -112,6 +112,9 @@ insert_final_newline = true
 [Makefile]
 indent_style = tab
 
+[*.el]
+indent_size = 2
+
 [*.java]
 indent_size = 2
 ")))

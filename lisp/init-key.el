@@ -73,7 +73,7 @@ Example:
   (keymap-global-set "M-h" #'tab-previous)
   (keymap-global-set "M-l" #'tab-next)
 
-  (keymap-global-set "<backtab>" #'outline-toggle-children)
+  (keymap-global-set "<backtab>" #'outline-cycle)
 
   (keymap-global-set "C-x r r" #'mk/trans-map/rectangle)
   
@@ -85,6 +85,7 @@ Example:
   (keymap-global-set "C-r" #'isearch-backward-regexp)
   (keymap-global-set "C-/" #'avy-goto-word-1)
   (keymap-global-set "C-M-/" #'avy-isearch)
+  
   
   (keymap-global-set "S-<return>" #'meow-open-below)
   (keymap-global-set "M-S-<return>" #'meow-open-above)
@@ -101,7 +102,8 @@ Example:
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
-  ;; (keymap-global-set "C-S-<return>" #'corfu-candidate-overlay-complete-at-point)
+  ;; cape-dabbrev has been integrated into completion-at-point function already
+  (keymap-global-set "C-S-k" #'dabbrev-completion)
   (keymap-global-set "C-S-f" #'cape-file)
   (keymap-global-set "C-S-l" #'mk/cape-line-previous-buffer))
 
@@ -141,6 +143,17 @@ Example:
   (keymap-global-set "C-x v p" #'vc-prepare-patch)
   (keymap-global-set "C-x v e" #'vc-ediff)
   (keymap-global-set "C-x v b p" #'mk/print-current-branch-name)
+  
+  (keymap-global-set "C-x v D" #'vc-dir)
+  (mk/define&set-keymap
+    "C-x v d" keymap/vc-diff 
+    '(("d" . vc-diff)
+       ("D" . vc-root-diff)
+       ("e" . vc-ediff)
+       ("v" . vc-version-diff)
+       ("V" . vc-root-version-diff)
+       ("E" . vc-version-ediff)))
+  
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)
   ;; smerge
@@ -341,6 +354,7 @@ Example:
                 "C-c s a" mk/search-apropos-keymap
                 '(("a" . apropos)
                    ("c" . apropos-command)
+                   ("C" . customize-apropos)
                    ("d" . apropos-documentation)
                    ("v" . apropos-variable)
                    ("f" . apropos-function)
@@ -393,10 +407,10 @@ Example:
        ("w" . ace-window)
        ("W" . mk/ace-window-balance-window)
        ("t" . others/window-split-toggle)
-       ("d" . ace-delete-window)
        ("f" . fit-window-to-buffer)
        ("q" . delete-window)
-       ("o" . delete-other-windows)
+       ("o" . ace-delete-window)
+       ("O" . delete-other-windows)
        ("m" . maximize-window)
        ("M" . minimize-window)
        ("s" . ace-swap-window)
@@ -499,7 +513,7 @@ START END."
   (interactive)
   (let (
          ;; (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ")
-         (command-prefix "kitty --class floating -d ")) ;; right parenthesis is needed to be added after concatance
+         (command-prefix "foot -a floating -D ")) ;; right parenthesis is needed to be added after concatance
     (if (project-current)
       (start-process-shell-command "open terminal" "*terminal*"
         (concat command-prefix (project-root (project-current))))
@@ -512,7 +526,7 @@ START END."
   (interactive)
   (let (
          ;; (command-prefix "hyprctl dispatch exec '[workspace 1 slien; float; size 90% 40%; move 5% 58%]  kitty -d ")
-         (command-prefix "kitty --class floating -d ")) ;; right parenthesis is needed to be added after concatance
+         (command-prefix "foot -a floating -D ")) ;; right parenthesis is needed to be added after concatance
     (start-process-shell-command "open terminal" "*terminal*"
       ;; (concat command-prefix (file-name-directory buffer-file-name) "'")
       (concat command-prefix (file-name-directory buffer-file-name)))))
@@ -851,7 +865,6 @@ ARG: number of words to kill"
   (interactive)
   (aw-select " Ace - Copy Window"
     #'aw-copy-window))
-
 
 (defun mk/global-read-only-mode ()
   "`find-file-hook'."

@@ -19,7 +19,7 @@ FRAME: nil for current selected frame."
           (layout (if horizontal 'horizontal 'vertical))
           (display-buffer-actions (if horizontal
                                     '(display-buffer-in-side-window
-                                       (side . right)
+                                       (side . left)
                                        (window-width . 0.5))
                                     '(display-buffer-below-selected
                                        ;; (window-height . fit-window-to-buffer)
@@ -278,9 +278,8 @@ FRAME: nil for current selected frame."
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   ;; (add-to-list 'completion-at-point-functions #'cape-file)
-  ;; for performance, use manually use `dabbrev-completion' instead.
-  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  )
+  ;; for performance (maybe), manually use `dabbrev-completion' instead.
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 (use-package dabbrev
   :elpaca nil

@@ -21,16 +21,26 @@
 
 (require 'transient)
 
+(defun mk/rectangle()
+  (interactive)
+  (rectangle-mark-mode)
+  (mk/trans-map/rectangle))
+
 (transient-define-prefix mk/trans-map/rectangle()
   "Rectangle Menu."
   [["Rectangle"
-     ("r" "mark mode" rectangle-mark-mode :transient nil)
-     ("k" "kill" kill-rectangle :transient nil)
+     ;; ("r" "mark mode" rectangle-mark-mode :transient nil)
+     ("j" "next line" next-line :transient t)
+     ("k" "prev line" previous-line :transient t)
+     ("h" "backward char" backward-char :transient t)
+     ("l" "forward char" forward-char :transient t)
+     
      ("o" "add blank" open-rectangle :transient nil)
      ("y" "yank" yank-rectangle :transient nil)
      ("c" "fill blank" clear-rectangle :transient nil)
      ("d" "delete" delete-rectangle :transient nil)
      ("s" "replace" string-rectangle :transient nil)
+     ("x" "kill" kill-rectangle :transient nil)
      ("K" "copy as kill" copy-rectangle-as-kill :transient nil)
      ("N" "number lines" rectangle-number-lines :transient nil)
      ("C" "copy to register" copy-rectangle-to-register :transient nil)]])

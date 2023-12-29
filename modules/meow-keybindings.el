@@ -93,8 +93,9 @@ line; else the surrounding white spaces."
     '("e" . meow-next-word)
     '("E" . meow-next-symbol)
     '("f" . meow-find)
-    '("g" . meow-cancel-selection)
-    '("G" . meow-grab)
+    ;; '("g" . meow-cancel-selection)
+    '("g" . mk/rectangle)
+    '("G" . mk/better-meow-grab)
     '("h" . meow-left)
     '("H" . meow-left-expand)
     '("i" . meow-insert)
@@ -202,6 +203,22 @@ table-capture"))))
             (goto-char (point-max))
             (insert "\n")))
         (setq buffer-read-only t)))))
+
+(defun mk/meow-grab-region()
+  (interactive)
+  (if (secondary-selection-exist-p)
+    (meow--cancel-second-selection)
+    (save-excursion
+      (call-interactively #'meow-bounds-of-thing)
+      (meow-grab))))
+
+(defun mk/better-meow-grab()
+  "Better `meow-grab'.
+If there is no active region, do `mk/meow-grab-region'; else do `meow-grab'."
+  (interactive)
+  (if (use-region-p)
+    (meow-grab)
+    (mk/meow-grab-region)))
 
 (provide 'meow-keybindings)
 

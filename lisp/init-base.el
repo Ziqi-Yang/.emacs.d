@@ -218,6 +218,7 @@
   :elpaca nil
   :hook (prog-mode . hs-minor-mode)
   :config
+  ;; also works for outline (minor) mode
   (set-display-table-slot standard-display-table
 		'selective-display
 		(string-to-vector " ❡❡❡")))
