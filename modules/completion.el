@@ -239,7 +239,7 @@ FRAME: nil for current selected frame."
 
 (defun mk/setup-completion-at-point-func()
   ;; one downgrade here: https://github.com/minad/consult#miscellaneous
-  (if (display-graphic-p)
+  (unless (display-graphic-p)
     (setq completion-in-region-function
       (lambda (&rest args)
         (apply (if vertico-mode
@@ -248,6 +248,7 @@ FRAME: nil for current selected frame."
           args)))))
 
 (add-hook 'after-init-hook #'mk/setup-completion-at-point-func)
+(add-hook 'server-after-make-frame-hook #'mk/setup-completion-at-point-func)
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs

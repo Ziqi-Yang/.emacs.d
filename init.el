@@ -98,7 +98,13 @@
     (require 'completion)
     (require 'custom-consult-collection)
 
-    (require 'l-general))
+    (require 'l-general)
+
+    ;; Kitty Keyboard protocol support (so I can use Ctrl + Return in Kitty)
+    (use-package kkp
+      :defer 1
+      :config
+      (global-kkp-mode +1)))
 
   (with-temp-message ""
     (require 'init-base)
