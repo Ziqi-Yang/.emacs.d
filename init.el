@@ -132,23 +132,9 @@
 
   ;; load languages
   (with-temp-message ""
-    (require 'l-markdown)
     (require 'l-org)
     (require 'l-web)
-    (require 'l-lisp)
-    (require 'l-rust)
-    (require 'l-cc)
-    (require 'l-java)
-    (require 'l-zig)
-    (require 'l-latex)
-    (require 'l-shell)
-    (require 'l-draw)
-    (require 'l-makefile)
-    (require 'l-python)
-    (require 'l-kotlin)
-    (require 'l-lua)
-    (require 'l-typst)
-    (require 'l-crystal)
+    (require 'l-languages)
     (require 'l-general)))
 
 

@@ -247,7 +247,8 @@
      (display-buffer-no-window)))
 
 (defun mk/switch-buffer-when-compilation-finished (compilation-buffer _msg)
-  (switch-to-buffer compilation-buffer))
+  (when (equal (buffer-name compilation-buffer) "*compilation*")
+    (switch-to-buffer compilation-buffer)))
 
 (add-hook 'compilation-finish-functions #'mk/switch-buffer-when-compilation-finished)
 

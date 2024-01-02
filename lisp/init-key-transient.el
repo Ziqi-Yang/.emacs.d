@@ -51,6 +51,40 @@
      ("a" "All" consult-info :transient nil)
      ("e" "Emacs Related" mk/consult-info-emacs :transient nil)]])
 
+(transient-define-prefix mk/trans-map/cargo ()
+  "Cargo command menu.
+Require cargo package."
+  [["Run"
+     ("b" "benchmark" cargo-process-bench)
+     ("B" "build" cargo-process-build)
+     ("C" "clean" cargo-process-clean)
+     ("r" "run" cargo-process-run)
+     ("x" "run example" cargo-process-run-example)]
+    ["Doc"
+      ("d" "doc" cargo-process-doc)
+      ("D" "open doc" cargo-process-doc-open)]
+    ["Test"
+      ("t" "current" cargo-process-current-test)
+      ("T" "file" cargo-process-current-file-tests)
+      ("C-t" "all" cargo-process-test)]
+    ["Package"
+      ("a" "add" cargo-process-add)
+      ("s" "search" cargo-process-search)
+      ("C-r" "remove" cargo-process-rm)
+      ("u" "update" cargo-process-update)
+      ("U" "upgrade" cargo-process-upgrade)]
+    ["Misc"
+      ("A" "audit" cargo-process-audit)
+      ("C-c" "check" cargo-process-check)
+      ("c" "clippy" cargo-process-clippy)
+      ("R" "repest" cargo-process-repeat)
+      ("i" "init" cargo-process-init)
+      ("n" "new" cargo-process-new)
+      ("f" "format" cargo-process-fmt)
+      ("s" "script" cargo-process-script)
+      ("w" "watch" cargo-process-watch)]
+    ])
+
 (defun mk/consult-info-emacs()
   (interactive)
   (let ((this-command 'consult-info))
