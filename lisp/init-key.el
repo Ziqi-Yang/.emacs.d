@@ -173,8 +173,7 @@ Example:
        ("P" . mk/smart-buffer-switch)
        ("d" . kill-current-buffer)
        ("k" . kill-current-buffer)
-       ;; ("K" . mk/kill-all-buffers) ;; FIXME
-       ))
+       ("K" . kill-matching-buffers-no-ask)))
 
   ;; bookmark(B)
   (mk/define&set-keymap

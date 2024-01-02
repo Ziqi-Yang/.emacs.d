@@ -72,17 +72,18 @@
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
 	;; see outer files(like header files) as in project temporarily
 
-  (mk/add-eglot-ensure
-    '(c-mode-hook c-ts-mode-hook ;; c
-       python-mode-hook python-ts-mode-hook ;; python
-       rust-mode-hook rust-ts-mode-hook ;; rust
-       go-ts-mode-hook go-mod-ts-mode-hook ;; go
-       js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook ;;  js/ts
-       html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode
-       java-mode-hook java-ts-mode-hook ;; java
-       kotlin-ts-mode-hook ;; kotlin
-       zig-mode-hook ;; zig
-       ))
+  ;; manually do `eglot' for every workspace is easy, see `eglot-ensure'
+  ;; (mk/add-eglot-ensure
+  ;;   '(c-mode-hook c-ts-mode-hook ;; c
+  ;;      python-mode-hook python-ts-mode-hook ;; python
+  ;;      rust-mode-hook rust-ts-mode-hook ;; rust
+  ;;      go-ts-mode-hook go-mod-ts-mode-hook ;; go
+  ;;      js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook ;;  js/ts
+  ;;      html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode
+  ;;      java-mode-hook java-ts-mode-hook ;; java
+  ;;      kotlin-ts-mode-hook ;; kotlin
+  ;;      zig-mode-hook ;; zig
+  ;;      ))
 
   ;; how to configure eglot-workspace-configuration:
   ;; https://paste.sr.ht/~meow_king/df83c4dd8541e54befe511ddaf0eeee7cb59eaba
@@ -98,8 +99,10 @@
   :elpaca (:host github :repo "dolmens/eglot-hierarchy"))
 
 ;; @ eldoc
-(setq eldoc-echo-area-use-multiline-p nil)
-
+(use-package eldoc
+  :elpaca nil
+  :config
+  (setq eldoc-echo-area-use-multiline-p nil))
 
 ;;; @ lsp-bridge ============================================
 ;; (use-package yasnippet
@@ -133,26 +136,30 @@
 ;; (add-hook 'acm-mode-hook #'evil-normalize-keymaps)
 
 ;;; citre ===================================================
-(defun mk/citre-eglot-integration()
-  "Disable some functionalities of citre for not messing up with eglot."
-  (setq-local citre-enable-imenu-integration nil)
-  (setq-local citre-enable-xref-integration nil))
 
-(use-package citre
-  :init
-  (require 'citre-config)
-  :config
-  (add-hook 'eglot-managed-mode-hook #'mk/citre-eglot-integration)
-  (add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
-  (setq
-    citre-default-create-tags-file-location 'global-cache
-    citre-use-project-root-when-creating-tags t
-    citre-prompt-language-for-ctags-command t
-    citre-capf-substr-completion t
-    ;; for my custom MarkdownTAG
-    citre-auto-enable-citre-mode-modes '(prog-mode markdown-mode))
-  ;; (setq evil-lookup-func #'citre-peek) ;; mapping key "K"
-  )
+;; use ggtags instead? https://github.com/yoshizow/global-pygments-plugin.git
+;; hacks for ggtags: https://github.com/lynnux/.emacs.d/blob/a4fb0a6cf6abe9f62f3cbadf4d77a11d9ff09a13/settings/package_extra.el#L5801
+
+;; (defun mk/citre-eglot-integration()
+;;   "Disable some functionalities of citre for not messing up with eglot."
+;;   (setq-local citre-enable-imenu-integration nil)
+;;   (setq-local citre-enable-xref-integration nil))
+
+;; (use-package citre
+;;   :init
+;;   (require 'citre-config)
+;;   :config
+;;   (add-hook 'eglot-managed-mode-hook #'mk/citre-eglot-integration)
+;;   (add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
+;;   (setq
+;;     citre-default-create-tags-file-location 'global-cache
+;;     citre-use-project-root-when-creating-tags t
+;;     citre-prompt-language-for-ctags-command t
+;;     citre-capf-substr-completion t
+;;     ;; for my custom MarkdownTAG
+;;     citre-auto-enable-citre-mode-modes '(prog-mode markdown-mode))
+;;   ;; (setq evil-lookup-func #'citre-peek) ;; mapping key "K"
+;;   )
 
 ;;; dumb-jump ===============================================
 ;; (use-package dumb-jump
@@ -217,6 +224,24 @@
 (use-package dape
   ;; Currently only on github
   :elpaca (dape :type git :host github :repo "svaante/dape"))
+
+;; Completion-Preview-Mode (emacs30 ============================================
+;; Enable Completion Preview mode in code buffers
+(add-hook 'prog-mode-hook #'completion-preview-mode)
+
+;; ;; ;; also in text buffers
+;; ;; ;; (add-hook 'text-mode-hook #'completion-preview-mode)
+;; ;; ;; and in \\[shell] and friends
+;; (with-eval-after-load 'comint
+;;   (add-hook 'comint-mode-hook #'completion-preview-mode))
+(with-eval-after-load 'completion-preview
+  (setq completion-preview-minimum-symbol-length 2)
+
+  ;; Cycle the completion candidate that the preview shows
+  (keymap-set completion-preview-active-mode-map
+    "M-n" #'completion-preview-next-candidate)
+  (keymap-set completion-preview-active-mode-map
+    "M-p" #'completion-preview-prev-candidate))
 
 ;;; Compile command for each mode ===========================
 ;; since configuration files for some mode doesn't exist, so I put it all here

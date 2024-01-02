@@ -35,6 +35,18 @@
 
 (defun mk/setup-theme()
   "Load theme."
+  (require-theme 'modus-themes)
+  (setq modus-themes-italic-constructs t
+    modus-themes-bold-constructs nil
+    modus-themes-mixed-fonts t
+    modus-themes-variable-pitch-ui nil
+    modus-themes-custom-auto-reload t
+    modus-themes-disable-other-themes t
+    
+    modus-themes-prompts '(italic bold)
+    modus-themes-completions
+    '((matches . (extrabold))
+       (selection . (semibold italic text-also))))
   (if (display-graphic-p)
     (load-theme 'modus-operandi t)
     (load-theme 'modus-vivendi t)))
@@ -163,10 +175,11 @@
 (add-hook 'server-after-make-frame-hook 'mk/setup-font-faces)
 
 ;;; mode line ===============================================
+
 ;; @ doom modeline
-(use-package doom-modeline
-  :after nerd-icons
-  :init (doom-modeline-mode 1))
+;; (use-package doom-modeline
+;;   :after nerd-icons
+;;   :init (doom-modeline-mode 1))
 
 ;;; Navigation Highlight ====================================
 ;; (use-package beacon
@@ -183,7 +196,7 @@
 ;;   ;; integration with the built-in `imenu':
 ;;   (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
 ;;   (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
-  
+
 ;;   (pulsar-global-mode 1))
 
 ;;; Center Area =============================================

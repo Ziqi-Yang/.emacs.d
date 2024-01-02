@@ -6,8 +6,11 @@
 (setq dired-listing-switches "-agho --group-directories-first"
   dired-hide-details-hide-symlink-targets nil
   dired-kill-when-opening-new-dired-buffer t
-  delete-by-moving-to-trash t)
+  delete-by-moving-to-trash t
+  dired-dwim-target t  ; so dual panel copy works
+  )
 
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 ;; @ icon
 (defun mk/dired-subtree-add-nerd-icons ()
@@ -81,9 +84,8 @@
 (with-eval-after-load 'dired
   (keymap-set dired-mode-map "h" #'dired-up-directory)
   (keymap-set dired-mode-map "l" #'dired-find-file)
-  
+  (keymap-set dired-mode-map "O" #'dired-do-open)
   (keymap-set dired-mode-map "/" #'dired-isearch-filenames)
-
   (keymap-set dired-mode-map "<tab>" #'dired-subtree-cycle))
 
 (provide 'file-browser)

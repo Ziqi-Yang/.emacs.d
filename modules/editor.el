@@ -39,16 +39,16 @@
 ;;   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; @ according to point position
-(use-package highlight-parentheses
-  ;; :hook ((prog-mode . highlight-parentheses-mode))
-  :config
-  (global-highlight-parentheses-mode)
-  (setq highlight-parentheses-colors nil
-	  highlight-parentheses-highlight-adjacent t
-	  highlight-parentheses-attributes '((:weight ultra-bold :background "lightGray"
-						                             :box
-						                             ( :line-width (1 . -1)
-						                               :color ,(face-attribute 'shadow :foreground))))))
+;; (use-package highlight-parentheses
+;;   ;; :hook ((prog-mode . highlight-parentheses-mode))
+;;   :config
+;;   (global-highlight-parentheses-mode)
+;;   (setq highlight-parentheses-colors nil
+;; 	  highlight-parentheses-highlight-adjacent t
+;; 	  highlight-parentheses-attributes '((:weight ultra-bold :background "lightGray"
+;; 						                             :box
+;; 						                             ( :line-width (1 . -1)
+;; 						                               :color ,(face-attribute 'shadow :foreground))))))
 
 ;; `show-parent-mode' when point is near a paren, highlight the matching paren
 (use-package paren
@@ -56,9 +56,10 @@
   :custom
   ;; directly near the inner of paren
   (show-paren-when-point-inside-paren t)
+  (show-paren-context-when-offscreen 'child-frame)
   :init
   ;; close this mode (default is open)
-  (setq show-paren-mode nil)) ;; use highlight-parentheses instead
+  (show-paren-mode t))
 
 ;; @ use electronic pair
 (use-package elec-pair
@@ -67,6 +68,7 @@
   :config
   (add-hook 'web-mode-hook #'(lambda () (electric-pair-local-mode -1)))
   (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
+                               (?( . ?))
                                (?\{ . ?\})
                                (?\[ . ?\])
                                ;; (?\< . ?\>)

@@ -128,8 +128,7 @@
     (require 'adbkeyboard)
     (require 'emacs-developer)
     (require 'hugo)
-    (require 'my-advice-adds)
-    (require 'emacs30))
+    (require 'my-advice-adds))
 
   ;; load languages
   (with-temp-message ""

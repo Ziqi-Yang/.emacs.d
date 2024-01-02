@@ -155,12 +155,12 @@
 
 (use-package project
   :elpaca nil
+  :custom
+  (project-mode-line t)
   :config
   (setq project-switch-commands
     (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
-  (add-to-list 'project-switch-commands '(project-find-regexp "find regexp" "G"))
-  (add-to-list 'project-switch-commands '(consult-ripgrep "Consult rg" "r"))
-  (add-to-list 'project-switch-commands '(consult-git-grep "Consult git grep" "g")))
+  (add-to-list 'project-switch-commands '(mk/consult-ripgrep-file-type "Consult rg" "r")))
 
 ;; (add-hook 'after-init-hook #'mk/setup-project.el)
 ;; (elpaca nil (mk/setup-project.el))

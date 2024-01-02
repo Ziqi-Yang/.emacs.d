@@ -33,3 +33,5 @@
 (add-hook 'rust-ts-mode-hook 'mk/rust-local-keybinding-setup)
 
 (provide 'l-rust)
+
+;;; l-rust.el ends here

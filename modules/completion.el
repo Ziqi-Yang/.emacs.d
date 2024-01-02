@@ -237,6 +237,16 @@ FRAME: nil for current selected frame."
   (corfu-popupinfo-mode)
   (setq corfu-popupinfo-delay (cons 0.7 0.7)))
 
+(defun corfu-enable-always-in-minibuffer ()
+  "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+  (unless (or (bound-and-true-p mct--active)
+            (bound-and-true-p vertico--input)
+            (eq (current-local-map) read-passwd-map))
+    ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+    (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+      corfu-popupinfo-delay nil)
+    (corfu-mode 1)))
+
 (defun mk/setup-completion-at-point-func()
   ;; one downgrade here: https://github.com/minad/consult#miscellaneous
   (unless (display-graphic-p)
@@ -245,7 +255,9 @@ FRAME: nil for current selected frame."
         (apply (if vertico-mode
                  #'consult-completion-in-region
                  #'completion--in-region)
-          args)))))
+          args))))
+
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1))
 
 (add-hook 'after-init-hook #'mk/setup-completion-at-point-func)
 (add-hook 'server-after-make-frame-hook #'mk/setup-completion-at-point-func)
