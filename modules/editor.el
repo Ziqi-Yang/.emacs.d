@@ -83,6 +83,7 @@
 ;;; Indentation & format ====================================
 (use-package aggressive-indent 
   ;; :hook ((prog-mode . aggressive-indent-mode))
+  :delight
   :config
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   ;; (global-aggressive-indent-mode 1)
@@ -92,6 +93,7 @@
 
 ;; note: .editorconfig configuration can lead to delete trailing characters on save
 (use-package editorconfig
+  :delight
   :config
   (editorconfig-mode 1))
 

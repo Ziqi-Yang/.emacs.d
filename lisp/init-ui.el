@@ -54,6 +54,8 @@
 (add-hook 'after-init-hook #'mk/setup-theme)
 (add-hook 'server-after-make-frame-hook #'mk/setup-theme)
 
+(use-package delight)
+
 (defun mk/setup-font-lock()
   "Set minimum font lock level for both treesit and font-lock"
   ;; (setq treesit-font-lock-level 1) ;; treesit NOTE change back to 1
@@ -243,14 +245,26 @@
 ;; compilation
 ;; hide when compilation starts, show when finished
 (add-to-list 'display-buffer-alist
-	'("\\*compilation\\*"
-     (display-buffer-no-window)))
+  '((derived-mode . compilation-mode)
+     (display-buffer-in-side-window)
+     (side . top)
+     (window-height . .5)))
+;; (add-to-list 'display-buffer-alist
+;; 	'("\\*compilation\\*"
+;;      (display-buffer-no-window)))
 
-(defun mk/switch-buffer-when-compilation-finished (compilation-buffer _msg)
-  (when (equal (buffer-name compilation-buffer) "*compilation*")
-    (switch-to-buffer compilation-buffer)))
+;; (add-to-list 'display-buffer-alist
+;; 	'("\\*Cargo Run\\*"
+;;      (display-buffer-no-window)))
 
-(add-hook 'compilation-finish-functions #'mk/switch-buffer-when-compilation-finished)
+;; (add-to-list 'display-buffer-alist
+;; 	'("\\*typst-ts-compilation\\*"
+;;      (display-buffer-no-window)))
+
+;; (defun mk/switch-buffer-when-compilation-finished (compilation-buffer _msg)
+;;   (switch-to-buffer compilation-buffer t t))
+
+;; (add-hook 'compilation-finish-functions #'mk/switch-buffer-when-compilation-finished)
 
 ;; git push
 (add-to-list 'display-buffer-alist

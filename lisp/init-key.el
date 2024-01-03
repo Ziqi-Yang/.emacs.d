@@ -316,7 +316,8 @@ Example:
        ("e" . mk/open-emacs.d)
        ("E" . flymake-show-project-diagnostics)
        ("v" . project-vc-dir)
-       ("s" . others/project-vterm)
+       ;; ("s" . others/project-vterm)
+       ("s" . project-eshell)
        ("S" . project-async-shell-command)
        ("k" . project-kill-buffers)))
 
@@ -460,6 +461,7 @@ Example:
 ;; for tapping key which begins with a character other than SPC
 ;; so `meow-keypad' won't appear
 (use-package which-key
+  :delight
   :init
   (setq which-key-idle-delay 0.5)
   (setq which-key-side-window-max-height 0.3)
@@ -653,11 +655,14 @@ ARG: prefix argument."
       (mk/better-emacs-lisp-byte-compile-and-load))
     (t)))
 
-(defun mk/project-compile()
-  "Save & Compile Project."
-  (interactive)
+(defun mk/project-compile (&optional confirm)
+  "Save & Compile Project.
+CONFIRM: universal argument."
+  (interactive "P")
   (save-buffer)
-  (project-compile))
+  (if confirm
+    (project-compile)
+    (recompile)))
 
 (defvar-local mk/search-engines
   '(("direct" . "%s")

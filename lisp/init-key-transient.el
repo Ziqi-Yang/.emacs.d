@@ -81,7 +81,7 @@ Require cargo package."
       ("i" "init" cargo-process-init)
       ("n" "new" cargo-process-new)
       ("f" "format" cargo-process-fmt)
-      ("s" "script" cargo-process-script)
+      ("S" "script" cargo-process-script)
       ("w" "watch" cargo-process-watch)]
     ])
 

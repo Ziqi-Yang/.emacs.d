@@ -37,6 +37,7 @@
 	    (sit-for 0.75))))
 
 ;; @ Automatically install and use tree-sitter major modes in Emacs 29+.
+;; run command `treesit-auto-install-all' manually to install grammers
 (use-package treesit-auto
   :config
   (global-treesit-auto-mode)
@@ -102,6 +103,7 @@
 (use-package eldoc
   :elpaca nil
   :config
+  (setq eldoc-minor-mode-string nil)
   (setq eldoc-echo-area-use-multiline-p nil))
 
 ;;; @ lsp-bridge ============================================
@@ -199,6 +201,7 @@
 ;; @ jinx
 (use-package jinx
   :elpaca (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
+  :delight
   :init
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
   :config
@@ -226,22 +229,18 @@
   :elpaca (dape :type git :host github :repo "svaante/dape"))
 
 ;; Completion-Preview-Mode (emacs30 ============================================
-;; Enable Completion Preview mode in code buffers
-(add-hook 'prog-mode-hook #'completion-preview-mode)
-
-;; ;; ;; also in text buffers
-;; ;; ;; (add-hook 'text-mode-hook #'completion-preview-mode)
-;; ;; ;; and in \\[shell] and friends
-;; (with-eval-after-load 'comint
-;;   (add-hook 'comint-mode-hook #'completion-preview-mode))
-(with-eval-after-load 'completion-preview
-  (setq completion-preview-minimum-symbol-length 2)
-
-  ;; Cycle the completion candidate that the preview shows
-  (keymap-set completion-preview-active-mode-map
-    "M-n" #'completion-preview-next-candidate)
-  (keymap-set completion-preview-active-mode-map
-    "M-p" #'completion-preview-prev-candidate))
+(use-package completion-preview
+  :elpaca nil
+  :delight completion-preview-mode
+  :hook
+  ;; text-mode comint-mode
+  ((prog-mode) . completion-preview-mode)
+  :custom
+  (completion-preview-minimum-symbol-length 2)
+  :bind
+  (:map completion-preview-active-mode-map
+    ("M-n" . completion-preview-next-candidate)
+    ("M-p" . completion-preview-prev-candidate)))
 
 ;;; Compile command for each mode ===========================
 ;; since configuration files for some mode doesn't exist, so I put it all here
@@ -262,10 +261,13 @@ configuration (like Makefile)."
               (relative-file-name (file-relative-name buffer-file-name base-path))
               (relative-bare-file-name (file-name-sans-extension relative-file-name))
               (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path)))
+              (justfile-exist (file-exists-p (expand-file-name "justfile" base-path)))
               (gradlew-project (file-exists-p (expand-file-name "gradlew" base-path))))
         (cond
           ((and (not major-mode-first) makefile-exist)
             "make run")
+          ((and (not major-mode-first) justfile-exist)
+            "just --list")
           (gradlew-project
             "./gradlew run")
           ;; rust
@@ -320,7 +322,7 @@ configuration (like Makefile)."
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
 
 ;;; Extra Project Root Markers ==============================
-(setq project-vc-extra-root-markers '("Cargo.toml" ".project-root"))
+(setq project-vc-extra-root-markers '(".project-root"))
 
 (provide 'l-general)
 

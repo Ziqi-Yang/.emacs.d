@@ -216,6 +216,7 @@
 ;;; fold ====================================================
 (use-package hideshow
   :elpaca nil
+  :delight hs-minor-mode
   :hook (prog-mode . hs-minor-mode)
   :config
   ;; also works for outline (minor) mode
@@ -239,8 +240,9 @@
 
 ;;; Waketime ================================================
 (use-package wakatime-mode
+  :delight
   :config
-  (global-wakatime-mode))
+  (global-wakatime-mode t))
 
 ;;; Zoxide ==================================================
 (use-package zoxide)
@@ -451,7 +453,6 @@
   (dolist (func '(find-function
                    query-replace-regexp
                    mk/better-query-replace
-                   mk/mark-line-smart
                    meow-line
                    meow-beginning-of-thing
                    meow-end-of-thing
@@ -501,6 +502,7 @@
 ;;; eldoc headline (my package)
 (use-package eldoc-headline
   :elpaca (:type git :host sourcehut :repo "meow_king/eldoc-headline")
+  :delight eldoc-headline-local-mode
   :custom (eldoc-headline-disable-echo-area t)
   :config
   (eldoc-headline-mode 1))

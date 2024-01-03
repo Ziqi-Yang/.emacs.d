@@ -25,7 +25,7 @@
 
 (defun mk/cc-local-keybinding-setup()
   (keymap-local-set "RET" #'newline-and-indent)
-  (keymap-local-set "C-c C-c m" #'mk/better-consult-man) 
+  (keymap-local-set "C-c C-c m" #'mk/better-consult-man)
   (keymap-local-set "C-c C-c f" #'ff-find-other-file)
   (keymap-local-set "C-c C-c p" #'c-ts-prototype-copy-proto))
 
@@ -146,7 +146,9 @@ and `defcustom' forms reset their default values."
 
 ;;; Rust =======================================================================
 (use-package cargo
-  :elpaca (:host github :repo "kwrooijen/cargo.el"))
+  :elpaca (:host github :repo "kwrooijen/cargo.el")
+  :custom
+  (cargo-process--command-search "search --registry crates-io"))
 
 ;; (defun mk/cargo-crate-info (crate-name)
 ;;   "Get the basic information of a crate. The underlying command is =cargo add --dry-run crate="
@@ -155,6 +157,9 @@ and `defcustom' forms reset their default values."
 
 (with-eval-after-load 'rust-ts-mode
   (keymap-set rust-ts-mode-map "C-c C-c" #'mk/trans-map/cargo))
+
+(with-eval-after-load 'toml-ts-mode
+  (keymap-set toml-ts-mode-map "C-c C-c" #'mk/trans-map/cargo))
 
 (defun mk/add-rust-search-engine()
   "Add search engine in addition to mk/search-engines when in rust."
@@ -165,9 +170,6 @@ and `defcustom' forms reset their default values."
 (add-hook 'toml-ts-mode-hook 'mk/add-rust-search-engine)
 (add-hook 'rust-ts-mode-hook 'mk/add-rust-search-engine)
 ;; (add-hook 'rust-mode-hook 'mk/add-rust-search-engine)
-
-(add-hook 'toml-ts-mode-hook 'mk/rust-local-keybinding-setup)
-(add-hook 'rust-ts-mode-hook 'mk/rust-local-keybinding-setup)
 
 ;;; Typst ======================================================================
 (use-package typst-ts-mode
@@ -193,10 +195,17 @@ and `defcustom' forms reset their default values."
   (keymap-set zig-mode-map "C-c C-c r" #'zig-run)
   (keymap-set zig-mode-map "C-c C-c f" #'zig-format-buffer))
 
+
+;;; Go =========================================================================
+(with-eval-after-load 'go-ts-mode
+  (setq-default go-ts-mode-indent-offset 4))
+
+
 ;;; micc =======================================================================
 (use-package crystal-mode)
 (use-package lua-mode)
 (use-package fish-mode)
+(use-package just-mode)
 
 (provide 'l-languages)
 
