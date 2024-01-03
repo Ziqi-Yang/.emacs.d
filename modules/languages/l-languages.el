@@ -107,6 +107,7 @@ and `defcustom' forms reset their default values."
 
 (defun mk/emacs-lisp-local-keybindings-setup()
   "Set up local keybindings for scratch buffer(lisp interaction mode)"
+  (keymap-set emacs-lisp-mode-map "TAB" #'indent-for-tab-command)
   (keymap-local-set "TAB" #'completion-at-point)
   (keymap-local-set "C-j" #'completion-at-point)
   (keymap-local-set "C-i" #'eval-print-last-sexp)

@@ -508,6 +508,11 @@
   (eldoc-headline-mode 1))
 
 
+;;; Misc ==================================================================
+(use-package so-long
+  :config
+  (global-so-long-mode 1))
+
 ;; expand region ===========
 (use-package expreg
   :elpaca (:type git :host github :repo "casouri/expreg"))
