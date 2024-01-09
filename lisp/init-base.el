@@ -155,8 +155,6 @@
 
 (use-package project
   :elpaca nil
-  :custom
-  (project-mode-line t)
   :config
   (setq project-switch-commands
     (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
@@ -482,11 +480,6 @@
 ;;   :config
 ;;   (gcmh-mode))
 
-;;; Bookmark Manage
-(use-package ebm
-  :elpaca (:type git :host sourcehut :repo "meow_king/ebm"))
-
-
 ;;; License =====================================================================
 (use-package lice
   :elpaca (:type git :host github :repo "buzztaiki/lice-el"))
@@ -499,6 +492,8 @@
 ;;   (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
 ;;   (emacs-gc-stats-mode +1))
 
+
+;;; Headline ====================================================================
 ;;; eldoc headline (my package)
 (use-package eldoc-headline
   :elpaca (:type git :host sourcehut :repo "meow_king/eldoc-headline")
@@ -507,11 +502,27 @@
   :config
   (eldoc-headline-mode 1))
 
+(use-package breadcrumb
+  :elpaca (:host github :repo "joaotavora/breadcrumb"))
 
 ;;; Misc ==================================================================
 (use-package so-long
   :config
   (global-so-long-mode 1))
+
+(use-package pixel-scroll
+  :elpaca nil
+  :bind
+  ([remap scroll-up-command]   . pixel-scroll-interpolate-down)
+  ([remap scroll-down-command] . pixel-scroll-interpolate-up)
+  :custom
+  (pixel-scroll-precision-interpolate-page t)
+  :init
+  ;; scrolling with an ordinary mouse to be almost as smooth as scrolling with a touchpad, on systems other than X:
+  ;; (setq pixel-scroll-precision-large-scroll-height 40.0)
+  (pixel-scroll-precision-mode 1))
+
+
 
 ;; expand region ===========
 (use-package expreg

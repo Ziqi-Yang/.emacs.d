@@ -63,7 +63,6 @@
 (with-eval-after-load 'eglot
 	;; NOTE
 	;; install markdown-mode to rich the doc
-  
   ;; performance improvemence: https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
   (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess
 	(setq-default eglot-events-buffer-size 0) ;; disable log, improve performance
@@ -71,7 +70,10 @@
 	(customize-set-variable 'eglot-stay-out-of '(imenu))
   (customize-set-variable 'eglot-extend-to-xref t)
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
-	;; see outer files(like header files) as in project temporarily
+  (add-hook 'eglot-managed-mode-hook
+    (lambda () (eglot-inlay-hints-mode -1)))
+  (setq-default eglot-send-changes-idle-time 0.25)
+  ;; see outer files(like header files) as in project temporarily
 
   ;; manually do `eglot' for every workspace is easy, see `eglot-ensure'
   ;; (mk/add-eglot-ensure
@@ -216,12 +218,11 @@
 	    (remove #'flymake-eldoc-function eldoc-documentation-functions)))
   (setq eldoc-documentation-strategy #'eldoc-documentation-compose))
 
-(add-hook 'flymake-mode-hook #'mk/setup-flymake-eldoc) ;; works in emacs lisp buffers
-;; since eglot set flymake, we need to add hook for eglot
-(with-eval-after-load 'eglot ;; works in eglot managed buffers
+(with-eval-after-load 'eglot
+  ;; `eglot-hover-eldoc-function' doesn't always display flymake errors
   (add-hook 'eglot-managed-mode-hook #'mk/setup-flymake-eldoc))
 
-;; to custom language server (like flags), add-to-list 'eglot-server-programs
+(add-hook 'flymake-mode-hook #'mk/setup-flymake-eldoc) ;; works in emacs lisp buffers
 
 ;;; Debug =======================================================================
 (use-package dape
@@ -290,11 +291,11 @@ configuration (like Makefile)."
           ((eq major-mode 'kotlin-ts-mode)
             (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))
           ;; zig
-          ((eq major-mode 'zig-mode)
+          ((derived-mode-p '(zig-mode))
             (concat "zig run " relative-file-name))
           ;; js
-          ((or (eq major-mode 'js-mode) (eq major-mode 'js-ts-mode))
-            (concat "node " relative-file-name))
+          ((derived-mode-p '(js-base-mode typescript-ts-base-mode))
+            (concat "tsc " relative-file-name))
           ;; d2
           ((eq major-mode 'd2-mode)
             (concat "d2 -p 8888 -l elk -w " relative-file-name))

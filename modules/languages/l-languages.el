@@ -149,7 +149,9 @@ and `defcustom' forms reset their default values."
 (use-package cargo
   :elpaca (:host github :repo "kwrooijen/cargo.el")
   :custom
-  (cargo-process--command-search "search --registry crates-io"))
+  (cargo-process--command-search "search --registry crates-io")
+  :config
+  (add-hook 'cargo-process-mode-hook #'(lambda () (setq-local truncate-lines nil))))
 
 ;; (defun mk/cargo-crate-info (crate-name)
 ;;   "Get the basic information of a crate. The underlying command is =cargo add --dry-run crate="
@@ -157,10 +159,17 @@ and `defcustom' forms reset their default values."
 ;;   (async-shell-command (concat "cargo add --dry-run " crate-name)))
 
 (with-eval-after-load 'rust-ts-mode
+  
   (keymap-set rust-ts-mode-map "C-c C-c" #'mk/trans-map/cargo))
 
 (with-eval-after-load 'toml-ts-mode
   (keymap-set toml-ts-mode-map "C-c C-c" #'mk/trans-map/cargo))
+
+(defun mk/rust/setup ()
+  (setq-local electric-pair-pairs
+    (add-to-list 'electric-pair-pairs '(?| . ?|))))
+
+(add-hook 'rust-ts-mode-hook #'mk/rust/setup)
 
 (defun mk/add-rust-search-engine()
   "Add search engine in addition to mk/search-engines when in rust."

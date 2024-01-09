@@ -4,7 +4,10 @@ fundamental-mode ;; Available everywhere
 (today (format-time-string "%Y-%0m-%0d"))
 (afile buffer-file-name)
 (afilename (file-name-nondirectory buffer-file-name))
-(filename-title (upcase-initials (s-replace-regexp (rx (or "-" "_")) " " (file-name-base buffer-file-name))))
+(filename-title (upcase-initials (replace-regexp-in-string
+                                     "[-_]"
+                                     " "
+                                     (file-name-base buffer-file-name))))
 
 org-mode
 
@@ -21,7 +24,7 @@ typst-ts-mode
 markdown-mode
 
 (meta "+++
-title = \"" (p (upcase-initials (s-replace-regexp (rx (or "-" "_")) " " (file-name-base buffer-file-name)))) """\"
+title = \"" (p (upcase-initials (replace-regexp-in-string (rx (or "-" "_")) " " (file-name-base buffer-file-name)))) """\"
 description = \"" p "\"
 date = " (format-time-string "%Y-%0m-%0d") "
 updated = " (format-time-string "%Y-%0m-%0d") "

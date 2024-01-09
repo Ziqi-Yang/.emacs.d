@@ -13,5 +13,8 @@
 /elpa
 /transient
 
+/places
+/history
+
 *.elc
 *.eld

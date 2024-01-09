@@ -3,7 +3,8 @@
 ;; customization for dired
 ;;; Code:
 
-(setq dired-listing-switches "-agho --group-directories-first"
+(setq
+  dired-listing-switches "-agho --group-directories-first"
   dired-hide-details-hide-symlink-targets nil
   dired-kill-when-opening-new-dired-buffer t
   delete-by-moving-to-trash t

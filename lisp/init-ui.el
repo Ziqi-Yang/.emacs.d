@@ -106,35 +106,36 @@
 
 ;; (add-hook 'dashboard-mode-hook '(lambda () (progn (setq buffer-face-mode-face '(:family "Zpix" :height 120))
 ;; 																						 (buffer-face-mode)) ))
-(use-package dashboard
-  :config
-  ;; configuration for emacsclient
-  ;; (set-face-background 'dashboard-banner-logo-title nil) ;; solaire-mode integration
-  ;; icons display in the emacsclient
-  (add-hook 'server-after-make-frame-hook  #'(lambda () (dashboard-refresh-buffer)))
-  (dashboard-setup-startup-hook)
-  (setq dashboard-projects-backend 'project-el
-	  dashboard-center-content t
-	  dashboard-set-heading-icons t
-	  dashboard-set-file-icons t
-	  dashboard-set-navigator t
-	  dashboard-set-init-info t
-	  dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
-	  dashboard-banner-logo-title "El Psy Kongaroo"
-	  dashboard-items '((recents  . 5)
-			                 ;; (bookmarks . 5)
-			                 (projects . 5)
-			                 ;; (agenda . 5)
-			                 ;; (registers . 5)
-			                 ))
 
-  ;; Format: "(icon title help action face prefix suffix)"
-  (setq dashboard-navigator-buttons
-	  `(((nil
-	       ,(concat "Email [" (shell-command-to-string "~/myBin/get-mu-unread-emails-num") "]") nil (lambda (&rest _) (mu4e)))
-	      (nil
-	        "Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
-        ))))
+;; (use-package dashboard
+;;   :config
+;;   ;; configuration for emacsclient
+;;   ;; (set-face-background 'dashboard-banner-logo-title nil) ;; solaire-mode integration
+;;   ;; icons display in the emacsclient
+;;   (add-hook 'server-after-make-frame-hook  #'(lambda () (dashboard-refresh-buffer)))
+;;   (dashboard-setup-startup-hook)
+;;   (setq dashboard-projects-backend 'project-el
+;; 	  dashboard-center-content t
+;; 	  dashboard-set-heading-icons t
+;; 	  dashboard-set-file-icons t
+;; 	  dashboard-set-navigator t
+;; 	  dashboard-set-init-info t
+;; 	  dashboard-startup-banner (concat user-emacs-directory "assets/banners/ue-dark-small.png")
+;; 	  dashboard-banner-logo-title "El Psy Kongaroo"
+;; 	  dashboard-items '((recents  . 5)
+;; 			                 ;; (bookmarks . 5)
+;; 			                 (projects . 5)
+;; 			                 ;; (agenda . 5)
+;; 			                 ;; (registers . 5)
+;; 			                 ))
+
+;;   ;; Format: "(icon title help action face prefix suffix)"
+;;   (setq dashboard-navigator-buttons
+;; 	  `(((nil
+;; 	       ,(concat "Email [" (shell-command-to-string "~/myBin/get-mu-unread-emails-num") "]") nil (lambda (&rest _) (mu4e)))
+;; 	      (nil
+;; 	        "Todos" nil (lambda (&rest _) (find-file "~/notes/agenda.org")))
+;;         ))))
 
 
 ;;; font settings ===========================================
@@ -185,27 +186,25 @@
         (let ((directory-abbrev-alist
                 `((,(directory-file-name
                       (expand-file-name
-                        (project-root pj))) . "$PROJ"))))
+                        (project-root pj))) . ,(project-name pj)))))
           (abbreviate-file-name fname))
         (abbreviate-file-name fname))
-      "*BUFFER*")))
+      (concat "[B]" (buffer-name)))))
 
 (defun mk/setup-modeline ()
-  (setq-default
-    mode-line-format
-    '("%e" mode-line-front-space
-       (:propertize
-         ("" mode-line-mule-info mode-line-client mode-line-modified
-           mode-line-remote mode-line-window-dedicated)
-         display (min-width (6.0)))
-       mode-line-frame-identification mode-line-buffer-identification "   "
-       mode-line-position (project-mode-line project-mode-line-format)
-       (vc-mode vc-mode) "  " mode-line-modes mode-line-misc-info
-       mode-line-format-right-align
-       (:eval (mk/mode-line/abbreviate-file-name))
-       mode-line-end-spaces)))
+  (setq-default mode-line-buffer-identification
+    '((:eval (mk/mode-line/abbreviate-file-name)))))
 
 (add-hook 'after-init-hook #'mk/setup-modeline)
+
+(defun mk/setup-header-line()
+  (setq-default
+    header-line-format
+    '((:eval eldoc-headline-string)
+       (:propertize " # " face error)
+       (:eval (breadcrumb-imenu-crumbs)))))
+
+(add-hook 'after-init-hook #'mk/setup-header-line)
 
 ;; @ doom modeline
 ;; (use-package doom-modeline
@@ -276,8 +275,8 @@
 (add-to-list 'display-buffer-alist
   '((derived-mode . compilation-mode)
      (display-buffer-in-side-window)
-     (side . top)
-     (window-height . .5)))
+     (side . right)
+     (window-width . .5)))
 ;; (add-to-list 'display-buffer-alist
 ;; 	'("\\*compilation\\*"
 ;;      (display-buffer-no-window)))

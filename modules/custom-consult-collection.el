@@ -116,8 +116,8 @@ NOTE you can also use prefix argument to specify directory."
           (initial (plist-get (cdr (assoc type mk/v/prog-filter-regexp)) :method))
           (this-command #'consult-ripgrep))
     (consult-ripgrep nil (if initial
-                           (concat initial " "
-                             (thing-at-point 'symbol))
+                           (concat (thing-at-point 'symbol)
+                             " " initial)
                            (thing-at-point 'symbol)))))
 
 (provide 'custom-consult-collection)

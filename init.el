@@ -64,11 +64,16 @@
 (add-to-list 'exec-path (expand-file-name "~/myBin/"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 ;; for compile to work
-(setenv "PATH" (concat (format "%s:%s:" (expand-file-name "~/myBin/") (expand-file-name "~/.local/bin")) (getenv "PATH")))
+(setenv "PATH" (concat
+                 (format "%s:%s:"
+                   (expand-file-name "~/myBin/")
+                   (expand-file-name "~/.local/bin"))
+                 (getenv "PATH")))
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "modules" user-emacs-directory) load-path)
 (push (expand-file-name "modules/languages" user-emacs-directory) load-path)
+(push (expand-file-name "vandor" user-emacs-directory) load-path)
 
 ;; modern looking
 ;; https://emacsconf.org/2023/talks/flat/
@@ -135,6 +140,7 @@
     (require 'l-org)
     (require 'l-web)
     (require 'l-languages)
+    (require 'eglot-booster)
     (require 'l-general)))
 
 

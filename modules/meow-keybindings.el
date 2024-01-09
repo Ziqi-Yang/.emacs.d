@@ -6,9 +6,16 @@
 (defun mk/better-clipboard-kill-ring-save ()
   "Copy region content or kill ring content to clipboard."
   (interactive)
-  (if (use-region-p)
-    (call-interactively #'clipboard-kill-ring-save)
-    (gui-set-selection 'CLIPBOARD (current-kill 0))))
+  (if (display-graphic-p)
+    (if (use-region-p)
+      (call-interactively #'clipboard-kill-ring-save)
+      (gui-set-selection 'CLIPBOARD (current-kill 0)))
+    ;; for terminal emacs under Wayland
+    (when (use-region-p)
+      (call-interactively #'kill-ring-save))
+    (call-process "wl-copy"
+      nil nil nil
+      "--" (current-kill 0))))
 
 (defun mk/mark-line-smart ()
   "Mark the visible part of the current line.

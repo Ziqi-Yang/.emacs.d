@@ -189,7 +189,10 @@ Example:
   ;; code(c)
   (mk/define&set-keymap
     "C-c c" keymap/code
-    `(("a" . eglot-code-actions)
+    `(;; note: you can select a region and then use this command, which prevents
+       ;; you from executing code actions for flymake errors (which often results
+       ;; in no actions)
+       ("a" . eglot-code-actions)
        ("B" . ,(mk/define&set-keymap
                  "C-c c D" keymap/code-debug
                  '(("d" . mk/gf-debug)
@@ -210,6 +213,7 @@ Example:
                  "C-c c h" keymap/code-hierarchy
                  '(("t" . eglot-hierarchy-type-hierarchy)
                     ("c" . eglot-hierarchy-call-hierarchy))))
+       ("H" . eglot-inlay-hints-mode)
        ("j" . citre-jump)
        ("k" . citre-jump-back)
        ("i" . eglot-code-action-organize-imports)
@@ -297,6 +301,7 @@ Example:
        ("s" . dired-sidebar-toggle-sidebar)
        ("a" . org-agenda)
        ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))
+       ("b" . (lambda () (interactive) (find-file "~/Documents/meow_king.srht.site/content")))
        ("e" . eww-list-bookmarks)
        ("E" . mk/browse-emacs-devel)
        ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
@@ -657,12 +662,13 @@ ARG: prefix argument."
 
 (defun mk/project-compile (&optional confirm)
   "Save & Compile Project.
-CONFIRM: universal argument."
+CONFIRM: universal argument. Whether a confirm is needed."
   (interactive "P")
   (save-buffer)
   (if confirm
     (project-compile)
-    (recompile)))
+    (let ((compilation-read-command nil))
+      (project-compile))))
 
 (defvar-local mk/search-engines
   '(("direct" . "%s")

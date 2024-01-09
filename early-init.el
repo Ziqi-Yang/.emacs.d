@@ -56,9 +56,6 @@
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (menu-bar-mode -1)
-(pixel-scroll-precision-mode 1)
-;; scrolling with an ordinary mouse to be almost as smooth as scrolling with a touchpad, on systems other than X:
-(setq pixel-scroll-precision-large-scroll-height 40.0)
 ;; set fringe width
 (set-fringe-mode 6) ;; diff-hl make use of fringe
 
@@ -73,6 +70,16 @@
 
 ;; Suppress warnings and errors during asynchronous native compilation
 (setq native-comp-async-report-warnings-errors nil)
+
+;;; Misc =======================================================================
+(defun efs/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+    (format "%.2f seconds"
+      (float-time
+        (time-subtract after-init-time before-init-time)))
+    gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
 (provide 'early-init)
 ;;; early-init.el ends here
