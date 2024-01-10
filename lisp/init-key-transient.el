@@ -35,15 +35,17 @@
      ("h" "backward char" backward-char :transient t)
      ("l" "forward char" forward-char :transient t)
      
-     ("o" "add blank" open-rectangle :transient nil)
-     ("y" "yank" yank-rectangle :transient nil)
-     ("c" "fill blank" clear-rectangle :transient nil)
-     ("d" "delete" delete-rectangle :transient nil)
-     ("s" "replace" string-rectangle :transient nil)
-     ("x" "kill" kill-rectangle :transient nil)
-     ("K" "copy as kill" copy-rectangle-as-kill :transient nil)
-     ("N" "number lines" rectangle-number-lines :transient nil)
-     ("C" "copy to register" copy-rectangle-to-register :transient nil)]])
+     ("o" "add blank" open-rectangle)
+     ("y" "yank" yank-rectangle)
+     ("c" "fill blank" clear-rectangle)
+     ("d" "delete" delete-rectangle)
+     ("s" "replace" string-rectangle)
+     ("x" "kill" kill-rectangle)
+     ("K" "copy as kill" copy-rectangle-as-kill)
+     ("N" "number lines" rectangle-number-lines)
+     ("m" "mark lines" mk/rectangle-mark-lines)
+     ("M" "meow mark lines" mk/meow/rectangle-mark-lines)
+     ("C" "copy to register" copy-rectangle-to-register)]])
 
 (transient-define-prefix mk/trans-map/consult-info ()
   "Consult Info Menu"
@@ -89,6 +91,24 @@ Require cargo package."
   (interactive)
   (let ((this-command 'consult-info))
     (consult-info "emacs" "efaq" "elisp" "cl" "compat")))
+
+(defun mk/rectangle-mark-lines ()
+  (interactive)
+  (when (bound-and-true-p rectangle-mark-mode)
+    (rectangle-mark-mode)
+    (let* ((rb (region-beginning))
+            (rblb (save-excursion
+                    (goto-char rb)
+                    (line-beginning-position))))
+      (push-mark rblb)
+      (goto-char (line-end-position)))))
+
+(defun mk/meow/rectangle-mark-lines ()
+  (interactive)
+  (when (bound-and-true-p rectangle-mark-mode)
+    (save-excursion
+      (mk/rectangle-mark-lines)
+      (meow-grab))))
 
 (provide 'init-key-transient)
 

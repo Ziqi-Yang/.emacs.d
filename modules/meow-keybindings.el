@@ -209,6 +209,9 @@ table-capture"))))
               "|" "$" 'left 20)
             (goto-char (point-max))
             (insert "\n")))
+        (insert "1. In Beacon Mode, use `query-search' and then you can mark all
+the occurrence with `meow-search' ('n'). [Though, `query-replace-regexp' can operate
+on selection.]")
         (setq buffer-read-only t)))))
 
 (defun mk/meow-grab-region()
