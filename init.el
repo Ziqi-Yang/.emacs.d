@@ -140,7 +140,6 @@
     (require 'l-org)
     (require 'l-web)
     (require 'l-languages)
-    (require 'eglot-booster)
     (require 'l-general)))
 
 

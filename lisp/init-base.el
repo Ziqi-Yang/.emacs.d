@@ -495,6 +495,7 @@
 
 ;;; Headline ====================================================================
 ;;; eldoc headline (my package)
+;; regarding the configuration of the header-line, see `init-ui'
 (use-package eldoc-headline
   :elpaca (:type git :host sourcehut :repo "meow_king/eldoc-headline")
   :delight eldoc-headline-local-mode
@@ -507,6 +508,7 @@
 
 ;;; Misc ==================================================================
 (use-package so-long
+  :elpaca nil
   :config
   (global-so-long-mode 1))
 
@@ -521,8 +523,6 @@
   ;; scrolling with an ordinary mouse to be almost as smooth as scrolling with a touchpad, on systems other than X:
   ;; (setq pixel-scroll-precision-large-scroll-height 40.0)
   (pixel-scroll-precision-mode 1))
-
-
 
 ;; expand region ===========
 (use-package expreg

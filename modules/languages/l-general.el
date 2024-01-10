@@ -56,6 +56,11 @@
 ;; to check the value the eglot-server-programs.
 
 ;; @ elgot ==================================================
+(use-package eglot-booster
+  :elpaca (:host github :repo "jdtsmith/eglot-booster")
+	:after eglot
+	:config	(eglot-booster-mode))
+
 (defun mk/add-eglot-ensure (hook-list)
 	(dolist (mode hook-list)
 		(add-hook mode #'eglot-ensure)))
@@ -144,26 +149,26 @@
 ;; use ggtags instead? https://github.com/yoshizow/global-pygments-plugin.git
 ;; hacks for ggtags: https://github.com/lynnux/.emacs.d/blob/a4fb0a6cf6abe9f62f3cbadf4d77a11d9ff09a13/settings/package_extra.el#L5801
 
-;; (defun mk/citre-eglot-integration()
-;;   "Disable some functionalities of citre for not messing up with eglot."
-;;   (setq-local citre-enable-imenu-integration nil)
-;;   (setq-local citre-enable-xref-integration nil))
-
-;; (use-package citre
-;;   :init
-;;   (require 'citre-config)
-;;   :config
-;;   (add-hook 'eglot-managed-mode-hook #'mk/citre-eglot-integration)
-;;   (add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
-;;   (setq
-;;     citre-default-create-tags-file-location 'global-cache
-;;     citre-use-project-root-when-creating-tags t
-;;     citre-prompt-language-for-ctags-command t
-;;     citre-capf-substr-completion t
-;;     ;; for my custom MarkdownTAG
-;;     citre-auto-enable-citre-mode-modes '(prog-mode markdown-mode))
-;;   ;; (setq evil-lookup-func #'citre-peek) ;; mapping key "K"
-;;   )
+(use-package citre
+  :init
+  (require 'citre-config)
+  :config
+  ;; use `citre-mode' to manually enable citre capf-integration
+  ;; citre can do jump without enabling `citre-mode'
+  (remove-hook 'find-file-hook #'citre-auto-enable-citre-mode)
+  (setq-default
+    citre-enable-capf-integration t  ; completion-at-point integration
+    citre-enable-imenu-integration nil
+    citre-enable-xref-integration nil)
+  (setq
+    citre-default-create-tags-file-location 'global-cache
+    citre-use-project-root-when-creating-tags t
+    citre-prompt-language-for-ctags-command t
+    ;; citre-capf-substr-completion t
+    ;; for my custom MarkdownTAG
+    ;; citre-auto-enable-citre-mode-modes '(prog-mode markdown-mode))
+    ;; (setq evil-lookup-func #'citre-peek) ;; mapping key "K"
+    ))
 
 ;;; dumb-jump ===============================================
 ;; (use-package dumb-jump
