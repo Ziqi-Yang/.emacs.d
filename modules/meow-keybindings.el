@@ -17,10 +17,16 @@
       nil nil nil
       "--" (current-kill 0))))
 
+(defun mk/clipboard-yank (&optional arg)
+  (interactive "P")
+  (if arg
+    (mk/yank-without-indent)
+    (clipboard-yank)))
+
 (defun mk/mark-line-smart ()
   "Mark the visible part of the current line.
-If current point is on a non-whitespace character, then mark the whole visible
-line; else the surrounding white spaces."
+  If current point is on a non-whitespace character, then mark the whole visible
+  line; else the surrounding white spaces."
   (interactive)
   ;; (rx (or blank eol))
   (if (looking-at "[[:blank:]]\\|$") ;; if a white space is in current point
@@ -119,6 +125,7 @@ line; else the surrounding white spaces."
     ;; '("O" . meow-to-block)
     '("O" . expreg-expand)
     '("p" . meow-yank)
+    '("P" . mk/yank-without-indent)
     '("q" . meow-quit)
     '("Q" . meow-goto-line)
     '("r" . meow-replace)
@@ -159,7 +166,7 @@ line; else the surrounding white spaces."
     '("C-M-h" . backward-sexp)
     '("C-M-l" . forward-sep)
     '("C-." . embark-act)
-    '("C-S-v" . clipboard-yank)
+    '("C-S-v" . mk/clipboard-yank)
     '("C-S-c" . mk/better-clipboard-kill-ring-save)
     '("!" . hs-toggle-hiding)))
 

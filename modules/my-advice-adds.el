@@ -19,10 +19,18 @@
 
 ;;; Code:
 
+(defun mk/advice/yank (&rest _r)
+  "Indent region after yank."
+  (indent-region (region-beginning) (region-end)))
+
 (defun mk/my-advice-add-initialize()
   "Add all my custom advices.
 This function should be called after init, so that other initialization can work properly."
-  (advice-add #'yank :after (lambda (&rest _r) (indent-region (region-beginning) (region-end)))))
+  (advice-add #'yank :after #'mk/advice/yank))
+
+(defun mk/yank-without-indent()
+  (interactive)
+  (funcall (advice--cdr (symbol-function #'yank))))
 
 ;; indent region being yanked
 (add-hook 'after-init-hook #'mk/my-advice-add-initialize)

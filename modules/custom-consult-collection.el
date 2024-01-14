@@ -108,7 +108,7 @@ When ARG is non-nil, then search all buffer."
 (defun mk/consult-ripgrep-file-type (&optional arg)
   "Consult-ripgrep with file type support.
 NOTE you can also use prefix argument to specify directory.
-ARG: prefix argument."
+ARG: prefix argument.  If ARG is not nil, then prompt for the search directory."
   (interactive "P")
   (let* ((type (mk/completing-rg-types))
           (consult-ripgrep-args (concat consult-ripgrep-args

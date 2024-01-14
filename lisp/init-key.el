@@ -98,7 +98,7 @@ Example:
   (keymap-global-set "C-M-`" #'popper-toggle-type)
 
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
-  (keymap-global-set "C-S-v" #'clipboard-yank)
+  (keymap-global-set "C-S-v" #'mk/clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
   ;; cape-dabbrev has been integrated into completion-at-point function already
   (keymap-global-set "M-/" #'dabbrev-completion)
@@ -164,14 +164,12 @@ Example:
   ;; buffer(b)
   (mk/define&set-keymap
     "C-c b" keymap/buffer
-    '(("b" . mk/consult-buffer-no-hidden)
+    '(("b" . mk/smart-buffer-switch-no-hidden)
+       ("B" . mk/smart-buffer-switch) ;; use SPC to filter hidden buffer 
        ("o" . switch-to-buffer-other-window)
-       ("B" . consult-buffer) ;; use SPC to filter hidden buffer 
        ("c" . mk/switch-to-compilation-buffer)
        ("e" . mk/switch-to-eww-buffer)
        ("r" . mk/reload-buffer)
-       ("p" . mk/smart-buffer-switch-no-hidden)
-       ("P" . mk/smart-buffer-switch)
        ("d" . kill-current-buffer)
        ("k" . kill-current-buffer)
        ("K" . kill-matching-buffers-no-ask)))
@@ -553,17 +551,21 @@ START END."
     (start-process-shell-command "my-translator" "*my-buffer*" (concat "alacritty --class floating -e /usr/bin/fish -c \"" command "\""))
     ))
 
-(defun mk/smart-buffer-switch-no-hidden ()
-  "Smart buffer switch according to project existence without showing hidden buffers."
-  (interactive)
-  (if (project-current)
+(defun mk/smart-buffer-switch-no-hidden (&optional arg)
+  "Buffer switch according to project existence without showing hidden buffers.
+ARG: prefix argument.  When ARG is non-nil, then force use
+`mk/consult-buffer-no-hidden' command instead."
+  (interactive "P")
+  (if (and (not arg) (project-current))
     (mk/consult-project-buffer-no-hidden)
     (mk/consult-buffer-no-hidden)))
 
-(defun mk/smart-buffer-switch ()
-  "Smart buffer switch according to project existence."
-  (interactive)
-  (if (project-current)
+(defun mk/smart-buffer-switch (&optional arg)
+  "Smart buffer switch according to project existence.
+ARG: prefix argument.  When ARG is non-nil, then force use
+`consult-buffer' command instead."
+  (interactive "P")
+  (if (and (not arg) (project-current))
     (consult-project-buffer)
     (consult-buffer)))
 

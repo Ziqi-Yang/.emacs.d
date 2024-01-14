@@ -460,8 +460,8 @@
                    query-replace-regexp
                    mk/better-query-replace
                    meow-line
-                   meow-beginning-of-thing
-                   meow-end-of-thing
+                   ;; meow-beginning-of-thing
+                   ;; meow-end-of-thing
                    isearch-forward
                    isearch-backward
                    consult-line
