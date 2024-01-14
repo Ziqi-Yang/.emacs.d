@@ -102,7 +102,7 @@
     (require 'editor)
     (require 'completion)
     (require 'custom-consult-collection)
-
+    (require 'file-browser)
     (require 'l-general)
 
     ;; Kitty Keyboard protocol support (so I can use Ctrl + Return in Kitty)

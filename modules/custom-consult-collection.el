@@ -105,20 +105,23 @@ When ARG is non-nil, then search all buffer."
                    (format "\t%s" desc))))))
     (completing-read "File type[empty: all]: " types nil nil (nth 0 (split-string (symbol-name major-mode) "-")))))
 
-(defun mk/consult-ripgrep-file-type ()
+(defun mk/consult-ripgrep-file-type (&optional arg)
   "Consult-ripgrep with file type support.
-NOTE you can also use prefix argument to specify directory."
-  (interactive)
+NOTE you can also use prefix argument to specify directory.
+ARG: prefix argument."
+  (interactive "P")
   (let* ((type (mk/completing-rg-types))
           (consult-ripgrep-args (concat consult-ripgrep-args
                                   (when (and type (not (string-empty-p type)))
                                     (concat " -t " type))))
           (initial (plist-get (cdr (assoc type mk/v/prog-filter-regexp)) :method))
           (this-command #'consult-ripgrep))
-    (consult-ripgrep nil (if initial
-                           (concat (thing-at-point 'symbol)
-                             " " initial)
-                           (thing-at-point 'symbol)))))
+    (consult-ripgrep
+      arg
+      (if initial
+        (concat (thing-at-point 'symbol)
+          " " initial)
+        (thing-at-point 'symbol)))))
 
 (provide 'custom-consult-collection)
 

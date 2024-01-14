@@ -16,6 +16,7 @@ org-mode
 rust-ts-mode
 
 (pt "fn pt<T>(_: &T) { println!(\"{}\", std::any::type_name::<T>()) }" q)
+(dead "#[allow(dead_code)] // FIXME" q)
 
 typst-ts-mode
 

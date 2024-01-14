@@ -267,8 +267,8 @@
 (use-package hl-todo
   :init
   (setq hl-todo-keyword-faces
-	  '(("DONE" . "#b3b3b3")
-	     ("TODO"   . "#2ecc71")
+	  '(("TODO"   . "#2ecc71")
+       ;; ("DONE" . "#b3b3b3")
 	     ("FIXME"  . "#e74c3c")
 	     ("DEBUG"  . "#9b59b6")
 	     ("NOTE" . "#3498db")
@@ -444,10 +444,18 @@
   (define-key vundo-mode-map (kbd "RET") #'vundo-confirm))
 
 ;;; Navigation ==================================================================
+(with-eval-after-load 'xref
+  (customize-set-variable
+    'xref-history-storage 'xref-window-local-history))
+
 (defun mk/push-point-to-xref-marker-stack (&rest r)
   (xref-push-marker-stack (point-marker)))
 
-(defun mk/funcs-go-back-setup()
+(defun mk/xref-stack-current-position ()
+  (interactive)
+  (mk/push-point-to-xref-marker-stack))
+
+(defun mk/funcs-go-back-setup ()
   (dolist (func '(find-function
                    query-replace-regexp
                    mk/better-query-replace

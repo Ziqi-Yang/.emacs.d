@@ -15,18 +15,21 @@
          (setq pname (project-name p))
          (if pname
            (insert
-             (concat
-               "# " pname "\n\n"
-               "![Static Badge](https://img.shields.io/badge/Made_with-Emacs-purple)" "  \n\n"
-               
-               "[Project Page](https://sr.ht/~meow_king/" pname "/) FIXME  \n"
-               "[Repository Page](https://git.sr.ht/~meow_king/" pname "/) FIXME  \n"
-               "[Public Inbox](https://lists.sr.ht/~meow_king/public-inbox): General Consults  \n"
-               "[Send a Patch](https://lists.sr.ht/~meow_king/dev)  \n"
-               "[Discussion](https://lists.sr.ht/~meow_king/discussion): Questions and Feedback  \n"
-               "[Tickets](https://todo.sr.ht/~meow_king/" pname "): issues, feature requests, etc. FIXME  \n"))
+             (format "# %s
+
+**This project is still in its awkward teenage phase. Usages and Configuration Specifications may be changed after any random update. Use it with your caution.**
+
+![Static Badge](https://img.shields.io/badge/Made_with-Emacs-purple)
+
+[Project Page](https://sr.ht/~meow_king/%s)  FIXME
+[Repository Page](https://git.sr.ht/~meow_king/%s/) FIXME  
+[Public Inbox](https://lists.sr.ht/~meow_king/public-inbox): General Consults  
+[Send a Patch](https://lists.sr.ht/~meow_king/dev)  
+[Discussion](https://lists.sr.ht/~meow_king/discussion): Questions and Feedback   
+[Tickets](https://todo.sr.ht/~meow_king/%s): issues, feature requests, etc. FIXME   
+" pname pname pname pname))
            (insert
-             "# " (file-name-base buffer-file-name))))))
+             (format "# %s %s" file-name-base buffer-file-name))))))
 
   ;; Emacs Lisp Mode
   (define-auto-insert

@@ -168,6 +168,7 @@ Example:
        ("o" . switch-to-buffer-other-window)
        ("B" . consult-buffer) ;; use SPC to filter hidden buffer 
        ("c" . mk/switch-to-compilation-buffer)
+       ("e" . mk/switch-to-eww-buffer)
        ("r" . mk/reload-buffer)
        ("p" . mk/smart-buffer-switch-no-hidden)
        ("P" . mk/smart-buffer-switch)
@@ -224,6 +225,7 @@ Example:
        ("p" . citre-ace-peek)
        ("P" . citre-peek)
        ("r" . xref-find-references)
+       ("s" . mk/xref-stack-current-position)
        ("R" . eglot-rename)
        ("u" . citre-update-this-tags-file)
        ("U" . mk/update-all-tags)))
@@ -237,14 +239,17 @@ Example:
   ;; file(f)
   (mk/define&set-keymap
     "C-c f" keymap/file
-    '(("D" . mk/delete-file)
+    `(("D" . mk/delete-file)
        ("f" . mk/smart-find-file)
        ("F" . mk/find-file-other-window)
        ("p" . project-find-file)
        ("P" . project-find-dir)
        ("r" . recentf-open)
        ("R" . rename-visited-file)
-       ("s" . sqlite-mode-open-file)
+       ("s" . ,(mk/define&set-keymap
+                 "C-c f s" keymap/sqlite
+                 '(("s" . sqlite-mode-open-file)
+                    ("S" . sql-sqlite))))
        ("S" . others/sudo-find-file)
        ("v" . view-file)
        ("z" . zoxide-find-file)))
@@ -893,6 +898,10 @@ ARG: number of words to kill"
         (with-current-buffer buf
           (read-only-mode 1))))
     (add-hook 'find-file-hook #'read-only-mode)))
+
+(defun mk/switch-to-eww-buffer ()
+  (interactive)
+  (switch-to-buffer "*eww*"))
 
 (provide 'init-key)
 
