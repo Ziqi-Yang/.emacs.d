@@ -24,7 +24,8 @@
                 ,(rx (1+ word) "(" (*? nonl) (? ")" (*? nonl) "{") (*? nonl))))
      ("python" . (:method
                    ,(rx "def" (*? nonl) ":")))
-     ("rust" . (:method "fn"))))
+     ("rust" . (:method "fn"))
+     ("zig" . (:method "fn"))))
 
 (defun mk/better-consult-line (arg)
   "Use symbol at point as the default input of `consult-line'.

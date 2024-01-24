@@ -8,6 +8,7 @@ fundamental-mode ;; Available everywhere
                                      "[-_]"
                                      " "
                                      (file-name-base buffer-file-name))))
+(el "El Psy Kongaroo" q)
 
 org-mode
 
@@ -50,7 +51,8 @@ java-ts-mode
 
 zig-mode
 
-(pl "std.debug.print(\"{any}\", .{" q "});")
+(pl "std.debug.print(\"{" (p "") "}\\n\", .{" q "});")
+(pt "std.debug.print(\"{}\", .{@TypeOf(" q ")});")
 
 
 js-ts-mode

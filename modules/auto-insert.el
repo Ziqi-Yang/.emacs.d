@@ -21,13 +21,10 @@
 
 ![Static Badge](https://img.shields.io/badge/Made_with-Emacs-purple)
 
-[Project Page](https://sr.ht/~meow_king/%s)  FIXME
-[Repository Page](https://git.sr.ht/~meow_king/%s/) FIXME  
-[Public Inbox](https://lists.sr.ht/~meow_king/public-inbox): General Consults  
-[Send a Patch](https://lists.sr.ht/~meow_king/dev)  
-[Discussion](https://lists.sr.ht/~meow_king/discussion): Questions and Feedback   
-[Tickets](https://todo.sr.ht/~meow_king/%s): issues, feature requests, etc. FIXME   
-" pname pname pname pname))
+[Discussion on Zulip](https://meow-place.zulipchat.com/)  
+[Tickets](https://todo.sr.ht/~meow_king/%s): issues, feature requests, etc.  
+[Send a Patch](https://lists.sr.ht/~meow_king/%s)
+" pname pname pname))
            (insert
              (format "# %s %s" file-name-base buffer-file-name))))))
 

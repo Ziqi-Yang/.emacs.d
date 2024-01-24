@@ -50,7 +50,7 @@
 (transient-define-prefix mk/trans-map/consult-info ()
   "Consult Info Menu"
   [["Consult Info"
-     ("a" "All" consult-info :transient nil)
+     ("a" "Normal" consult-info :transient nil)
      ("e" "Emacs Related" mk/consult-info-emacs :transient nil)]])
 
 (transient-define-prefix mk/trans-map/cargo ()
@@ -90,7 +90,7 @@ Require cargo package."
 (defun mk/consult-info-emacs()
   (interactive)
   (let ((this-command 'consult-info))
-    (consult-info "emacs" "efaq" "elisp" "cl" "compat")))
+    (consult-info "efaq" "elisp" "cl" "compat")))
 
 (defun mk/rectangle-mark-lines ()
   (interactive)

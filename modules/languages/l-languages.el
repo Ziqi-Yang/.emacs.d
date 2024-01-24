@@ -185,7 +185,9 @@ and `defcustom' forms reset their default values."
 (use-package typst-ts-mode
   :elpaca (:repo "~/proj/tree-sitter/typst-ts-mode")
   :custom
-  (typst-ts-mode-watch-options "--open"))
+  (typst-ts-mode-watch-options "--open")
+  (typst-ts-mode-enable-raw-blocks-highlight t)
+  (typst-ts-mode-highlight-raw-blocks-at-startup t))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(typst-ts-mode . ("typst-lsp"))))

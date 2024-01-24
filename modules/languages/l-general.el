@@ -309,7 +309,7 @@ configuration (like Makefile)."
             (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))
           ;; zig
           ((derived-mode-p '(zig-mode))
-            (concat "zig run " relative-file-name))
+            (concat "zig build run"))
           ;; js
           ((derived-mode-p '(js-base-mode typescript-ts-base-mode))
             (concat "tsc " relative-file-name))

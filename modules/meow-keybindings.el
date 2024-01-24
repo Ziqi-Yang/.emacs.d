@@ -20,8 +20,14 @@
 (defun mk/clipboard-yank (&optional arg)
   (interactive "P")
   (if arg
-    (mk/yank-without-indent)
+    (mk/yank-without-indent)  ; FIXME, not from clipboard
     (clipboard-yank)))
+
+(defun mk/yank (&optional arg)
+  (interactive "P")
+  (if arg
+    (mk/yank-without-indent)
+    (yank)))
 
 (defun mk/mark-line-smart ()
   "Mark the visible part of the current line.
@@ -124,8 +130,7 @@
     '("o" . meow-block)
     ;; '("O" . meow-to-block)
     '("O" . expreg-expand)
-    '("p" . meow-yank)
-    '("P" . mk/yank-without-indent)
+    '("p" . mk/yank)
     '("q" . meow-quit)
     '("Q" . meow-goto-line)
     '("r" . meow-replace)
