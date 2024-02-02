@@ -230,11 +230,7 @@
 3. eglot-hover-eldoc-function"
   (setq eldoc-documentation-functions
     (cons #'eglot-signature-eldoc-function
-	    (remove #'eglot-signature-eldoc-function eldoc-documentation-functions)))
-  ;; `eglot-hover-eldoc-function' doesn't always display flymake errors at the top
-  (setq eldoc-documentation-functions
-	  (cons #'flymake-eldoc-function
-	    (remove #'flymake-eldoc-function eldoc-documentation-functions))))
+	    (remove #'eglot-signature-eldoc-function eldoc-documentation-functions))))
 
 (with-eval-after-load 'eglot
   (add-hook 'eglot-managed-mode-hook #'mk/setup-eglot-eldoc))

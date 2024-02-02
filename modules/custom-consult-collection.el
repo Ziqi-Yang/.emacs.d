@@ -124,6 +124,13 @@ ARG: prefix argument.  If ARG is not nil, then prompt for the search directory."
           " " initial)
         (thing-at-point 'symbol)))))
 
+(defun mk/consult-fd-current-directory ()
+  "`Consult-fd' at current directory.
+Since we already have `project-find-file', we just need `consult-fd' to
+search files from current directory."
+  (interactive)
+  (consult-fd default-directory))
+
 (provide 'custom-consult-collection)
 
 ;;; custom-consult-collection.el ends here

@@ -1,6 +1,6 @@
 #+title: README
 
-* COMMENT Requirements
+* Requirements
 Mainly Language Servers  
 Be sure to follow the [[https://wakatime.com/emacs][wakatime setup guide]] to setup wakatime
 #+begin_src shell

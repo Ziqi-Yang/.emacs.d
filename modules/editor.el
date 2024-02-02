@@ -10,6 +10,9 @@
 	scroll-step 1
 	select-enable-clipboard nil)  ; make register indepentent from clipboard
 
+;; (with-eval-after-load 'visual-wrap
+;;   (add-hook 'prog-mode-hook #'visual-wrap-prefix-mode))
+
 ;; @ remember cursor position
 (use-package saveplace
   :elpaca nil

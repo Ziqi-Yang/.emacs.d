@@ -53,7 +53,8 @@ zig-mode
 
 (pl "std.debug.print(\"{" (p "") "}\\n\", .{" q "});")
 (pt "std.debug.print(\"{}\", .{@TypeOf(" q ")});")
-
+(test_eq "try std.testing.expectEqual(" q ")")
+(test_eq_str "try std.testing.expectEqualStrings(" q ")")
 
 js-ts-mode
 

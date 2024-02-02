@@ -83,6 +83,11 @@
     (call-interactively #'find-file)))
 
 (with-eval-after-load 'dired
+  (keymap-unset dired-mode-map "C-M-u")
+  
+  (keymap-set dired-mode-map "<" #'beginning-of-buffer)
+  (keymap-set dired-mode-map ">" #'end-of-buffer)
+  
   (keymap-set dired-mode-map "h" #'dired-up-directory)
   (keymap-set dired-mode-map "l" #'dired-find-file)
   (keymap-set dired-mode-map "O" #'dired-do-open)

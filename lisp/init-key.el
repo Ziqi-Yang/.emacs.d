@@ -175,6 +175,7 @@ Example:
        ("K" . kill-matching-buffers-no-ask)))
 
   ;; bookmark(B)
+  ;; also use consult-bookmark to jump to buffer
   (mk/define&set-keymap
     "C-c B" keymap/bookmark
     `(("e" . ,(mk/define&set-keymap
@@ -237,7 +238,8 @@ Example:
   ;; file(f)
   (mk/define&set-keymap
     "C-c f" keymap/file
-    `(("D" . mk/delete-file)
+    `(("d" . mk/consult-fd-current-directory)
+       ("D" . mk/delete-file)
        ("f" . mk/smart-find-file)
        ("F" . mk/find-file-other-window)
        ("p" . project-find-file)
