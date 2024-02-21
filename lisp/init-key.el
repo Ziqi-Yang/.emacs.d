@@ -383,7 +383,7 @@ Example:
      ;; NOTE: to post filter to filter group (i.e. filename in this case)
      ;; https://github.com/minad/consult/issues/799
      ("p" . mk/consult-ripgrep-file-type)
-     ("b" . consult-bookmark)
+     ("b" . bookmark-jump)
      ("d" . dictionary-search)
      ("o" . consult-outline)
      ("O" . mk/search-online)
@@ -581,9 +581,14 @@ When tempel-trigger-prefix is before the point, then use temple, else `completio
       (call-interactively 'tempel-next)
     (if (and tempel-trigger-prefix
              (length> tempel-trigger-prefix 0)
-             ;; TODO
-             (looking-back (rx-to-string `(seq ,tempel-trigger-prefix (* (not space)))) nil))
-        (call-interactively 'tempel-complete)
+             ;; (rx-to-string `(seq ,tempel-trigger-prefix (* (not (or space punct)))))
+             (looking-back "\\(?:<[^[:punct:][:space:]]*\\)" nil))
+        (condition-case nil
+            (call-interactively 'tempel-complete)
+          (user-error
+           (if lsp-bridge-mode
+               (lsp-bridge-popup-complete-menu)
+             (completion-at-point))))
       (if lsp-bridge-mode
           (lsp-bridge-popup-complete-menu)
         (completion-at-point)))))
@@ -948,7 +953,7 @@ ARG: number of words to kill"
 (defun mk/code/toggle-inlay-hint ()
   (interactive)
   (if lsp-bridge-mode
-      (customize-toggle-option lsp-bridge-enable-inlay-hint)
+      (setq lsp-bridge-enable-inlay-hint (not lsp-bridge-enable-inlay-hint))
     (call-interactively #'eglot-inlay-hints-mode)))
 
 (defun mk/code/error-list ()

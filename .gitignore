@@ -4,6 +4,8 @@
 /.local/straight/*
 !/.local/straight/versions
 
+/README.pdf
+
 /eln-cache
 /test.el
 /parinfer-rust

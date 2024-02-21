@@ -29,6 +29,7 @@
   :custom
   (lsp-bridge-code-action-enable-popup-menu nil)  ; FIXME quit popup menu will cause weird problem
   (lsp-bridge-enable-hover-diagnostic t)
+  (lsp-bridge-complete-manually t)
   (lsp-bridge-python-lsp-server "ruff")
   (lsp-bridge-python-multi-lsp-server "pylsp_ruff")
   (lsp-bridge-multi-lang-server-mode-list
@@ -165,6 +166,7 @@ configuration (like Makefile)."
                  (project-root (project-current)) ;; have problem with git submodule
                (file-name-directory buffer-file-name)))
             (file-extension (file-name-extension buffer-file-name))
+            (file-name (file-name-nondirectory buffer-file-name))
             (relative-file-name (file-relative-name buffer-file-name base-path))
             (relative-bare-file-name (file-name-sans-extension relative-file-name))
             (makefile-exist (file-exists-p (expand-file-name "Makefile" base-path)))
@@ -208,6 +210,9 @@ configuration (like Makefile)."
         ;; python
         ((or (eq major-mode 'python-mode) (eq major-mode 'python-ts-mode))
          (concat "python " relative-file-name))
+        ;; README.typ -> README.md
+        ((and (eq major-mode 'typst-ts-mode) (equal file-name "README.typ"))
+         (concat "pandoc -o README.md README.typ"))
         ;; web
         ((eq major-mode 'web-mode)
          ;; format file
@@ -227,6 +232,7 @@ configuration (like Makefile)."
         (t "make "))))))
 
 (add-hook 'prog-mode-hook #'mk/set-compile-command)
+(add-hook 'typst-ts-mode-hook #'mk/set-compile-command)
 
 ;;; Extra Project Root Markers ==============================
 (setq project-vc-extra-root-markers
