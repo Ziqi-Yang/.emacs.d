@@ -81,15 +81,16 @@
   (setenv "all_proxy" "")
   (proxy-socks-show))
 
-(defun proxy-socks-toggle ()
-  "Toggle SOCKS proxy."
-  (interactive)
-  (if (bound-and-true-p socks-noproxy)
-    (proxy-socks-disable)
-    (proxy-socks-enable)))
+;;; I don't need this since I use dae instead
+;; (defun proxy-socks-toggle ()
+;;   "Toggle SOCKS proxy."
+;;   (interactive)
+;;   (if (bound-and-true-p socks-noproxy)
+;;     (proxy-socks-disable)
+;;     (proxy-socks-enable)))
 
-;;; start emacs with proxy setting ==========================
-(add-hook 'emacs-startup-hook (lambda () (proxy-http-enable)))
+;; ;;; start emacs with proxy setting ==========================
+;; (add-hook 'emacs-startup-hook (lambda () (proxy-http-enable)))
 
 (provide 'init-proxy)
 ;;; init-proxy.el ends here

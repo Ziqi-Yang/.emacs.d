@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package compat)
 (use-package package-lint)
 ;; (use-package polymode)
 ;; (use-package posframe)

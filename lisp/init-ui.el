@@ -199,10 +199,10 @@
 
 (defun mk/setup-header-line()
   (setq-default
-    header-line-format
-    '((:eval eldoc-headline-string)
-       (:propertize " # " face error)
-       (:eval (breadcrumb-imenu-crumbs)))))
+   header-line-format
+   '((:eval eldoc-headline-string)
+     (:propertize " # " face error)
+     (:eval (breadcrumb-imenu-crumbs)))))
 
 (add-hook 'after-init-hook #'mk/setup-header-line)
 

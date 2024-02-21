@@ -93,23 +93,23 @@
 
 ;; NOTE: module name should be unique(also to the built-in module)
 (if (getenv "EMACS-MIN")
-  (with-temp-message ""
-    (require 'init-base)
-    (require 'meow-keybindings)
-    (require 'init-key-transient)
-    (require 'init-key)
-    (require 'init-ui)
-    (require 'editor)
-    (require 'completion)
-    (require 'custom-consult-collection)
-    (require 'file-browser)
-    (require 'l-general)
+    (with-temp-message ""
+      (require 'init-base)
+      (require 'meow-keybindings)
+      (require 'init-key-transient)
+      (require 'init-key)
+      (require 'init-ui)
+      (require 'editor)
+      (require 'completion)
+      (require 'custom-consult-collection)
+      (require 'file-browser)
+      (require 'l-general)
 
-    ;; Kitty Keyboard protocol support (so I can use Ctrl + Return in Kitty)
-    (use-package kkp
-      :defer 1
-      :config
-      (global-kkp-mode +1)))
+      ;; Kitty Keyboard protocol support (so I can use Ctrl + Return in Kitty)
+      (use-package kkp
+        :defer 1
+        :config
+        (global-kkp-mode +1)))
 
   (with-temp-message ""
     (require 'init-base)
@@ -139,8 +139,10 @@
   (with-temp-message ""
     (require 'l-org)
     (require 'l-web)
+    (require 'l-treesit)
     (require 'l-languages)
-    (require 'l-general)))
+    (require 'l-general)
+    (require 'l-eglot)))
 
 
 ;; l-general must loaded after l-rust

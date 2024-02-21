@@ -41,110 +41,24 @@
   :custom
   (tab-bar-select-tab-modifiers '(meta))
   (tab-bar-new-tab-to 'rightmost)
-  (tab-bar-show 1) ;; hide bar if <= 1 tabs open
-  (tab-bar-close-button-show nil) ;; hide tab close / X button
-  (tab-bar-new-tab-choice "*dashboard*") ;; buffer to show in new tabs
-  (tab-bar-tab-hints t) ;; show tab numbers
+  (tab-bar-show 1)  ; hide bar if <= 1 tabs open
+  (tab-bar-close-button-show nil)  ; hide tab close / X button
+  (tab-bar-new-tab-choice "*dashboard*")  ; buffer to show in new tabs
+  (tab-bar-tab-hints t)  ; show tab numbers
   (tab-bar-format '(tab-bar-format-menu-bar tab-bar-format-tabs tab-bar-separator))
   ;; don't use :custom-face
   :config
   (tab-bar-mode 1)                           ;; enable tab bar
   (custom-set-faces
-    '(tab-bar ((t (:inherit mode-line :box nil))))
-    '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
-    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box nil))))))
+   '(tab-bar ((t (:inherit mode-line :box nil))))
+   '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
+   '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box nil))))))
 
-
-;; @ persp-mode
-;; poor document, conflict with vertico-posframe when manually recover, too hard to use
-;; (use-package persp-mode
-;;   :hook (after-init . persp-mode)
-;;   :config
-;;   (setq persp-autokill-buffer-on-remove 'kill-weak
-;;         persp-auto-resume-time -1 ; Don't auto-load on startup
-;;         persp-auto-save-opt 1 ;; save on the emacs shutdown and only if the persp-mode active
-;;         persp-reset-windows-on-nil-window-conf nil
-;;         persp-nil-hidden t
-;;         persp-set-last-persp-for-new-frames t
-;;         ;; persp-switch-to-added-buffer nil
-;;         persp-kill-foreign-buffer-behaviour 'kill
-;;         persp-remove-buffers-from-nil-persp-behaviour nil))
-;; TODO try tabspace
-
-;; @ switch workspace
-;; (use-package eyebrowse
-;;   :config
-;; 	(define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
-;; 	(define-key eyebrowse-mode-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
-;; 	(define-key eyebrowse-mode-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
-;; 	(define-key eyebrowse-mode-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
-;; 	(define-key eyebrowse-mode-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
-;; 	(define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
-;; 	(eyebrowse-mode t)
-;; 	(setq eyebrowse-wrap-around t) ;; makes workspaces a loop
-;; 	;; (setq eyebrowse-new-workspace "*dashboard*")
-;;   ) ;; use *scratch* buffer (use string to provide it with custom buffer name)
-
-;; (use-package tabspaces
-;;   ;; use this next line only if you also use straight, otherwise ignore it.
-;;   :elpaca (:type git :host github :repo "mclear-tools/tabspaces")
-;;   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
-;;   :commands (tabspaces-switch-or-create-workspace
-;;               tabspaces-open-or-create-project-and-workspace)
-;;   :custom
-;;   (tabspaces-use-filtered-buffers-as-default t)
-;;   (tabspaces-default-tab "Default")
-;;   (tabspaces-remove-to-default t)
-;;   (tabspaces-include-buffers '("*scratch*"))
-;;   ;; sessions
-;;   (tabspaces-session t)
-;;   (tabspaces-session-auto-restore t))
-
-;; @ save session(buildin)
-;; (use-package desktop
-;;   :custom
-;;   (desktop-restore-eager 4)
-;; 	(desktop-save t)
-;; 	:init
-;; 	(if (display-graphic-p)
-;; 		;; non-daemon emacs
-;; 		(progn
-;; 			(add-hook 'after-init-hook '(lambda () (desktop-save-mode t)))
-;; 			;; Manually read by clicking on dashboard icon instead
-;; 			;; (add-hook 'after-init-hook #'desktop-read)
-;; 			)
-;; 		;; emacs server
-;; 		(progn
-;; 			(add-hook 'server-after-make-frame-hook '(lambda () (desktop-save-mode t)))
-;; 			;; we need the first emacsclient to read the session, the later opened emacsclient(the
-;; 			;; first one is still alive) will not read the session since the server arleady owns the
-;; 			;; session
-;; 			;; Manually read by clicking on dashboard icon instead
-;; 			;; (add-hook 'server-after-make-frame-hook #'desktop-read)
-;; 			)
-;; 		)
-;; 	:config
-;; 	;; Config Block makes sure this lambda function load later than desktop in kill-emacs-query-functions hook , so this lambda function is executed earlier
-
-;; 	;; remove desktop-kill hook. Leave out the check procedure.
-;; 	(remove-hook 'kill-emacs-query-functions #'desktop-kill)
-
-;; 	(let ((save-path (expand-file-name ".local/data/desktop" user-emacs-directory)))
-;; 		;; when explictly quit emacs with kill-emacs command
-;; 		(add-hook 'kill-emacs-hook
-;; 			`(lambda ()
-;; 				 (desktop-remove)
-;; 				 (desktop-save ,save-path t)))
-;; 		;; when implictly quit emacs like close window
-;; 		(add-hook 'kill-emacs-query-functions
-;; 			`(lambda ()
-;; 				 (desktop-remove) ;; make sure there is no desktop file or desktop.el will prompt you Whether override it or not
-;; 				 (desktop-save ,save-path t))))) ;; save session without lock
 
 ;;; text scale change on the fly ============================
 (use-package default-text-scale
   :bind (("C--" . default-text-scale-decrease)
-	        ("C-=" . default-text-scale-increase))
+	       ("C-=" . default-text-scale-increase))
   :config
   (default-text-scale-mode))
 
@@ -267,12 +181,12 @@
 (use-package hl-todo
   :init
   (setq hl-todo-keyword-faces
-	  '(("TODO"   . "#2ecc71")
-       ;; ("DONE" . "#b3b3b3")
-	     ("FIXME"  . "#e74c3c")
-	     ("DEBUG"  . "#9b59b6")
-	     ("NOTE" . "#3498db")
-	     ("STUB"   . "#f39c12")))
+	      '(("TODO"   . "#2ecc71")
+          ;; ("DONE" . "#b3b3b3")
+	        ("FIXME"  . "#e74c3c")
+	        ("DEBUG"  . "#9b59b6")
+	        ("NOTE" . "#3498db")
+	        ("STUB"   . "#f39c12")))
   :config
   (global-hl-todo-mode))
 
@@ -291,92 +205,6 @@
 
 ;;; Buffer Move (swap window) ===============================
 (use-package buffer-move)
-
-;;; Sideline ================================================
-;; (use-package sideline
-;;   :init
-;;   (setq sideline-flymake-display-mode 'point)
-;;   (setq sideline-backends-right
-;; 	'((sideline-flymake . up)
-;;           ;; (mk/sideline-eldoc . down)
-;;           ))
-;;   :config
-;;   (global-sideline-mode))
-
-;; (use-package sideline-flymake)
-
-;; This package does badly (2023.08.30
-;; (use-package sideline-eldoc
-;;   :elpaca (:type git :host github :repo "ginqi7/sideline-eldoc"))
-
-;; if run the following code on non-emacs-lisp mode using eldoc, then text-read-only error occurs
-;; (defvar mk/sideline-eldoc--message "")
-
-;; (defun mk/sideline-eldoc--set-message (str &rest args)
-;;   "Extract eldoc message format STR with ARGS."
-;;   (when str
-;;     (message str)
-;;     (setq mk/sideline-eldoc--message (apply #'format str args))))
-
-;; (defun mk/sideline-eldoc (command)
-;;   "Eldoc backend for sideline."
-;;   (cl-case command
-;;     (`candidates
-;;       (cons :async
-;;         (lambda (callback &rest _)
-;;           (progn
-;;             (remove-text-properties 0 (length mk/sideline-eldoc--message)
-;;               '(read-only t) mk/sideline-eldoc--message)
-;;             (funcall callback (split-string mk/sideline-eldoc--message "\n"))))))))
-
-;; (setq eldoc-message-function #'mk/sideline-eldoc--set-message)
-
-;;; Peek ====================================================
-;; (use-package peek
-;;   :elpaca (:type git :host sourcehut :repo "meow_king/peek")
-
-;;   :custom
-;;   ;; only list some mostly-want-changed settings
-;;   (peek-overlay-window-size 11) ; lines
-;;   ;; one line before the place found by `peek-definition' will also appear
-;;   ;; in peek window. Note `peek-definition' is the underlying function of
-;;   ;; `peek-xref-definition'
-;;   (peek-definition-surrounding-above-lines 1)
-;;   (peek-overlay-position 'above) ;; or below
-
-;;   (peek-live-update t) ;; live update peek view of a marked region
-
-;;   (peek-eldoc-message-overlay-position 2) ;; eldoc message overlay at two lines below the point
-
-;;   (peek-enable-eldoc-message-integration nil) ;; disable (defaut) `eldoc-message-function' integration
-;;   (peek-enable-eldoc-display-integration nil) ;; enable `eldoc-display-functons'  integration
-
-;;   :config
-;;   (global-peek-mode 1)
-
-;;   ;; Keybindings
-;;   ;; default keybindings in peek-mode-keymap
-;;   (define-key peek-mode-keymap (kbd "M-n") 'peek-next-line)
-;;   (define-key peek-mode-keymap (kbd "M-p") 'peek-prev-line)
-
-;;   ;; or you can use `keymap-global-set', which is introduced in emacs 29
-;;   ;; (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
-;;   ;; (global-set-key (kbd "C-x P d") #'peek-xref-definition)
-;;   ;; (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
-;;   ;; (global-set-key (kbd "C-c c d") #'eldoc)
-
-;;   ;; Eldoc display setting
-;;   ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
-;;   ;;   other eldoc display functions.
-;;   ;; (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
-
-;;   ;; (add-hook 'meow-insert-enter-hook 'peek-overlay-eldoc-message-enable)
-;;   ;; (add-hook 'meow-insert-exit-hook 'peek-overlay-eldoc-message-disable)
-;;   )
-
-;; (use-package peek-collection
-;;   :elpaca (:type git :host sourcehut :repo "meow_king/peek-collection"))
-
 
 ;;; outline minor mode ======================================
 ;; use TAB, ze, zE to toggle outline (evil-collection binding)
@@ -457,17 +285,22 @@
 
 (defun mk/funcs-go-back-setup ()
   (dolist (func '(find-function
-                   query-replace-regexp
-                   mk/better-query-replace
-                   meow-line
-                   ;; meow-beginning-of-thing
-                   ;; meow-end-of-thing
-                   isearch-forward
-                   isearch-backward
-                   consult-line
-                   consult-imenu
-                   consult-ripgrep
-                   consult-git-grep))
+                  query-replace-regexp
+                  mk/better-query-replace
+                  meow-search
+                  meow-line
+                  ;; meow-beginning-of-thing
+                  ;; meow-end-of-thing
+                  lsp-bridge-find-def
+                  lsp-bridge-find-references
+                  lsp-bridge-find-impl
+                  lsp-bridge-find-type-def
+                  isearch-forward
+                  isearch-backward
+                  consult-line
+                  consult-imenu
+                  consult-ripgrep
+                  consult-git-grep))
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
 
 (add-hook 'after-init-hook 'mk/funcs-go-back-setup)

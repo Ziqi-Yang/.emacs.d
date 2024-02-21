@@ -3,12 +3,13 @@
 ;; Not Incluing KeyBindings
 ;;; Code:
 
-(setq-default tab-width 2
-	indent-tabs-mode nil  ; use white spaces instead of tabs
-	evil-shift-width tab-width
-	;; scroll-margin 15
-	scroll-step 1
-	select-enable-clipboard nil)  ; make register indepentent from clipboard
+(setq-default
+ tab-width 2
+ indent-tabs-mode nil  ; use white spaces instead of tabs
+ evil-shift-width tab-width
+ ;; scroll-margin 15
+ scroll-step 1
+ select-enable-clipboard nil)  ; make register indepentent from clipboard
 
 ;; (with-eval-after-load 'visual-wrap
 ;;   (add-hook 'prog-mode-hook #'visual-wrap-prefix-mode))
@@ -18,6 +19,12 @@
   :elpaca nil
   :config
   (save-place-mode))
+
+
+;; change name case at ease (i.e. camel case, snake case)
+(use-package string-inflection
+  :elpaca (:type git :host github :repo "akicho8/string-inflection"))
+
 
 ;; Surround =========================
 (use-package surround
@@ -101,18 +108,6 @@
   (editorconfig-mode 1))
 
 (use-package apheleia)
-
-;; Other ====================================================
-
-;; (use-package combobulate
-;;   :elpaca (:host github :repo "mickeynp/combobulate")
-;;   :hook ((python-ts-mode . combobulate-mode)
-;;           (js-ts-mode . combobulate-mode)
-;;           (css-ts-mode . combobulate-mode)
-;;           (yaml-ts-mode . combobulate-mode)
-;;           (json-ts-mode . combobulate-mode)
-;;           (typescript-ts-mode . combobulate-mode)
-;;           (tsx-ts-mode . combobulate-mode)))
 
 ;;; Focus ===================================================
 ;; focus mode, dim other text color

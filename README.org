@@ -10,7 +10,8 @@ sudo pacman -S ripgrep
 sudo pacman -S clang pyright rust-analyzer bash-language-server gopls typescript-language-server vscode-html-languageserver vscode-css-languageserver
 
 # vue
-paru -S nodejs-vls
+sudo pacman -S vue-language-server
+
 sudo pacman -S --asdeps openmp python llvm # clang optional dependences
 sudo pacman -S bash-completion man-db shellcheck # bash-language-server
 
@@ -51,7 +52,7 @@ paru -S mu
 systemctl --user enable --now offlineimap.service
 #+end_src
 
-(Now I don't use it)Requirements of =lsp-bridge=: https://github.com/manateelazycat/lsp-bridge
+Requirements of =lsp-bridge=: https://github.com/manateelazycat/lsp-bridge
 
 * Note
 The dictionary file =en_US-large.dic= in =dict= directory is stolen from =/usr/share/hunspell/en_US-large.dic= (and do some clean work: ~sed 's/\/.*//' en_US-large.dic > en_US-large_mod.dic~).

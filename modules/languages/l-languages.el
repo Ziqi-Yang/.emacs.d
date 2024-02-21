@@ -40,8 +40,10 @@
 
 (use-package mermaid-ts-mode
   :elpaca (:type git :host github :repo "JonathanHope/mermaid-ts-mode"))
+(add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-ts-mode))
 
-(use-package d2-mode)
+;; (use-package d2-mode)
+;; (add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
 
 (defun mk/draw-local-keybinding-setup()
   (keymap-local-set "C-c C-c c" #'mermaid-compile)

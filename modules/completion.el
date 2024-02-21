@@ -185,35 +185,35 @@ FRAME: nil for current selected frame."
 ;;; Consult =================================================
 (use-package consult
   :custom
-  (consult-imenu-config '((java-ts-mode :toplevel "Method" :types
-					                  ((?m "Method" font-lock-function-name-face)
-					                    (?c "Class" font-lock-type-face)
-					                    (?i "Interface" font-lock-type-face)))
-                           (emacs-lisp-mode :toplevel "Functions" :types
-					                   ((102 "Functions" font-lock-function-name-face)
-					                     (109 "Macros" font-lock-function-name-face)
-					                     (112 "Packages" font-lock-constant-face)
-					                     (116 "Types" font-lock-type-face)
-					                     (118 "Variables" font-lock-variable-name-face)))
-                           (typst-ts-mode :topLevel "Headings" :types
-					                   ((?h "Headings" typst-ts-markup-header-face)
-					                     (?f "Functions" font-lock-function-name-face)))
-                           (rust-ts-mode :topLevel "Fn" :types
-                             ((?f "Fn" font-lock-function-name-face)
-                               (?m "Module" font-lock-variable-name-face)
-                               (?t "Type" font-lock-type-face)
-                               (?i "Impl" font-lock-operator-face)
-                               (?e "Enum" font-lock-variable-name-face)
-                               (?s "Struct" font-lock-variable-name-face)))))
+  (consult-imenu-config
+   '((java-ts-mode :toplevel "Method" :types
+					         ((?m "Method" font-lock-function-name-face)
+					          (?c "Class" font-lock-type-face)
+					          (?i "Interface" font-lock-type-face)))
+     (emacs-lisp-mode :toplevel "Functions" :types
+					            ((?f "Functions" font-lock-function-name-face)
+					             (?m "Macros" font-lock-function-name-face)
+					             (?p "Packages" font-lock-constant-face)
+					             (?t "Types" font-lock-type-face)
+					             (?v "Variables" font-lock-variable-name-face)))
+     (typst-ts-mode :topLevel "Headings" :types
+					          ((?h "Headings" typst-ts-markup-header-face)
+					           (?f "Functions" font-lock-function-name-face)))
+     (rust-ts-mode :topLevel "Fn" :types
+                   ((?f "Fn" font-lock-function-name-face)
+                    (?m "Module" font-lock-variable-name-face)
+                    (?t "Type" font-lock-type-face)
+                    (?i "Impl" font-lock-operator-face)
+                    (?e "Enum" font-lock-variable-name-face)
+                    (?s "Struct" font-lock-variable-name-face)))))
   :config
   ;; integrated with xref
   (setq xref-show-xrefs-function #'consult-xref
-	  xref-show-definitions-function #'consult-xref)
+	      xref-show-definitions-function #'consult-xref)
   ;; disable preview for recent file
   (consult-customize 
-    consult-info
-    consult-recent-file :preview-key nil) 
-  ) 
+   consult-info
+   consult-recent-file :preview-key nil))
 
 ;; NOTE: disable these to using lsp-bridge
 ;;; Corfu: In Region Completion  ============================

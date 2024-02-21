@@ -5,15 +5,13 @@
 
 ;;; html 
 ;; in insert mode: C-j or C-<return> to expand
-(use-package emmet-mode
-	:hook ((web-mode . emmet-mode)))
+;; (use-package emmet-mode
+;; 	:hook ((web-mode . emmet-mode)))
 
 ;;; Css =====================================================
 (use-package rainbow-mode
-	:hook ( ((mhtml-mode html-mode css-mode web-mode) . rainbow-mode) )) ;; TODO more specific mode
+	:hook ( ((mhtml-mode html-mode html-ts-mode css-mode web-mode) . rainbow-mode) )) ;; TODO more specific mode
 
-;;; Vue =====================================================
-;; @ Custom vue mode based on web-mode
 (use-package web-mode
   :custom
   (web-mode-markup-indentation 2)
@@ -25,7 +23,7 @@
   (web-mode-enable-current-element-highlight t)
   (web-mode-enable-current-column-highlight t)
   (web-mode-enable-engine-detection t)
-  
+
   :config
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -40,23 +38,41 @@
   "Setup some values of web mode for emacs cliet.
 Due to web-mode bug for emacs client, some customizable values need to be set after emacs client reload.  `display-graphic-p'."
   (if (display-graphic-p)
-    (setq web-mode-enable-auto-closing t
-      web-mode-enable-auto-pairing t
-      web-mode-enable-auto-indentation t
-      web-mode-enable-auto-opening t
-      web-mode-enable-auto-quoting t
-      web-mode-enable-css-colorization t)))
+      (setq web-mode-enable-auto-closing t
+            web-mode-enable-auto-pairing t
+            web-mode-enable-auto-indentation t
+            web-mode-enable-auto-opening t
+            web-mode-enable-auto-quoting t
+            web-mode-enable-css-colorization t)))
 
 (add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client)
 
+;;; Vue Mode Eglot server configuration =========================================
+;; https://github.com/joaotavora/eglot/discussions/1184#discussioncomment-5431145
 (define-derived-mode vue-mode web-mode "Vue")
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
 
-;; eglot server programs configuration
+(defun vue-eglot-init-options ()
+  (let ((tsdk-path (expand-file-name
+                    "lib"
+                    (shell-command-to-string "npm list --global --parseable typescript | head -n1 | tr -d \"\n\""))))
+    `(:typescript (:tsdk ,tsdk-path
+                         :languageFeatures (:completion
+                                            (:defaultTagNameCase "both"
+                                                                 :defaultAttrNameCase "kebabCase"
+                                                                 :getDocumentNameCasesRequest nil
+                                                                 :getDocumentSelectionRequest nil)
+                                            :diagnostics
+                                            (:getDocumentVersionRequest nil))
+                         :documentFeatures (:documentFormatting
+                                            (:defaultPrintWidth 100
+                                                                :getDocumentPrintWidthRequest nil)
+                                            :documentSymbol t
+                                            :documentColor t)))))
+
 (with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(vue-mode . ("vls" "--stdio")))
   (add-to-list 'eglot-server-programs
-    '((typescript-ts-mode) "typescript-language-server" "--stdio")))
+               `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options)))))
 
 ;;; Trivial =================================================
 (defun mk/live-web-start()
@@ -64,12 +80,12 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
   (interactive)
   (condition-case nil	(delete-process "live-web")	(error nil))
   (if (project-current) ;;; start browser-sync in the project root if in a project
+      (start-process-shell-command "live-web"
+                                   "*my-buffer*"
+                                   (concat "browser-sync start --server " (project-root (project-current)) " --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
     (start-process-shell-command "live-web"
-      "*my-buffer*"
-      (concat "browser-sync start --server " (project-root (project-current)) " --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
-    (start-process-shell-command "live-web"
-      "*my-buffer*"
-      "browser-sync start --server --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
+                                 "*my-buffer*"
+                                 "browser-sync start --server --files '*.html,*.css,*.js,**/*.html,**/*.css,**/*.js'"))
   (message "live web start"))
 
 (defun mk/live-web-kill()
