@@ -12,7 +12,7 @@
 ;;; save minibuffer history
 ;; Persist history over Emacs restarts.
 (use-package savehist
-  :elpaca nil
+  :ensure nil
   :init
   ;; Allow commands in minibuffers, will affect `dired-do-dired-do-find-regexp-and-replace' command:
   (setq enable-recursive-minibuffers t)
@@ -37,7 +37,7 @@
 
 ;;; workspace ===============================================
 (use-package tab-bar
-  :elpaca nil
+  :ensure nil
   :custom
   (tab-bar-select-tab-modifiers '(meta))
   (tab-bar-new-tab-to 'rightmost)
@@ -68,10 +68,10 @@
 ;; (use-package consult-project-extra)
 
 (use-package project
-  :elpaca nil
+  :ensure nil
   :config
   (setq project-switch-commands
-    (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
+        (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
   (add-to-list 'project-switch-commands '(mk/consult-ripgrep-file-type "Consult rg" "r")))
 
 ;; (add-hook 'after-init-hook #'mk/setup-project.el)
@@ -100,7 +100,7 @@
 
 ;;; Recent file =============================================
 (use-package recentf
-  :elpaca nil
+  :ensure nil
   :custom
   (recentf-auto-cleanup 'never) ; "05:00am"
   (recentf-max-saved-items 300)
@@ -127,14 +127,14 @@
 
 ;;; fold ====================================================
 (use-package hideshow
-  :elpaca nil
+  :ensure nil
   :delight hs-minor-mode
   :hook (prog-mode . hs-minor-mode)
   :config
   ;; also works for outline (minor) mode
   (set-display-table-slot standard-display-table
-		'selective-display
-		(string-to-vector " ❡❡❡")))
+		                      'selective-display
+		                      (string-to-vector " ❡❡❡")))
 
 ;;; save file utility =======================================
 (defun mk/auto-save-visited-predicate ()
@@ -163,11 +163,11 @@
 ;; @ make search and replace very easy (even for project)
 ;; notice: in replace: !, y, n is the keybindings to replace all, replace current and not replace current
 (use-package color-rg
-  :elpaca (:host github :repo "manateelazycat/color-rg"))
+  :ensure (:host github :repo "manateelazycat/color-rg"))
 
 ;; @ fuzzy finder ;; use consult-ripgrep instead
 ;; (use-package affe
-;;   :elpaca (:host github :repo "minad/affe" :files ("*.el"))
+;;   :ensure (:host github :repo "minad/affe" :files ("*.el"))
 ;;   :config
 ;;   ;; Manual preview key for `affe-grep'
 ;;   (consult-customize affe-grep :preview-key '(:debounce 0.5 any))
@@ -191,7 +191,7 @@
   (global-hl-todo-mode))
 
 (use-package consult-todo
-  :elpaca (:type git :host github :repo "liuyinz/consult-todo"))
+  :ensure (:type git :host github :repo "liuyinz/consult-todo"))
 
 ;;; Persistent Scrctch Buffer ===============================
 ;; (use-package persistent-scratch
@@ -307,7 +307,7 @@
 
 ;;; Ediff =======================================================================
 (use-package ediff
-  :elpaca nil
+  :ensure nil
   :custom
   (ediff-window-setup-function 'ediff-setup-windows-plain)
   (ediff-split-window-function 'split-window-horizontally))
@@ -323,7 +323,7 @@
 
 ;;; License =====================================================================
 (use-package lice
-  :elpaca (:type git :host github :repo "buzztaiki/lice-el"))
+  :ensure (:type git :host github :repo "buzztaiki/lice-el"))
 
 ;; collect gc-statistics to help developers improve gc performance
 ;; https://www.reddit.com/r/emacs/comments/14dej62/please_help_collecting_statistics_to_optimize/
@@ -338,23 +338,23 @@
 ;;; eldoc headline (my package)
 ;; regarding the configuration of the header-line, see `init-ui'
 (use-package eldoc-headline
-  :elpaca (:type git :host sourcehut :repo "meow_king/eldoc-headline")
+  :ensure (:type git :host sourcehut :repo "meow_king/eldoc-headline")
   :delight eldoc-headline-local-mode
   :custom (eldoc-headline-disable-echo-area t)
   :config
   (eldoc-headline-mode 1))
 
 (use-package breadcrumb
-  :elpaca (:host github :repo "joaotavora/breadcrumb"))
+  :ensure (:host github :repo "joaotavora/breadcrumb"))
 
 ;;; Misc ==================================================================
 (use-package so-long
-  :elpaca nil
+  :ensure nil
   :config
   (global-so-long-mode 1))
 
 (use-package pixel-scroll
-  :elpaca nil
+  :ensure nil
   :bind
   ([remap scroll-up-command]   . pixel-scroll-interpolate-down)
   ([remap scroll-down-command] . pixel-scroll-interpolate-up)
@@ -367,7 +367,7 @@
 
 ;; expand region ===========
 (use-package expreg
-  :elpaca (:type git :host github :repo "casouri/expreg"))
+  :ensure (:type git :host github :repo "casouri/expreg"))
 
 (provide 'init-base)
 

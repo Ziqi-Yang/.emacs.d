@@ -8,7 +8,7 @@
 
 ;; @ eldoc
 (use-package eldoc
-  :elpaca nil
+  :ensure nil
   :config
   (setq eldoc-minor-mode-string nil)
   (setq eldoc-echo-area-use-multiline-p nil))
@@ -20,16 +20,15 @@
   (yas-global-mode 1))
 
 (use-package lsp-bridge
-  :elpaca '(lsp-bridge
+  :ensure '(lsp-bridge
             :type git :host github :repo "manateelazycat/lsp-bridge"
             :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
             :build (:not elpaca--byte-compile))
-  :init
-  (global-lsp-bridge-mode)
   :custom
   (lsp-bridge-code-action-enable-popup-menu nil)  ; FIXME quit popup menu will cause weird problem
   (lsp-bridge-enable-hover-diagnostic t)
   (lsp-bridge-complete-manually t)
+  (acm-candidate-match-function 'orderless-regexp)
   (lsp-bridge-python-lsp-server "ruff")
   (lsp-bridge-python-multi-lsp-server "pylsp_ruff")
   (lsp-bridge-multi-lang-server-mode-list
@@ -40,8 +39,14 @@
   ;; use my `eldoc-headline' to display signature information
   (lsp-bridge-signature-show-function '(lambda (str) (setq-local eldoc-headline-string str)))
   :config
+  ;; lsp-bridge doesn't work well on *scratch* buffer
+  (dolist (hook '(lisp-interaction-mode-hook emacs-lisp-mode-hook))
+    (setq lsp-bridge-default-mode-hooks (remove hook lsp-bridge-default-mode-hooks)))
+
   (add-hook 'web-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
-  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t))))
+  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
+  
+  (global-lsp-bridge-mode))
 
 ;;; citre ===================================================
 
@@ -100,7 +105,7 @@
 
 ;; @ jinx
 (use-package jinx
-  :elpaca (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
+  :ensure (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
   :delight
   :init
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
@@ -133,11 +138,11 @@
 ;;; Debug =======================================================================
 (use-package dape
   ;; Currently only on github
-  :elpaca (dape :type git :host github :repo "svaante/dape"))
+  :ensure (dape :type git :host github :repo "svaante/dape"))
 
 ;; Completion-Preview-Mode (emacs30 ============================================
 ;; (use-package completion-preview
-;;   :elpaca nil
+;;   :ensure nil
 ;;   :delight completion-preview-mode
 ;;   :hook
 ;;   ;; text-mode comint-mode
@@ -201,9 +206,9 @@ configuration (like Makefile)."
         ;; zig
         ((derived-mode-p '(zig-mode))
          (concat "zig build run"))
-        ;; js
-        ((derived-mode-p '(js-base-mode typescript-ts-base-mode))
-         (concat "tsc " relative-file-name))
+        ;; typescript
+        ((derived-mode-p '(typescript-ts-base-mode))
+         (concat "bun run " relative-file-name))
         ;; d2
         ((eq major-mode 'd2-mode)
          (concat "d2 -p 8888 -l elk -w " relative-file-name))

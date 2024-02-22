@@ -30,16 +30,16 @@
   (keymap-set c-ts-base-mode-map "C-c C-c p" #'c-ts-prototype-copy-proto))
 
 (use-package c-ts-prototype
-  :elpaca (:type git :host sourcehut :repo "meow_king/c-ts-protoype"))
+  :ensure (:type git :host sourcehut :repo "meow_king/c-ts-protoype"))
 
 (setq c-ts-mode-indent-style 'linux)
 
 ;;; Draw =======================================================================
 (use-package plantuml-mode
-  :elpaca (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
+  :ensure (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
 
 (use-package mermaid-ts-mode
-  :elpaca (:type git :host github :repo "JonathanHope/mermaid-ts-mode"))
+  :ensure (:type git :host github :repo "JonathanHope/mermaid-ts-mode"))
 (add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-ts-mode))
 
 ;; (use-package d2-mode)
@@ -76,7 +76,7 @@
   (keymap-local-set "C-c C-c t" #'mk/java-generate-tags))
 
 (use-package java-ts-mode
-  :elpaca nil
+  :ensure nil
   :custom (java-ts-mode-indent-offset 2))
 
 (add-hook 'java-mode-hook 'mk/java-local-keybinding-setup)
@@ -85,7 +85,7 @@
 
 ;;; Kotlin =====================================================================
 (use-package kotlin-ts-mode
-  :elpaca (:host gitlab :repo "bricka/emacs-kotlin-ts-mode")
+  :ensure (:host gitlab :repo "bricka/emacs-kotlin-ts-mode")
   :mode "\\.kt\\'")
 
 (with-eval-after-load 'eglot
@@ -146,7 +146,7 @@ and `defcustom' forms reset their default values."
 
 ;;; Rust =======================================================================
 (use-package cargo
-  :elpaca (:host github :repo "kwrooijen/cargo.el")
+  :ensure (:host github :repo "kwrooijen/cargo.el")
   :custom
   (cargo-process--command-search "search --registry crates-io")
   :config
@@ -182,7 +182,7 @@ and `defcustom' forms reset their default values."
 
 ;;; Typst ======================================================================
 (use-package typst-ts-mode
-  :elpaca (:repo "~/proj/tree-sitter/typst-ts-mode")
+  :ensure (:repo "~/proj/tree-sitter/typst-ts-mode")
   :custom
   (typst-ts-mode-watch-options "--open")
   (typst-ts-mode-enable-raw-blocks-highlight t)
@@ -194,7 +194,7 @@ and `defcustom' forms reset their default values."
 
 ;;; Zig ========================================================================
 (use-package zig-mode
-  :elpaca (:type git :host github :repo "ziglang/zig-mode")
+  :ensure (:type git :host github :repo "ziglang/zig-mode")
   :config
   (setq zig-format-on-save nil)
   

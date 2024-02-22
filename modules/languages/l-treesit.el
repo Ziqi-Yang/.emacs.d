@@ -54,6 +54,7 @@
 (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
 (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))  ; `rust-ts-mode' haven't autoload this line ...
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))   ; so do typescript-ts-mode ...
 ;; (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode))
 
 (provide 'l-treesit)

@@ -29,7 +29,7 @@
 ;;; Code:
 
 (use-package eglot-booster
-  :elpaca (:host github :repo "jdtsmith/eglot-booster")
+  :ensure (:host github :repo "jdtsmith/eglot-booster")
 	:after eglot
 	:config	(eglot-booster-mode))
 
@@ -63,7 +63,7 @@
                                              ))))))
 
 (use-package eglot-hierarchy
-  :elpaca (:host github :repo "dolmens/eglot-hierarchy"))
+  :ensure (:host github :repo "dolmens/eglot-hierarchy"))
 
 (provide 'l-eglot)
 

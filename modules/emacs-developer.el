@@ -14,7 +14,7 @@
 
 ;;; tree-sitter
 (use-package ts-query-highlight
-  :elpaca (:type git :host sourcehut :repo "meow_king/ts-query-highlight")
+  :ensure (:type git :host sourcehut :repo "meow_king/ts-query-highlight")
   :config
   (setq ts-query-highlight-dabbrev-expand-function 'cape-dabbrev))
 

@@ -55,22 +55,22 @@ FRAME: nil for current selected frame."
     (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
 
 (use-package vertico
-  :elpaca (:host github :repo "minad/vertico"
-		        :files ("*.el" "extensions/*.el"))
+  :ensure (:host github :repo "minad/vertico"
+		             :files ("*.el" "extensions/*.el"))
   :bind (:map vertico-map
-	        ("C-j" . vertico-next)
-	        ("C-k" . vertico-previous)
-	        :map minibuffer-local-map
-	        ("M-h" . backward-kill-word)
-	        ("C-w" . backward-kill-word))
+	            ("C-j" . vertico-next)
+	            ("C-k" . vertico-previous)
+	            :map minibuffer-local-map
+	            ("M-h" . backward-kill-word)
+	            ("C-w" . backward-kill-word))
   :init
   (vertico-mode)
 
   (setq vertico-cycle t
-	  vertico-resize t
-	  read-file-name-completion-ignore-case t
-	  read-buffer-completion-ignore-case t
-	  completion-ignore-case t)
+	      vertico-resize t
+	      read-file-name-completion-ignore-case t
+	      read-buffer-completion-ignore-case t
+	      completion-ignore-case t)
 
   ;; (vertico-flat-mode)
   ;; (setq vertico-flat-max-lines 2)
@@ -80,47 +80,47 @@ FRAME: nil for current selected frame."
   (vertico-multiform-mode)
 
   (setq vertico-multiform-categories
-    '((symbol (vertico-sort-function . vertico-sort-alpha))
-       (file (vertico-sort-function . vertico/sort-directories-first))))
+        '((symbol (vertico-sort-function . vertico-sort-alpha))
+          (file (vertico-sort-function . vertico/sort-directories-first))))
 
   (mk/vertico-setup-multiform-commands)
   (add-function :after after-focus-change-function #'mk/vertico-setup-multiform-commands-focus-change-function))
 
 ;; Configure directory extension.
 (use-package vertico-directory
-  :elpaca nil
+  :ensure nil
   :ensure nil
   :after vertico
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
-          ("RET" . vertico-directory-enter)
-          ("DEL" . vertico-directory-delete-char)
-          ("C-w" . vertico-directory-delete-word))
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("C-w" . vertico-directory-delete-word))
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 ;; @ vertico recommended defualt configuration
 (use-package emacs
-  :elpaca nil
+  :ensure nil
   :init
   ;; Add prompt indicator to `completing-read-multiple'.
   (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
-		        (replace-regexp-in-string
-		          "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-		          crm-separator)
-		        (car args))
-	    (cdr args)))
+		              (replace-regexp-in-string
+		               "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+		               crm-separator)
+		              (car args))
+	        (cdr args)))
   (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
   
   ;; Do not allow the cursor in the minibuffer prompt
   (setq minibuffer-prompt-properties
-	  '(read-only t cursor-intangible t face minibuffer-prompt))
+	      '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
   ;; Hide commands in M-x which do not work in the current mode
   (setq read-extended-command-predicate
-	  #'command-completion-default-include-p)
+	      #'command-completion-default-include-p)
 
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
@@ -178,7 +178,7 @@ FRAME: nil for current selected frame."
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package embark-collection
-  :elpaca (:type git :host sourcehut :repo "meow_king/embark-collection")
+  :ensure (:type git :host sourcehut :repo "meow_king/embark-collection")
   :config
   (embark-collection-register-commands))
 
@@ -220,8 +220,8 @@ FRAME: nil for current selected frame."
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 ;; use vertico completion instead(since I don't use completion often)
 (use-package corfu
-  :elpaca (:host github :repo "minad/corfu"
-		        :files ("*.el" "extensions/*.el"))
+  :ensure (:host github :repo "minad/corfu"
+		             :files ("*.el" "extensions/*.el"))
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-on-exact-match 'quit)
@@ -271,7 +271,7 @@ FRAME: nil for current selected frame."
 
 ;; @ corfu recommended defualt configuration
 (use-package emacs
-  :elpaca nil
+  :ensure nil
   :init
   ;; (setq completion-cycle-threshold 0)
   (setq tab-always-indent 'complete))
@@ -298,7 +298,7 @@ FRAME: nil for current selected frame."
   )
 
 (use-package dabbrev
-  :elpaca nil
+  :ensure nil
   :custom
   (dabbrev-check-other-buffers nil)
   (dabbrev-case-fold-search nil) ;; to make dabbrev completion match case

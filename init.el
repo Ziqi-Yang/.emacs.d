@@ -44,9 +44,9 @@
 
 ;; Install use-package support
 (elpaca elpaca-use-package
-  ;; Enable :elpaca use-package keyword.
+  ;; Enable :ensure use-package keyword.
   (elpaca-use-package-mode)
-  ;; Assume :elpaca t unless otherwise specified.
+  ;; Assume :ensure t unless otherwise specified.
   (setq elpaca-use-package-by-default t))
 
 ;; Block until current queue processed.
@@ -144,15 +144,11 @@
     (require 'l-general)
     (require 'l-eglot)))
 
-
-;; l-general must loaded after l-rust
-
 ;; remove old version native-compiled files in the end
 (use-package comp
-  :elpaca nil
+  :ensure nil
   :config
   (native-compile-prune-cache))
-
 
 ;; Don’t compact font caches during GC.
 (setq inhibit-compacting-font-caches t)

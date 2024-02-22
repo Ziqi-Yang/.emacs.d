@@ -169,7 +169,7 @@ Example:
      ("o" . switch-to-buffer-other-window)
      ("c" . mk/switch-to-compilation-buffer)
      ("e" . mk/switch-to-eww-buffer)
-     ("i" . info)  ; or C-h i
+     ("i" . ibuffer)
      ("r" . mk/reload-buffer)
      ("d" . kill-current-buffer)
      ("k" . kill-current-buffer)

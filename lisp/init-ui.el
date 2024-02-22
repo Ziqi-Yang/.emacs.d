@@ -21,7 +21,7 @@
 ;;   (doom-themes-org-config))
 
 ;; (use-package almost-mono-themes
-;;   :elpaca (:host github :repo "Ziqi-Yang/almost-mono-themes")
+;;   :ensure (:host github :repo "Ziqi-Yang/almost-mono-themes")
 ;;   :hook (server-after-make-frame .
 ;; 				  (lambda ()
 ;; 				    (progn
@@ -211,7 +211,7 @@
 ;;   (beacon-mode 1))
 
 ;; (use-package pulsar
-;;   :elpaca (:type git :host github :repo "protesilaos/pulsar")
+;;   :ensure (:type git :host github :repo "protesilaos/pulsar")
 ;;   :config
 ;;   ;; integration with the `consult' package:
 ;;   (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
@@ -234,7 +234,7 @@
 ;;   (olivetti-body-width 111))
 
 ;; (use-package auto-olivetti
-;;   :elpaca (:type git :host sourcehut :repo "ashton314/auto-olivetti")
+;;   :ensure (:type git :host sourcehut :repo "ashton314/auto-olivetti")
 ;;   :custom
 ;;   (auto-olivetti-enabled-modes '(text-mode prog-mode))
 ;;   :config
@@ -247,7 +247,7 @@
 ;;; Compilation =============================================
 ;; @ colorful
 (use-package ansi-color ;; @ emacs 28 buildin
-  :elpaca nil
+  :ensure nil
   :hook (compilation-filter . ansi-color-compilation-filter))
 
 ;;; Display Buffer Alist ========================================================

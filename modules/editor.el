@@ -16,19 +16,19 @@
 
 ;; @ remember cursor position
 (use-package saveplace
-  :elpaca nil
+  :ensure nil
   :config
   (save-place-mode))
 
 
 ;; change name case at ease (i.e. camel case, snake case)
 (use-package string-inflection
-  :elpaca (:type git :host github :repo "akicho8/string-inflection"))
+  :ensure (:type git :host github :repo "akicho8/string-inflection"))
 
 
 ;; Surround =========================
 (use-package surround
-  :elpaca (:type git :host github :repo "mkleehammer/surround"))
+  :ensure (:type git :host github :repo "mkleehammer/surround"))
 
 ;;; Indent Bar ==================================================================
 ;; (use-package indent-bars
@@ -62,7 +62,7 @@
 
 ;; `show-parent-mode' when point is near a paren, highlight the matching paren
 (use-package paren
-  :elpaca nil
+  :ensure nil
   :custom
   ;; directly near the inner of paren
   (show-paren-when-point-inside-paren t)
@@ -73,16 +73,16 @@
 
 ;; @ use electronic pair
 (use-package elec-pair
-  :elpaca nil
+  :ensure nil
   :hook ((prog-mode) . electric-pair-mode)
   :config
   (add-hook 'web-mode-hook #'(lambda () (electric-pair-local-mode -1)))
   (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
-                               (?( . ?))
-                               (?\{ . ?\})
-                               (?\[ . ?\])
-                               ;; (?\< . ?\>)
-                               )))
+                              (?( . ?))
+                              (?\{ . ?\})
+                              (?\[ . ?\])
+                              ;; (?\< . ?\>)
+                              )))
 
 ;; (use-package smartparens
 ;;   :hook ((prog-mode org-mode lisp-interaction-mode-hook) . smartparens-mode)
@@ -123,7 +123,7 @@
 
 ;;; Replace =================================================
 (use-package substitute
-  :elpaca (:type git :host sourcehut :repo "protesilaos/substitute")
+  :ensure (:type git :host sourcehut :repo "protesilaos/substitute")
   :config
   (add-hook 'substitute-post-replace-functions #'substitute-report-operation))
 

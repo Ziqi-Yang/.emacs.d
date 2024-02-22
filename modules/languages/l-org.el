@@ -5,7 +5,7 @@
 ;;; Common ==================================================
 
 (use-package org
-  :elpaca nil
+  :ensure nil
 	:config
 	(setq
 	 org-directory "~/notes/"
@@ -131,7 +131,7 @@
 
 ;; ;; @ visibility
 (use-package org-appear
-  :elpaca (:includes org) ;; prevent org-appear from installing org
+  :ensure (:includes org) ;; prevent org-appear from installing org
   :hook (org-mode . org-appear-mode)
   :config
   (setq org-appear-autolinks t)
