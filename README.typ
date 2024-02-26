@@ -10,7 +10,8 @@
         ```
     
     + language servers: check #link("https://github.com/manateelazycat/lsp-bridge")[lsp-bridge] and `eglot-server-programs` variable \
-        Also note that some programs have optional dependencies, which can be viewed by `pacman -Qi`. \
+        Also note that some programs have optional dependencies, which can be viewed by `pacman -Qi`. Also, install `emacs-lsp-booster-git` aur
+        package for `eglot-lsp-booster` emacs packagae. \
         To use `jdtls`, `java-17` environment is needed, which can be achieved by the following code:
         ```bash
     sudo pacman -S jdk17-openjdk # jdtls needs at least jdk17

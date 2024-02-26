@@ -288,9 +288,8 @@
                   query-replace-regexp
                   mk/better-query-replace
                   meow-search
-                  meow-line
-                  ;; meow-beginning-of-thing
-                  ;; meow-end-of-thing
+                  meow-beginning-of-thing
+                  meow-end-of-thing
                   lsp-bridge-find-def
                   lsp-bridge-find-references
                   lsp-bridge-find-impl

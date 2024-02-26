@@ -181,8 +181,10 @@ and `defcustom' forms reset their default values."
 ;; (add-hook 'rust-mode-hook 'mk/add-rust-search-engine)
 
 ;;; Typst ======================================================================
+(use-package outline-indent-mode
+  :ensure (:type git :host sourcehut :repo "meow_king/outline-indent-mode"))
 (use-package typst-ts-mode
-  :ensure (:repo "~/proj/tree-sitter/typst-ts-mode")
+  :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :branch "develop" :files (:defaults "*.el"))
   :custom
   (typst-ts-mode-watch-options "--open")
   (typst-ts-mode-enable-raw-blocks-highlight t)

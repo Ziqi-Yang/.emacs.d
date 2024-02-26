@@ -28,6 +28,7 @@
 
 ;;; Code:
 
+;; need https://aur.archlinux.org/packages/emacs-lsp-booster-git
 (use-package eglot-booster
   :ensure (:host github :repo "jdtsmith/eglot-booster")
 	:after eglot
@@ -52,6 +53,7 @@
   (setq-default eglot-send-changes-idle-time 0.25)
   ;; see outer files(like header files) as in project temporarily
 
+  ;; NOTE: pyright is better for handling virtual environment with a configuration flie per project
   ;; how to configure eglot-workspace-configuration:
   ;; https://paste.sr.ht/~meow_king/df83c4dd8541e54befe511ddaf0eeee7cb59eaba
   (setq-default eglot-workspace-configuration

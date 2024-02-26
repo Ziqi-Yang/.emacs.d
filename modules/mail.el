@@ -22,6 +22,8 @@
 (add-hook 'after-init-hook #'mk/setup-mail)
 
 ;; https://www.djcbsoftware.nl/code/mu/mu4e/Getting-mail.html
+;; after updating mu, you may need to manually initailize again if you encounter an error
+;; do 'mu init --my-address mr.meowking@anche.no -m ~/mail/'
 (use-package mu4e
   ;; installing 'mu' though 'pacman -S mu' will automatically add package 'mu4e' into emacs site-package
   :ensure nil

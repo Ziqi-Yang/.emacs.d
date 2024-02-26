@@ -30,7 +30,14 @@
   (lsp-bridge-complete-manually t)
   (acm-candidate-match-function 'orderless-regexp)
   (lsp-bridge-python-lsp-server "ruff")
-  (lsp-bridge-python-multi-lsp-server "pylsp_ruff")
+  ;; pyright is good at handling virtual environment with a configuration file
+  ;; see https://microsoft.github.io/pyright/#/configuration
+  ;; pyrightconfig.json
+  ;; {
+  ;; "venvPath": ".",
+  ;; "venv": ".venv"
+  ;; }
+  (lsp-bridge-python-multi-lsp-server "pyright_ruff")
   (lsp-bridge-multi-lang-server-mode-list
    '(((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
      ((web-mode) . "html_emmet")
@@ -113,7 +120,26 @@
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
   :config
   ;; (setq jinx-languages '("en_US.UTF-8" "zh_CN.UTF-8"))
-  )
+  (add-to-list
+   'jinx-exclude-faces
+   '(typst-ts-mode
+     ;; not included font lock faces
+     ;; `font-lock-comment-face', `font-lock-string-face', `font-lock-doc-face'
+     ;; `font-lock-doc-markup-face'
+     font-lock-warning-face font-lock-function-name-face font-lock-function-call-face
+     font-lock-variable-name-face font-lock-variable-use-face font-lock-keyword-face
+     font-lock-comment-delimiter-face font-lock-type-face font-lock-constant-face
+     font-lock-builtin-face font-lock-preprocessor-face
+     font-lock-negation-char-face font-lock-escape-face font-lock-number-face
+     font-lock-operator-face font-lock-property-use-face font-lock-punctuation-face
+     font-lock-bracket-face font-lock-delimiter-face font-lock-misc-punctuation-face
+     ;; typst-ts-mode created faces
+     typst-ts-markup-item-indicator-face typst-ts-markup-term-indicator-face
+     typst-ts-markup-rawspan-indicator-face typst-ts-markup-rawspan-blob-face
+     typst-ts-markup-rawblock-indicator-face typst-ts-markup-rawblock-lang-face
+     typst-ts-markup-rawblock-blob-face
+     typst-ts-error-face typst-ts-shorthand-face typst-ts-markup-linebreak-face
+     typst-ts-markup-quote-face typst-ts-markup-url-face typst-ts-math-indicator-face)))
 
 
 (defun mk/setup-flymake-eldoc ()

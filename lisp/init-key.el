@@ -958,7 +958,11 @@ ARG: number of words to kill"
 (defun mk/code/toggle-inlay-hint ()
   (interactive)
   (if lsp-bridge-mode
-      (setq lsp-bridge-enable-inlay-hint (not lsp-bridge-enable-inlay-hint))
+      (progn
+        (setq-local lsp-bridge-enable-inlay-hint (not lsp-bridge-enable-inlay-hint))
+        (if lsp-bridge-enable-inlay-hint
+            (lsp-bridge-inlay-hint)
+          (lsp-bridge-inlay-hint-hide-overlays)))
     (call-interactively #'eglot-inlay-hints-mode)))
 
 (defun mk/code/error-list ()

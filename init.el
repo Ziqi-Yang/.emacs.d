@@ -58,17 +58,18 @@
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (setq user-full-name "Meow King"
-  user-mail-address "mr.meowking@anche.no"
-  default-directory (expand-file-name "~/.emacs.d"))
+      user-mail-address "mr.meowking@anche.no"
+      default-directory (expand-file-name "~/.emacs.d"))
 
+(setq find-function-C-source-directory "~/proj/probe/emacs/src")
 (add-to-list 'exec-path (expand-file-name "~/myBin/"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 ;; for compile to work
 (setenv "PATH" (concat
-                 (format "%s:%s:"
-                   (expand-file-name "~/myBin/")
-                   (expand-file-name "~/.local/bin"))
-                 (getenv "PATH")))
+                (format "%s:%s:"
+                        (expand-file-name "~/myBin/")
+                        (expand-file-name "~/.local/bin"))
+                (getenv "PATH")))
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "modules" user-emacs-directory) load-path)
