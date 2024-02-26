@@ -373,7 +373,9 @@ Example:
                 ("I" . info-apropos))))
      ("s" . mk/better-consult-line)
      ("S" . mk/better-consult-line-multi)
-     ("f". consult-focus-lines)
+     ("f" . consult-focus-lines)
+     ("h" . isearch-highlight-regexp)
+     ("H" . unhighlight-regexp)
      ("c" . list-colors-display)
      ;; note you can input keys like `v' and add a space after it to filter
      ("i" . consult-imenu) 
@@ -930,19 +932,22 @@ ARG: number of words to kill"
   (interactive)
   (if lsp-bridge-mode
       (lsp-bridge-find-def)
-    (call-interactively #'xref-find-definitions)))
+    (let ((this-command 'xref-find-definitions))
+      (call-interactively #'xref-find-definitions))))
 
 (defun mk/code/find-definition-other-window ()
   (interactive)
   (if lsp-bridge-mode
       (lsp-bridge-find-def-other-window)
-    (call-interactively #'xref-find-definitions-other-window)))
+    (let ((this-command 'xref-find-definitions-other-window))
+      (call-interactively #'xref-find-definitions-other-window))))
 
 (defun mk/code/find-references ()
   (interactive)
   (if lsp-bridge-mode
       (lsp-bridge-find-references)
-    (call-interactively #'xref-find-references)))
+    (let ((this-command 'xref-find-references))
+      (call-interactively #'xref-find-references))))
 
 (defun mk/code/find-implementation ()
   (interactive)

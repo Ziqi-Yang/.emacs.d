@@ -42,6 +42,8 @@
   ;; lsp-bridge doesn't work well on *scratch* buffer
   (dolist (hook '(lisp-interaction-mode-hook emacs-lisp-mode-hook))
     (setq lsp-bridge-default-mode-hooks (remove hook lsp-bridge-default-mode-hooks)))
+  
+  (setq lsp-bridge-enable-with-tramp nil)  ; goto local sudo bookmark will cause error
 
   (add-hook 'web-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
   (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
