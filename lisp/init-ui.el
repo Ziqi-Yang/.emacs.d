@@ -250,116 +250,39 @@
   :ensure nil
   :hook (compilation-filter . ansi-color-compilation-filter))
 
+;;; Enhanced Calc (Use C-o to define key)
+(use-package casual
+  :ensure (:host github :repo "kickingvegas/Casual")
+  :config
+  (define-key calc-mode-map (kbd "C-o") 'casual-main-menu))
+
+
 ;;; Display Buffer Alist ========================================================
-;; dictionary
-(add-to-list 'display-buffer-alist
-	'("^\\*Dictionary\\*" display-buffer-in-side-window
-	   (side . left)
-	   (window-width . 100)))
-
-;; tree sitter
-(add-to-list 'display-buffer-alist
-	'("^\\*tree-sitter explorer for [^z-a]+\\*"
-	   display-buffer-in-side-window
-	   (side . right)
-	   (window-width . 70)))
-
-;; compilation
-;; hide when compilation starts, show when finished
-(add-to-list 'display-buffer-alist
-  '((derived-mode . compilation-mode)
-     (display-buffer-in-side-window)
-     (side . right)
-     (window-width . .5)))
-;; (add-to-list 'display-buffer-alist
-;; 	'("\\*compilation\\*"
-;;      (display-buffer-no-window)))
-
-;; (add-to-list 'display-buffer-alist
-;; 	'("\\*Cargo Run\\*"
-;;      (display-buffer-no-window)))
-
-;; (add-to-list 'display-buffer-alist
-;; 	'("\\*typst-ts-compilation\\*"
-;;      (display-buffer-no-window)))
-
-;; (defun mk/switch-buffer-when-compilation-finished (compilation-buffer _msg)
-;;   (switch-to-buffer compilation-buffer t t))
-
-;; (add-hook 'compilation-finish-functions #'mk/switch-buffer-when-compilation-finished)
-
-;; git push
-(add-to-list 'display-buffer-alist
-  `(,(rx "*vc-git" (*? nonl) "*")
-     ;; (and . (,(rx "*vc-git" (*? nonl) "*") (major-mode . compilation-mode)))
-     (display-buffer-in-side-window)
-     (side . top)))
-
-;; help
-(add-to-list 'display-buffer-alist
-  `(,(rx "*helpful" (*? nonl) "*")
-	   display-buffer-in-side-window
-     (side . right)
-     (window-width . .5)))
-
-;; help
-(add-to-list 'display-buffer-alist
-  `("*Help*"
-     display-buffer-in-side-window
-     (side . right)
-     (window-width . .5)))
-
-;; man page
-(add-to-list 'display-buffer-alist
-  `(,(rx "*Man" (*? nonl) "*")
-     display-buffer-in-side-window
-     (side . right)
-     (window-width . .5)))
-
-;; info page
-(add-to-list 'display-buffer-alist
-  `("\\*info\\*"
-     display-buffer-in-side-window
-     (side . right)
-     (window-width . .5)))
-
-;; sqlite
-(add-to-list 'display-buffer-alist
-  `(,(rx "*SQLite" (*? nonl) "*")
-     (display-buffer-same-window)
-	   (reusable-frames . nil)))
-
-;; shortdoc
-(add-to-list 'display-buffer-alist
-  `(,(rx "*Shortdoc" (*? nonl) "*")
-     display-buffer-in-side-window
-     (side . right)
-     (window-width . .5)))
-
-;; ;; embark
-(add-to-list 'display-buffer-alist
-	'("\\*Embark Actions\\*"
-	   (display-buffer-in-tab)
-	   (side . right)
-	   (width . 0.3)))
-
-(add-to-list 'display-buffer-alist
-	'("\\*Embark Collect"
-	   (display-buffer-in-side-window)
-	   (side . bottom)
-	   (height . 0.4)))
-
-;; (add-to-list 'display-buffer-alist
-;;   '("^\\*Embark Actions\\*"
-;;      display-buffer-in-side-window
-;;      (side . right)
-;;      (window-width . 70)))
-
-;; (add-to-list 'display-buffer-alist
-;;   '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-;;      display-buffer-in-side-window
-;;      (side . right)
-;;      (mode-line-format . none)))
+(setq display-buffer-alist
+      '(("\\*Embark Collect" (display-buffer-in-side-window) (side . bottom)
+         (height . 0.4))
+        ("\\*Embark Actions\\*" (display-buffer-in-tab) (side . right)
+         (width . 0.3))
+        ("\\*Shortdoc.*?\\*" display-buffer-in-side-window (side . right)
+         (window-width . 0.5))
+        ("\\*SQLite.*?\\*" (display-buffer-same-window) (reusable-frames))
+        ("\\*info\\*" display-buffer-in-side-window (side . right)
+         (window-width . 0.5))
+        ("\\*Man.*?\\*" display-buffer-in-side-window (side . right)
+         (window-width . 0.5))
+        ("*Help*" display-buffer-in-side-window (side . right)
+         (window-width . 0.5))
+        ("\\*helpful.*?\\*" display-buffer-in-side-window (side . right)
+         (window-width . 0.5))
+        ("\\*vc-git.*?\\*" (display-buffer-in-side-window) (side . top))
+        ((derived-mode . compilation-mode) (display-buffer-in-side-window)
+         (side . right) (window-width . 0.5))
+        ("^\\*tree-sitter explorer for [^z-a]+\\*"
+         display-buffer-in-side-window (side . right) (window-width . 70))
+        ("^\\*Dictionary\\*" display-buffer-in-side-window (side . left)
+         (window-width . 100))
+        ("^\\*Flymake diagnostics for.*?\\*"
+         display-buffer-in-side-window (side . bottom))))
 
 (provide 'init-ui)
 

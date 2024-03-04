@@ -583,8 +583,9 @@ When tempel-trigger-prefix is before the point, then use temple, else `completio
       (call-interactively 'tempel-next)
     (if (and tempel-trigger-prefix
              (length> tempel-trigger-prefix 0)
-             ;; (rx-to-string `(seq ,tempel-trigger-prefix (* (not (or space punct)))))
-             (looking-back "\\(?:<[^[:punct:][:space:]]*\\)" nil))
+             (looking-back
+              (rx-to-string `(seq ,tempel-trigger-prefix (* (not (or space punct)))))
+              nil))
         (condition-case nil
             (call-interactively 'tempel-complete)
           (user-error
@@ -965,11 +966,13 @@ ARG: number of words to kill"
           (lsp-bridge-inlay-hint-hide-overlays)))
     (call-interactively #'eglot-inlay-hints-mode)))
 
-(defun mk/code/error-list ()
-  (interactive)
-  (if lsp-bridge-mode
-      (lsp-bridge-diagnostic-list)
-    (call-interactively #'lsp-bridge-diagnostic-list)))
+(defun mk/code/error-list (&optional arg)
+  (interactive "P")
+  (if arg
+      (call-interactively #'flymake-show-buffer-diagnostics)
+    (if lsp-bridge-mode
+        (lsp-bridge-diagnostic-list)
+      (call-interactively #'flymake-show-buffer-diagnostics))))
 
 (defun mk/code/action ()
   (interactive)

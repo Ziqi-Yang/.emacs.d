@@ -310,7 +310,7 @@ FRAME: nil for current selected frame."
 (use-package tempel
   :custom
   (tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
-  (tempel-trigger-prefix "<")
+  (tempel-trigger-prefix "#")
   :init
   (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
   (add-hook 'text-mode-hook #'tempel-abbrev-mode))

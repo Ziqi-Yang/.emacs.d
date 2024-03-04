@@ -21,6 +21,9 @@
 
 ;;; Code:
 
+(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.svelte\\'" . web-mode))
+
 ;;; CC =========================================================================
 
 (with-eval-after-load 'c-ts-mode
@@ -186,7 +189,8 @@ and `defcustom' forms reset their default values."
 (use-package typst-ts-mode
   :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :branch "develop" :files (:defaults "*.el"))
   :custom
-  (typst-ts-mode-watch-options "--open")
+  (typst-ts-watch-options "--open")
+  (typst-ts-mode-grammar-location (expand-file-name "~/.emacs.d/tree-sitter/libtree-sitter-typst.so"))
   (typst-ts-mode-enable-raw-blocks-highlight t)
   (typst-ts-mode-highlight-raw-blocks-at-startup t))
 

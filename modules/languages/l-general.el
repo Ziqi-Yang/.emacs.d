@@ -19,6 +19,11 @@
   :config
   (yas-global-mode 1))
 
+;; global (only enable disable hooks)
+;; activate: (global-lsp-bridge-mode)
+;; de-activate: mk/disbale-global-lsp-bridge-mode
+;; single buffer
+;; lsp-bridge-mode
 (use-package lsp-bridge
   :ensure '(lsp-bridge
             :type git :host github :repo "manateelazycat/lsp-bridge"
@@ -42,6 +47,7 @@
    '(((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
      ((web-mode) . "html_emmet")
      ((vue-mode) . "volar_emmet")
+     ;; ((typescript-ts-mode) . "typescript_eslint") ;; eslint part seems does nothing at all?
      ((qml-mode qml-ts-mode) . "qmlls_javascript")))
   ;; use my `eldoc-headline' to display signature information
   (lsp-bridge-signature-show-function '(lambda (str) (setq-local eldoc-headline-string str)))
@@ -53,9 +59,18 @@
   (setq lsp-bridge-enable-with-tramp nil)  ; goto local sudo bookmark will cause error
 
   (add-hook 'web-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
-  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
-  
-  (global-lsp-bridge-mode))
+  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t))))
+
+(defun mk/disbale-global-lsp-bridge-mode ()
+  (interactive)
+  (dolist (hook lsp-bridge-default-mode-hooks)
+    (remove-hook hook (lambda ()
+                        (when (and (lsp-bridge--not-mind-wave-chat-buffer)
+                                   (lsp-bridge--not-acm-doc-markdown-buffer))
+                          (lsp-bridge-mode 1)))))
+  (dolist (buf (buffer-list))
+    (when lsp-bridge-mode
+      (lsp-bridge-mode -1))))
 
 ;;; citre ===================================================
 
@@ -91,15 +106,24 @@
 ;;   ;; (setq evil-lookup-func #'dumb-jump-quick-look)
 ;;   )
 
-;;; Syntax Checker ==========================================
-;; flymake is integrated with eglot, so we only need to enable it for emacs lisp mode
+;;; Syntax Checker (flymake) ==========================================
+(use-package flymake-eslint
+  :ensure (:host github :repo "orzechowskid/flymake-eslint")
+  :config
+  (add-hook 'typescript-ts-mode-hook
+            (lambda ()
+              (flymake-eslint-enable)))
+  (add-hook 'js-ts-mode-hook
+            (lambda ()
+              (flymake-eslint-enable))))
+
 (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 
 ;;; Spell Checker ===========================================
 ;; @ ispell
 (setq ispell-program-name "hunspell"
-  ispell-dictionary "en_US" ;; M-: (message "%s" (ispell-valid-dictionary-list))
-  ispell-alternate-dictionary (expand-file-name  "dicts/en_US-large.dic" user-emacs-directory))
+      ispell-dictionary "en_US" ;; M-: (message "%s" (ispell-valid-dictionary-list))
+      ispell-alternate-dictionary (expand-file-name  "dicts/en_US-large.dic" user-emacs-directory))
 
 ;; @ dictionary
 (setq dictionary-server "localhost")
@@ -235,7 +259,7 @@ configuration (like Makefile)."
         ((derived-mode-p '(zig-mode))
          (concat "zig build run"))
         ;; typescript
-        ((derived-mode-p '(typescript-ts-base-mode))
+        ((derived-mode-p '(typescript-ts-base-mode js-base-mode))
          (concat "bun run " relative-file-name))
         ;; d2
         ((eq major-mode 'd2-mode)

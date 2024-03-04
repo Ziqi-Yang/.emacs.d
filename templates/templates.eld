@@ -8,7 +8,7 @@ fundamental-mode ;; Available everywhere
                                      "[-_]"
                                      " "
                                      (file-name-base buffer-file-name))))
-(el "El Psy Kongaroo" q)
+(el "El Psy Congroo" q)
 
 org-mode
 
@@ -60,3 +60,9 @@ zig-mode
 js-ts-mode
 
 (pl "console.log(" q ")")
+
+web-mode
+
+(style "<link rel=\"stylesheet\" type=\"text/css\" href=\"" (p "styles.css") "\" />" q)
+(script "<script src=\"" (p "main.js") "\"></script>" q)
+(script-module "<script type=\"module\" src=\"" (p "main.js") "\"></script>" q)

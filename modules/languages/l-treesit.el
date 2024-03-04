@@ -40,7 +40,9 @@
         (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
         (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
         (typst "https://github.com/uben0/tree-sitter-typst")
-        (vue "https://github.com/ikatyang/tree-sitter-vue")))
+        (vue "https://github.com/ikatyang/tree-sitter-vue")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (toml "https://github.com/ikatyang/tree-sitter-toml")))
 
 (defun nf/treesit-install-all-languages ()
   "Install all languages specified by `treesit-language-source-alist'."
@@ -57,6 +59,10 @@
 (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))  ; `rust-ts-mode' haven't autoload this line ...
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))   ; so do typescript-ts-mode ...
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode))
+
 ;; (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode))
 
 (provide 'l-treesit)

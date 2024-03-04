@@ -37,7 +37,7 @@
          (insert
            (format
              ";;; %s --- FIXME description  -*- lexical-binding: t; -*-
-;; Copyright (C) 2023 Meow King <mr.meowking@anche.no>
+;; Copyright (C) 2024 Meow King <mr.meowking@anche.no>
 
 ;; Version: 0.1.0
 ;; Author: Meow King <mr.meowking@anche.no>
