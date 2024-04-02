@@ -281,6 +281,8 @@
          display-buffer-in-side-window (side . right) (window-width . 70))
         ("^\\*Dictionary\\*" display-buffer-in-side-window (side . left)
          (window-width . 100))
+        ("^\\*ielm\\*"
+         display-buffer-in-side-window (side . bottom))
         ("^\\*Flymake diagnostics for.*?\\*"
          display-buffer-in-side-window (side . bottom))))
 

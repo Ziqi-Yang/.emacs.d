@@ -78,6 +78,10 @@
 ;; (elpaca nil (mk/setup-project.el))
 
 ;;; Window ==================================================
+
+(use-package moeti-window
+  :ensure (:host sourcehut :repo "meow_king/moeti-window"))
+
 ;; @ jump
 (use-package ace-window
   :bind (("M-o" . ace-window))

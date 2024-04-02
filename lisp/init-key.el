@@ -308,9 +308,8 @@ Example:
      ("a" . org-agenda)
      ("A" . (lambda () (interactive) (find-file "~/notes/agenda.org")))
      ("b" . (lambda () (interactive) (find-file "~/Documents/meow_king.srht.site/content")))
-     ("e" . eww-list-bookmarks)
-     ("E" . mk/browse-emacs-devel)
-     ("r" . (lambda () (interactive) (find-file "~/projects/rust/LearningRustOS2023Record/README.org")))
+     ("e" . mk/ace-ielm)
+     ("E" . (lambda (arg) (interactive "P") (if arg (mk/browse-emacs-devel) (eww-list-bookmarks))))
      ("d" . dired-jump)
      ("D" . mk/open-dired-smart)
      ("r" . mk/draw-diagram)
@@ -979,6 +978,14 @@ ARG: number of words to kill"
   (if lsp-bridge-mode
       (lsp-bridge-code-action)
     (call-interactively #'eglot-code-actions)))
+
+(defun mk/ace-ielm ()
+  (interactive)
+  (ielm)
+  (when-let ((ielm-window (selected-window))
+             (w (ace-select-window)))
+    (select-window ielm-window)
+    (ielm-change-working-buffer (window-buffer w))))
 
 (provide 'init-key)
 
