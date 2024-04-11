@@ -33,25 +33,23 @@
   "Advice (type: around) for command `compile'.
 OLDFUN COMMAND R."
   (when-let* ((command-tidy (string-clean-whitespace (string-trim command)))
-              ((eq system-type 'gnu/linux))
-              ((getenv "NIX_PATH"))
               (p (project-current))
               (pt (project-root p))
               (flake-path (concat pt "/flake.nix"))
               ((file-exists-p flake-path)))
-    (unless (string-prefix-p "nix develop" command-tidy)
-      (let ((python-venv (concat pt ".venv") ))
+    (if in-nixos
+        (unless (string-prefix-p "nix develop" command-tidy)
+          (setq command (format "nix develop -c bash -c \"%s\"" (mk/util/quote-string command))))
+      (let ((python-venv (concat pt ".venv")))
         (cond
          ((and (file-exists-p python-venv) (not (string-prefix-p "source" command-tidy)))
-          (setq command (concat "source " python-venv "/bin/activate; " command)))))
-      (setq command (format "nix develop -c bash -c \"%s\"" (mk/util/quote-string command))))
+          (setq command (concat "source " python-venv "/bin/activate; " command))))))
     (funcall (apply oldfun command r))))
 
 (defun mk/my-advice-add-initialize()
   "Add all my custom advices.
 This function should be called after init, so that other initialization can work properly."
   (advice-add #'yank :after #'mk/advice/yank)
-  ;; (advice-remove #'compile #'mk/advice/compile)
   (advice-add #'compile :around #'mk/advice/compile))
 
 ;; indent region being yanked
