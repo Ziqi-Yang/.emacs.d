@@ -62,7 +62,19 @@
                 ;; and https://github.com/charliermarsh/ruff
                 '((:pylsp . (:plugins (:ruff (:enabled t)
                                              ;; :rope_autoimport doens't work ...
-                                             ))))))
+                                             )))))
+
+  (add-hook 'eglot-managed-mode-hook #'mk/setup-eglot-eldoc))
+
+(defun mk/setup-eglot-eldoc ()
+  "Set the eldoc documentation functions to be the following.
+1. flymake-eldoc-function (ensure we can see error in echo line when hover)
+2. eglot-signature-eldoc-function
+3. eglot-hover-eldoc-function"
+  (setq eldoc-documentation-functions
+        (cons #'eglot-signature-eldoc-function
+	            (remove #'eglot-signature-eldoc-function eldoc-documentation-functions))))
+
 
 (use-package eglot-hierarchy
   :ensure (:host github :repo "dolmens/eglot-hierarchy"))

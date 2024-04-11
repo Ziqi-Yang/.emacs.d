@@ -37,6 +37,10 @@
 
 (setq c-ts-mode-indent-style 'linux)
 
+;; Nix =========================================================================
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
 ;;; Draw =======================================================================
 (use-package plantuml-mode
   :ensure (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
@@ -190,7 +194,7 @@ and `defcustom' forms reset their default values."
   :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :branch "develop" :files (:defaults "*.el"))
   :custom
   (typst-ts-watch-options "--open")
-  (typst-ts-mode-grammar-location (expand-file-name "~/.emacs.d/tree-sitter/libtree-sitter-typst.so"))
+  (typst-ts-mode-grammar-location (expand-file-name "~/.config/emacs/tree-sitter/libtree-sitter-typst.so"))
   (typst-ts-mode-enable-raw-blocks-highlight t)
   (typst-ts-mode-highlight-raw-blocks-at-startup t))
 

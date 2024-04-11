@@ -14,32 +14,32 @@
   "Use with `frame-local'.
 FRAME: nil for current selected frame."
   (let* ((frame (if frame frame (selected-frame)))
-          (horizontal (with-selected-frame frame
-                        (> (frame-pixel-width) (frame-pixel-height))))
-          (layout (if horizontal 'horizontal 'vertical))
-          (display-buffer-actions (if horizontal
-                                    '(display-buffer-in-side-window
+         (horizontal (with-selected-frame frame
+                       (> (frame-pixel-width) (frame-pixel-height))))
+         (layout (if horizontal 'horizontal 'vertical))
+         (display-buffer-actions (if horizontal
+                                     '(display-buffer-in-side-window
                                        (side . left)
                                        (window-width . 0.5))
-                                    '(display-buffer-below-selected
-                                       ;; (window-height . fit-window-to-buffer)
-                                       ;; (window-min-height . 10)
-                                       ;; (inhibit-same-window . t)
-                                       (side . bottom)
-                                       (window-width . 0.5)))))
+                                   '(display-buffer-below-selected
+                                     ;; (window-height . fit-window-to-buffer)
+                                     ;; (window-min-height . 10)
+                                     ;; (inhibit-same-window . t)
+                                     (side . bottom)
+                                     (window-width . 0.5)))))
     ;; (message "> %s %s" (frame-pixel-width) (frame-pixel-height))
     (unless (eq mk/v/vertico-last-layout layout)
       (setq mk/v/vertico-last-layout layout)
       (setq vertico-multiform-commands
-        (append
-          (mk/create-vertico-multiform-commands
-            '(mk/completion-at-point-with-tempel cape-dabbrev cape-file cape-line mk/cape-line-previous-buffer)
-            '(grid))
-          ;; display buffer according to layout
-          (mk/create-vertico-multiform-commands
-            '(mk/better-consult-git-grep mk/better-consult-line consult-line consult-line-multi consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info mk/better-consult-line-multi mk/consult-ripgrep-file-type)
-            `(buffer
-               (vertico-buffer-display-action . ,display-buffer-actions))))))))
+            (append
+             (mk/create-vertico-multiform-commands
+              '(mk/completion-at-point-with-tempel cape-dabbrev cape-file cape-line mk/cape-line-previous-buffer)
+              '(grid))
+             ;; display buffer according to layout
+             (mk/create-vertico-multiform-commands
+              '(mk/better-consult-git-grep mk/better-consult-line mk/better-consult-imenu consult-line consult-line-multi consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info mk/better-consult-line-multi mk/consult-ripgrep-file-type)
+              `(buffer
+                (vertico-buffer-display-action . ,display-buffer-actions))))))))
 
 (defun mk/vertico-setup-multiform-commands-focus-change-function ()
   (let ((current-focused-frame (catch 'focused-frame

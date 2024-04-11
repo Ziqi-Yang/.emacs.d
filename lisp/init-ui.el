@@ -62,8 +62,8 @@
   (setq font-lock-maximum-decoration 3) ;; font lock
   ;; setup jit-lock
   (setq jit-lock-chunk-size 4096
-	  ;; jit-lock-defer-time 0.25
-	  jit-lock-stealth-time 1.25))
+	      ;; jit-lock-defer-time 0.25
+	      jit-lock-stealth-time 1.25))
 
 (add-hook 'after-init-hook #'mk/setup-font-lock())
 
@@ -142,12 +142,13 @@
 ;; font faces only works in emacs GUI, terminal emcas should change terminal font instead
 (defun mk/setup-font-faces ()
   "Setup Fonts."
-  (let ((default-font "Iosevka") ;; , IBM Plex Mono, Cascadia Code
-        (CJK-font "LXGW Neo XiHei Screen"))
+  (let ((default-font "Iosevka")  ; , IBM Plex Mono, Cascadia Code
+        (CJK-font "LXGW Neo XiHei")
+        (font-size 26))
     (when (display-graphic-p)
       (when (member default-font (font-family-list))
         ;; @ default font
-	      (set-face-attribute 'default nil :family default-font :height 130 :weight 'normal)
+	      (set-face-attribute 'default nil :font (font-spec :family default-font :size font-size))
         ;; @ fixed-pitch font ;; i.e. Monospaced font
         (set-face-attribute 'fixed-pitch nil :inherit 'default)
         ;; @ variable-pitch font ;; i.e. variable-width font

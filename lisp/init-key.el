@@ -377,8 +377,8 @@ Example:
      ("H" . unhighlight-regexp)
      ("c" . list-colors-display)
      ;; note you can input keys like `v' and add a space after it to filter
-     ("i" . consult-imenu) 
-     ("I" . consult-imenu-multi)
+     ("i" . imenu) 
+     ("I" . mk/better-consult-imenu)
      ("m" . mk/better-consult-man)
      ("M" . consult-global-mark)
      ;; NOTE: to post filter to filter group (i.e. filename in this case)
@@ -757,7 +757,7 @@ CONFIRM: universal argument. Whether a confirm is needed."
   (let ((command-prefix "kitty --class fullscreen -d ")) ;; right parenthesis is needed to be added after concatance
     (if (project-current)
       (start-process-shell-command "open terminal" "*terminal*"
-        (concat command-prefix (project-root (project-current)) " ~/.emacs.d/gitui_start.sh"))
+        (concat command-prefix (project-root (project-current)) " ~/.config/emacs/gitui_start.sh"))
       (message "Not in a project!"))))
 
 (defun mk/browse-emacs-devel()
@@ -986,6 +986,12 @@ ARG: number of words to kill"
              (w (ace-select-window)))
     (select-window ielm-window)
     (ielm-change-working-buffer (window-buffer w))))
+
+(defun mk/better-consult-imenu (&optional arg)
+  (interactive "P")
+  (if arg
+      (call-interactively #'consult-imenu-multi)
+    (call-interactively #'consult-imenu)))
 
 (provide 'init-key)
 

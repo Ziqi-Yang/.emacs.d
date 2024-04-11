@@ -194,8 +194,9 @@
   :config
   (global-hl-todo-mode))
 
-(use-package consult-todo
-  :ensure (:type git :host github :repo "liuyinz/consult-todo"))
+;; TODO https://github.com/liuyinz/consult-todo
+;; (use-package consult-todo
+;;   :ensure (:type git :host github :repo "liuyinz/consult-todo"))
 
 ;;; Persistent Scrctch Buffer ===============================
 ;; (use-package persistent-scratch

@@ -17,6 +17,7 @@
 
 /places
 /history
+/tramp
 
 *.elc
 *.eld

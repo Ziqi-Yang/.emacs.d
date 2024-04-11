@@ -5,6 +5,9 @@
 
 ;; (setq debug-on-error t)
 
+;; https://github.com/progfolio/elpaca/wiki/Warnings-and-Errors#unable-to-determine-elpaca-core-date
+(setq elpaca-core-date '(20240407))
+
 (defvar elpaca-installer-version 0.7)
 (defvar elpaca-directory (expand-file-name ".local/elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
@@ -61,7 +64,7 @@
 
 (setq user-full-name "Meow King"
       user-mail-address "mr.meowking@anche.no"
-      default-directory (expand-file-name "~/.emacs.d"))
+      default-directory (expand-file-name "/tmp"))
 
 (setq find-function-C-source-directory "~/proj/probe/emacs/src")
 (add-to-list 'exec-path (expand-file-name "~/myBin/"))
