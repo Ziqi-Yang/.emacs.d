@@ -96,15 +96,24 @@ When ARG is non-nil, then search all buffer."
 (defun mk/completing-rg-types()
   "Completing rg types."
   (let* ((types (mk/get-rg-types))
-          (completion-extra-properties
-            '(:annotation-function
-               (lambda (type)
-                 (let ((desc
-                         (alist-get
-                           type minibuffer-completion-table
-                           nil nil #'string=)))
-                   (format "\t%s" desc))))))
-    (completing-read "File type[empty: all]: " types nil nil (nth 0 (split-string (symbol-name major-mode) "-")))))
+         (completion-extra-properties
+          '(:annotation-function
+            (lambda (type)
+              (let ((desc
+                     (alist-get
+                      type minibuffer-completion-table
+                      nil nil #'string=)))
+                (format "\t%s" desc))))))
+    (completing-read
+     "File type[empty: all]: "
+     types nil nil
+     (let ((type
+            (nth 0
+                 (split-string
+                  (symbol-name major-mode) "-"))))
+       (pcase type
+         ("emacs" "elisp")
+         (_ type))))))
 
 (defun mk/consult-ripgrep-file-type (&optional arg)
   "Consult-ripgrep with file type support.

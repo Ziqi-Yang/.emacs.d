@@ -756,8 +756,10 @@ CONFIRM: universal argument. Whether a confirm is needed."
   (interactive)
   (let ((command-prefix "kitty --class fullscreen -d ")) ;; right parenthesis is needed to be added after concatance
     (if (project-current)
-      (start-process-shell-command "open terminal" "*terminal*"
-        (concat command-prefix (project-root (project-current)) " ~/.config/emacs/gitui_start.sh"))
+        (start-process-shell-command
+         "open terminal" "*terminal*"
+         (concat command-prefix (project-root (project-current))
+                 " " (expand-file-name "gitui_start.sh" user-emacs-directory)))
       (message "Not in a project!"))))
 
 (defun mk/browse-emacs-devel()
