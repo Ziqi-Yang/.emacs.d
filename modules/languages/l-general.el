@@ -45,12 +45,14 @@
   (lsp-bridge-python-multi-lsp-server "pyright_ruff")
   (lsp-bridge-multi-lang-server-mode-list
    '(((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
-     ((web-mode) . "html_emmet")
+     ((web-mode) . "html_emmet_tailwindcss")
      ((vue-mode) . "volar_emmet")
      ;; ((typescript-ts-mode) . "typescript_eslint") ;; eslint part seems does nothing at all?
      ((qml-mode qml-ts-mode) . "qmlls_javascript")))
   ;; use my `eldoc-headline' to display signature information
   (lsp-bridge-signature-show-function '(lambda (str) (setq-local eldoc-headline-string str)))
+  (lsp-bridge-user-langserver-dir (expand-file-name "lsp-bridge-config/langserver" user-emacs-directory))
+  (lsp-bridge-user-multiserver-dir (expand-file-name "lsp-bridge-config/multiserver" user-emacs-directory))
   :config
   ;; lsp-bridge doesn't work well on *scratch* buffer
   (dolist (hook '(lisp-interaction-mode-hook emacs-lisp-mode-hook))
@@ -107,15 +109,16 @@
 ;;   )
 
 ;;; Syntax Checker (flymake) ==========================================
-(use-package flymake-eslint
-  :ensure (:host github :repo "orzechowskid/flymake-eslint")
-  :config
-  (add-hook 'typescript-ts-mode-hook
-            (lambda ()
-              (flymake-eslint-enable)))
-  (add-hook 'js-ts-mode-hook
-            (lambda ()
-              (flymake-eslint-enable))))
+;; high cpu consumption
+;; (use-package flymake-eslint
+;;   :ensure (:host github :repo "orzechowskid/flymake-eslint")
+;;   :config
+;;   (add-hook 'typescript-ts-mode-hook
+;;             (lambda ()
+;;               (flymake-eslint-enable)))
+;;   (add-hook 'js-ts-mode-hook
+;;             (lambda ()
+;;               (flymake-eslint-enable))))
 
 (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 

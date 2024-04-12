@@ -20,7 +20,10 @@
 
 ;; (use-package magit-todos)
 
-;;; Diff-hl =================================================
+
+;;; =================================================
+
+
 (use-package diff-hl
   :config
   (global-diff-hl-mode)
@@ -28,10 +31,33 @@
 
 	;; make sure it works in daemon mode
 	(add-hook 'server-after-make-frame-hook
-		#'(lambda () (unless (display-graphic-p)
-									 (diff-hl-margin-mode))))
+		        #'(lambda () (unless (display-graphic-p)
+									         (diff-hl-margin-mode))))
 	(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 	(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+;;; Misc =======================================================================
+(use-package git-link
+  :ensure (:host github :repo "sshaw/git-link")
+  :custom
+  ;; since I'm often in detached state
+  (git-link-default-branch "main")
+  (git-link-open-in-browser t)
+  :config
+  (defun mk/git-link-clipboard ()
+    (interactive)
+    (call-interactively #'git-link)
+    (mk/better-clipboard-kill-ring-save))
+
+  (defun mk/git-link-commit-clipboard ()
+    (interactive)
+    (call-interactively #'git-link-commit)
+    (mk/better-clipboard-kill-ring-save))
+
+  (defun mk/git-link-homepage-clipboard ()
+    (interactive)
+    (call-interactively #'git-link-homepage)
+    (mk/better-clipboard-kill-ring-save)))
 
 
 (defun mk/log-edit/insert-gitmessages()
@@ -44,12 +70,13 @@
       (save-excursion
         (goto-char (point-max))
         (overlay-put (make-overlay (point) (point))
-          'after-string message)))))
+                     'after-string message)))))
 
 (with-eval-after-load 'log-edit
   (customize-set-value 'log-edit-hook '(log-edit-insert-message-template
-                                         mk/log-edit/insert-gitmessages
-                                         log-edit-show-files)))
+                                        mk/log-edit/insert-gitmessages
+                                        log-edit-show-files)))
+
 
 (provide 'my-vc)
 

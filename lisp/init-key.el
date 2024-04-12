@@ -151,6 +151,12 @@ Example:
      ("v" . vc-version-diff)
      ("V" . vc-root-version-diff)
      ("E" . vc-version-ediff)))
+
+  (mk/define&set-keymap
+   "C-x v s" keymap/vc-share
+   '(("s" . mk/git-link-clipboard)
+     ("c" . mk/git-link-commit-clipboard)
+     ("h" . mk/git-link-homepage-clipboard)))
   
   ;; diff (SPC x SPC d)
   (keymap-global-set "C-x d" #'diff)
