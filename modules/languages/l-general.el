@@ -230,10 +230,6 @@ configuration (like Makefile)."
         ;; rust
         ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
          "cargo run")
-        ;; emacs lisp 
-        ((eq major-mode 'emacs-lisp-mode)
-         (concat "emacs --debug-init --init-directory=~/.emacs.d_test/ -l "
-                 (project-root (project-current)) "test/init.el" " test/0.el"))
         ;; cpp
         ((or (eq major-mode 'c++-mode) (eq major-mode 'c++-ts-mode))
          (concat "g++ -Wall -std=c++17 " relative-file-name " -o " relative-bare-file-name " && ./" relative-bare-file-name))

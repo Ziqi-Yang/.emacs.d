@@ -174,21 +174,24 @@
 
 ;;; mode line ===============================================
 (defun mk/mode-line/abbreviate-file-name ()
-  (let ((fname (buffer-file-name))
-         (pj (project-current)))
-    (if fname
-      (if pj
-        (let ((directory-abbrev-alist
-                `((,(directory-file-name
-                      (expand-file-name
-                        (project-root pj))) . ,(project-name pj)))))
-          (abbreviate-file-name fname))
-        (abbreviate-file-name fname))
-      (concat "[B]" (buffer-name)))))
+  ;; TODO, use a variable to store the result, `prjoect-current' will cause performance issue
+  (breadcrumb-project-crumbs)
+  ;; (let ((fname (buffer-file-name))
+  ;;       (pj (project-current)))
+  ;;   (if fname
+  ;;       (if pj
+  ;;           (let ((directory-abbrev-alist
+  ;;                  `((,(directory-file-name
+  ;;                       (expand-file-name
+  ;;                        (project-root pj))) . ,(project-name pj)))))
+  ;;             (abbreviate-file-name fname))
+  ;;         (abbreviate-file-name fname))
+  ;;     (concat "[B]" (buffer-name))))
+  )
 
 (defun mk/setup-modeline ()
   (setq-default mode-line-buffer-identification
-    '((:eval (mk/mode-line/abbreviate-file-name)))))
+                '((:eval (mk/mode-line/abbreviate-file-name)))))
 
 (add-hook 'after-init-hook #'mk/setup-modeline)
 
@@ -262,6 +265,7 @@
 (setq display-buffer-alist
       '(("\\*Embark Collect" (display-buffer-in-side-window) (side . bottom)
          (height . 0.4))
+        ("\\*Typst-Watch\\*" display-buffer-at-bottom (window-height . fit-window-to-buffer))
         ("\\*Embark Actions\\*" (display-buffer-in-tab) (side . right)
          (width . 0.3))
         ("\\*Shortdoc.*?\\*" display-buffer-in-side-window (side . right)
