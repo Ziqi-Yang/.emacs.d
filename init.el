@@ -6,7 +6,7 @@
 ;; (setq debug-on-error t)
 
 ;; https://github.com/progfolio/elpaca/wiki/Warnings-and-Errors#unable-to-determine-elpaca-core-date
-(setq elpaca-core-date '(20240407))
+(setq elpaca-core-date '(20240420))
 
 (defvar elpaca-installer-version 0.7)
 (defvar elpaca-directory (expand-file-name ".local/elpaca/" user-emacs-directory))
@@ -47,11 +47,8 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-;; Install use-package support
 (elpaca elpaca-use-package
-  ;; Enable :ensure use-package keyword.
   (elpaca-use-package-mode)
-  ;; Assume :ensure t unless otherwise specified.
   (setq elpaca-use-package-by-default t))
 
 ;; Block until current queue processed.
@@ -62,63 +59,32 @@
 ;;   ;; To disable collection of benchmark data after init is done.
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-(defvar has-nix (getenv "NIX_PATH"))
-
-(defvar in-nixos
-  (and (eq system-type 'gnu/linux)
-       (string-prefix-p "/run/current-system" (getenv "SHELL"))))
-
-(setq user-full-name "Meow King"
-      user-mail-address "mr.meowking@anche.no"
-      default-directory (expand-file-name "/tmp")
-      shell-file-name (if in-nixos
-                          "/run/current-system/sw/bin/bash"
-                        "/bin/bash"))
-
-(setq find-function-C-source-directory "~/proj/probe/emacs/src")
-(add-to-list 'exec-path (expand-file-name "~/myBin/"))
-(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
-;; for compile to work
-(setenv "PATH" (concat
-                (format "%s:%s:"
-                        (expand-file-name "~/myBin/")
-                        (expand-file-name "~/.local/bin"))
-                (getenv "PATH")))
-
-(push (expand-file-name "lisp" user-emacs-directory) load-path)
+(push (expand-file-name "init" user-emacs-directory) load-path)
 (push (expand-file-name "modules" user-emacs-directory) load-path)
-(push (expand-file-name "modules/languages" user-emacs-directory) load-path)
-(push (expand-file-name "vandor" user-emacs-directory) load-path)
+(push (expand-file-name "languages" user-emacs-directory) load-path)
+(push (expand-file-name "lib" user-emacs-directory) load-path)
 
-;; modern looking
-;; https://emacsconf.org/2023/talks/flat/
-;; with a little modifications
-(defun flat-style(theme &rest args)
-  (custom-set-faces
-    '(header-line
-       ((t (:inherit mode-line
-             :box (:style flat-button)))) t)
-    '(mode-line
-       ((t (:inherit mode-line
-             :box (:style flat-button)))) t)
-    '(mode-line-inactive
-       ((t (:inherit mode-line-inactive
-             :box (:style flat-button)))) t)))
-(advice-add 'load-theme :after #'flat-style)
+;; common modules
+(with-temp-message ""
+  ;; all files under `init' directory
+  (require 'init-vars)
+  (require 'init-advice)
+  (require 'init-base)
+  (require 'init-key)
+  (require 'init-meow-keys)
+  (require 'init-key-transient)
+  (require 'init-ui)
+
+  ;; all file under `lib' directory
+  (require 'lib-0))
 
 ;; NOTE: module name should be unique(also to the built-in module)
-(if (getenv "EMACS-MIN")
+(if (getenv "EMACS-TERM")
     (with-temp-message ""
-      (require 'init-base)
-      (require 'meow-keybindings)
-      (require 'init-key-transient)
-      (require 'init-key)
-      (require 'init-ui)
-      (require 'editor)
-      (require 'completion)
-      (require 'custom-consult-collection)
-      (require 'file-browser)
-      (require 'l-general)
+      (require 'my-edit)
+      (require 'my-completion)
+      (require 'my-search-replace)
+      (require 'my-dired)
 
       ;; Kitty Keyboard protocol support (so I can use Ctrl + Return in Kitty)
       (use-package kkp
@@ -127,46 +93,35 @@
         (global-kkp-mode +1)))
 
   (with-temp-message ""
-    (require 'init-base)
-    (require 'meow-keybindings)
-    (require 'init-key-transient)
-    (require 'init-key)
-    (require 'init-ui)
-    (require 'editor)
-    (require 'completion)
-    (require 'custom-consult-collection)
-    (require 'file-browser)
-    (require 'my-vc)
-    (require 'my-minibuffer)
-    (require 'init-proxy)
-    (require 'mail)
-    (require 'auto-insert)
-    ;; (require 'ai)
-    (require 'browser)
-    (require 'info-config)
+    ;; load all files under `module' directory (require will only load once)
+    (require 'my-advice-adds)
+    (require 'my-ai)
+    (require 'my-auto-insert)
+    (require 'my-completion)
     (require 'my-debug)
-    (require 'adbkeyboard)
-    (require 'emacs-developer)
-    (require 'hugo)
-    (require 'my-advice-adds))
+    (require 'my-dired)
+    (require 'my-edit)
+    (require 'my-emacs-pkg-dev)
+    (require 'my-lsp)
+    (require 'my-mail)
+    (require 'my-minibuffer)
+    (require 'my-misc)
+    (require 'my-search-replace)
+    (require 'my-spellcheck)
+    (require 'my-utils)
+    (require 'my-vc)
 
-  ;; load languages
-  (with-temp-message ""
+    ;; load all files under `language' directory
     (require 'l-org)
     (require 'l-web)
     (require 'l-treesit)
-    (require 'l-languages)
-    (require 'l-general)
-    (require 'l-eglot)))
+    (require 'l-languages)))
 
 ;; remove old version native-compiled files in the end
 (use-package comp
   :ensure nil
   :config
   (native-compile-prune-cache))
-
-;; Don’t compact font caches during GC.
-(setq inhibit-compacting-font-caches t)
 
 (setq find-file-visit-truename t)
 

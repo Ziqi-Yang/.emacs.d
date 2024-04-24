@@ -21,8 +21,6 @@
 ;; (use-package magit-todos)
 
 
-;;; =================================================
-
 
 (use-package diff-hl
   :config
@@ -36,7 +34,6 @@
 	(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 	(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-;;; Misc =======================================================================
 (use-package git-link
   :ensure (:host github :repo "sshaw/git-link")
   :custom

@@ -52,12 +52,10 @@
 ;; (use-package d2-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
 
-(defun mk/draw-local-keybinding-setup()
-  (keymap-local-set "C-c C-c c" #'mermaid-compile)
-  (keymap-local-set "C-c C-c b" #'mermaid-open-browser)
-  (keymap-local-set "C-c C-c d" #'mermaid-open-doc))
-
-(add-hook 'mermaid-mode-hook 'mk/draw-local-keybinding-setup)
+(with-eval-after-load 'mermaid-ts-mode
+  (keymap-set mermaid-ts-mode-map "C-c C-c c" #'mermaid-compile)
+  (keymap-set mermaid-ts-mode-map "C-c C-c b" #'mermaid-open-browser)
+  (keymap-set mermaid-ts-mode-map "C-c C-c d" #'mermaid-open-doc))
 
 ;;; Java =======================================================================
 (defun mk/java-open-doc()
@@ -71,23 +69,17 @@
   (let ((compile-command "make gen_tags"))
     (project-compile)))
 
-;; ;; enable cape-dabbrev and cape-keyword for java-mode and java-ts-mode
-;; (dolist (mode '(java-mode-hook java-ts-mode-hook))
-;;   (add-hook mode
-;;     '(lambda ()
-;;        (setq-local completion-at-point-functions
-;;          (append completion-at-point-functions '(cape-dabbrev cape-keyword))))))
-
-(defun mk/java-local-keybinding-setup()
-  (keymap-local-set "C-c C-c d" #'mk/java-open-doc)
-  (keymap-local-set "C-c C-c t" #'mk/java-generate-tags))
-
 (use-package java-ts-mode
   :ensure nil
   :custom (java-ts-mode-indent-offset 2))
 
-(add-hook 'java-mode-hook 'mk/java-local-keybinding-setup)
-(add-hook 'java-ts-mode-hook 'mk/java-local-keybinding-setup)
+(with-eval-after-load 'java-mode
+  (keymap-set java-mode-map "C-c C-c d" #'mk/java-open-doc)
+  (keymap-set java-mode-map "C-c C-c t" #'mk/java-generate-tags))
+
+(with-eval-after-load 'java-ts-mode
+  (keymap-set java-ts-mode-map "C-c C-c d" #'mk/java-open-doc)
+  (keymap-set java-ts-mode-map "C-c C-c t" #'mk/java-generate-tags))
 
 
 ;;; Kotlin =====================================================================
@@ -111,16 +103,17 @@ and `defcustom' forms reset their default values."
       (forward-sexp)
       (eval-defun nil))))
 
-(defun mk/emacs-lisp-local-keybindings-setup()
-  "Set up local keybindings for scratch buffer(lisp interaction mode)"
-  (keymap-set emacs-lisp-mode-map "TAB" #'indent-for-tab-command)
-  (keymap-local-set "TAB" #'completion-at-point)
-  (keymap-local-set "C-j" #'completion-at-point)
-  (keymap-local-set "C-i" #'eval-print-last-sexp)
-  (keymap-local-set "C-x C-S-e" #'others/eval-buffer))
+(with-eval-after-load 'elisp-mode
+  (keymap-set emacs-lisp-mode-map "TAB" #'completion-at-point)
+  (keymap-set emacs-lisp-mode-map "C-j" #'completion-at-point)
+  (keymap-set emacs-lisp-mode-map "C-i" #'eval-print-last-sexp)
+  (keymap-set emacs-lisp-mode-map "C-x C-S-e" #'others/eval-buffer)
+  
+  (keymap-set lisp-interaction-mode-map "TAB" #'completion-at-point)
+  (keymap-set lisp-interaction-mode-map "C-j" #'completion-at-point)
+  (keymap-set lisp-interaction-mode-map "C-i" #'eval-print-last-sexp)
+  (keymap-set lisp-interaction-mode-map "C-x C-S-e" #'others/eval-buffer))
 
-(add-hook 'lisp-interaction-mode-hook 'mk/emacs-lisp-local-keybindings-setup)
-(add-hook 'emacs-lisp-mode-hook 'mk/emacs-lisp-local-keybindings-setup)
 
 ;;; Makefile ===================================================================
 (defun mk/makefile-local-keybinding-setup()

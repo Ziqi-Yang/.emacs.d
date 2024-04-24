@@ -1,54 +1,7 @@
-;;; meow-keybindings.el --- meow model editing                   -*- lexical-binding: t; -*-
+;;; init-meow-keys.el --- meow model editing -*- lexical-binding: t; -*-
 ;; Copyright (C) 2023  Ziqi Yang
 ;; Author: Ziqi Yang <mr.ziqiyang@gmail.com>
 ;; Comments:
-
-(defun mk/better-clipboard-kill-ring-save ()
-  "Copy region content or kill ring content to clipboard."
-  (interactive)
-  (if (display-graphic-p)
-    (if (use-region-p)
-      (call-interactively #'clipboard-kill-ring-save)
-      (gui-set-selection 'CLIPBOARD (current-kill 0)))
-    ;; for terminal emacs under Wayland
-    (when (use-region-p)
-      (call-interactively #'kill-ring-save))
-    (call-process "wl-copy"
-      nil nil nil
-      "--" (current-kill 0))))
-
-(defun mk/clipboard-yank (&optional arg)
-  (interactive "P")
-  (if arg
-    (mk/yank-without-indent)  ; FIXME, not from clipboard
-    (clipboard-yank)))
-
-(defun mk/yank (&optional arg)
-  (interactive "P")
-  (if arg
-    (mk/yank-without-indent)
-    (yank)))
-
-(defun mk/mark-line-smart ()
-  "Mark the visible part of the current line.
-  If current point is on a non-whitespace character, then mark the whole visible
-  line; else the surrounding white spaces."
-  (interactive)
-  ;; (rx (or blank eol))
-  (if (looking-at "[[:blank:]]\\|$") ;; if a white space is in current point
-    ;; mark white spaces
-    (when-let ((bounds (bounds-of-thing-at-point 'whitespace)))
-      (push-mark (car bounds))
-      (goto-char (cdr bounds)))
-    ;; mark the whole visible line
-    (progn
-      (back-to-indentation) ;; go to the non-whitespace line beginning
-      (push-mark (point))
-      ;; go to the last non-whitespace line end
-      (move-end-of-line nil)
-      (re-search-backward "^\\|[^[:space:]]")
-      (forward-char)))
-  (activate-mark))
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -240,12 +193,6 @@ If there is no active region, do `mk/meow-grab-region'; else do `meow-grab'."
       (meow-grab)
     (mk/meow-grab-region)))
 
-(defun mk/code/documentation()
-  (interactive)
-  (if lsp-bridge-mode
-      (call-interactively #'lsp-bridge-show-documentation)
-    (call-interactively #'eldoc)))
+(provide 'init-meow-keys)
 
-(provide 'meow-keybindings)
-
-;;; meow-keybindings.el ends here
+;;; init-meow-keys.el ends here

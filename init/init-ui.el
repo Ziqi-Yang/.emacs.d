@@ -37,18 +37,18 @@
   "Load theme."
   (require-theme 'modus-themes)
   (setq modus-themes-italic-constructs t
-    modus-themes-bold-constructs nil
-    modus-themes-mixed-fonts t
-    modus-themes-variable-pitch-ui nil
-    modus-themes-custom-auto-reload t
-    modus-themes-disable-other-themes t
-    
-    modus-themes-prompts '(italic bold)
-    modus-themes-completions
-    '((matches . (extrabold))
-       (selection . (semibold italic text-also))))
+        modus-themes-bold-constructs nil
+        modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui nil
+        modus-themes-custom-auto-reload t
+        modus-themes-disable-other-themes t
+        
+        modus-themes-prompts '(italic bold)
+        modus-themes-completions
+        '((matches . (extrabold))
+          (selection . (semibold italic text-also))))
   (if (display-graphic-p)
-    (load-theme 'modus-operandi t)
+      (load-theme 'modus-operandi t)
     (load-theme 'modus-vivendi t)))
 
 (add-hook 'after-init-hook #'mk/setup-theme)
@@ -172,28 +172,30 @@
 ;; re-run this hook if we create a new frame from daeamonized Emacs
 (add-hook 'server-after-make-frame-hook 'mk/setup-font-faces)
 
-;;; mode line ===============================================
+;;; Mode line & Header line ====================================================
+;; regarding the configuration of the header-line, see `init-ui'
+(use-package eldoc-headline
+  :ensure (:type git :host sourcehut :repo "meow_king/eldoc-headline")
+  :delight eldoc-headline-local-mode
+  :custom (eldoc-headline-disable-echo-area t)
+  :config
+  (eldoc-headline-mode 1))
+
+(use-package breadcrumb
+  :ensure (:host github :repo "joaotavora/breadcrumb"))
+
+;; `prjoect-current' can cause performance issue(IO) in some cases, so I use a
+;; variable to store the result
+(defvar-local mk/vars/project-file-name nil)
+
 (defun mk/mode-line/abbreviate-file-name ()
-  ;; TODO, use a variable to store the result, `prjoect-current' will cause performance issue
-  (breadcrumb-project-crumbs)
-  ;; (let ((fname (buffer-file-name))
-  ;;       (pj (project-current)))
-  ;;   (if fname
-  ;;       (if pj
-  ;;           (let ((directory-abbrev-alist
-  ;;                  `((,(directory-file-name
-  ;;                       (expand-file-name
-  ;;                        (project-root pj))) . ,(project-name pj)))))
-  ;;             (abbreviate-file-name fname))
-  ;;         (abbreviate-file-name fname))
-  ;;     (concat "[B]" (buffer-name))))
-  )
+  (unless mk/vars/project-file-name
+    (setq-local mk/vars/project-file-name (breadcrumb-project-crumbs)))
+  mk/vars/project-file-name)
 
 (defun mk/setup-modeline ()
   (setq-default mode-line-buffer-identification
                 '((:eval (mk/mode-line/abbreviate-file-name)))))
-
-(add-hook 'after-init-hook #'mk/setup-modeline)
 
 (defun mk/setup-header-line()
   (setq-default
@@ -202,64 +204,15 @@
      (:propertize " # " face error)
      (:eval (breadcrumb-imenu-crumbs)))))
 
-(add-hook 'after-init-hook #'mk/setup-header-line)
-
-;; @ doom modeline
-;; (use-package doom-modeline
-;;   :after nerd-icons
-;;   :init (doom-modeline-mode 1))
-
-;;; Navigation Highlight ====================================
-;; (use-package beacon
-;;   :config
-;;   (beacon-mode 1))
-
-;; (use-package pulsar
-;;   :ensure (:type git :host github :repo "protesilaos/pulsar")
-;;   :config
-;;   ;; integration with the `consult' package:
-;;   (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
-;;   (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry)
-
-;;   ;; integration with the built-in `imenu':
-;;   (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
-;;   (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
-
-;;   (pulsar-global-mode 1))
-
-;;; Center Area =============================================
-;; (use-package olivetti
-;;   ;; :hook ((text-mode         . olivetti-mode)
-;;   ;;         (prog-mode         . olivetti-mode)
-;;   ;;         (Info-mode         . olivetti-mode)
-;;   ;;         (org-mode          . olivetti-mode)
-;;   ;;         (markdown-mode     . olivetti-mode))
-;;   :custom
-;;   (olivetti-body-width 111))
-
-;; (use-package auto-olivetti
-;;   :ensure (:type git :host sourcehut :repo "ashton314/auto-olivetti")
-;;   :custom
-;;   (auto-olivetti-enabled-modes '(text-mode prog-mode))
-;;   :config
-;;   (auto-olivetti-mode))
-
-;;; Cursor ==================================================
-;; @ disable cursor blink
-(setq blink-cursor-mode nil)
-
-;;; Compilation =============================================
-;; @ colorful
-(use-package ansi-color ;; @ emacs 28 buildin
-  :ensure nil
-  :hook (compilation-filter . ansi-color-compilation-filter))
+(with-eval-after-load 'emacs
+  (mk/setup-modeline)
+  (mk/setup-header-line))
 
 ;;; Enhanced Calc (Use C-o to define key)
 (use-package casual
   :ensure (:host github :repo "kickingvegas/Casual")
   :config
   (define-key calc-mode-map (kbd "C-o") 'casual-main-menu))
-
 
 ;;; Display Buffer Alist ========================================================
 (setq display-buffer-alist

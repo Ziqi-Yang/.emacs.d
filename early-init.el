@@ -26,9 +26,12 @@
   read-process-output-max (* 10 1024 1024))
 (defun mk/setup-gc()
   (setq
-    gc-cons-threshold (* 50 1024 1024)
-    gc-cons-percentage 0.3
-    read-process-output-max (* 10 1024 1024)))
+   gc-cons-threshold (* 50 1024 1024)
+   gc-cons-percentage 0.3
+   read-process-output-max (* 10 1024 1024)
+   
+   ;; Don’t compact font caches during GC.
+   inhibit-compacting-font-caches t))
 (add-hook 'after-init-hook #'mk/setup-gc)
 
 ;; ;; @ time ;; discord, since dashboard owns the same function
@@ -54,13 +57,13 @@
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(tooltip-mode -1)
 (menu-bar-mode -1)
 ;; set fringe width
 (set-fringe-mode 6) ;; diff-hl make use of fringe
 
 
-(column-number-mode)
+(tooltip-mode 1)
+(column-number-mode 1)
 ;; (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'absolute)
 

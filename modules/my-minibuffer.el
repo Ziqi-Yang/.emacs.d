@@ -22,6 +22,36 @@
 
 ;;; Code:
 
+(use-package embark
+  :bind (("C-." . embark-act))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Show Embark actions via which-key
+  (setq embark-action-indicator
+	      (lambda (map)
+	        (which-key--show-keymap "Embark" map nil nil 'no-paging)
+	        #'which-key--hide-popup-ignore-command)
+	      embark-become-indicator embark-action-indicator))
+
+;; @ Interact at Consult
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package embark-collection
+  :ensure (:type git :host sourcehut :repo "meow_king/embark-collection")
+  :config
+  (embark-collection-register-commands))
+
+;; annotation in minibuffer
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+;;; My Custom Functions ========================================================
+
+
 (defun mk/minibuffer-get-associated-buffer ()
   (with-selected-window (minibuffer-selected-window)
     (window-buffer)))

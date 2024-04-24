@@ -1,4 +1,4 @@
-;;; auto-insert.el --- Editor Settings -*- lexical-binding: t -*-
+;;; my-auto-insert.el --- Editor Settings -*- lexical-binding: t -*-
 ;;; Commentary:
 ;; auto insert content to new files
 ;;; Code:
@@ -119,5 +119,6 @@ indent_size = 2
 indent_size = 2
 ")))
 
-(provide 'auto-insert)
-;;; auto-insert.el ends here
+(provide 'my-auto-insert)
+
+;;; my-auto-insert.el ends here

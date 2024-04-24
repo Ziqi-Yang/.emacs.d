@@ -1,4 +1,4 @@
-;;; ai.el --- AI Powered Emacs -*- lexical-binding: t -*-
+;;; my-ai.el --- AI Powered Emacs -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -28,4 +28,6 @@
 ;;   (setq mind-wave-api-key-path openai-api-key-path
 ;;     mind-wave-api-base "https://openai-proxy.animer.live/v1"))
 
-(provide 'ai)
+(provide 'my-ai)
+
+;;; my-ai.el ends here

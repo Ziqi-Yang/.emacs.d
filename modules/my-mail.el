@@ -1,4 +1,4 @@
-;;; mail.el --- Email Configuartion -*- lexical-binding: t -*-
+;;; my-mail.el --- Email Configuartion -*- lexical-binding: t -*-
 ;;; Commentary:
 ;; msmtp settings: ~/.msmtprc
 ;; offlineimap settings: ~/.config/offlineimap
@@ -27,6 +27,10 @@
 (use-package mu4e
   ;; installing 'mu' though 'pacman -S mu' will automatically add package 'mu4e' into emacs site-package
   :ensure nil
+  :bind (:map mu4e-main-mode-map
+              ("J" . mu4e-search-maildir)
+              :map mu4e-view-mode-map
+              ("M-r" . mu4e-compose-reply))
   :config
   (setq mu4e-mu-binary (executable-find "mu")
         mu4e-confirm-quit nil
@@ -44,31 +48,20 @@
   (setq mu4e-maildir-shortcuts
         '(("/mr.meowking@anche.no/INBOX" . ?i))))
 
-(defun mk/mu4e-main-local-keybinding-setup()
-  (keymap-local-set "J" #'mu4e-search-maildir))
-
-(defun mk/mu4e-view-local-keybinding-setup()
-  ;; SPC-m r
-  (keymap-local-set "M-r" #'mu4e-compose-reply))
-
-(add-hook 'mu4e-main-mode-hook 'mk/mu4e-main-local-keybinding-setup)
-(add-hook 'mu4e-view-mode-hook 'mk/mu4e-view-local-keybinding-setup)
-
-
 (defun others/sign-or-encrypt-message ()
   "Use it with `message-send-hook'."
   (let ((answer (read-from-minibuffer "Sign or encrypt?\nEmpty to do nothing.\n[s/e]: ")))
     (cond
-      ((string-equal answer "s") (progn
-                                   (message "Signing message.")
-                                   (mml-secure-message-sign-pgpmime)))
-      ((string-equal answer "e") (progn
-                                   (message "Encrypt and signing message.")
-                                   (mml-secure-message-encrypt-pgpmime)))
-      (t (progn
-           (message "Dont signing or encrypting message.")
-           nil)))))
+     ((string-equal answer "s") (progn
+                                  (message "Signing message.")
+                                  (mml-secure-message-sign-pgpmime)))
+     ((string-equal answer "e") (progn
+                                  (message "Encrypt and signing message.")
+                                  (mml-secure-message-encrypt-pgpmime)))
+     (t (progn
+          (message "Dont signing or encrypting message.")
+          nil)))))
 
-(provide 'mail)
+(provide 'my-mail)
 
-;;; mail.el ends here
+;;; my-mail.el ends here

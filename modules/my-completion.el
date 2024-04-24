@@ -1,8 +1,8 @@
-;;; completion.el --- For Completions -*- lexical-binding: t -*-
+;;; my-completion.el --- For Completions -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-;;; Vertico =================================================
+;;; Vertico ====================================================================
 (defvar mk/v/vertico-last-layout nil)
 (defun mk/create-vertico-multiform-commands (commands common-properties)
   (let ((result '()))
@@ -125,7 +125,6 @@ FRAME: nil for current selected frame."
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
 
-
 ;; @ posframe
 ;; vertico-posframe depends on posframe(thus it is auto-installed)
 ;; (use-package vertico-posframe
@@ -138,85 +137,24 @@ FRAME: nil for current selected frame."
 ;;     '((left-fringe . 8)
 ;;        (right-fringe . 8))))
 
-;;; Annotations in completion =============================
-(use-package marginalia
-  :init
-  (marginalia-mode))
-
-;;; Orderless completion ====================================
+;;; Orderless completion =======================================================
 (use-package orderless
   :init
   (setq completion-styles '(orderless basic)
-    completion-category-defaults nil
-    completion-category-overrides nil
-    orderless-component-separator #'orderless-escapable-split-on-space)
+        completion-category-defaults nil
+        completion-category-overrides nil
+        orderless-component-separator #'orderless-escapable-split-on-space)
   :config
   (with-eval-after-load 'eglot
     (add-to-list 'completion-category-overrides
-      '(eglot (styles orderless basic))))
+                 '(eglot (styles orderless basic))))
 
   (with-eval-after-load 'citre
     (add-to-list 'completion-category-overrides
-      '(citre (styles orderless basic)))))
-
-;;; Embark ==================================================
-(use-package embark
-  :bind (("C-." . embark-act))
-  :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-  ;; Show Embark actions via which-key
-  (setq embark-action-indicator
-	  (lambda (map)
-	    (which-key--show-keymap "Embark" map nil nil 'no-paging)
-	    #'which-key--hide-popup-ignore-command)
-	  embark-become-indicator embark-action-indicator))
-
-;; @ Interact at Consult
-(use-package embark-consult
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package embark-collection
-  :ensure (:type git :host sourcehut :repo "meow_king/embark-collection")
-  :config
-  (embark-collection-register-commands))
-
-;;; Consult =================================================
-(use-package consult
-  :custom
-  (consult-imenu-config
-   '((java-ts-mode :toplevel "Method" :types
-					         ((?m "Method" font-lock-function-name-face)
-					          (?c "Class" font-lock-type-face)
-					          (?i "Interface" font-lock-type-face)))
-     (emacs-lisp-mode :toplevel "Functions" :types
-					            ((?f "Functions" font-lock-function-name-face)
-					             (?m "Macros" font-lock-function-name-face)
-					             (?p "Packages" font-lock-constant-face)
-					             (?t "Types" font-lock-type-face)
-					             (?v "Variables" font-lock-variable-name-face)))
-     (typst-ts-mode :topLevel "Headings" :types
-					          ((?h "Headings" typst-ts-markup-header-face)
-					           (?f "Functions" font-lock-function-name-face)))
-     (rust-ts-mode :topLevel "Fn" :types
-                   ((?f "Fn" font-lock-function-name-face)
-                    (?m "Module" font-lock-variable-name-face)
-                    (?t "Type" font-lock-type-face)
-                    (?i "Impl" font-lock-operator-face)
-                    (?e "Enum" font-lock-variable-name-face)
-                    (?s "Struct" font-lock-variable-name-face)))))
-  :config
-  ;; integrated with xref
-  (setq xref-show-xrefs-function #'consult-xref
-	      xref-show-definitions-function #'consult-xref)
-  ;; disable preview for recent file
-  (consult-customize 
-   consult-info
-   consult-recent-file :preview-key nil))
+                 '(citre (styles orderless basic)))))
 
 ;; NOTE: disable these to using lsp-bridge
-;;; Corfu: In Region Completion  ============================
+;;; Corfu: In Region Completion  ===============================================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 ;; use vertico completion instead(since I don't use completion often)
 (use-package corfu
@@ -284,7 +222,7 @@ FRAME: nil for current selected frame."
 ;; 	(unless (display-graphic-p)
 ;; 		(corfu-terminal-mode +1)))
 
-;; Cafe ====================================================
+;; Cafe ========================================================================
 ;; add completion etension
 ;; FIXME it seems like this package doesn't work well with citre (may be citre's problem)
 (use-package cape
@@ -305,7 +243,7 @@ FRAME: nil for current selected frame."
   :config
   (add-to-list 'dabbrev-ignored-buffer-modes 'text-mode))
 
-;;; Snippet =================================================
+;;; Snippet ====================================================================
 ;; @ Tempel
 (use-package tempel
   :custom
@@ -318,32 +256,44 @@ FRAME: nil for current selected frame."
 ;; (use-package tempel-collection
 ;;   :after tempel)
 
-;;; Custom Cape Functions ===================================
-(defun mk/get-lines-from-previous-buffer ()
-  "Collect all visible lines from the previously visited buffer and store them in a list."
+;; Completion-Preview-Mode (emacs30 ============================================
+;; (use-package completion-preview
+;;   :ensure nil
+;;   :delight completion-preview-mode
+;;   :hook
+;;   ;; text-mode comint-mode
+;;   ((prog-mode) . completion-preview-mode)
+;;   :custom
+;;   (completion-preview-minimum-symbol-length 2)
+;;   :bind
+;;   (:map completion-preview-active-mode-map
+;;     ("M-n" . completion-preview-next-candidate)
+;;     ("M-p" . completion-preview-prev-candidate)))
+
+
+;;; Custom Functions ======================================================
+(defun mk/completion-at-point-with-tempel ()
+  "`Completion-at-point' function with tempel support.
+When tempel-trigger-prefix is before the point, then use temple, else `completion-at-point'."
   (interactive)
-  (let ((previous-buffer (other-buffer))
-        (lines))
-    (with-current-buffer previous-buffer
-      (save-excursion
-        (goto-char (point-min))
-        (while (not (eobp))
-          (setq lines (cons (buffer-substring (line-beginning-position) (line-end-position)) lines))
-          (forward-line 1))))
-    (setq lines (nreverse lines))
-    lines))
+  (if tempel--active
+      (call-interactively 'tempel-next)
+    (if (and tempel-trigger-prefix
+             (length> tempel-trigger-prefix 0)
+             (looking-back
+              (rx-to-string `(seq ,tempel-trigger-prefix (* (not (or space punct)))))
+              nil))
+        (condition-case nil
+            (call-interactively 'tempel-complete)
+          (user-error
+           (if lsp-bridge-mode
+               (lsp-bridge-popup-complete-menu)
+             (completion-at-point))))
+      (if lsp-bridge-mode
+          (lsp-bridge-popup-complete-menu)
+        (completion-at-point)))))
 
-(defun mk/cape-line-previous-buffer (&optional interactive)
-  "Complete current line from other lines.
-The buffers returned by `cape-line-buffer-function' are scanned for lines.
-If INTERACTIVE is nil the function acts like a Capf."
-  (interactive (list t))
-  (if interactive
-      (cape-interactive #'mk/cape-line-previous-buffer)
-    `(,(pos-bol) ,(point)
-      ,(cape--table-with-properties (mk/get-lines-from-previous-buffer) :sort nil)
-      ,@cape--line-properties)))
 
-(provide 'completion)
+(provide 'my-completion)
 
-;;; completion.el ends here
+;;; my-completion.el ends here

@@ -1,16 +1,14 @@
 ;;; init-base.el --- Basics -*- lexical-binding: t -*-
 ;;; Commentary:
+
+;; change the behavior of built-in & basic stuffs 
+
 ;;; Code:
 
 ;;; Trivil ==================================================
-;; @ delete file by moving to trash
-;; change the behavior of delete-file and delete-directory function
-(setq delete-by-moving-to-trash t)
-(setq make-backup-files nil) ;; dont' automatically backup files in <fileName>~ format
+(setq delete-by-moving-to-trash t
+      make-backup-files nil)
 
-;; @ save minibuffer history
-;;; save minibuffer history
-;; Persist history over Emacs restarts.
 (use-package savehist
   :ensure nil
   :init
@@ -19,21 +17,22 @@
   (savehist-mode 1))
 
 ;;; auto revert buffer ======================================
-(global-auto-revert-mode)
+(with-eval-after-load 'emacs
+  (global-auto-revert-mode))
 
 ;;; clean directory =========================================
 (use-package no-littering
   :init
   (setq
-    no-littering-etc-directory (expand-file-name ".local/config/" user-emacs-directory)
-    no-littering-var-directory (expand-file-name ".local/data/" user-emacs-directory))
+   no-littering-etc-directory (expand-file-name ".local/config/" user-emacs-directory)
+   no-littering-var-directory (expand-file-name ".local/data/" user-emacs-directory))
   :config
   (require 'recentf)
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory)
   (setq
-    auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-    custom-file (no-littering-expand-etc-file-name "custom.el")))
+   auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+   custom-file (no-littering-expand-etc-file-name "custom.el")))
 
 ;;; workspace ===============================================
 (use-package tab-bar
@@ -54,7 +53,6 @@
    '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
    '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box nil))))))
 
-
 ;;; text scale change on the fly ============================
 (use-package default-text-scale
   :bind (("C--" . default-text-scale-decrease)
@@ -63,10 +61,6 @@
   (default-text-scale-mode))
 
 ;;; Project Utilities =======================================
-;; use buildin prokect.el for project ability
-;; @ enable consult to find file in project
-;; (use-package consult-project-extra)
-
 (use-package project
   :ensure nil
   :config
@@ -74,13 +68,9 @@
         (remove (assoc 'project-find-regexp project-switch-commands) project-switch-commands))
   (add-to-list 'project-switch-commands '(mk/consult-ripgrep-file-type "Consult rg" "r")))
 
-;; (add-hook 'after-init-hook #'mk/setup-project.el)
-;; (elpaca nil (mk/setup-project.el))
-
 ;;; Window ==================================================
-
-(use-package moeti-window
-  :ensure (:host sourcehut :repo "meow_king/moeti-window"))
+;; (use-package moeti-window
+;;   :ensure (:host sourcehut :repo "meow_king/moeti-window"))
 
 ;; @ jump
 (use-package ace-window
@@ -116,11 +106,6 @@
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
 ;;; Enhance Help ============================================
-;; Some symbol cannot be found(like eglot-server-programs, also the emacs
-;; buildin helper, but the latter in wider cases can find, maybe same buffer
-;; can find, different buffer cannot find). In this case, you should first search
-;; for eglot symbol, then all the symbols related to eglot can be found at the next
-;; time
 (use-package helpful
   :bind
   ([remap describe-function] . helpful-function)
@@ -143,43 +128,17 @@
 ;;; save file utility =======================================
 (defun mk/auto-save-visited-predicate ()
   (and
-    (not (eq major-mode 'mu4e-compose-mode))
-    (not (and buffer-file-name ;; save-visited-file-mode only 
-           (member (file-name-base buffer-file-name)
-             '("git-rebase-todo"))))))
+   (not (eq major-mode 'mu4e-compose-mode))
+   (not (and buffer-file-name ;; save-visited-file-mode only 
+             (member (file-name-base buffer-file-name)
+                     '("git-rebase-todo"))))))
 
-(custom-set-variables
-  '(auto-save-no-message t)
-  '(auto-save-visited-mode t)
-  '(auto-save-visited-interval 1)
-  '(auto-save-visited-predicate #'mk/auto-save-visited-predicate))
-
-;;; Waketime ================================================
-(use-package wakatime-mode
-  :delight
-  :config
-  (global-wakatime-mode t))
-
-;;; Zoxide ==================================================
-(use-package zoxide)
-
-;;; Search & Replce =========================================
-;; @ make search and replace very easy (even for project)
-;; notice: in replace: !, y, n is the keybindings to replace all, replace current and not replace current
-(use-package color-rg
-  :ensure (:host github :repo "manateelazycat/color-rg"))
-
-;; @ fuzzy finder ;; use consult-ripgrep instead
-;; (use-package affe
-;;   :ensure (:host github :repo "minad/affe" :files ("*.el"))
-;;   :config
-;;   ;; Manual preview key for `affe-grep'
-;;   (consult-customize affe-grep :preview-key '(:debounce 0.5 any))
-;; 	;; use orderless
-;; 	(defun affe-orderless-regexp-compiler (input _type _ignorecase)
-;; 		(setq input (orderless-pattern-compiler input))
-;; 		(cons input (lambda (str) (orderless--highlight input str))))
-;; 	(setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
+(with-eval-after-load 'file
+  (custom-set-variables
+   '(auto-save-no-message t)
+   '(auto-save-visited-mode t)
+   '(auto-save-visited-interval 1)
+   '(auto-save-visited-predicate #'mk/auto-save-visited-predicate)))
 
 ;;; Todo highlight ==========================================
 (use-package hl-todo
@@ -194,72 +153,18 @@
   :config
   (global-hl-todo-mode))
 
-;; TODO https://github.com/liuyinz/consult-todo
-;; (use-package consult-todo
-;;   :ensure (:type git :host github :repo "liuyinz/consult-todo"))
-
-;;; Persistent Scrctch Buffer ===============================
-;; (use-package persistent-scratch
-;; 	:config
-;; 	(persistent-scratch-setup-default))
-
-;;; Show Key ================================================
-;; for presentation usage
-;; (use-package keycast
-;;   :after (doom-modeline dashboard))
-
-;;; Buffer Move (swap window) ===============================
-(use-package buffer-move)
-
-;;; outline minor mode ======================================
-;; use TAB, ze, zE to toggle outline (evil-collection binding)
-;; (defun mk/set-outline-minor-mode ()
-;;   "Define compile command for every mode."
-;;   (outline-minor-mode)
-;;   ;; this line also set hs-hide symbol
-;;   (let (comment-symbol)
-;;     (cond
-;;       ((or (eq major-mode 'rust-mode) (eq major-mode 'rust-ts-mode))
-;;         (setq comment-symbol "//"))
-;;       (t
-;;         (setq comment-symbol '(syntax comment-start))))
-;;     (set (make-local-variable 'outline-regexp)
-;;       (eval `(rx bol ,comment-symbol (*? not-newline) (>= 10 "=") (* blank) eol)))))
-
-;; (add-hook 'prog-mode-hook #'mk/set-outline-minor-mode)
-
-;;; Environment Variables ===================================
-(defun mk/set-env()
-  "Set environment variables for Emacs"
-  (interactive)
-  (setenv "GTAGSOBJDIRPREFIX" "/home/zarkli/.cache/gtags/"))
-(add-hook 'emacs-startup-hook #'mk/set-env)
-
-;;; Terminal ====================================================================
-;; (use-package vterm)
-
-;;; My custom functions ===================================
-(defun mk/base/copy-string-to-clipboard (str)
-  ;; note this function only works in GUI version emacs
-  (with-temp-buffer
-    (insert str)
-    (clipboard-kill-region (point-min) (point-max))))
-
-(defun mk/vundo-hook ()
-  (meow-mode -1))
-
 ;;; undo
 (use-package vundo
   :config
-  (add-hook 'vundo-mode-hook #'mk/vundo-hook)
+  (add-hook 'vundo-mode-hook #'(lambda () (meow-mode -1)))
   ;; Take less on-screen space.
   (setq vundo-compact-display t)
 
   ;; Better contrasting highlight.
   (custom-set-faces
-    '(vundo-node ((t (:foreground "#808080"))))
-    '(vundo-stem ((t (:foreground "#808080"))))
-    '(vundo-highlight ((t (:foreground "#FFFF00")))))
+   '(vundo-node ((t (:foreground "#808080"))))
+   '(vundo-stem ((t (:foreground "#808080"))))
+   '(vundo-highlight ((t (:foreground "#FFFF00")))))
 
   ;; Use `HJKL` VIM-like motion, also Home/End to jump around.
   (define-key vundo-mode-map (kbd "l") #'vundo-forward)
@@ -325,32 +230,6 @@
 ;;   :config
 ;;   (gcmh-mode))
 
-;;; License =====================================================================
-(use-package lice
-  :ensure (:type git :host github :repo "buzztaiki/lice-el"))
-
-;; collect gc-statistics to help developers improve gc performance
-;; https://www.reddit.com/r/emacs/comments/14dej62/please_help_collecting_statistics_to_optimize/
-;; (use-package emacs-gc-stats
-;;   :config
-;;   (setq emacs-gc-stats-remind t) ; can also be a number of days
-;;   (setq emacs-gc-stats-gc-defaults 'emacs-defaults) ;; use default gc settings
-;;   (emacs-gc-stats-mode +1))
-
-
-;;; Headline ====================================================================
-;;; eldoc headline (my package)
-;; regarding the configuration of the header-line, see `init-ui'
-(use-package eldoc-headline
-  :ensure (:type git :host sourcehut :repo "meow_king/eldoc-headline")
-  :delight eldoc-headline-local-mode
-  :custom (eldoc-headline-disable-echo-area t)
-  :config
-  (eldoc-headline-mode 1))
-
-(use-package breadcrumb
-  :ensure (:host github :repo "joaotavora/breadcrumb"))
-
 ;;; Misc ==================================================================
 (use-package so-long
   :ensure nil
@@ -368,10 +247,6 @@
   ;; scrolling with an ordinary mouse to be almost as smooth as scrolling with a touchpad, on systems other than X:
   ;; (setq pixel-scroll-precision-large-scroll-height 40.0)
   (pixel-scroll-precision-mode 1))
-
-;; expand region ===========
-(use-package expreg
-  :ensure (:type git :host github :repo "casouri/expreg"))
 
 (provide 'init-base)
 
