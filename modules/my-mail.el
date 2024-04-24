@@ -22,15 +22,11 @@
 (add-hook 'after-init-hook #'mk/setup-mail)
 
 ;; https://www.djcbsoftware.nl/code/mu/mu4e/Getting-mail.html
+;; External Package (installed by system package manager - 'mu')
 ;; after updating mu, you may need to manually initailize again if you encounter an error
 ;; do 'mu init --my-address mr.meowking@anche.no -m ~/Maildir/'
 (use-package mu4e
-  ;; installing 'mu' though 'pacman -S mu' will automatically add package 'mu4e' into emacs site-package
   :ensure nil
-  :bind (:map mu4e-main-mode-map
-              ("J" . mu4e-search-maildir)
-              :map mu4e-view-mode-map
-              ("M-r" . mu4e-compose-reply))
   :config
   (setq mu4e-mu-binary (executable-find "mu")
         mu4e-confirm-quit nil
@@ -46,7 +42,10 @@
         mu4e-trash-folder "/mr.meowking@anche.no/Trash")
 
   (setq mu4e-maildir-shortcuts
-        '(("/mr.meowking@anche.no/INBOX" . ?i))))
+        '(("/mr.meowking@anche.no/INBOX" . ?i)))
+
+  (keymap-set mu4e-main-mode-map "J" #'mu4e-search-maildir)
+  (keymap-set mu4e-view-mode-map "M-r" #'mu4e-compose-reply))
 
 (defun others/sign-or-encrypt-message ()
   "Use it with `message-send-hook'."

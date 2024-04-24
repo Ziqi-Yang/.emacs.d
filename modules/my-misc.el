@@ -21,11 +21,10 @@
 
 ;;; Code:
 
-;; (use-package wakatime-mode
-;;   :delight
-;;   :config
-;;   (global-wakatime-mode t))
-
+(use-package wakatime-mode
+  :delight
+  :config
+  (global-wakatime-mode t))
 
 ;; show key, for presentation usage
 ;; (use-package keycast
