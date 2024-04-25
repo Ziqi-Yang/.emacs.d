@@ -24,6 +24,9 @@
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . web-mode))
 
+;;; Scheme =====================================================================
+(use-package geiser-guile)
+
 ;;; CC =========================================================================
 
 (with-eval-after-load 'c-ts-mode
@@ -42,8 +45,8 @@
   :mode "\\.nix\\'")
 
 ;;; Draw =======================================================================
-(use-package plantuml-mode
-  :ensure (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
+;; (use-package plantuml-mode
+;;   :ensure (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
 
 (use-package mermaid-ts-mode
   :ensure (:type git :host github :repo "JonathanHope/mermaid-ts-mode"))

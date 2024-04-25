@@ -201,8 +201,8 @@ Example:
               "C-c c o" keymap/code-other
               '(("c" . citre-create-tags-file)
                 ("e" . citre-edit-tags-file-recipe))))
-     ("p" . lsp-bridge-peek)
-     ("P" . citre-peek)
+     ("p" . mk/code/peek)
+     ("P" . mk/code/peek-reference)
      ("r" . mk/code/find-references)
      ("s" . mk/xref-stack-current-position)
      ("R" . eglot-rename)

@@ -133,15 +133,14 @@ configuration (like Makefile)."
         ((eq major-mode 'mermaid-ts-mode)
          ;; https://sr.ht/~meow_king/mermaid-open/
          (concat "mermaid-open -v " relative-file-name " --no-open | xargs firefox-developer-edition "))
-        ((eq major-mode 'plantuml-mode) ;; it seems like that we need to manually run it
+        ((or (equal file-extension "puml") (equal file-extension "plantuml"))
          (concat "env PLANTUML_LIMIT_SIZE=327680 plantuml " relative-file-name " && imv " relative-bare-file-name ".png"))
         ((and major-mode-first makefile-exist)
          "make run")
         ;; other
         (t "make "))))))
 
-(add-hook 'prog-mode-hook #'mk/set-compile-command)
-(add-hook 'typst-ts-mode-hook #'mk/set-compile-command)
+(add-hook 'after-change-major-mode-hook #'mk/set-compile-command)
 
 ;;; Extra Project Root Markers ==============================
 (setq project-vc-extra-root-markers

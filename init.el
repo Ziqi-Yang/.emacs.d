@@ -82,6 +82,7 @@
 (if (getenv "EMACS-TERM")
     (with-temp-message ""
       (require 'my-edit)
+      (require 'my-utils)
       (require 'my-completion)
       (require 'my-search-replace)
       (require 'my-dired)

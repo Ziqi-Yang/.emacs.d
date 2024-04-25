@@ -100,7 +100,7 @@
             :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
             :build (:not elpaca--byte-compile))
   :custom
-  (lsp-bridge-code-action-enable-popup-menu nil)  ; FIXME quit popup menu will cause weird problem
+  (lsp-bridge-code-action-enable-popup-menu t)  ; FIXME quit popup menu will cause weird problem
   (lsp-bridge-enable-hover-diagnostic t)
   (lsp-bridge-complete-manually t)
   (acm-candidate-match-function 'orderless-regexp)
@@ -261,6 +261,20 @@
   (if lsp-bridge-mode
       (call-interactively #'lsp-bridge-show-documentation)
     (call-interactively #'eldoc)))
+
+(defun mk/code/peek (&optional arg)
+  (interactive "P")
+  (if arg
+      (call-interactively #'citre-ace-peek)
+    (if lsp-bridge-mode
+        (call-interactively #'lsp-bridge-peek)
+      (call-interactively #'citre-peek))))
+
+(defun mk/code/peek-reference (&optional arg)
+  (interactive "P")
+  (if arg
+      (call-interactively #'citre-ace-peek-reference)
+    (call-interactively #'citre-peek-reference)))
 
 (provide 'my-lsp)
 

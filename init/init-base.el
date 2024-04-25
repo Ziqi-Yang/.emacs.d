@@ -118,7 +118,7 @@
 (use-package hideshow
   :ensure nil
   :delight hs-minor-mode
-  :hook (prog-mode . hs-minor-mode)
+  ;; :hook (prog-mode . hs-minor-mode)
   :config
   ;; also works for outline (minor) mode
   (set-display-table-slot standard-display-table
@@ -133,7 +133,7 @@
              (member (file-name-base buffer-file-name)
                      '("git-rebase-todo"))))))
 
-(with-eval-after-load 'file
+(with-eval-after-load 'emacs
   (custom-set-variables
    '(auto-save-no-message t)
    '(auto-save-visited-mode t)
@@ -184,7 +184,8 @@
 ;;; Navigation ==================================================================
 (with-eval-after-load 'xref
   (customize-set-variable
-    'xref-history-storage 'xref-window-local-history))
+   'xref-history-storage 'xref-window-local-history)
+  (mk/funcs-go-back-setup))
 
 (defun mk/push-point-to-xref-marker-stack (&rest r)
   (xref-push-marker-stack (point-marker)))
@@ -211,8 +212,6 @@
                   consult-ripgrep
                   consult-git-grep))
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
-
-(add-hook 'after-init-hook 'mk/funcs-go-back-setup)
 
 ;;; Ediff =======================================================================
 (use-package ediff
