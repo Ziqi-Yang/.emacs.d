@@ -86,7 +86,7 @@ Example:
   (keymap-global-set "C-c \`" #'tab-switch)
   (keymap-global-set "C-c ;" #'async-shell-command)
   ;; (keymap-global-set "C-c SPC" #'which-key-show-major-mode)
-  (keymap-global-set "C-c SPC" #'consult-mode-command) ;; use l/g/m to filter
+  ;; (keymap-global-set "C-c SPC" #'consult-mode-command) ;; use l/g/m to filter
   (keymap-global-set "C-c ~" #'list-processes)
   ;; C-h (SPC h) ================================================================
   ;; help (h) SPC h SPC <character>
@@ -141,10 +141,7 @@ Example:
   (keymap-global-set "C-M-l" #'recenter-top-bottom) ;; gl
   (keymap-global-set "C-M-s" #'scratch-buffer)      ;; gs
 
-  ;; this keymap is used as local keymap, see `mk/set-shared-local-keymap' function
-  (mk/define&set-keymap
-   "C-c SPC" keymap/shared-local
-   '())
+  ;; C-c SPC is preserved for `mk/set-shared-local-keymap' function
 
   ;; buffer(b)
   (mk/define&set-keymap
@@ -464,13 +461,16 @@ Example:
   :config
   (which-key-mode))
 
+
 (defun mk/set-shared-local-keymap()
   (interactive)
-  (setq keymap/shared-local (make-sparse-keymap))
-  (cond
-   ((derived-mode-p 'emacs-lisp-mode)
-    (keymap-set 'keymap/shared-local "d" #'others/byte-compile-and-load-directory)
-    (keymap-set 'keymap/shared-local "e" #'others/eval-buffer))))
+  (let ((key "C-c SPC"))
+    (cond
+     ((derived-mode-p 'emacs-lisp-mode)
+      (mk/define&set-keymap
+       key keymap/local/elisp
+       '(("d" . others/byte-compile-and-load-directory)
+         ("e" . others/eval-buffer)))))))
 
 (add-hook 'after-change-major-mode-hook #'mk/set-shared-local-keymap)
 
