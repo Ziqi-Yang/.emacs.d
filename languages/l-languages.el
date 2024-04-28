@@ -92,19 +92,9 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-    `(kotlin-ts-mode . ("kotlin-language-server"))))
+               `(kotlin-ts-mode . ("kotlin-language-server"))))
 
 ;;; Lisp =======================================================================
-(defun others/eval-buffer ()
-  "Execute the current buffer as Lisp code.
-Top-level forms are evaluated with `eval-defun' so that `defvar'
-and `defcustom' forms reset their default values."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (not (eobp))
-      (forward-sexp)
-      (eval-defun nil))))
 
 (with-eval-after-load 'elisp-mode
   (keymap-set emacs-lisp-mode-map "TAB" #'completion-at-point)
@@ -186,8 +176,11 @@ and `defcustom' forms reset their default values."
 ;;; Typst ======================================================================
 (use-package outline-indent-mode
   :ensure (:type git :host sourcehut :repo "meow_king/outline-indent-mode"))
+
+
 (use-package typst-ts-mode
   :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :branch "develop" :files (:defaults "*.el"))
+  ;; :ensure `(typst-ts-mode :repo ,(expand-file-name "typst-ts-mode" mk/vars/dir/vendor) :files (:defaults "*.el") :inherit nil)
   :custom
   (typst-ts-watch-options "--open")
   (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))

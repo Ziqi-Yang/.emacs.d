@@ -90,7 +90,7 @@ Require cargo package."
 (defun mk/consult-info-emacs()
   (interactive)
   (let ((this-command 'consult-info))
-    (consult-info "efaq" "elisp" "cl" "compat")))
+    (consult-info "efaq" "elisp" "cl")))
 
 (defun mk/rectangle-mark-lines ()
   (interactive)

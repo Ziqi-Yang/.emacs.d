@@ -22,19 +22,20 @@
 
 ;;; Code:
 
-(defvar has-nix (getenv "NIX_PATH"))
+(defvar mk/vars/has-nix (getenv "NIX_PATH"))
 
-(defvar in-nixos
+(defvar mk/vars/in-nixos
   (and (eq system-type 'gnu/linux)
        (string-prefix-p "/run/current-system" (getenv "SHELL"))))
 
 (setq user-full-name "Meow King"
       user-mail-address "mr.meowking@anche.no"
       default-directory (expand-file-name "/tmp")
-      shell-file-name (if in-nixos
+      shell-file-name (if mk/vars/in-nixos
                           "/run/current-system/sw/bin/bash"
                         "/bin/bash")
       find-function-C-source-directory "~/proj/probe/emacs/src")
+
 
 (provide 'init-vars)
 

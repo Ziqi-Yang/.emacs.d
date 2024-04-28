@@ -130,6 +130,10 @@
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+
+(add-hook 'after-init-hook #'split-window-horizontally)
+(add-hook 'server-after-make-frame-hook #'split-window-horizontally)
+
 (provide 'init)
 
 ;;; init.el ends here

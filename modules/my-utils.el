@@ -215,6 +215,13 @@ ARG: prefix argument.  When ARG is non-nil, then force use
   (aw-select " Ace - Copy Window"
              #'aw-copy-window))
 
+(defun mk/toggle-follow-mode ()
+  (interactive)
+  (require 'follow)
+  (if follow-mode
+      (follow-mode -1)
+    (follow-delete-other-windows-and-split)))
+
 ;;; Trivial Functions ==========================================================
 
 (defun mk/open-terminal (&optional arg)

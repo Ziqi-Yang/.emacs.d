@@ -117,6 +117,7 @@ Example:
   (keymap-global-set "C-x v e" #'vc-ediff)
   
   (keymap-global-set "C-x v D" #'vc-dir)
+  
   (mk/define&set-keymap
    "C-x v d" keymap/vc-diff 
    '(("d" . vc-diff)
@@ -139,6 +140,11 @@ Example:
   ;; C-M- (SPC g) ===============================================================
   (keymap-global-set "C-M-l" #'recenter-top-bottom) ;; gl
   (keymap-global-set "C-M-s" #'scratch-buffer)      ;; gs
+
+  ;; this keymap is used as local keymap, see `mk/set-shared-local-keymap' function
+  (mk/define&set-keymap
+   "C-c SPC" keymap/shared-local
+   '())
 
   ;; buffer(b)
   (mk/define&set-keymap
@@ -376,7 +382,8 @@ Example:
   ;; toggle (t)
   (mk/define&set-keymap
    "C-c t" keymap/toggle
-   '(("w" . whitespace-mode)
+   '(("f" . mk/toggle-follow-mode)
+     ("w" . whitespace-mode)
      ("r" . read-only-mode)
      ("R" . mk/global-read-only-mode)
      ("v" . view-mode)
@@ -456,6 +463,16 @@ Example:
   (setq which-key-side-window-max-height 0.3)
   :config
   (which-key-mode))
+
+(defun mk/set-shared-local-keymap()
+  (interactive)
+  (setq keymap/shared-local (make-sparse-keymap))
+  (cond
+   ((derived-mode-p 'emacs-lisp-mode)
+    (keymap-set 'keymap/shared-local "d" #'others/byte-compile-and-load-directory)
+    (keymap-set 'keymap/shared-local "e" #'others/eval-buffer))))
+
+(add-hook 'after-change-major-mode-hook #'mk/set-shared-local-keymap)
 
 (provide 'init-key)
 

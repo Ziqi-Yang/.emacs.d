@@ -36,7 +36,7 @@ OLDFUN COMMAND R."
     (when-let* ((p (project-current))
                 (pt (project-root p)))
       (if (and
-           in-nixos
+           mk/vars/in-nixos
            (file-exists-p (concat pt "/flake.nix")))
           (unless (string-prefix-p "nix develop" command-tidy)
             (setq command (format "nix develop -c bash -c \"%s\"" (mk/util/quote-string command))))
