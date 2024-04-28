@@ -1,3 +1,5 @@
+/init/my-private-configs.el
+
 !/.local
 /.local/*
 !/.local/straight

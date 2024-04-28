@@ -435,6 +435,7 @@ Example:
   (mk/define&set-keymap
    "C-c z" keymap/trivial
    '(("c" . jinx-correct)
+     ("a" . gptel-menu)
      ("C" . list-colors-display)
      ("d" . ediff-buffers)
      ("q" . save-buffers-kill-emacs)

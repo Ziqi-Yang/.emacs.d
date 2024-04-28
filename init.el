@@ -74,6 +74,8 @@
   (require 'init-meow-keys)
   (require 'init-key-transient)
   (require 'init-ui)
+  
+  (require 'my-private-configs)
 
   ;; all file under `lib' directory
   (require 'lib-0))
