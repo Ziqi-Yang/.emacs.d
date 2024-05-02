@@ -345,6 +345,41 @@ CONFIRM: universal argument. Whether a confirm is needed."
     (select-window ielm-window)
     (ielm-change-working-buffer (window-buffer w))))
 
+(defun mk/share-0x0 ()
+  (interactive)
+  (when (region-active-p)
+    (let* ((mode major-mode)
+           (content (buffer-substring-no-properties
+                     (region-beginning)
+                     (region-end)))
+           (tempfile (make-temp-file "emacs-share-0x0-" nil ".txt")))
+      ;; Write the region content to the temporary file
+      (with-temp-file tempfile
+        (insert
+         "================================================================================\n"
+         "Author: " user-full-name "\n"
+         "Time: " (current-time-string) "\n"
+         "Lang(Emacs Major Mode): " (symbol-name mode) "\n"
+         "================================================================================\n\n")
+        (insert content)
+        (mk/lib/buffer-remove-left-common-paddings))
+      ;; Send the temporary file as a multipart/form-data request
+      (request "https://0x0.st"
+        :type "POST"
+        :files `(("file" . ,tempfile))
+        :success (cl-function
+                  (lambda (&key data &allow-other-keys)
+                    (when data
+                      (let ((res (string-trim-right data)))
+                        (mk/lib/copy-string-to-clipboard res)
+                        (message "File uploaded: %s" res)))))
+        :error (cl-function
+                (lambda (&rest args &key error-thrown &allow-other-keys)
+                  (message "Error: %S" error-thrown)))
+        :complete (lambda (&rest _)
+                    ;; Clean up the temporary file after the request is complete
+                    (delete-file tempfile))))))
+
 (provide 'my-utils)
 
 ;;; my-utils.el ends here

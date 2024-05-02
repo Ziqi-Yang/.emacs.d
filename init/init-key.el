@@ -435,6 +435,7 @@ Example:
   (mk/define&set-keymap
    "C-c z" keymap/trivial
    '(("c" . jinx-correct)
+     ("0".  mk/share-0x0)
      ("a" . gptel-menu)
      ("C" . list-colors-display)
      ("d" . ediff-buffers)
@@ -443,11 +444,7 @@ Example:
      ("r" . restart-emacs)
      ;; ("s" . desktop-save-in-desktop-dir)
      ;; ("l" . desktop-load-file)
-     ("n". string-inflection-cycle)
-     ("p" . mk/copy-path-smart)
-     ("z" . mk/adb-send-messages)
-     ("RET" . mk/adb-wechat-press-send-button)
-     ("x" . mk/adb--delete-char))))
+     ("n". string-inflection-cycle))))
 
 (with-eval-after-load 'emacs
   (mk/keyBindingSetup))

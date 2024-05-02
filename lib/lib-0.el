@@ -19,6 +19,8 @@
 
 ;;; Code:
 
+(use-package request)
+
 (defun mk/util/quote-string (s)
   (replace-regexp-in-string
    (rx (group (or "'" "\"")))
@@ -30,6 +32,22 @@
   (with-temp-buffer
     (insert str)
     (clipboard-kill-region (point-min) (point-max))))
+
+(defun mk/lib/buffer-remove-left-common-paddings ()
+  "Remove common left padding from the current buffer."
+  (let ((min-indent nil))
+    ;; Calculate minimum indentation across lines
+    (save-excursion
+      (goto-char (point-min))
+      (while (not (eobp))
+        (unless (looking-at "^[[:space:]]*$") ; Skip blank lines
+          (let ((current-indent (current-indentation)))
+            (if (or (not min-indent) (< current-indent min-indent))
+                (setq min-indent current-indent))))
+        (forward-line 1)))
+    ;; Remove the minimum indentation
+    (when min-indent
+      (indent-rigidly (point-min) (point-max) (- min-indent)))))
 
 
 (provide 'lib-0)
