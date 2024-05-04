@@ -468,7 +468,11 @@ Example:
       (mk/define&set-keymap
        key keymap/local/elisp
        '(("d" . others/byte-compile-and-load-directory)
-         ("e" . others/eval-buffer)))))))
+         ("e" . others/eval-buffer))))
+     ((derived-mode-p 'dired-mode)
+      (keymap-global-set key #'casual-dired-tmenu))
+     ((derived-mode-p 'calc-mode)
+      (keymap-global-set key #'casual-main-menu)))))
 
 (add-hook 'after-change-major-mode-hook #'mk/set-shared-local-keymap)
 

@@ -62,8 +62,9 @@
   (setq font-lock-maximum-decoration 3) ;; font lock
   ;; setup jit-lock
   (setq jit-lock-chunk-size 4096
-	      ;; jit-lock-defer-time 0.25
-	      jit-lock-stealth-time 1.25))
+	      jit-lock-defer-time 0
+	      jit-lock-stealth-time 1.5
+        jit-lock-stealth-nice 0.2))
 
 (add-hook 'after-init-hook #'mk/setup-font-lock())
 
@@ -210,9 +211,7 @@
 
 ;;; Enhanced Calc (Use C-o to define key)
 (use-package casual
-  :ensure (:host github :repo "kickingvegas/Casual")
-  :config
-  (define-key calc-mode-map (kbd "C-o") 'casual-main-menu))
+  :ensure (:host github :repo "kickingvegas/Casual"))
 
 ;;; Display Buffer Alist ========================================================
 (setq display-buffer-alist

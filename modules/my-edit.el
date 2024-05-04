@@ -79,7 +79,7 @@
   :config
   (add-hook 'web-mode-hook #'(lambda () (electric-pair-local-mode -1)))
   (setq electric-pair-pairs '( ; make electric-pair-mode work on more brackets.
-                              (?( . ?))
+                              (?\( . ?\))
                               (?\{ . ?\})
                               (?\[ . ?\])
                               ;; (?\< . ?\>)

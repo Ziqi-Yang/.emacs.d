@@ -112,6 +112,9 @@ insert_final_newline = true
 [Makefile]
 indent_style = tab
 
+[*.nix]
+indent_size = 2
+
 [*.el]
 indent_size = 2
 

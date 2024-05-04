@@ -27,6 +27,13 @@
 ;;; Scheme =====================================================================
 (use-package geiser-guile)
 
+;; gerbil
+(use-package gambit
+  :ensure (:host github :repo "gambit/gambit" :files ("misc/gambit.el")))
+
+(use-package gerbil-mode
+  :ensure (:host github :repo "mighty-gerbils/gerbil" :files ("etc/gerbil-mode.el")))
+
 ;;; CC =========================================================================
 
 (with-eval-after-load 'c-ts-mode
