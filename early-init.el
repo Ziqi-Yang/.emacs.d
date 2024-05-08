@@ -5,8 +5,8 @@
 (set-default-coding-systems 'utf-8)
 
 ;;; Disable package.el ======================================
-(setq package-enable-at-startup nil ;; disable package.el at startup
-  package-quickstart nil) ;; don't load from package cache
+;; (setq package-enable-at-startup nil ;; disable package.el at startup
+;;   package-quickstart nil) ;; don't load from package cache
 
 ;;; Performance =============================================
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -19,14 +19,15 @@
 ;; need to do it manually. -- I changed this configuration, see my comments around
 ;; my setup of gcmh
 (setq
-  ;; set a high value before initialization, and it should be reduced to a
-  ;; proper value after init
-  gc-cons-threshold most-positive-fixnum 
-  gc-cons-percentage 0.3
-  read-process-output-max (* 10 1024 1024))
+ ;; set a high value before initialization, and it should be reduced to a
+ ;; proper value after init
+ gc-cons-threshold most-positive-fixnum
+ gc-cons-percentage 0.3
+ read-process-output-max (* 10 1024 1024))
+
 (defun mk/setup-gc()
   (setq
-   gc-cons-threshold (* 50 1024 1024)
+   gc-cons-threshold (* 100 1024 1024)
    gc-cons-percentage 0.3
    read-process-output-max (* 10 1024 1024)
    
@@ -47,8 +48,8 @@
 ;; Change eln-cache folder place ============================
 (when (fboundp 'startup-redirect-eln-cache)
   (startup-redirect-eln-cache
-    (convert-standard-filename
-	    (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
+   (convert-standard-filename
+	  (expand-file-name  ".local/eln-cache/" user-emacs-directory))))
 
 ;;; UI settings =============================================
 (setq default-frame-alist '((fullscreen . maxmized) (alpha-background . 92)

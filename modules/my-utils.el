@@ -380,6 +380,15 @@ CONFIRM: universal argument. Whether a confirm is needed."
         :complete (lambda (&rest _)
                     (delete-file tempfile))))))
 
+(defun mk/run-just-command (&optional command)
+  (interactive
+   (list (completing-read
+          "Choose a recipe:"
+          (seq-map #'(lambda (str)
+                       (car (split-string str)))
+                   (cdr (process-lines "just" "--list"))))))
+  (compile (concat "just " command)))
+
 (provide 'my-utils)
 
 ;;; my-utils.el ends here

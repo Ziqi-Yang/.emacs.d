@@ -135,6 +135,8 @@ configuration (like Makefile)."
          (concat "mermaid-open -v " relative-file-name " --no-open | xargs firefox-developer-edition "))
         ((or (equal file-extension "puml") (equal file-extension "plantuml"))
          (concat "env PLANTUML_LIMIT_SIZE=327680 plantuml " relative-file-name " && imv " relative-bare-file-name ".png"))
+        ((or (equal file-extension "pikchr"))
+         (concat "pikchr --svg-only " relative-file-name " > " relative-bare-file-name ".svg"))
         ((and major-mode-first makefile-exist)
          "make run")
         ;; other

@@ -203,7 +203,9 @@
    header-line-format
    '((:eval eldoc-headline-string)
      (:propertize " # " face error)
-     (:eval (breadcrumb-imenu-crumbs)))))
+     (:eval (breadcrumb-imenu-crumbs))
+     (:propertize " # " face error)
+     "GC: " (:eval (number-to-string gcs-done)) " - " (:eval (number-to-string gc-elapsed)) "s")))
 
 (with-eval-after-load 'emacs
   (mk/setup-modeline)
@@ -242,6 +244,11 @@
          display-buffer-in-side-window (side . bottom))
         ("^\\*Flymake diagnostics for.*?\\*"
          display-buffer-in-side-window (side . bottom))))
+
+;;; Misc =======================================================================
+(with-eval-after-load 'image-mode
+  (customize-set-variable 'image-auto-resize 'fit-window)
+  (customize-set-variable 'image-auto-resize-on-window-resize 0))
 
 (provide 'init-ui)
 

@@ -8,6 +8,9 @@ fundamental-mode ;; Available everywhere
                                      "[-_]"
                                      " "
                                      (file-name-base buffer-file-name))))
+(info "Author: " user-full-name "\n"
+ "Time: " (current-time-string) "\n" q)
+
 (el "El Psy Congroo" q)
 
 org-mode

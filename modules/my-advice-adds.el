@@ -35,15 +35,13 @@ OLDFUN COMMAND R."
   (let* ((command-tidy (string-clean-whitespace (string-trim command))))
     (when-let* ((p (project-current))
                 (pt (project-root p)))
-      (if (and
-           mk/vars/in-nixos
-           (file-exists-p (concat pt "/flake.nix")))
-          (unless (string-prefix-p "nix develop" command-tidy)
-            (setq command (format "nix develop -c bash -c \"%s\"" (mk/util/quote-string command))))
+      (unless (string-prefix-p "nix develop" command-tidy)
         (let ((python-venv (concat pt ".venv")))
           (cond
            ((and (file-exists-p python-venv) (not (string-prefix-p "source" command-tidy)))
-            (setq command (concat "source " python-venv "/bin/activate; " command)))))))
+            (setq command (concat "source " python-venv "/bin/activate; " command)))))
+        (when (and mk/vars/in-nixos (file-exists-p (concat pt "/flake.nix")))
+          (setq command (format "nix develop -c bash -c \"%s\"" (mk/util/quote-string command))))))
     (funcall (apply oldfun command r))))
 
 (defun mk/my-advice-add-initialize()
