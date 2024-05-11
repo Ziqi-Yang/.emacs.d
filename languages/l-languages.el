@@ -223,6 +223,7 @@
 (use-package lua-mode)
 (use-package fish-mode)
 (use-package just-mode)
+(use-package graphql-mode)
 
 (provide 'l-languages)
 

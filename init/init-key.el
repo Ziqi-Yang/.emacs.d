@@ -434,11 +434,11 @@ Example:
   ;; trivial (z)
   (mk/define&set-keymap
    "C-c z" keymap/trivial
-   '(("c" . jinx-correct)
-     ("0".  mk/share-0x0)
-     ("a" . gptel-menu)
-     ("c" . compile)
-     ("C" . list-colors-display)
+   '(("0".  mk/share-0x0)
+     ("a" . mk/better-gptel)
+     ("c" . jinx-correct)
+     ("C" . compile)
+     ("L" . list-colors-display)
      ("j" . mk/run-just-command)
      ("d" . ediff-buffers)
      ("q" . save-buffers-kill-emacs)
