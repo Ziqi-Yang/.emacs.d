@@ -66,19 +66,7 @@
                 ;; and https://github.com/charliermarsh/ruff
                 '((:pylsp . (:plugins (:ruff (:enabled t)
                                              ;; :rope_autoimport doens't work ...
-                                             )))))
-
-  (add-hook 'eglot-managed-mode-hook #'mk/setup-eglot-eldoc))
-
-(defun mk/setup-eglot-eldoc ()
-  "Set the eldoc documentation functions to be the following.
-1. flymake-eldoc-function (ensure we can see error in echo line when hover)
-2. eglot-signature-eldoc-function
-3. eglot-hover-eldoc-function"
-  (setq eldoc-documentation-functions
-        (cons #'eglot-signature-eldoc-function
-	            (remove #'eglot-signature-eldoc-function eldoc-documentation-functions))))
-
+                                             ))))))
 
 (use-package eglot-hierarchy
   :ensure (:host github :repo "dolmens/eglot-hierarchy"))
@@ -177,24 +165,25 @@
   (citre-global-update-database))
 
 ;;; Other ======================================================================
+;; @ Display completion preview
+(with-eval-after-load 'completion-preview
+  (global-completion-preview-mode))
 
 ;; @ eldoc
 (use-package eldoc
   :ensure nil
-  :config
-  (setq eldoc-minor-mode-string nil)
-  (setq eldoc-echo-area-use-multiline-p nil))
+  :custom
+  (eldoc-minor-mode-string nil)
+  (eldoc-echo-area-use-multiline-p nil)
+  (eldoc-documentation-strategy #'eldoc-documentation-compose)
+  (eldoc-echo-area-prefer-doc-buffer t))
 
-(defun mk/setup-flymake-eldoc ()
-  "Better setting for displaying flymake diagnostics in eldoc documentation."
-  (setq eldoc-documentation-functions
-	      (cons #'flymake-eldoc-function
-	            (remove #'flymake-eldoc-function eldoc-documentation-functions)))
-  (setq eldoc-documentation-strategy #'eldoc-documentation-compose))
+(use-package eldoc-box
+  :config
+  (add-hook 'prog-mode-hook #'eldoc-box-hover-mode))
 
 (with-eval-after-load 'flymake
-  (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
-  (add-hook 'flymake-mode-hook #'mk/setup-flymake-eldoc))
+  (add-hook 'emacs-lisp-mode-hook #'flymake-mode))
 
 (use-package dape
   ;; Currently only on github

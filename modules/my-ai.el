@@ -17,7 +17,7 @@
   (interactive "P")
   (if (or arg (region-active-p))
       (call-interactively #'gptel-menu)
-    (call-interactively #'gptel-send)))
+    (call-interactively #'gptel)))
 
 (provide 'my-ai)
 

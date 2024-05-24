@@ -175,12 +175,12 @@
 
 ;;; Mode line & Header line ====================================================
 ;; regarding the configuration of the header-line, see `init-ui'
-(use-package eldoc-headline
-  :ensure (:type git :host sourcehut :repo "meow_king/eldoc-headline")
-  :delight eldoc-headline-local-mode
-  :custom (eldoc-headline-disable-echo-area t)
-  :config
-  (eldoc-headline-mode 1))
+;; (use-package eldoc-headline
+;;   :ensure (:type git :host sourcehut :repo "meow_king/eldoc-headline")
+;;   :delight eldoc-headline-local-mode
+;;   :custom (eldoc-headline-disable-echo-area t)
+;;   :config
+;;   (eldoc-headline-mode 1))
 
 (use-package breadcrumb
   :ensure (:host github :repo "joaotavora/breadcrumb"))
@@ -201,8 +201,9 @@
 (defun mk/setup-header-line()
   (setq-default
    header-line-format
-   '((:eval eldoc-headline-string)
-     (:propertize " # " face error)
+   '(
+     ;; (:eval eldoc-headline-string)
+     ;; (:propertize " # " face error)
      (:eval (breadcrumb-imenu-crumbs))
      (:propertize " # " face error)
      "GC: " (:eval (number-to-string gcs-done)) " - " (:eval (number-to-string gc-elapsed)) "s")))
