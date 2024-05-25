@@ -395,6 +395,13 @@ CONFIRM: universal argument. Whether a confirm is needed."
                    (cdr (process-lines "just" "--list"))))))
   (compile (concat "just " command)))
 
+(defun mk/better-align-regexp (start end)
+  (interactive "r")
+  (let ((re-adjustable (rx-to-string '(group (* space))))
+        (re-identifier (rx-to-string (read--expression "Enter RX expression: " "(seq )"))))
+    (align-regexp
+     start end
+     (concat re-adjustable re-identifier) 1 1 t)))
 
 (provide 'my-utils)
 

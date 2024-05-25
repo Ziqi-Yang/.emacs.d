@@ -7,7 +7,9 @@
 
 (use-package ekg
   :custom
-  (ekg-db-file (expand-file-name "ekg.db" user-emacs-directory))
+  (ekg-db-file
+   ;; (expand-file-name "ekg.db" user-emacs-directory)
+   (expand-file-name "ekg.db" "~/personal/notes"))
   (ekg-acceptable-modes '(org-mode markdown-mode text-mode typst-ts-mode))
   (ekg-capture-default-mode 'typst-ts-mode)
   (ekg-inline-custom-tag-completion-symbols '((?! . "idea"))))

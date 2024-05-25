@@ -55,6 +55,13 @@ paru -S mu
 sed 's/\/.*//' en_US-large.dic > en_US-large_mod.dic
 ```
 
+== Understand Concepts
+=== `align-regexp` Explain
+#link("https://gniuk.github.io/2020-11-18-Emacs-align-regexp-explained-in-detail/")[Emacs Align Regexp Explained In Detail]
+TLDR: The matched place in `\(\)` is where to insert or truncate characters to fulfill the alignment.
+Example rx expression: `(rx (sep (group (* space)) (or "&" "\\\\")))` => indent indicator `&` and `\\`
+My custom function: `mk/better-align-regexp`
+
 = Other Awesome Emacs Configurations
 + #link("https://protesilaos.com/emacs/dotemacs")[Protesilaos Stavrou]
 + #link("Likhon-baRoy/.emacs.d")[Likhon-baRoy/.emacs.d]

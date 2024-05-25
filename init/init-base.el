@@ -214,6 +214,21 @@
                   consult-git-grep))
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
 
+;;; Shell ======================================================================
+(use-package eat
+  :ensure
+  (:url "https://codeberg.org/akib/emacs-eat"
+        :files ("*.el" ("term" "term/*.el") "*.texi"
+                "*.ti" ("terminfo/e" "terminfo/e/*")
+                ("terminfo/65" "terminfo/65/*")
+                ("integration" "integration/*")
+                (:exclude ".dir-locals.el" "*-tests.el")))
+  :custom
+  (eat-shell
+   (if mk/vars/in-nixos
+       "/run/current-system/sw/bin/fish"
+     "/bin/fish")))
+
 ;;; Ediff =======================================================================
 (use-package ediff
   :ensure nil

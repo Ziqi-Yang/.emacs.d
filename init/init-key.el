@@ -292,7 +292,8 @@ Example:
      ("e" . mk/ace-ielm)
      ("E" . (lambda (arg) (interactive "P") (if arg (mk/browse-emacs-devel) (eww-list-bookmarks))))
      ("d" . mk/dired-jump)
-     ("t" . mk/open-terminal)))
+     ("t" . eat)
+     ("T" . mk/open-terminal)))
 
   ;; project(p)
   (mk/define&set-keymap
@@ -380,7 +381,7 @@ Example:
   (mk/define&set-keymap
    "C-c t" keymap/toggle
    '(("f" . mk/toggle-follow-mode)
-     ("w" . whitespace-mode)
+     ("W" . whitespace-mode)
      ("r" . read-only-mode)
      ("R" . mk/global-read-only-mode)
      ("v" . view-mode)
@@ -395,7 +396,8 @@ Example:
      ("f" . other-frame)
      ("w" . ace-window)
      ("W" . mk/ace-window-balance-window)
-     ("t" . others/window-split-toggle)
+     ("t" . window-toggle-side-windows)
+     ("T" . others/window-split-toggle)
      ("f" . fit-window-to-buffer)
      ("q" . delete-window)
      ("o" . ace-delete-window)
@@ -436,6 +438,7 @@ Example:
    "C-c z" keymap/trivial
    '(("0".  mk/share-0x0)
      ("a" . mk/better-gptel)
+     ("A" . mk/better-align-regexp)
      ("c" . jinx-correct)
      ("C" . compile)
      ("e" . mk/trans-map/ekg-dispatch)
@@ -472,10 +475,20 @@ Example:
        key keymap/local/elisp
        '(("d" . others/byte-compile-and-load-directory)
          ("e" . others/eval-buffer))))
+     
      ((derived-mode-p 'dired-mode)
       (keymap-global-set key #'casual-dired-tmenu))
+     
      ((derived-mode-p 'calc-mode)
-      (keymap-global-set key #'casual-main-menu)))))
+      (keymap-global-set key #'casual-main-menu))
+     
+     ((derived-mode-p 'eat-mode)
+      (mk/define&set-keymap
+       key keymap/local/eat
+       '(("c" . eat-semi-char-mode)
+         ("C" . eat-char-mode)
+         ("l" . eat-line-mode)
+         ("e" . eat-emacs-mode)))))))
 
 (add-hook 'after-change-major-mode-hook #'mk/set-shared-local-keymap)
 

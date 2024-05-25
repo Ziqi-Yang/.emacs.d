@@ -235,6 +235,8 @@
         ("\\*helpful.*?\\*" display-buffer-in-side-window (side . right)
          (window-width . 0.5))
         ("\\*vc-git.*?\\*" (display-buffer-in-side-window) (side . top))
+        ((derived-mode . eat-mode) (display-buffer-in-side-window)
+         (side . right) (window-width . 0.5))
         ((derived-mode . compilation-mode) (display-buffer-in-side-window)
          (side . right) (window-width . 0.5))
         ("^\\*tree-sitter explorer for [^z-a]+\\*"
