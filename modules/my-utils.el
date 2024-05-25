@@ -111,6 +111,12 @@ ARG: prefix argument.  When ARG is non-nil, then force use
           (quit-window nil window)
         (display-buffer buf)))))
 
+(defun mk/better-kill-buffer (&optional arg)
+  (interactive "P")
+  (if arg
+      (call-interactively #'kill-buffer-and-window)
+    (call-interactively #'kill-current-buffer)))
+
 ;;; File =======================================================================
 
 (defun mk/delete-file ()

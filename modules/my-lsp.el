@@ -179,6 +179,8 @@
   (eldoc-echo-area-prefer-doc-buffer t))
 
 (use-package eldoc-box
+  :custom
+  (eldoc-box-lighter nil)
   :config
   (add-hook 'prog-mode-hook #'eldoc-box-hover-mode))
 

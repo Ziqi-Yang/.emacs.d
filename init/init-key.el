@@ -154,7 +154,7 @@ Example:
      ("i" . ibuffer)
      ("r" . mk/reload-buffer)
      ("d" . kill-current-buffer)
-     ("k" . kill-current-buffer)
+     ("k" . mk/better-kill-buffer)
      ("K" . kill-matching-buffers-no-ask)))
 
   ;; bookmark(B)
@@ -438,6 +438,7 @@ Example:
      ("a" . mk/better-gptel)
      ("c" . jinx-correct)
      ("C" . compile)
+     ("e" . mk/trans-map/ekg-dispatch)
      ("L" . list-colors-display)
      ("j" . mk/run-just-command)
      ("d" . ediff-buffers)

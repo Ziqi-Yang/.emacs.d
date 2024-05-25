@@ -6,7 +6,7 @@
 ;; (setq debug-on-error t)
 
 ;; https://github.com/progfolio/elpaca/wiki/Warnings-and-Errors#unable-to-determine-elpaca-core-date
-(setq elpaca-core-date '(20240420))
+(setq elpaca-core-date '(20240525))
 
 (defvar elpaca-installer-version 0.7)
 (defvar elpaca-directory (expand-file-name ".local/elpaca/" user-emacs-directory))
@@ -109,6 +109,7 @@
     (require 'my-mail)
     (require 'my-minibuffer)
     (require 'my-misc)
+    (require 'my-note)
     (require 'my-search-replace)
     (require 'my-spellcheck)
     (require 'my-utils)

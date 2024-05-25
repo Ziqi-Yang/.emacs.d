@@ -17,6 +17,12 @@
 /recentf
 /bookmarks
 
+# ekg
+/triples.db
+/ekg.db
+
+*~
+
 /places
 /history
 /tramp
