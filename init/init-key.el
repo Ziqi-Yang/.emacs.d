@@ -477,6 +477,9 @@ Example:
      
      ((derived-mode-p 'calc-mode)
       (keymap-global-set key #'casual-main-menu))
+
+     ((derived-mode-p 'Info-mode)
+      (keymap-global-set key #'casual-info-tmenu))
      
      ((derived-mode-p 'eat-mode)
       (mk/define&set-keymap

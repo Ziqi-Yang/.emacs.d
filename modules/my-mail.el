@@ -12,7 +12,7 @@
   "Setup Email Configuration."
   ;; (setq message-send-mail-function 'message-send-mail-with-mailclient)
   (setq send-mail-function 'sendmail-send-it
-        sendmail-program "/usr/bin/msmtp" ;; TODO
+        sendmail-program "msmtp"
         ;; mail-specify-envelope-from t
         ;; message-sendmail-envelope-from 'header
         message-auto-save-directory "~/mail_save"

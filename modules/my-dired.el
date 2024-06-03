@@ -3,9 +3,6 @@
 ;; customization for dired
 ;;; Code:
 
-(use-package casual-dired
-  :ensure (:host github :repo "kickingvegas/casual-dired"))
-
 ;; @ icon
 (defun mk/dired-subtree-add-nerd-icons ()
   (interactive)

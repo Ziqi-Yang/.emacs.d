@@ -225,10 +225,6 @@
   (mk/setup-modeline)
   (mk/setup-header-line))
 
-;;; Enhanced Calc (Use C-o to define key)
-(use-package casual
-  :ensure (:host github :repo "kickingvegas/Casual"))
-
 ;;; Display Buffer Alist ========================================================
 (setq display-buffer-alist
       '(("\\*Embark Collect" (display-buffer-in-side-window) (side . bottom)
