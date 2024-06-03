@@ -81,14 +81,6 @@
   (aw-keys '(?a ?s ?d ?c ?n ?j ?k ?l ?i))
   (aw-minibuffer-flag t))
 
-(use-package popper
-  :init
-  (setq popper-reference-buffers
-    '("\\*Messages\\*"
-       "note.txt"))
-  (popper-mode +1)
-  (popper-echo-mode +1))
-
 ;; @ remember window layout for different scino
 ;; (use-package winner
 ;; 	:hook (after-init . winner-mode))

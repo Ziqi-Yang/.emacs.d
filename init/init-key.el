@@ -69,10 +69,6 @@ Example:
   (keymap-global-set "C-M-$" #'kill-line)
   (setq meow--kbd-kill-line "C-M-$")
 
-  (keymap-global-set "C-`" #'popper-toggle)
-  (keymap-global-set "M-`" #'popper-cyclce)
-  (keymap-global-set "C-M-`" #'popper-toggle-type)
-
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'mk/clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)

@@ -173,6 +173,19 @@
 ;; re-run this hook if we create a new frame from daeamonized Emacs
 (add-hook 'server-after-make-frame-hook 'mk/setup-font-faces)
 
+(use-package ligature
+  :config
+  ;; Enable all Iosevka ligatures in programming modes
+  (ligature-set-ligatures
+   '(prog-mode typst-ts-mode)
+   '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--"
+     "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
+     "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
+     ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
 ;;; Mode line & Header line ====================================================
 ;; regarding the configuration of the header-line, see `init-ui'
 ;; (use-package eldoc-headline
@@ -233,6 +246,8 @@
         ("*Help*" display-buffer-in-side-window (side . right)
          (window-width . 0.5))
         ("\\*helpful.*?\\*" display-buffer-in-side-window (side . right)
+         (window-width . 0.5))
+        ("\\*Messages\\*" display-buffer-in-side-window (side . right)
          (window-width . 0.5))
         ("\\*vc-git.*?\\*" (display-buffer-in-side-window) (side . top))
         ((derived-mode . eat-mode) (display-buffer-in-side-window)
