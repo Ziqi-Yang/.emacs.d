@@ -35,7 +35,25 @@
   :init
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
   :config
-  ;; (setq jinx-languages '("en_US.UTF-8" "zh_CN.UTF-8"))
+  ;; To excludes CJK characters
+  ;; See issue https://github.com/minad/jinx/issues/4
+  ;; This is the syntax table approach. It changes CJK characters from "w" (
+  ;; word constituent) to "_" (symbol constituent). You can use `describe-char'
+  ;; to view a characters' specific syntax category (from major mode syntax table).
+  ;; Emacs 29 supports Unicode 15, the code charts of which can be found at
+  ;; http://www.unicode.org/charts/ (use mouse hover to show the specific range)
+  (let ((st jinx--base-syntax-table))
+    (modify-syntax-entry '(#x4E00 . #x9FFF) "_" st)   ; CJK Unified Ideographs
+    (modify-syntax-entry '(#x3400 . #x4DBF) "_" st)   ; CJK Unified Ideographs Extension A
+    (modify-syntax-entry '(#x20000 . #x2A6DF) "_" st) ; CJK Unified Ideographs Extension B
+    (modify-syntax-entry '(#x2A700 . #x2B73F) "_" st) ; CJK Unified Ideographs Extension C
+    (modify-syntax-entry '(#x2B740 . #x2B81F) "_" st) ; CJK Unified Ideographs Extension D
+    (modify-syntax-entry '(#x2B820 . #x2CEAF) "_" st) ; CJK Unified Ideographs Extension E
+    (modify-syntax-entry '(#x2CEB0 . #x2EBEF) "_" st) ; CJK Unified Ideographs Extension F
+    (modify-syntax-entry '(#x30000 . #x3134F) "_" st) ; CJK Unified Ideographs Extension G
+    (modify-syntax-entry '(#x31350 . #x323AF) "_" st) ; CJK Unified Ideographs Extension H
+    (modify-syntax-entry '(#x2EBF0 . #x2EE5F) "_" st) ; CJK Unified Ideographs Extension I
+    )
   (add-to-list
    'jinx-exclude-faces
    '(typst-ts-mode

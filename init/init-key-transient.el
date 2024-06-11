@@ -26,11 +26,11 @@
   (rectangle-mark-mode)
   (mk/trans-map/rectangle))
 
+(use-package casual  ; calc
+  :ensure (:host github :repo "kickingvegas/Casual"))
+
 (use-package casual-info
   :ensure (:host github :repo "kickingvegas/casual-info"))
-
-(use-package casual
-  :ensure (:host github :repo "kickingvegas/Casual"))
 
 (use-package casual-dired
   :ensure (:host github :repo "kickingvegas/casual-dired"))
