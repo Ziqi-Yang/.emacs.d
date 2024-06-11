@@ -453,14 +453,10 @@ Example:
 
 ;; for tapping key which begins with a character other than SPC
 ;; so `meow-keypad' won't appear
-(use-package which-key
-  :delight
-  :init
-  (setq which-key-idle-delay 0.5)
-  (setq which-key-side-window-max-height 0.3)
-  :config
+(with-eval-after-load 'which-key
+  (setq which-key-idle-delay 0.5
+        which-key-side-window-max-height 0.3)
   (which-key-mode))
-
 
 (defun mk/set-shared-local-keymap()
   (interactive)
@@ -476,7 +472,7 @@ Example:
       (keymap-global-set key #'casual-dired-tmenu))
      
      ((derived-mode-p 'calc-mode)
-      (keymap-global-set key #'casual-main-menu))
+      (keymap-global-set key #'casual-calc-tmenu))
 
      ((derived-mode-p 'Info-mode)
       (keymap-global-set key #'casual-info-tmenu))

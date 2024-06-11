@@ -211,19 +211,22 @@
   (setq-default mode-line-buffer-identification
                 '((:eval (mk/mode-line/abbreviate-file-name)))))
 
-(defun mk/setup-header-line()
-  (setq-default
-   header-line-format
-   '(
-     ;; (:eval eldoc-headline-string)
-     ;; (:propertize " # " face error)
-     (:eval (breadcrumb-imenu-crumbs))
-     (:propertize " # " face error)
-     "GC: " (:eval (number-to-string gcs-done)) " - " (:eval (number-to-string gc-elapsed)) "s")))
+;; note that there is also tab line (`tab-line-format')
+
+;; (defun mk/setup-header-line()
+;;   (setq-default
+;;    header-line-format
+;;    '(
+;;      ;; (:eval eldoc-headline-string)
+;;      ;; (:propertize " # " face error)
+;;      (:eval (breadcrumb-imenu-crumbs))
+;;      (:propertize " # " face error)
+;;      "GC: " (:eval (number-to-string gcs-done)) " - " (:eval (number-to-string gc-elapsed)) "s")))
 
 (with-eval-after-load 'emacs
   (mk/setup-modeline)
-  (mk/setup-header-line))
+  ;; (mk/setup-header-line)
+  )
 
 ;;; Display Buffer Alist ========================================================
 (setq display-buffer-alist

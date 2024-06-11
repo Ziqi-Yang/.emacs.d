@@ -182,8 +182,8 @@
 
 ;;; Typst ======================================================================
 (use-package outline-indent-mode
-  :ensure (:type git :host sourcehut :repo "meow_king/outline-indent-mode"))
-
+  :ensure (:type git :host sourcehut :repo "meow_king/outline-indent-mode")
+  :hook (typst-ts-mode))
 
 (use-package typst-ts-mode
   :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :branch "develop" :files (:defaults "*.el"))
@@ -196,6 +196,10 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(typst-ts-mode . ("typst-lsp"))))
+
+
+(use-package cmake-mode
+  :ensure (:type git :host github :repo "northgaard/cmake-mode" :files (:defaults)))
 
 
 ;;; Zig ========================================================================

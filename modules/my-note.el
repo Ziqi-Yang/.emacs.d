@@ -12,7 +12,11 @@
    (expand-file-name "ekg.db" "~/personal/notes"))
   (ekg-acceptable-modes '(org-mode markdown-mode text-mode typst-ts-mode))
   (ekg-capture-default-mode 'typst-ts-mode)
-  (ekg-inline-custom-tag-completion-symbols '((?! . "idea"))))
+  (ekg-inline-custom-tag-completion-symbols '((?! . "idea")))
+  :config
+  (require 'ekg-auto-save)
+  (add-hook 'ekg-capture-mode-hook #'ekg-auto-save-mode)
+  (add-hook 'ekg-edit-mode-hook #'ekg-auto-save-mode))
 
 (provide 'my-note)
 

@@ -256,21 +256,6 @@ FRAME: nil for current selected frame."
 ;; (use-package tempel-collection
 ;;   :after tempel)
 
-;; Completion-Preview-Mode (emacs30 ============================================
-;; (use-package completion-preview
-;;   :ensure nil
-;;   :delight completion-preview-mode
-;;   :hook
-;;   ;; text-mode comint-mode
-;;   ((prog-mode) . completion-preview-mode)
-;;   :custom
-;;   (completion-preview-minimum-symbol-length 2)
-;;   :bind
-;;   (:map completion-preview-active-mode-map
-;;     ("M-n" . completion-preview-next-candidate)
-;;     ("M-p" . completion-preview-prev-candidate)))
-
-
 ;;; Custom Functions ======================================================
 (defun mk/completion-at-point-with-tempel ()
   "`Completion-at-point' function with tempel support.
