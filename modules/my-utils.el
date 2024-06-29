@@ -403,6 +403,27 @@ CONFIRM: universal argument. Whether a confirm is needed."
      start end
      (concat re-adjustable re-identifier) 1 1 t)))
 
+;; https://emacs.stackexchange.com/a/80549
+(defun others/visual-diff-strings (old-string new-string)
+  (let ((old-buffer (get-buffer-create (make-temp-name "old-buffer-")))
+        (new-buffer (get-buffer-create (make-temp-name "new-buffer-")))
+        (output-buffer (get-buffer-create (make-temp-name "*output-diff*"))))
+    (with-current-buffer old-buffer
+      (insert old-string))
+    (with-current-buffer new-buffer
+      (insert new-string))
+    (diff-no-select old-buffer new-buffer "-u" t output-buffer)
+    (kill-buffer old-buffer)
+    (kill-buffer new-buffer)
+    (display-buffer-pop-up-frame output-buffer '((pop-up-frame-parameters (width . 80))))))
+
+(defun mk/diff-string()
+  (interactive)
+  (let ((str1 (read-string "String1: "))
+        (str2 (read-string "String2: ")))
+    (others/visual-diff-strings str1 str2)))
+
 (provide 'my-utils)
 
 ;;; my-utils.el ends here
+

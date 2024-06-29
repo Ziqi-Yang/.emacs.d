@@ -151,7 +151,8 @@ Example:
      ("r" . mk/reload-buffer)
      ("d" . kill-current-buffer)
      ("k" . mk/better-kill-buffer)
-     ("K" . kill-matching-buffers-no-ask)))
+     ("K" . kill-buffer-and-window)
+     ("R" . kill-matching-buffers-no-ask)))
 
   ;; bookmark(B)
   ;; also use consult-bookmark to jump to buffer

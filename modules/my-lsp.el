@@ -92,7 +92,7 @@
   (lsp-bridge-enable-hover-diagnostic t)
   (lsp-bridge-complete-manually t)
   (acm-candidate-match-function 'orderless-regexp)
-  (lsp-bridge-python-lsp-server "ruff")
+  (lsp-bridge-python-lsp-server "basedpyright")
   ;; pyright is good at handling virtual environment with a configuration file
   ;; see https://microsoft.github.io/pyright/#/configuration
   ;; pyrightconfig.json
@@ -100,7 +100,7 @@
   ;; "venvPath": ".",
   ;; "venv": ".venv"
   ;; }
-  (lsp-bridge-python-multi-lsp-server "pyright_ruff")
+  (lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
   (lsp-bridge-multi-lang-server-mode-list
    '(((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
      ((web-mode) . "html_emmet_tailwindcss")
