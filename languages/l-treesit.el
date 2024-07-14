@@ -42,7 +42,8 @@
         (typst "https://github.com/uben0/tree-sitter-typst")
         (vue "https://github.com/ikatyang/tree-sitter-vue")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-        (toml "https://github.com/ikatyang/tree-sitter-toml")))
+        (toml "https://github.com/ikatyang/tree-sitter-toml")
+        (nix "https://github.com/nix-community/tree-sitter-nix")))
 
 (defun nf/treesit-install-all-languages ()
   "Install all languages specified by `treesit-language-source-alist'."
