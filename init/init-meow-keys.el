@@ -117,6 +117,7 @@
    '("M-D" . surround-change)
    '("C-o" . xref-go-back)
    '("C-i" . xref-go-forward)
+   '("C-M-o" . mk/code/jump-back)
    '(":" . async-shell-command)
    '("C-m" . set-mark-command)
    '("C-M-h" . backward-sexp)

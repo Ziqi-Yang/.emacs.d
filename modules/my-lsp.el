@@ -196,76 +196,144 @@
 
 ;;; Custom glue functions ======================================================
 
+(defcustom mk/code/current-lsp-backend 'eglot
+  "Current lsp backend.
+Though citre(ctag) is not a lsp client implementation XD."
+  :type '(choice (const :tag "Eglot" eglot)
+                 (const :tag "Lsp Bridge" lsp-bridge)
+                 (const :tag "citre" citre)))
+
+(defconst mk/code/lsp-backend-not-match-error
+  "`mk/code/current-lsp-backend' doesn't match the required values!")
+
+(defun mk/code/set-current-lsp-backend ()
+  (interactive)
+  (setq mk/code/current-lsp-backend
+        (intern (completing-read
+                 (format "Choose an backend(current: %s): " mk/code/current-lsp-backend)
+                 '(elgot lsp-bridge citre)))))
+
+(with-eval-after-load 'lsp-bridge
+  (add-hook 'lsp-bridge-mode-hook (lambda () (setq mk/code/current-lsp-backend 'lsp-bridge))))
+
+(with-eval-after-load 'eglot
+  (add-hook 'eglot-managed-mode-hook (lambda () (setq mk/code/current-lsp-backend 'eglot))))
+
 (defun mk/code/find-definition ()
   (interactive)
-  (if lsp-bridge-mode
-      (lsp-bridge-find-def)
-    (let ((this-command 'xref-find-definitions))
-      (call-interactively #'xref-find-definitions))))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'lsp-bridge-find-def))
+    ('eglot
+     (let ((this-command 'xref-find-definitions))
+       (call-interactively #'xref-find-definitions)))
+    ('citre (call-interactively #'citre-jump))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
+
+(defun mk/code/query-find-definition ()
+  (interactive)
+  (pcase mk/code/current-lsp-backend
+    ('citre (call-interactively #'citre-query-jump))
+    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
 
 (defun mk/code/find-definition-other-window ()
   (interactive)
-  (if lsp-bridge-mode
-      (lsp-bridge-find-def-other-window)
-    (let ((this-command 'xref-find-definitions-other-window))
-      (call-interactively #'xref-find-definitions-other-window))))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'lsp-bridge-find-def-other-window))
+    ('eglot
+     (let ((this-command 'xref-find-definitions-other-window))
+       (call-interactively #'xref-find-definitions-other-window)))
+    ('citre (user-error "Not implemented for back end 'citre"))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
 
 (defun mk/code/find-references ()
   (interactive)
-  (if lsp-bridge-mode
-      (lsp-bridge-find-references)
-    (let ((this-command 'xref-find-references))
-      (call-interactively #'xref-find-references))))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'lsp-bridge-find-references))
+    ('eglot
+     (let ((this-command 'xref-find-references))
+       (call-interactively #'xref-find-references)))
+    ('citre (call-interactively #'citre-jump-to-reference))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
+
+(defun mk/code/query-find-references ()
+  (interactive)
+  (pcase mk/code/current-lsp-backend
+    ('citre (call-interactively #'citre-query-jump-to-reference))
+    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
 
 (defun mk/code/find-implementation ()
   (interactive)
-  (if lsp-bridge-mode
-      (lsp-bridge-find-impl)
-    (call-interactively #'eglot-find-implementation)))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'lsp-bridge-find-impl))
+    ('eglot (call-interactively #'eglot-find-implementation))
+    ('citre (call-interactively #'citre-jump-to-reference))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
 
 (defun mk/code/toggle-inlay-hint ()
   (interactive)
-  (if lsp-bridge-mode
-      (progn
-        (setq-local lsp-bridge-enable-inlay-hint (not lsp-bridge-enable-inlay-hint))
-        (if lsp-bridge-enable-inlay-hint
-            (lsp-bridge-inlay-hint)
-          (lsp-bridge-inlay-hint-hide-overlays)))
-    (call-interactively #'eglot-inlay-hints-mode)))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge
+     (setq-local lsp-bridge-enable-inlay-hint (not lsp-bridge-enable-inlay-hint))
+     (if lsp-bridge-enable-inlay-hint
+         (lsp-bridge-inlay-hint)
+       (lsp-bridge-inlay-hint-hide-overlays)))
+    ('eglot (call-interactively #'eglot-inlay-hints-mode))
+    ('citre (user-error "Not implemented for back end 'citre"))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
 
 (defun mk/code/error-list (&optional arg)
   (interactive "P")
-  (if arg
-      (call-interactively #'flymake-show-buffer-diagnostics)
-    (if lsp-bridge-mode
-        (lsp-bridge-diagnostic-list)
-      (call-interactively #'flymake-show-buffer-diagnostics))))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (lsp-bridge-diagnostic-list))
+    (_ (call-interactively #'flymake-show-buffer-diagnostics))))
 
 (defun mk/code/action ()
   (interactive)
-  (if lsp-bridge-mode
-      (lsp-bridge-code-action)
-    (call-interactively #'eglot-code-actions)))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'lsp-bridge-code-action))
+    ('eglot (call-interactively #'eglot-code-actions))
+    ('citre (user-error "Not implemented for back end 'citre"))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
 
 (defun mk/code/documentation()
   (interactive)
-  (if lsp-bridge-mode
-      (call-interactively #'lsp-bridge-show-documentation)
-    (call-interactively #'eldoc)))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'lsp-bridge-show-documentation))
+    (_ (call-interactively #'eldoc))))
 
 (defun mk/code/peek (&optional arg)
   (interactive "P")
-  (if arg
-      (call-interactively #'citre-ace-peek)
-    (if lsp-bridge-mode
-        (call-interactively #'lsp-bridge-peek)
-      (call-interactively #'citre-peek))))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'lsp-bridge-peek))
+    ('eglot (user-error "Not implemented for back end 'eglot"))
+    ('citre (call-interactively #'citre-peek))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
+
+(defun mk/code/query-peek-definition ()
+  (interactive)
+  (pcase mk/code/current-lsp-backend
+    ('citre (call-interactively #'citre-query-peek))
+    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
 
 (defun mk/code/peek-reference (&optional arg)
   (interactive "P")
-  (if arg
-      (call-interactively #'citre-ace-peek-reference)
-    (call-interactively #'citre-peek-reference)))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (user-error "Not implemented for back end 'lsp-bridge"))
+    ('eglot (user-error "Not implemented for back end 'eglot"))
+    ('citre (call-interactively #'citre-peek-reference))
+    (_ (user-error mk/code/lsp-backend-not-match-error))))
+
+(defun mk/code/query-peek-reference ()
+  (interactive)
+  (pcase mk/code/current-lsp-backend
+    ('citre (call-interactively #'citre-query-peek-reference))
+    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
+
+(defun mk/code/jump-back ()
+  (interactive)
+  (pcase mk/code/current-lsp-backend
+    ('citre (call-interactively #'citre-jump-back))
+    (_ (call-interactively #'xref-go-back))))
 
 (provide 'my-lsp)
 

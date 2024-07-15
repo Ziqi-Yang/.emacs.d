@@ -178,6 +178,7 @@ Example:
               '(("d" . mk/gf-debug)
                 ("D" . mk/gdb-smart)
                 ("v" . mk/debug-with-valgrind))))
+     ("c" . mk/code/set-current-lsp-backend)
      ("d" . mk/code/find-definition)
      ("D" . mk/code/find-definition-other-window)
      ;; eldoc: use ? (binding in meow.el)
@@ -193,8 +194,6 @@ Example:
               '(("t" . eglot-hierarchy-type-hierarchy)
                 ("c" . eglot-hierarchy-call-hierarchy))))
      ("H" . mk/code/toggle-inlay-hint)
-     ("j" . citre-jump)
-     ("k" . citre-jump-back)
      ;; ("i" . eglot-code-action-organize-imports)
      ("i" . mk/code/find-implementation)
      ("o" . ,(mk/define&set-keymap
@@ -203,6 +202,12 @@ Example:
                 ("e" . citre-edit-tags-file-recipe))))
      ("p" . mk/code/peek)
      ("P" . mk/code/peek-reference)
+     ("q" . ,(mk/define&set-keymap
+              "C-c c q" keymap/code-query
+              '(("d" . mk/code/query-find-definition)
+                ("r" . mk/code/query-find-references)
+                ("p" . mk/code/query-peek-definition)
+                ("P" . mk/code/query-peek-reference))))
      ("r" . mk/code/find-references)
      ("s" . mk/xref-stack-current-position)
      ("R" . eglot-rename)
