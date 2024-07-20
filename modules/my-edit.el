@@ -4,13 +4,19 @@
 ;;; Code:
 
 (with-eval-after-load 'emacs
-  (setq-default blink-cursor-mode nil
-                tab-width 2
-                indent-tabs-mode nil  ; use white spaces instead of tabs
-                ;; scroll-margin 15
-                scroll-step 1
-                ;; make register indepentent from clipboard
-                select-enable-clipboard nil))
+  (setq-default
+   tab-always-indent t
+   blink-cursor-mode nil
+   tab-width 2
+   indent-tabs-mode nil  ; use white spaces instead of tabs
+   ;; scroll-margin 15
+   scroll-step 1
+   ;; make register indepentent from clipboard
+   select-enable-clipboard nil))
+
+(with-eval-after-load 'simple
+  (setq-default fill-column 90)
+  (add-hook 'prog-mode-hook 'auto-fill-mode))
 
 ;; (with-eval-after-load 'visual-wrap
 ;;   (add-hook 'prog-mode-hook #'visual-wrap-prefix-mode))

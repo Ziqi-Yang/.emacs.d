@@ -211,7 +211,7 @@ Though citre(ctag) is not a lsp client implementation XD."
   (setq mk/code/current-lsp-backend
         (intern (completing-read
                  (format "Choose an backend(current: %s): " mk/code/current-lsp-backend)
-                 '(elgot lsp-bridge citre)))))
+                 '(eglot lsp-bridge citre)))))
 
 (with-eval-after-load 'lsp-bridge
   (add-hook 'lsp-bridge-mode-hook (lambda () (setq mk/code/current-lsp-backend 'lsp-bridge))))
@@ -328,12 +328,6 @@ Though citre(ctag) is not a lsp client implementation XD."
   (pcase mk/code/current-lsp-backend
     ('citre (call-interactively #'citre-query-peek-reference))
     (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
-
-(defun mk/code/jump-back ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('citre (call-interactively #'citre-jump-back))
-    (_ (call-interactively #'xref-go-back))))
 
 (provide 'my-lsp)
 

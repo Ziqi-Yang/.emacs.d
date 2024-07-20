@@ -57,7 +57,7 @@ Example:
 
   (keymap-global-set "C-s" #'isearch-forward-regexp)
   (keymap-global-set "C-r" #'isearch-backward-regexp)
-  (keymap-global-set "C-/" #'avy-goto-word-1)
+  (keymap-global-set "C-/" #'avy-goto-char-timer)
   (keymap-global-set "C-M-/" #'avy-isearch)
   
   
@@ -357,8 +357,8 @@ Example:
      ("H" . unhighlight-regexp)
      ("c" . list-colors-display)
      ;; note you can input keys like `v' and add a space after it to filter
-     ("i" . imenu) 
-     ("I" . mk/better-consult-imenu)
+     ("i" . mk/better-consult-imenu)
+     ("I" . imenu) 
      ("m" . mk/better-consult-man)
      ("M" . consult-global-mark)
      ;; NOTE: to post filter to filter group (i.e. filename in this case)
@@ -446,6 +446,8 @@ Example:
      ("e" . mk/trans-map/ekg-dispatch)
      ("L" . list-colors-display)
      ("j" . mk/run-just-command)
+     ("k" . consult-kmacro)
+     ("K" . kmacro-name-last-macro)
      ("d" . ediff-buffers)
      ("q" . save-buffers-kill-emacs)
      ("Q" . kill-emacs)
@@ -473,6 +475,11 @@ Example:
        key keymap/local/elisp
        '(("d" . others/byte-compile-and-load-directory)
          ("e" . others/eval-buffer))))
+
+     ((derived-mode-p 'c-ts-base-mode)
+      (mk/define&set-keymap
+       key keymap/local/cc
+       '(("o" . ff-find-other-file))))
      
      ((derived-mode-p 'dired-mode)
       (keymap-global-set key #'casual-dired-tmenu))

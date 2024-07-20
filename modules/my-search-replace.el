@@ -32,6 +32,14 @@
 (use-package color-rg
   :ensure (:host github :repo "manateelazycat/color-rg"))
 
+;; before goto certain position, you can press `?' key to view the action panel
+(use-package avy
+  :config
+  (setf (alist-get ?c avy-dispatch-alist) 'mk/avy-action/copy-word
+        (alist-get ?C avy-dispatch-alist) 'mk/avy-action/copy-symbol
+        (alist-get ?y avy-dispatch-alist) 'mk/avy-action/yank-word
+        (alist-get ?Y avy-dispatch-alist) 'mk/avy-action/yank-symbol))
+
 (use-package consult
   :custom
   (consult-imenu-config
@@ -75,13 +83,15 @@
     ("rust" . (:method "fn"))
     ("zig" . (:method "fn"))))
 
+(defvar mk/v/consult-line-persistent-prefix "")
+
 (defun mk/better-consult-line (arg)
   "Use symbol at point as the default input of `consult-line'.
 ARG: prefix argument.  Use prefix argument when you want no default input."
   (interactive "P")
   (if arg
-      (call-interactively #'consult-line)
-    (consult-line (thing-at-point 'symbol) nil)))
+      (setq mk/v/consult-line-persistent-prefix (read-string "Set prefix: ")))
+  (consult-line (concat mk/v/consult-line-persistent-prefix (thing-at-point 'symbol)) nil))
 
 (defun mk/better-consult-line-multi (arg)
   "Buffer filter + symbol at point as the default input of `consult-line-multi'.
@@ -202,6 +212,41 @@ search files from current directory."
       (let ((default-directory (dired-current-directory)))
         (call-interactively #'find-file))
     (call-interactively #'find-file)))
+
+
+(defun mk/avy-action/copy-word (pt)
+  "Copy sexp starting on PT."
+  (save-excursion
+    (let (str)
+      (goto-char pt)
+      (setq str (thing-at-point 'word))
+      (kill-new str)
+      (message "Copied: %s" str)))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0))))
+
+
+(defun mk/avy-action/copy-symbol (pt)
+  "Copy sexp starting on PT."
+  (save-excursion
+    (let (str)
+      (goto-char pt)
+      (setq str (thing-at-point 'symbol))
+      (kill-new str)
+      (message "Copied: %s" str)))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0))))
+
+(defun mk/avy-action/yank-word (pt)
+  (mk/avy-action/copy-word pt)
+  (yank))
+
+(defun mk/avy-action/yank-symbol (pt)
+  (mk/avy-action/copy-symbol pt)
+  (yank))
+
 
 (provide 'my-search-replace)
 

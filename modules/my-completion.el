@@ -212,7 +212,7 @@ FRAME: nil for current selected frame."
   :ensure nil
   :init
   ;; (setq completion-cycle-threshold 0)
-  (setq tab-always-indent 'complete))
+  )
 
 ;; @ enable corfu in terminal emacs
 ;; (use-package corfu-terminal

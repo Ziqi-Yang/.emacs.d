@@ -65,6 +65,7 @@
    '("e" . meow-next-word)
    '("E" . meow-next-symbol)
    '("f" . meow-find)
+   '("F" . mk/meow/find-backward)
    ;; '("g" . meow-cancel-selection)
    '("g" . mk/rectangle)
    '("G" . mk/better-meow-grab)
@@ -90,10 +91,11 @@
    ;; '("R" . meow-swap-grab)
    '("s" . meow-kill)
    '("t" . meow-till)
+   '("T" . mk/meow/till-backward)
    '("u" . undo-only)
    ;; '("U" . meow-undo-in-selection)
    '("U" . undo-redo)
-   '("v" . meow-visit)
+   '("v" . avy-goto-char-in-line) ;; meow-visit
    '("w" . meow-mark-word)
    '("W" . meow-mark-symbol)
    '("x" . meow-line)
@@ -106,7 +108,6 @@
    '("'" . repeat)
    '("<escape>" . ignore)
 
-   '("<tab>" . completion-at-point)
    '("<" . indent-rigidly-left)
    '(">" . indent-rigidly-right)
    '("?" . mk/code/documentation)
@@ -117,7 +118,6 @@
    '("M-D" . surround-change)
    '("C-o" . xref-go-back)
    '("C-i" . xref-go-forward)
-   '("C-M-o" . mk/code/jump-back)
    '(":" . async-shell-command)
    '("C-m" . set-mark-command)
    '("C-M-h" . backward-sexp)
@@ -142,20 +142,20 @@
 ;;; Add things to meow-cheatsheet
 
 (define-advice meow-cheatsheet
-  (:after (&rest args) add-notes)
+    (:after (&rest args) add-notes)
   (let ((notes
-          '(("Completion" .
-              "Command | Keybinding | Description
+         '(("Completion" .
+            "Command | Keybinding | Description
 ispell-complete-word | C-M-i")
-             ("Selection Operation" .
-               "Command | Keybinding | Description
+           ("Selection Operation" .
+            "Command | Keybinding | Description
 dabbrev-copmletion | C-M-/ 
 mk/trans-map/rectangle | C-x r r
 align-regexp | C-u M-x | align regexp whole line")
-             ("VC Operation" .
-               "Command | Keybinding | Description
+           ("VC Operation" .
+            "Command | Keybinding | Description
 Smerge | C-c ^ | `=' diff; `o': merge below")
-             ("Miscellaneous" . "Command | Keybinding | Description
+           ("Miscellaneous" . "Command | Keybinding | Description
 table-insert
 table-capture"))))
     (save-excursion
@@ -169,8 +169,8 @@ table-capture"))))
             (insert (cdr note))
             ;; note that `table-capture' won't update point
             (table-capture point-beg
-              (point)
-              "|" "$" 'left 20)
+                           (point)
+                           "|" "$" 'left 20)
             (goto-char (point-max))
             (insert "\n")))
         (insert "1. In Beacon Mode, use `query-search' and then you can mark all
@@ -193,6 +193,16 @@ If there is no active region, do `mk/meow-grab-region'; else do `meow-grab'."
   (if (use-region-p)
       (meow-grab)
     (mk/meow-grab-region)))
+
+(defun mk/meow/find-backward ()
+  (interactive)
+  (let ((current-prefix-arg -1))
+    (call-interactively #'meow-find)))
+
+(defun mk/meow/till-backward ()
+  (interactive)
+  (let ((current-prefix-arg -1))
+    (call-interactively #'meow-till)))
 
 (provide 'init-meow-keys)
 

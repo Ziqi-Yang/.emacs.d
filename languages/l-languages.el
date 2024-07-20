@@ -201,10 +201,6 @@
   (add-to-list 'eglot-server-programs '(typst-ts-mode . ("typst-lsp"))))
 
 
-(use-package cmake-mode
-  :ensure (:type git :host github :repo "northgaard/cmake-mode" :files (:defaults)))
-
-
 ;;; Zig ========================================================================
 (use-package zig-mode
   :ensure (:type git :host github :repo "ziglang/zig-mode")

@@ -27,6 +27,7 @@
         (bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
         (c . ("https://github.com/tree-sitter/tree-sitter-c"))
         (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (go "https://github.com/tree-sitter/tree-sitter-go")
         (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
@@ -64,6 +65,7 @@
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode))
+(add-to-list 'auto-mode-alist '("\\(?:CMakeLists\\.txt\\|\\.cmake\\)\\'" . cmake-ts-mode))
 
 ;; (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode))
 

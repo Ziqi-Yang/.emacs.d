@@ -203,7 +203,8 @@
                   consult-line
                   consult-imenu
                   consult-ripgrep
-                  consult-git-grep))
+                  consult-git-grep
+                  citre-jump))
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
 
 ;;; Shell ======================================================================

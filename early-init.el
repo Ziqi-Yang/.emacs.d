@@ -69,11 +69,15 @@
 (setq display-line-numbers-type 'absolute)
 
 (setq
-  inhibit-startup-message t
-  visible-bell t)
+ inhibit-startup-message t
+ visible-bell t)
 
 ;; Suppress warnings and errors during asynchronous native compilation
-(setq native-comp-async-report-warnings-errors nil)
+(setq native-comp-async-report-warnings-errors nil
+      ;; FIXME 24.07.23: temporary disable native compiling compat library since it causes problems, check it later
+      ;; manual way to do it: remove `.local/eln-cache/<emacs-version>/compat-xxx.eln' file, but it will be
+      ;; regenerated in next start
+      native-comp-jit-compilation-deny-list '("compat.*"))
 
 ;;; Misc =======================================================================
 (defun efs/display-startup-time ()
