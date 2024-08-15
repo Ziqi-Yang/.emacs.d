@@ -198,9 +198,10 @@
                   lsp-bridge-find-references
                   lsp-bridge-find-impl
                   lsp-bridge-find-type-def
-                  isearch-forward
-                  isearch-backward
+                  isearch-forward isearch-forward-regexp
+                  isearch-backward isearch-backward-regexp
                   consult-line
+                  consult-goto-line
                   consult-imenu
                   consult-ripgrep
                   consult-git-grep

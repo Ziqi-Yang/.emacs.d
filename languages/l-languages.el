@@ -189,16 +189,19 @@
   :hook (typst-ts-mode))
 
 (use-package typst-ts-mode
-  :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :branch "develop" :files (:defaults "*.el"))
-  ;; :ensure `(typst-ts-mode :repo ,(expand-file-name "typst-ts-mode" mk/vars/dir/vendor) :files (:defaults "*.el") :inherit nil)
+  :ensure (:type git :host codeberg :repo "meow_king/typst-ts-mode" :branch "develop" :files (:defaults "*.el"))
   :custom
   (typst-ts-watch-options "--open")
   (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
-  (typst-ts-mode-enable-raw-blocks-highlight t)
-  (typst-ts-mode-highlight-raw-blocks-at-startup t))
+  (typst-ts-mode-enable-raw-blocks-highlight t))
 
 (with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(typst-ts-mode . ("typst-lsp"))))
+  (with-eval-after-load 'typst-ts-mode
+    (add-to-list 'eglot-server-programs
+                 `((typst-ts-mode) .
+                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                          "tinymist"
+                                          "typst-lsp"))))))
 
 
 ;;; Zig ========================================================================

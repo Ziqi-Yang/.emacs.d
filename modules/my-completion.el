@@ -222,6 +222,11 @@ FRAME: nil for current selected frame."
 ;; 	(unless (display-graphic-p)
 ;; 		(corfu-terminal-mode +1)))
 
+
+
+;; @ Display completion preview ================================================
+(add-hook 'after-init-hook #'global-completion-preview-mode)
+
 ;; Cafe ========================================================================
 ;; add completion etension
 ;; FIXME it seems like this package doesn't work well with citre (may be citre's problem)

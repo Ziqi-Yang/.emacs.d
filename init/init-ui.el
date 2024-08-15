@@ -61,7 +61,7 @@
   ;; (setq treesit-font-lock-level 1) ;; treesit NOTE change back to 1
   (setq font-lock-maximum-decoration 3) ;; font lock
   ;; setup jit-lock
-  (setq jit-lock-chunk-size 4096
+  (setq jit-lock-chunk-size 1500
 	      jit-lock-defer-time 0
 	      jit-lock-stealth-time 1.5
         jit-lock-stealth-nice 0.2))

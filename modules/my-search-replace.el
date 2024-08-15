@@ -93,6 +93,16 @@ ARG: prefix argument.  Use prefix argument when you want no default input."
       (setq mk/v/consult-line-persistent-prefix (read-string "Set prefix: ")))
   (consult-line (concat mk/v/consult-line-persistent-prefix (thing-at-point 'symbol)) nil))
 
+
+(defun mk/consult-line-other-window-no-jump ()
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol))
+        (original-window (selected-window)))
+    (call-interactively #'ace-window)
+    (unwind-protect
+        (consult-line (concat mk/v/consult-line-persistent-prefix symbol) nil)
+      (select-window original-window t))))
+
 (defun mk/better-consult-line-multi (arg)
   "Buffer filter + symbol at point as the default input of `consult-line-multi'.
 ARG: prefix argument.  Use prefix argument when you want no default input.

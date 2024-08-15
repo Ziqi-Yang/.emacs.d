@@ -124,10 +124,10 @@
 ;; @ tangle
 ;; #+auto_tangle: t
 ;; #+PROPERTY: header-args :tangle install.sh ;; apply to every header
-(use-package org-auto-tangle
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
+;; (use-package org-auto-tangle
+;;   :hook (org-mode . org-auto-tangle-mode)
+;;   :config
+;;   (setq org-auto-tangle-default t))
 
 ;; ;; @ visibility
 (use-package org-appear

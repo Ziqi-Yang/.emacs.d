@@ -39,11 +39,16 @@
         (python . ("https://github.com/tree-sitter/tree-sitter-python"))
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
         (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
-        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
+        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil
+                       "typescript/src"))
+        ;; remember to update my forked repo:
+        ;; https://github.com/Ziqi-Yang/tree-sitter-typst, which is used for
+        ;; typst-ts-mode
         (typst "https://github.com/uben0/tree-sitter-typst")
         (vue "https://github.com/ikatyang/tree-sitter-vue")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (toml "https://github.com/ikatyang/tree-sitter-toml")
+        (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (nix "https://github.com/nix-community/tree-sitter-nix")))
 
 (defun nf/treesit-install-all-languages ()

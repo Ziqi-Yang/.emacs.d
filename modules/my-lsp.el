@@ -60,13 +60,26 @@
   ;; NOTE: pyright is better for handling virtual environment with a configuration flie per project
   ;; how to configure eglot-workspace-configuration:
   ;; https://paste.sr.ht/~meow_king/df83c4dd8541e54befe511ddaf0eeee7cb59eaba
-  (setq-default eglot-workspace-configuration
-                ;; install python-lsp-server and python-lsp-ruff
-                ;; see https://github.com/python-lsp/python-lsp-server
-                ;; and https://github.com/charliermarsh/ruff
-                '((:pylsp . (:plugins (:ruff (:enabled t)
-                                             ;; :rope_autoimport doens't work ...
-                                             ))))))
+  ;; Examples:
+  ;; - For tinymist
+  ;; (setq-default eglot-workspace-configuration
+  ;;               '(:exportPdf "onSave"))
+  ;; - For pylsp
+  ;; (setq-default eglot-workspace-configuration
+  ;;               ;; install python-lsp-server and python-lsp-ruff
+  ;;               ;; see https://github.com/python-lsp/python-lsp-server
+  ;;               ;; and https://github.com/charliermarsh/ruff
+  ;;               '((:pylsp . (:plugins (:ruff (:enabled t)
+  ;;                                            ;; :rope_autoimport doens't work ...
+  ;;                                            )))))
+  ;; Example log
+  ;; [stderr]  [2024-08-15T06:14:48Z INFO  tinymist::init] preferred theme: None {"exportPdf": String("onSave")}
+  ;; [stderr]  [2024-08-15T06:14:48Z INFO  tinymist::server] new settings applied
+  ;; The whole value of eglot-workspace-configuration is directly passed into
+  ;; the langauge server
+  ;; pylsp's configuration docs: `pylsp.configurationSources'
+  ;; tinymist's configuration dosc: `:exportPdf'
+  )
 
 (use-package eglot-hierarchy
   :ensure (:host github :repo "dolmens/eglot-hierarchy"))
@@ -165,9 +178,6 @@
   (citre-global-update-database))
 
 ;;; Other ======================================================================
-;; @ Display completion preview
-(with-eval-after-load 'completion-preview
-  (global-completion-preview-mode))
 
 ;; @ eldoc
 (use-package eldoc
