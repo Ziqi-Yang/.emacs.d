@@ -219,14 +219,14 @@
    '(
      ;; (:eval eldoc-headline-string)
      ;; (:propertize " # " face error)
-     (:eval (breadcrumb-imenu-crumbs))
+     ;; (:eval (breadcrumb-imenu-crumbs))
      ;; (:propertize " # " face error)
      ;; "GC: " (:eval (number-to-string gcs-done)) " - " (:eval (number-to-string gc-elapsed)) "s"
      )))
 
 (with-eval-after-load 'emacs
   (mk/setup-modeline)
-  (mk/setup-header-line)
+  ;; (mk/setup-header-line)
   )
 
 ;;; Display Buffer Alist ========================================================

@@ -14,8 +14,8 @@
        (let ((p (project-current)))
          (setq pname (project-name p))
          (if pname
-           (insert
-             (format "# %s
+             (insert
+              (format "# %s
 
 **This project is still in its awkward teenage phase. Usages and Configuration Specifications may be changed after any random update. Use it with your caution.**
 
@@ -26,17 +26,17 @@
 [Send a Patch](https://lists.sr.ht/~meow_king/%s)
 " pname pname pname))
            (insert
-             (format "# %s %s" file-name-base buffer-file-name))))))
+            (format "# %s %s" file-name-base buffer-file-name))))))
 
   ;; Emacs Lisp Mode
   (define-auto-insert
     'emacs-lisp-mode
     '(lambda ()
        (let ((fname (file-name-nondirectory buffer-file-name))
-              (fbname (file-name-base buffer-file-name)))
+             (fbname (file-name-base buffer-file-name)))
          (insert
-           (format
-             ";;; %s --- FIXME description  -*- lexical-binding: t; -*-
+          (format
+           ";;; %s --- FIXME description  -*- lexical-binding: t; -*-
 ;; Copyright (C) 2024 Meow King <mr.meowking@anche.no>
 
 ;; Version: 0.1.0
@@ -74,15 +74,15 @@
     'java-ts-mode
     '(lambda ()
        (when-let*
-         ((p (project-current))
-           (pr (project-root p))
-           (d (file-name-directory buffer-file-name))
-           (dr (file-relative-name d pr))
-           (dr-package (substring dr (+ 5 (string-search "java" dr))))
-           (package-name (string-replace "/" "." (substring dr-package 0 -1)))
-           (fn (file-name-nondirectory (file-name-sans-extension buffer-file-name))))
+           ((p (project-current))
+            (pr (project-root p))
+            (d (file-name-directory buffer-file-name))
+            (dr (file-relative-name d pr))
+            (dr-package (substring dr (+ 5 (string-search "java" dr))))
+            (package-name (string-replace "/" "." (substring dr-package 0 -1)))
+            (fn (file-name-nondirectory (file-name-sans-extension buffer-file-name))))
          (insert
-           (format "package %s;
+          (format "package %s;
 
 public class %s {
   public static void main(String[] args) {
@@ -93,7 +93,7 @@ public class %s {
   (define-auto-insert
     'editorconfig-conf-mode
     '(insert
-       "# https://EditorConfig.org
+      "# https://EditorConfig.org
 # https://github.com/editorconfig/editorconfig/wiki/Projects-Using-EditorConfig
 
 # top-most EditorConfig file
@@ -120,7 +120,30 @@ indent_size = 2
 
 [*.java]
 indent_size = 2
-")))
+"))
+
+  (define-auto-insert
+    "flake\\.nix"
+    '(insert
+      "{
+  description = \"A Nix-flake-based development environment\";
+
+  inputs.nixpkgs.url = \"github:nixos/nixpkgs/nixos-unstable\";
+
+  outputs = { self, nixpkgs }: let
+    supportedSystems = [ \"x86_64-linux\" \"aarch64-linux\" \"x86_64-darwin\" \"aarch64-darwin\" ];
+    forEachSupportedSystem = f: nixpkgs.lib.genAttrs supportedSystems (system: f {
+      pkgs = import nixpkgs { inherit system; };
+    });
+    in {
+      devShells = forEachSupportedSystem ({ pkgs }: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+          ];
+        };
+      });
+    };
+}")))
 
 (provide 'my-auto-insert)
 

@@ -45,6 +45,7 @@
         ;; https://github.com/Ziqi-Yang/tree-sitter-typst, which is used for
         ;; typst-ts-mode
         (typst "https://github.com/uben0/tree-sitter-typst")
+        (llvm "https://github.com/benwilliamgraham/tree-sitter-llvm")
         (vue "https://github.com/ikatyang/tree-sitter-vue")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (toml "https://github.com/ikatyang/tree-sitter-toml")

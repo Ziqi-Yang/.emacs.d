@@ -54,6 +54,9 @@
 (use-package nix-ts-mode
   :mode "\\.nix\\'")
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
+
 ;;; Draw =======================================================================
 ;; (use-package plantuml-mode
 ;;   :ensure (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
