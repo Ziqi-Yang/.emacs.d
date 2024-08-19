@@ -225,6 +225,8 @@ FRAME: nil for current selected frame."
 
 
 ;; @ Display completion preview ================================================
+(with-eval-after-load 'completion-preview
+  (setq completion-preview-idle-delay 0.3))
 (add-hook 'after-init-hook #'global-completion-preview-mode)
 
 ;; Cafe ========================================================================
