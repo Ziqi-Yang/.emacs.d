@@ -51,9 +51,11 @@ paru -S mu
     
 == Note
 + The dictionary file `en_US-large.dic` in `dicts` directory is stolen from `/usr/share/hunspell/en_US-large.dic` with
-```bash
-sed 's/\/.*//' en_US-large.dic > en_US-large_mod.dic
-```
+  ```bash
+  sed 's/\/.*//' en_US-large.dic > en_US-large_mod.dic
+  ```
++ Private configurations are in module `my-private-configs`, which is not inclued
+  in git repo.
 
 == Understand Concepts
 === `align-regexp` Explain
