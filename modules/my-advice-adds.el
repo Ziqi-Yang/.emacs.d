@@ -20,6 +20,8 @@
 ;;; Code:
 (require 'my-utils)
 
+;; note that `kill-ring-deindent-mode' is useful in Python mode. So I enabled it.
+;; When debug, don't ignore it.
 (defun mk/advice/yank (&rest _r)
   "Advice (type: after) for command `yank'."
   (indent-region (region-beginning) (region-end)))

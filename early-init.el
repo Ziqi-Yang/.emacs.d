@@ -74,9 +74,7 @@
 
 ;; Suppress warnings and errors during asynchronous native compilation
 (setq native-comp-async-report-warnings-errors nil
-      ;; FIXME 24.07.23: temporary disable native compiling compat library since it causes problems, check it later
-      ;; manual way to do it: remove `.local/eln-cache/<emacs-version>/compat-xxx.eln' file, but it will be
-      ;; regenerated in next start
+      ;; Also remove `.local/eln-cache/<emacs-version>/compat-xxx.eln' file
       native-comp-jit-compilation-deny-list '("compat.*"))
 
 ;;; Misc =======================================================================

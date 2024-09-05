@@ -15,7 +15,7 @@
    select-enable-clipboard nil))
 
 (with-eval-after-load 'simple
-  (setq-default fill-column 90)
+  (setq-default fill-column 80)
   (add-hook 'prog-mode-hook 'auto-fill-mode)
   (add-hook 'text-mode-hook 'auto-fill-mode))
 
@@ -101,6 +101,7 @@
 
 ;; note: .editorconfig configuration can lead to delete trailing characters on save
 (use-package editorconfig
+  :ensure nil
   :delight
   :config
   (editorconfig-mode 1))

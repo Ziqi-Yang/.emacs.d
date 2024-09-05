@@ -149,7 +149,9 @@
  '(auto-save-visited-interval 1)
  '(auto-save-visited-mode t)
  '(auto-save-visited-predicate #'mk/auto-save-visited-predicate)
- '(mml-secure-openpgp-sign-with-sender t))
+ '(mml-secure-openpgp-sign-with-sender t)
+ '(safe-local-variable-directories
+   '("/home/meowking/proj/llvm/llvmpym/" "/home/meowking/proj/llvm/lliv/")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

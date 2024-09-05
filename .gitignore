@@ -19,6 +19,7 @@
 /url
 /eshell
 /multisession
+/request
 
 # ekg
 /triples.db

@@ -239,11 +239,25 @@
 ;;   :config
 ;;   (gcmh-mode))
 
-;;; Misc ==================================================================
+
+;; Performance =================================================================
 (use-package so-long
   :ensure nil
   :config
   (global-so-long-mode 1))
+
+;; https://emacs-china.org/t/topic/25811/7
+(setq-default bidi-display-reordering nil)
+(setq bidi-inhibit-bpa t
+      long-line-threshold 1000
+      large-hscroll-threshold 1000
+      syntax-wholeline-max 1000)
+
+
+
+;;; Misc =======================================================================
+(with-eval-after-load 'indent-aux
+  (kill-ring-deindent-mode t))
 
 (use-package pixel-scroll
   :ensure nil
@@ -256,6 +270,7 @@
   ;; scrolling with an ordinary mouse to be almost as smooth as scrolling with a touchpad, on systems other than X:
   ;; (setq pixel-scroll-precision-large-scroll-height 40.0)
   (pixel-scroll-precision-mode 1))
+
 
 (provide 'init-base)
 

@@ -398,10 +398,12 @@ CONFIRM: universal argument. Whether a confirm is needed."
 (defun mk/better-align-regexp (start end)
   (interactive "r")
   (let ((re-adjustable (rx-to-string '(group (* space))))
-        (re-identifier (rx-to-string (read--expression "Enter RX expression: " "(seq )"))))
+        (re-identifier (rx-to-string (read--expression "Enter RX expression: "
+                                                       "(seq )")))
+        (repeat (yes-or-no-p "Repeat through the line? ")))
     (align-regexp
      start end
-     (concat re-adjustable re-identifier) 1 1 t)))
+     (concat re-adjustable re-identifier) 1 1 repeat)))
 
 ;; https://emacs.stackexchange.com/a/80549
 (defun others/visual-diff-strings (old-string new-string)
