@@ -21,7 +21,6 @@
 
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . web-mode))
 
 (use-package llvm-mode
@@ -48,7 +47,7 @@
 (use-package c-ts-prototype
   :ensure (:type git :host sourcehut :repo "meow_king/c-ts-protoype"))
 
-(setq c-ts-mode-indent-style 'linux)
+(setq c-ts-mode-indent-style 'gnu)
 
 ;; Nix =========================================================================
 (use-package nix-ts-mode
@@ -187,9 +186,9 @@
 ;; (add-hook 'rust-mode-hook 'mk/add-rust-search-engine)
 
 ;;; Typst ======================================================================
-(use-package outline-indent-mode
-  :ensure (:type git :host sourcehut :repo "meow_king/outline-indent-mode")
-  :hook (typst-ts-mode))
+;; (use-package outline-indent-mode
+;;   :ensure (:type git :host sourcehut :repo "meow_king/outline-indent-mode")
+;;   :hook (typst-ts-mode))
 
 (use-package typst-ts-mode
   :ensure (:type git :host codeberg :repo "meow_king/typst-ts-mode" :branch "develop"

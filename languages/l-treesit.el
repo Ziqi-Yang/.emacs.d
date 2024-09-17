@@ -50,7 +50,8 @@
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (toml "https://github.com/ikatyang/tree-sitter-toml")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
-        (nix "https://github.com/nix-community/tree-sitter-nix")))
+        (nix "https://github.com/nix-community/tree-sitter-nix")
+        (zig "https://github.com/maxxnino/tree-sitter-zig")))
 
 (defun nf/treesit-install-all-languages ()
   "Install all languages specified by `treesit-language-source-alist'."
@@ -66,6 +67,8 @@
 (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
 (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
 (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode))
+(add-to-list 'major-mode-remap-alist '(zig-mode . zig-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.m?js\\'" . js-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))  ; `rust-ts-mode' has't autoload this line ...
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))   ; so does typescript-ts-mode ...
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))

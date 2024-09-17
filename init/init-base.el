@@ -271,6 +271,11 @@
   ;; (setq pixel-scroll-precision-large-scroll-height 40.0)
   (pixel-scroll-precision-mode 1))
 
+(use-package eee
+  :ensure (:type git :host github :repo "eval-exec/eee.el"
+                 :files (:defaults "*.el" "*.sh"))
+  :custom
+  (ee-terminal-command "kitty --class floating"))
 
 (provide 'init-base)
 

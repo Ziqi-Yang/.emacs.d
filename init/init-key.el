@@ -44,10 +44,10 @@ Example:
   (keymap-global-set "C-M-u" #'universal-argument))
 
 (progn
-  (keymap-global-set "M-<left>" #'backward-sexp)
-  (keymap-global-set "M-<right>" #'forward-sexp)
-  (keymap-global-set "M-h" #'backward-sexp)
-  (keymap-global-set "M-l" #'forward-sexp)
+  (keymap-global-set "M-h" #'windmove-left)
+  (keymap-global-set "M-j" #'windmove-down)
+  (keymap-global-set "M-k" #'windmove-up)
+  (keymap-global-set "M-l" #'windmove-right)
 
   (keymap-global-set "<backtab>" #'outline-cycle)
   
@@ -294,6 +294,7 @@ Example:
      ("e" . mk/ace-ielm)
      ("E" . (lambda (arg) (interactive "P") (if arg (mk/browse-emacs-devel) (eww-list-bookmarks))))
      ("d" . mk/dired-jump)
+     ("y" . ee-yazi)
      ("t" . eat)
      ("T" . mk/open-terminal)))
 
@@ -309,7 +310,8 @@ Example:
      ("v" . project-vc-dir)
      ("s" . project-eshell)
      ("S" . project-async-shell-command)
-     ("k" . project-kill-buffers)))
+     ("k" . project-kill-buffers)
+     ("y" . ee-yazi-project)))
 
   ;; peek (P)
   (mk/define&set-keymap

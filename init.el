@@ -6,7 +6,7 @@
 ;; (setq debug-on-error t)
 
 ;; https://github.com/progfolio/elpaca/wiki/Warnings-and-Errors#unable-to-determine-elpaca-core-date
-(setq elpaca-core-date '(20240629))
+(setq elpaca-core-date '(20240905))
 
 (defvar elpaca-installer-version 0.7)
 (defvar elpaca-directory (expand-file-name ".local/elpaca/" user-emacs-directory))
@@ -63,6 +63,9 @@
 (push (expand-file-name "modules" user-emacs-directory) load-path)
 (push (expand-file-name "languages" user-emacs-directory) load-path)
 (push (expand-file-name "lib" user-emacs-directory) load-path)
+
+(use-package compat
+  :ensure nil)
 
 ;; common modules
 (with-temp-message ""
@@ -149,9 +152,7 @@
  '(auto-save-visited-interval 1)
  '(auto-save-visited-mode t)
  '(auto-save-visited-predicate #'mk/auto-save-visited-predicate)
- '(mml-secure-openpgp-sign-with-sender t)
- '(safe-local-variable-directories
-   '("/home/meowking/proj/llvm/llvmpym/" "/home/meowking/proj/llvm/lliv/")))
+ '(safe-local-variable-values '((just-indent-offset . 4))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
