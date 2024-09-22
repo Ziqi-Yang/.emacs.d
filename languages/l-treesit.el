@@ -76,7 +76,7 @@
 (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(?:CMakeLists\\.txt\\|\\.cmake\\)\\'" . cmake-ts-mode))
 
-;; (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode))
+(add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode))
 
 (provide 'l-treesit)
 

@@ -275,7 +275,7 @@
   :ensure (:type git :host github :repo "eval-exec/eee.el"
                  :files (:defaults "*.el" "*.sh"))
   :custom
-  (ee-terminal-command "kitty --class floating"))
+  (ee-terminal-command "footclient -a floating_noanim"))
 
 (provide 'init-base)
 

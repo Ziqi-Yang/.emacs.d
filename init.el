@@ -136,34 +136,12 @@
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
-
 ;; (add-hook 'after-init-hook #'split-window-horizontally)
 ;; (add-hook 'server-after-make-frame-hook #'split-window-horizontally)
+
+;; Disable the damn thing by making it disposable.
+(setq custom-file (make-temp-file "emacs-custom-"))
 
 (provide 'init)
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(auto-save-no-message t)
- '(auto-save-visited-interval 1)
- '(auto-save-visited-mode t)
- '(auto-save-visited-predicate #'mk/auto-save-visited-predicate)
- '(safe-local-variable-values '((just-indent-offset . 4))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(header-line ((t (:inherit mode-line :box (:style flat-button)))))
- '(mode-line ((t (:inherit mode-line :box (:style flat-button)))))
- '(mode-line-inactive ((t (:inherit mode-line-inactive :box (:style flat-button)))))
- '(tab-bar ((t (:inherit mode-line :box nil))))
- '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
- '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box nil))))
- '(vundo-highlight ((t (:foreground "#FFFF00"))))
- '(vundo-node ((t (:foreground "#808080"))))
- '(vundo-stem ((t (:foreground "#808080")))))

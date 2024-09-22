@@ -3,16 +3,19 @@
 ;; 
 ;;; Code:
 
-;;; html 
 ;; in insert mode: C-j or C-<return> to expand
 ;; (use-package emmet-mode
 ;; 	:hook ((web-mode . emmet-mode)))
 
-;;; Css =====================================================
 (use-package rainbow-mode
-	:hook ( ((mhtml-mode html-mode html-ts-mode css-mode web-mode) . rainbow-mode) )) ;; TODO more specific mode
+	:hook ( ((mhtml-mode html-mode html-ts-mode css-mode web-mode) . rainbow-mode)))
+
+;; put this line into .dir-locals
+;; ((auto-mode-alist . (("\\.html\\'" . jinja2-mode))))
+(use-package jinja2-mode)
 
 (use-package web-mode
+  :disabled
   :custom
   (web-mode-markup-indentation 2)
   (web-mode-css-indent-offset 2)
@@ -33,7 +36,9 @@
   (add-to-list 'auto-mode-alist '("\\.j2\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+
+  (add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client))
 
 (defun mk/setup-web-mode-for-emacs-client ()
   "Setup some values of web mode for emacs cliet.
@@ -46,34 +51,6 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
             web-mode-enable-auto-quoting t
             web-mode-enable-css-colorization t)))
 
-(add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client)
-
-;;; Vue Mode Eglot server configuration =========================================
-;; https://github.com/joaotavora/eglot/discussions/1184#discussioncomment-5431145
-(define-derived-mode vue-mode web-mode "Vue")
-(add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
-
-(defun vue-eglot-init-options ()
-  (let ((tsdk-path (expand-file-name
-                    "lib"
-                    (shell-command-to-string "npm list --global --parseable typescript | head -n1 | tr -d \"\n\""))))
-    `(:typescript (:tsdk ,tsdk-path
-                         :languageFeatures (:completion
-                                            (:defaultTagNameCase "both"
-                                                                 :defaultAttrNameCase "kebabCase"
-                                                                 :getDocumentNameCasesRequest nil
-                                                                 :getDocumentSelectionRequest nil)
-                                            :diagnostics
-                                            (:getDocumentVersionRequest nil))
-                         :documentFeatures (:documentFormatting
-                                            (:defaultPrintWidth 100
-                                                                :getDocumentPrintWidthRequest nil)
-                                            :documentSymbol t
-                                            :documentColor t)))))
-
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options)))))
 
 ;;; Trivial =================================================
 (defun mk/live-web-start()
@@ -101,7 +78,7 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
   "Toggle live web"
   (interactive)
   (if (get-process "live-web")
-    (mk/live-web-kill)
+      (mk/live-web-kill)
     (mk/live-web-start)))
 
 (defun mk/web-local-keybinding-setup()
