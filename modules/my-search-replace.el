@@ -258,6 +258,18 @@ search files from current directory."
   (yank))
 
 
+;; Modified from `project-find-file'
+;; Though the prompt is not as all perfect
+(defun mk/project-find-file-current-dir (&optional include-all)
+  (interactive "P")
+  (let* ((pr (project-current t))
+         (dirs (list default-directory)))
+    (project-find-file-in
+     (delq nil (list (and buffer-file-name (project--find-default-from
+                                            buffer-file-name pr))
+                     (thing-at-point 'filename)))
+     dirs pr include-all)))
+
 (provide 'my-search-replace)
 
 ;;; my-search-replace.el ends here

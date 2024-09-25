@@ -211,6 +211,8 @@
   (setq-default mode-line-buffer-identification
                 '((:eval (mk/mode-line/abbreviate-file-name)))))
 
+(add-hook 'prog-mode-hook 'which-function-mode)
+
 ;; note that there is also tab line (`tab-line-format')
 
 (defun mk/setup-header-line()

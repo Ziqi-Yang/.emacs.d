@@ -68,6 +68,8 @@
   ;; the langauge server
   ;; pylsp's configuration docs: `pylsp.configurationSources'
   ;; tinymist's configuration dosc: `:exportPdf'
+
+  (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls")))
   )
 
 (use-package eglot-hierarchy

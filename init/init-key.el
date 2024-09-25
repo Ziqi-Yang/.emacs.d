@@ -223,12 +223,11 @@ Example:
   ;; file(f)
   (mk/define&set-keymap
    "C-c f" keymap/file
-   `(("d" . mk/consult-fd-current-directory)
-     ("D" . mk/delete-file)
+   `(("D" . mk/delete-file)
      ("f" . mk/smart-find-file)
      ("F" . mk/find-file-other-window)
      ("p" . project-find-file)
-     ("P" . project-find-dir)
+     ("P" . mk/project-find-file-current-dir)
      ("r" . recentf-open)
      ("R" . rename-visited-file)
      ("s" . ,(mk/define&set-keymap

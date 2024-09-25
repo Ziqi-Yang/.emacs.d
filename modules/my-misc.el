@@ -103,7 +103,7 @@ configuration (like Makefile)."
         ((eq major-mode 'kotlin-ts-mode)
          (concat "kotlinc " relative-file-name " -include-runtime -d app.jar && kotlin ./app.jar"))
         ;; zig
-        ((derived-mode-p '(zig-mode))
+        ((derived-mode-p '(zig-mode zig-ts-mode))
          (concat "zig build run"))
         ;; typescript
         ((derived-mode-p '(typescript-ts-base-mode js-base-mode))
