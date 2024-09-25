@@ -212,6 +212,7 @@
 ;;; Zig ========================================================================
 (use-package zig-mode
   :ensure (:type git :host github :repo "ziglang/zig-mode")
+  :disabled
   :config
   (setq zig-format-on-save nil)
   
@@ -222,6 +223,9 @@
   (keymap-set zig-mode-map "C-c C-c t" #'zig-test-buffer)
   (keymap-set zig-mode-map "C-c C-c r" #'zig-run)
   (keymap-set zig-mode-map "C-c C-c f" #'zig-format-buffer))
+
+(use-package zig-ts-mode
+  :ensure (:type git :host codeberg :repo "meow_king/zig-ts-mode"))
 
 
 ;;; Go =========================================================================

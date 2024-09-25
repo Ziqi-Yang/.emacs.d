@@ -492,6 +492,9 @@ Example:
 
      ((derived-mode-p 'Info-mode)
       (keymap-global-set key #'casual-info-tmenu))
+
+     ((derived-mode-p 'ibuffer-mode)
+      (keymap-global-set key #'casual-ibuffer-tmenu))
      
      ((derived-mode-p 'eat-mode)
       (mk/define&set-keymap

@@ -16,6 +16,18 @@
   (setq enable-recursive-minibuffers t)
   (savehist-mode 1))
 
+(use-package ibuffer-project
+  :ensure (:host github :repo "muffinmad/emacs-ibuffer-project")
+  :custom
+  (ibuffer-project-use-cache t)
+  :config
+  (add-hook
+   'ibuffer-hook
+   (lambda ()
+     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
+     (unless (eq ibuffer-sorting-mode 'project-file-relative)
+       (ibuffer-do-sort-by-project-file-relative)))))
+
 ;;; auto revert buffer ======================================
 (with-eval-after-load 'emacs
   (global-auto-revert-mode))

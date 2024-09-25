@@ -38,6 +38,9 @@
 (use-package casual-dired
   :ensure (:host github :repo "kickingvegas/casual-dired"))
 
+(use-package casual-ibuffer
+  :ensure (:host github :repo "kickingvegas/casual-ibuffer"))
+
 (transient-define-prefix mk/trans-map/rectangle()
   "Rectangle Menu."
   [["Rectangle"

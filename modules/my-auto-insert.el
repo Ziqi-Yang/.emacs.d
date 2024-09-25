@@ -123,6 +123,15 @@ indent_size = 2
 "))
 
   (define-auto-insert
+    "pyrightconfig\\.json"
+    '(insert
+      "{
+    \"venvPath\": \".\",
+    \"venv\": \".venv\",
+    \"typeCheckingMode\": \"standard\"
+}"))
+
+  (define-auto-insert
     "flake\\.nix"
     '(insert
       "{
