@@ -50,6 +50,10 @@
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (toml "https://github.com/ikatyang/tree-sitter-toml")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
+        (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                  "split_parser" "tree-sitter-markdown/src")
+        (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                         "split_parser" "tree-sitter-markdown-inline/src")
         (nix "https://github.com/nix-community/tree-sitter-nix")
         (zig "https://github.com/maxxnino/tree-sitter-zig")))
 

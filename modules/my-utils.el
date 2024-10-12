@@ -403,7 +403,7 @@ CONFIRM: universal argument. Whether a confirm is needed."
         (repeat (yes-or-no-p "Repeat through the line? ")))
     (align-regexp
      start end
-     (concat re-adjustable re-identifier) 1 1 repeat)))
+     (concat re-adjustable re-identifier) 1 0 repeat)))
 
 ;; https://emacs.stackexchange.com/a/80549
 (defun others/visual-diff-strings (old-string new-string)

@@ -15,8 +15,9 @@
    select-enable-clipboard nil))
 
 (with-eval-after-load 'simple
-  (setq-default fill-column 80)
+  (setq-default fill-column 90)
   (add-hook 'prog-mode-hook 'auto-fill-mode)
+  (add-hook 'web-mode-hook (lambda () (auto-fill-mode -1)))
   (add-hook 'text-mode-hook 'auto-fill-mode))
 
 ;; (with-eval-after-load 'visual-wrap
@@ -140,17 +141,6 @@ ARG: number of words to kill"
                   nil nil nil
                   "--" (current-kill 0))))
 
-(defun mk/clipboard-yank (&optional arg)
-  (interactive "P")
-  (if arg
-      (mk/yank-without-indent)  ; FIXME, not from clipboard
-    (clipboard-yank)))
-
-(defun mk/yank (&optional arg)
-  (interactive "P")
-  (if arg
-      (mk/yank-without-indent)
-    (yank)))
 
 (defun mk/mark-line-smart ()
   "Mark the visible part of the current line.

@@ -84,7 +84,7 @@
    '("o" . meow-block)
    ;; '("O" . meow-to-block)
    '("O" . expreg-expand)
-   '("p" . mk/yank)
+   '("p" . yank)
    '("q" . meow-quit)
    '("Q" . meow-goto-line)
    '("r" . meow-replace)
@@ -123,7 +123,7 @@
    '("C-M-h" . backward-sexp)
    '("C-M-l" . forward-sep)
    '("C-." . embark-act)
-   '("C-S-v" . mk/clipboard-yank)
+   '("C-S-v" . clipboard-yank)
    '("C-S-c" . mk/better-clipboard-kill-ring-save)
    '("!" . hs-toggle-hiding)))
 

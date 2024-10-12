@@ -12,10 +12,9 @@
 
 ;; put this line into .dir-locals
 ;; ((auto-mode-alist . (("\\.html\\'" . jinja2-mode))))
-(use-package jinja2-mode)
+;; (use-package jinja2-mode)
 
 (use-package web-mode
-  :disabled
   :custom
   (web-mode-markup-indentation 2)
   (web-mode-css-indent-offset 2)
@@ -46,7 +45,7 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
   (if (display-graphic-p)
       (setq web-mode-enable-auto-closing t
             web-mode-enable-auto-pairing t
-            web-mode-enable-auto-indentation t
+            web-mode-enable-auto-indentation nil
             web-mode-enable-auto-opening t
             web-mode-enable-auto-quoting t
             web-mode-enable-css-colorization t)))

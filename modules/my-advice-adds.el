@@ -22,14 +22,14 @@
 
 ;; note that `kill-ring-deindent-mode' is useful in Python mode. So I enabled it.
 ;; When debug, don't ignore it.
-(defun mk/advice/yank (&rest _r)
+(defun mk/advice/clipboard-yank (&rest _r)
   "Advice (type: after) for command `yank'."
   (indent-region (region-beginning) (region-end)))
 
 ;; not a advice add function
-(defun mk/yank-without-indent()
-  (interactive)
-  (funcall (advice--cdr (symbol-function #'yank))))
+;; (defun mk/yank-without-indent()
+;;   (interactive)
+;;   (funcall (advice--cdr (symbol-function #'yank))))
 
 (defun mk/advice/compile (oldfun command &rest r)
   "Advice (type: around) for command `compile'.
@@ -49,7 +49,7 @@ OLDFUN COMMAND R."
 (defun mk/my-advice-add-initialize()
   "Add all my custom advices.
 This function should be called after init, so that other initialization can work properly."
-  (advice-add #'yank :after #'mk/advice/yank)
+  (advice-add #'clipboard-yank :after #'mk/advice/clipboard-yank)
   (advice-add #'compile :around #'mk/advice/compile))
 
 ;; indent region being yanked

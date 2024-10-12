@@ -131,16 +131,13 @@
 ;; C-c ' to edit code block like in org
 (use-package edit-indirect)
 
-(use-package markdown-mode
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init
-	;; export function(need to install external program)
-	(setq markdown-command "multimarkdown"))
+(use-package markdown-ts-mode
+  :mode ("\\.md\\'" . markdown-ts-mode))
 
 ;;; Python =====================================================================
 (with-eval-after-load
-  (setq python-shell-interpreter "python"
-    python-shell-interpreter-args "-i"))
+    (setq python-shell-interpreter "python"
+          python-shell-interpreter-args "-i"))
 
 (with-eval-after-load 'python
   (keymap-unset python-mode-map "C-c C-c")
@@ -227,7 +224,7 @@
   (keymap-set zig-mode-map "C-c C-c f" #'zig-format-buffer))
 
 (use-package zig-ts-mode
-  :ensure (:type git :host codeberg :repo "meow_king/zig-ts-mode"))
+  :ensure (:type git :host codeberg :branch "develop" :repo "meow_king/zig-ts-mode"))
 
 
 ;;; Go =========================================================================

@@ -70,7 +70,7 @@ Example:
   (setq meow--kbd-kill-line "C-M-$")
 
   (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
-  (keymap-global-set "C-S-v" #'mk/clipboard-yank)
+  (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
   ;; cape-dabbrev has been integrated into completion-at-point function already
   (keymap-global-set "M-/" #'dabbrev-completion)
