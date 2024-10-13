@@ -181,6 +181,7 @@ When ARG is non-nil, then search all buffer."
                   (symbol-name major-mode) "-"))))
        (pcase type
          ("emacs" "elisp")
+         ("web" "html")
          (_ type))))))
 
 (defun mk/consult-ripgrep-file-type (&optional arg)

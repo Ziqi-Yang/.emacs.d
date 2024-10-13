@@ -35,9 +35,7 @@
   (add-to-list 'auto-mode-alist '("\\.j2\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-
-  (add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
 
 (defun mk/setup-web-mode-for-emacs-client ()
   "Setup some values of web mode for emacs cliet.
@@ -50,6 +48,8 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
             web-mode-enable-auto-quoting t
             web-mode-enable-css-colorization t)))
 
+(add-hook 'after-init-hook #'mk/setup-web-mode-for-emacs-client)
+(add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client)
 
 ;;; Trivial =================================================
 (defun mk/live-web-start()
