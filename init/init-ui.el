@@ -48,7 +48,7 @@
         '((matches . (extrabold))
           (selection . (semibold italic text-also))))
   (if (display-graphic-p)
-      (load-theme 'modus-operandi t)
+      (load-theme 'modus-operandi-tinted t)
     (load-theme 'modus-vivendi t)))
 
 (add-hook 'after-init-hook #'mk/setup-theme)

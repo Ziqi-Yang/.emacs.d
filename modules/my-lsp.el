@@ -83,7 +83,7 @@
 
 ;; global (only enable disable hooks)
 ;; activate: (global-lsp-bridge-mode)
-;; de-activate: mk/disbale-global-lsp-bridge-mode
+;; de-activate: mk/disable-global-lsp-bridge-mode
 ;; single buffer
 ;; lsp-bridge-mode
 (use-package lsp-bridge
@@ -106,10 +106,10 @@
   ;; }
   (lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
   (lsp-bridge-multi-lang-server-mode-list
-   '(((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
-     ((web-mode) . "html_emmet_tailwindcss")
-     ((vue-mode) . "volar_emmet")
-     ;; ((typescript-ts-mode) . "typescript_eslint") ;; eslint part seems does nothing at all?
+   '(((web-mode) . "html_emmet_tailwindcss")
+     ;; ((typescript-ts-mode) . "typescript_eslint") ;; eslint part seems does nothing at
+     ;; all?
+     ((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
      ((qml-mode qml-ts-mode) . "qmlls_javascript")))
   ;; use my `eldoc-headline' to display signature information
   (lsp-bridge-signature-show-function '(lambda (str) (setq-local eldoc-headline-string str)))
@@ -117,7 +117,8 @@
   (lsp-bridge-user-multiserver-dir (expand-file-name "lsp-bridge-config/multiserver" user-emacs-directory))
   :config
   ;; lsp-bridge doesn't work well on *scratch* buffer
-  (dolist (hook '(lisp-interaction-mode-hook emacs-lisp-mode-hook))
+  ;; typst-ts-mode: editing in docs will leads to error messaging/buffer constantly popping up
+  (dolist (hook '(lisp-interaction-mode-hook emacs-lisp-mode-hook typst-ts-mode-hook))
     (setq lsp-bridge-default-mode-hooks (remove hook lsp-bridge-default-mode-hooks)))
   
   (setq lsp-bridge-enable-with-tramp nil)  ; goto local sudo bookmark will cause error
@@ -125,7 +126,7 @@
   (add-hook 'web-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
   (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t))))
 
-(defun mk/disbale-global-lsp-bridge-mode ()
+(defun mk/disable-global-lsp-bridge-mode ()
   (interactive)
   (dolist (hook lsp-bridge-default-mode-hooks)
     (remove-hook hook (lambda ()
@@ -299,7 +300,7 @@ Though citre(ctag) is not a lsp client implementation XD."
 (defun mk/code/documentation()
   (interactive)
   (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-show-documentation))
+    ('lsp-bridge (call-interactively #'lsp-bridge-popup-documentation))
     (_ (call-interactively #'eldoc))))
 
 (defun mk/code/peek (&optional arg)
