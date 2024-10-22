@@ -64,14 +64,8 @@
   (custom-set-faces
    '(tab-bar ((t (:inherit mode-line :box nil))))
    '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
-   '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box nil))))))
-
-;;; text scale change on the fly ============================
-(use-package default-text-scale
-  :bind (("C--" . default-text-scale-decrease)
-	       ("C-=" . default-text-scale-increase))
-  :config
-  (default-text-scale-mode))
+   '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box
+                                        nil))))))
 
 ;;; Project Utilities =======================================
 (use-package project

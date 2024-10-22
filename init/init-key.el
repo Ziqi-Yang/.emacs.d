@@ -44,6 +44,8 @@ Example:
   (keymap-global-set "C-M-u" #'universal-argument))
 
 (progn
+  (keymap-global-set "C--" #'global-text-scale-adjust)
+  (keymap-global-set "C-=" #'global-text-scale-adjust)
   (keymap-global-set "M-h" #'windmove-left)
   (keymap-global-set "M-j" #'windmove-down)
   (keymap-global-set "M-k" #'windmove-up)

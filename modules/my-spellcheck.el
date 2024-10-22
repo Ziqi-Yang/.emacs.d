@@ -34,6 +34,7 @@
   :delight
   :init
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
+  (add-hook 'markdown-ts-mode-hook 'jinx-mode)
   :config
   ;; To excludes CJK characters
   ;; See issue https://github.com/minad/jinx/issues/4
