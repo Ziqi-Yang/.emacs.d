@@ -59,6 +59,9 @@ _Note: the configuration is meant to be used for myself, you'd better only copy/
 + Private configurations are in module `my-private-configs`, which is not inclued
   in git repo.
 
++ If you find changing configuration doesn't apply, it's probably you have randomly
+  generates a `elc` file under the same directory of the source file.
+
 == Understand Concepts
 === `align-regexp` Explain
 #link("https://gniuk.github.io/2020-11-18-Emacs-align-regexp-explained-in-detail/")[Emacs Align Regexp Explained In Detail]

@@ -27,18 +27,19 @@
   :ensure (:host github :repo "nverno/llvm-mode"))
 
 ;;; Scheme =====================================================================
-(use-package geiser-guile)
+;; (use-package geiser-guile)
 
 ;; gerbil
-(use-package gambit
-  :ensure (:host github :repo "gambit/gambit" :files ("misc/gambit.el")))
+;; (use-package gambit
+;;   :ensure (:host github :repo "gambit/gambit" :files ("misc/gambit.el")))
 
-(use-package gerbil-mode
-  :ensure (:host github :repo "mighty-gerbils/gerbil" :files ("etc/gerbil-mode.el")))
+;; (use-package gerbil-mode
+;;   :ensure (:host github :repo "mighty-gerbils/gerbil" :files ("etc/gerbil-mode.el")))
 
 ;;; CC =========================================================================
 
 (with-eval-after-load 'c-ts-mode
+  (setq c-ts-mode-indent-style 'gnu)
   (keymap-unset c-ts-base-mode-map "C-c C-c")
   (keymap-set c-ts-base-mode-map "C-c C-c m" #'mk/better-consult-man)
   (keymap-set c-ts-base-mode-map "C-c C-c f" #'ff-find-other-file)
@@ -47,11 +48,10 @@
 (use-package c-ts-prototype
   :ensure (:type git :host sourcehut :repo "meow_king/c-ts-protoype"))
 
-(setq c-ts-mode-indent-style 'gnu)
-
 ;; Nix =========================================================================
 (use-package nix-ts-mode
-  :mode "\\.nix\\'")
+  :mode "\\.nix\\'"
+  :ensure (:type git :host github :repo "nix-community/nix-ts-mode"))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
@@ -61,16 +61,16 @@
 ;;   :ensure (:type git :host github :repo "xshyamx/simple-plantuml-mode"))
 
 (use-package mermaid-ts-mode
-  :ensure (:type git :host github :repo "JonathanHope/mermaid-ts-mode"))
+  :ensure (:type git :host github :repo "JonathanHope/mermaid-ts-mode")
+  :config
+  (keymap-set mermaid-ts-mode-map "C-c C-c c" #'mermaid-compile)
+  (keymap-set mermaid-ts-mode-map "C-c C-c b" #'mermaid-open-browser)
+  (keymap-set mermaid-ts-mode-map "C-c C-c d" #'mermaid-open-doc)
+  )
 (add-to-list 'auto-mode-alist '("\\.\\(mermaid\\|mmd\\)\\'" . mermaid-ts-mode))
 
 ;; (use-package d2-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
-
-(with-eval-after-load 'mermaid-ts-mode
-  (keymap-set mermaid-ts-mode-map "C-c C-c c" #'mermaid-compile)
-  (keymap-set mermaid-ts-mode-map "C-c C-c b" #'mermaid-open-browser)
-  (keymap-set mermaid-ts-mode-map "C-c C-c d" #'mermaid-open-doc))
 
 ;;; Java =======================================================================
 (defun mk/java-open-doc()
@@ -129,7 +129,8 @@
 
 ;;; Makefile ===================================================================
 ;; C-c ' to edit code block like in org
-(use-package edit-indirect)
+(use-package edit-indirect
+  :ensure (:host github :repo "Fanael/edit-indirect"))
 
 (use-package markdown-ts-mode
   :mode ("\\.md\\'" . markdown-ts-mode))
@@ -233,11 +234,14 @@
 
 
 ;;; micc =======================================================================
-(use-package crystal-mode)
-(use-package lua-mode)
-(use-package fish-mode)
-(use-package just-mode)
-(use-package graphql-mode)
+;; (use-package crystal-mode)
+;; (use-package lua-mode)
+;; (use-package fish-mode)
+
+(use-package just-ts-mode
+  :ensure (:type git :host github :repo "leon-barrett/just-ts-mode.el"))
+
+;; (use-package graphql-mode)
 
 (provide 'l-languages)
 

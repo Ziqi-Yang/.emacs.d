@@ -26,20 +26,20 @@
   (rectangle-mark-mode)
   (mk/trans-map/rectangle))
 
-(use-package casual-lib
-  :ensure (:host github :repo "kickingvegas/casual-lib"))
+;; (use-package casual-lib
+;;   :ensure (:host github :repo "kickingvegas/casual-lib"))
 
-(use-package casual-calc
-  :ensure (:host github :repo "kickingvegas/casual-calc"))
+;; (use-package casual-calc
+;;   :ensure (:host github :repo "kickingvegas/casual-calc"))
 
-(use-package casual-info
-  :ensure (:host github :repo "kickingvegas/casual-info"))
+;; (use-package casual-info
+;;   :ensure (:host github :repo "kickingvegas/casual-info"))
 
-(use-package casual-dired
-  :ensure (:host github :repo "kickingvegas/casual-dired"))
+;; (use-package casual-dired
+;;   :ensure (:host github :repo "kickingvegas/casual-dired"))
 
-(use-package casual-ibuffer
-  :ensure (:host github :repo "kickingvegas/casual-ibuffer"))
+;; (use-package casual-ibuffer
+;;   :ensure (:host github :repo "kickingvegas/casual-ibuffer"))
 
 (transient-define-prefix mk/trans-map/rectangle()
   "Rectangle Menu."

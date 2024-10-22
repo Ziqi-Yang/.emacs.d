@@ -191,7 +191,7 @@
 
 (use-package dape
   ;; Currently only on github
-  :ensure (dape :type git :host github :repo "svaante/dape"))
+  :ensure (:type git :host github :repo "svaante/dape"))
 
 ;; format file
 (use-package apheleia)

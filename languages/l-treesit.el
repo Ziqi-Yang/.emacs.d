@@ -55,6 +55,7 @@
         (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
                          "split_parser" "tree-sitter-markdown-inline/src")
         (nix "https://github.com/nix-community/tree-sitter-nix")
+        (just "https://github.com/IndianBoy42/tree-sitter-just")
         (zig "https://github.com/maxxnino/tree-sitter-zig")))
 
 (defun nf/treesit-install-all-languages ()

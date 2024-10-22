@@ -82,6 +82,10 @@ only copy/paste the only part you want.*
 2.  Private configurations are in module `my-private-configs`, which is
     not inclued in git repo.
 
+3.  If you find changing configuration doesn't apply, it's probably you
+    have randomly generates a `elc` file under the same directory of the
+    source file.
+
 ## Understand Concepts
 
 ### `align-regexp` Explain

@@ -5,8 +5,8 @@
 (set-default-coding-systems 'utf-8)
 
 ;;; Disable package.el ======================================
-;; (setq package-enable-at-startup nil ;; disable package.el at startup
-;;   package-quickstart nil) ;; don't load from package cache
+(setq package-enable-at-startup nil ;; disable package.el at startup
+      package-quickstart nil) ;; don't load from package cache
 
 ;;; Performance =============================================
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -73,9 +73,9 @@
  visible-bell t)
 
 ;; Suppress warnings and errors during asynchronous native compilation
-(setq native-comp-async-report-warnings-errors nil
+(setq native-comp-async-report-warnings-errors 'silent
       ;; Also remove `.local/eln-cache/<emacs-version>/compat-xxx.eln' file
-      native-comp-jit-compilation-deny-list '("compat.*"))
+      native-comp-jit-compilation-deny-list '())
 
 ;;; Misc =======================================================================
 (defun efs/display-startup-time ()
