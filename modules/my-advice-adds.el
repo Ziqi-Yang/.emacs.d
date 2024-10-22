@@ -26,6 +26,11 @@
   "Advice (type: after) for command `yank'."
   (indent-region (region-beginning) (region-end)))
 
+(defun mk/advice/global-text-scale-change (&rest _r)
+  "Changes "
+  (set-fontset-font t 'han (font-spec :family CJK-font :size font-size))
+  (set-face-attribute 'han nil :height (face-attribute 'default :height)))
+
 ;; not a advice add function
 ;; (defun mk/yank-without-indent()
 ;;   (interactive)

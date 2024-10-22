@@ -144,7 +144,7 @@
 (defun mk/setup-font-faces ()
   "Setup Fonts."
   (let ((default-font "Iosevka")  ; , IBM Plex Mono, Cascadia Code
-        (CJK-font "Source Han Serif SC")
+        (CJK-font "LXGW Neo XiHei")
         (font-size 18))
     (when (display-graphic-p)
       (when (member default-font (font-family-list))
@@ -156,7 +156,9 @@
         (set-face-attribute 'variable-pitch nil :inherit 'default)
         ;; @ CJK font 包括中文、日语、韩语中的汉字，但是不包含日语假名
         (when (member CJK-font (font-family-list))
-	        (set-fontset-font t 'han (font-spec :family CJK-font :size font-size)))
+          ;; don't set font size, since it will prevent size change when using
+          ;; commands like `global-text-scale-adjust'
+	        (set-fontset-font t 'han (font-spec :family CJK-font)))
         ;; @ Japanese Kana 日语假名
         ;; (when (member CJK-font (font-family-list))
 	      ;;   (set-fontset-font t 'kana (font-spec :family CJK-font :size font-size))
