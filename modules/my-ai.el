@@ -3,7 +3,7 @@
 (use-package aider
   :ensure (:host github :repo "tninja/aider.el")
   :custom
-  (aider-args '("–no-auto-commits" "--model" "openrouter/anthropic/claude-3.5-sonnet"))
+  (aider-args '("--model" "openrouter/anthropic/claude-3.5-sonnet"))
   :config
   (setenv "OPENAI_API_KEY" mk/private-vars/gptel-openrouter-key)
   (setenv "OPENROUTER_API_KEY" mk/private-vars/gptel-openrouter-key))
