@@ -154,10 +154,12 @@ FRAME: nil for current selected frame."
                  '(citre (styles orderless basic)))))
 
 ;; NOTE: disable these to using lsp-bridge
-;;; Corfu: In Region Completion  ===============================================
+;;; In Region Completion  ===============================================
 ;; interacted with orderless (use M-SPC(M: Alt) to insert seperator)
 ;; use vertico completion instead(since I don't use completion often)
 (use-package corfu
+  ;; TODO Corfu uses child-frame, which cause a lot of memory leaks (GTK BUG) on
+  ;; Emacs-pgtk on Hyprland. https://github.com/hyprwm/Hyprland/issues/7038
   :ensure (:host github :repo "minad/corfu"
 		             :files ("*.el" "extensions/*.el"))
   :custom
@@ -196,11 +198,11 @@ FRAME: nil for current selected frame."
   ;; one downgrade here: https://github.com/minad/consult#miscellaneous
   (unless (display-graphic-p)
     (setq completion-in-region-function
-      (lambda (&rest args)
-        (apply (if vertico-mode
-                 #'consult-completion-in-region
-                 #'completion--in-region)
-          args))))
+          (lambda (&rest args)
+            (apply (if vertico-mode
+                       #'consult-completion-in-region
+                     #'completion--in-region)
+                   args))))
 
   (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1))
 

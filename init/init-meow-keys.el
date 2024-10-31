@@ -132,6 +132,11 @@
   (meow-setup)
   (meow-global-mode 1))
 
+(use-package meow-tree-sitter
+  :after meow
+  :config
+  (meow-tree-sitter-register-defaults))
+
 
 ;; remap `q' in major modes
 (with-eval-after-load 'vc-dir

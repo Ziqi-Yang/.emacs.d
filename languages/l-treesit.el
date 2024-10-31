@@ -31,7 +31,7 @@
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (go "https://github.com/tree-sitter/tree-sitter-go")
         (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.23.0"))
         (java "https://github.com/tree-sitter/tree-sitter-java")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
         (json "https://github.com/tree-sitter/tree-sitter-json")
@@ -56,7 +56,8 @@
                          "split_parser" "tree-sitter-markdown-inline/src")
         (nix "https://github.com/nix-community/tree-sitter-nix")
         (just "https://github.com/IndianBoy42/tree-sitter-just")
-        (zig "https://github.com/maxxnino/tree-sitter-zig")))
+        (zig "https://github.com/maxxnino/tree-sitter-zig")
+        (htmldjango . ("https://github.com/interdependence/tree-sitter-htmldjango.git" "v1.0.0"))))
 
 (defun nf/treesit-install-all-languages ()
   "Install all languages specified by `treesit-language-source-alist'."

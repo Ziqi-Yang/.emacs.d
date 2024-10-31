@@ -76,9 +76,7 @@
 ;; command line tool `repgrep' is also awesome, but not as this good
 (use-package wgrep
   :defer 2
-  :ensure (:host github :repo "mhayashi1120/Emacs-wgrep")
-  :custom
-  (wgrep-enable-key "r"))
+  :ensure (:host github :repo "mhayashi1120/Emacs-wgrep"))
 
 ;;; Functions ==================================================================
 
