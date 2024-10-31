@@ -2,16 +2,27 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package aider
+  :ensure (:host github :repo "tninja/aider.el")
+  :custom
+  ;; (aider-args '("--model" "openrouter/deepseek/deepseek-coder"))
+  (aider-args '("--model" "openrouter/anthropic/claude-3.5-sonnet"))
+  :config
+  (setenv "OPENAI_API_KEY" mk/private-vars/gptel-openrouter-key)
+  (setenv "OPENROUTER_API_KEY" mk/private-vars/gptel-openrouter-key))
+
 (use-package gptel
   :config
-  (setq
-   gptel-model "gpt-4o"
-   gptel-backend
-   (gptel-make-openai "openai-api"
-     :host "api.gptsapi.net"
-     :key 'mk/private-vars/gptel-openai-key
-     :stream t
-     :models '("gpt-3.5-turbo" "gpt-4-turbo-preview" "gpt-4o"))))
+  (setq gptel-model 'deepseek/deepseek-chat)
+  (setq gptel-backend
+        (gptel-make-openai "OpenRouter"
+          :host "openrouter.ai"
+          :endpoint "/api/v1/chat/completions"
+          :stream t
+          :key 'mk/private-vars/gptel-openrouter-key
+          :models '(deepseek/deepseek-chat
+                    anthropic/claude-3.5-sonnet
+                    openai/chatgpt-4o-latest))))
 
 (defun mk/better-gptel (&optional arg)
   (interactive "P")
