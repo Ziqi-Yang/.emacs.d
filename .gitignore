@@ -33,3 +33,5 @@
 
 *.elc
 *.eld
+.aider*
+.env

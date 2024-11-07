@@ -442,8 +442,9 @@ Example:
   ;; trivial (z)
   (mk/define&set-keymap
    "C-c z" keymap/trivial
-   '(("0".  mk/share-0x0)
-     ("a" . mk/better-gptel)
+   `(("0".  mk/share-0x0)
+     ("a" . aider-transient-menu)
+     ("g" . mk/better-gptel)
      ("A" . mk/better-align-regexp)
      ("c" . jinx-correct)
      ("C" . compile)
@@ -453,12 +454,14 @@ Example:
      ("k" . consult-kmacro)
      ("K" . kmacro-name-last-macro)
      ("d" . ediff-buffers)
-     ("q" . save-buffers-kill-emacs)
-     ("Q" . kill-emacs)
      ("r" . restart-emacs)
      ;; ("s" . desktop-save-in-desktop-dir)
      ;; ("l" . desktop-load-file)
-     ("n". string-inflection-cycle))))
+     ("n" . string-inflection-cycle)
+     ("z" . ,(mk/define&set-keymap
+              "C-c z z" keymap/trival/trival
+              '(("q" . save-buffers-kill-emacs)
+                ("Q" . kill-emacs)))))))
 
 (with-eval-after-load 'emacs
   (mk/keyBindingSetup))

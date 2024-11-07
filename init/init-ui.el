@@ -267,6 +267,7 @@
         ("^\\*Flymake diagnostics for.*?\\*"
          display-buffer-in-side-window (side . bottom))))
 
+
 ;;; Misc =======================================================================
 (with-eval-after-load 'image-mode
   (customize-set-variable 'image-auto-resize 'fit-window)
