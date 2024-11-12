@@ -36,6 +36,10 @@
                         "/bin/bash")
       find-function-C-source-directory "~/proj/probe/emacs/src")
 
+(let ((zvm (file-name-concat (getenv "HOME") ".zvm/bin")))
+  (setenv "PATH" (concat (getenv "PATH") ":" zvm))
+  (setq exec-path (append (list zvm) exec-path)))
+
 
 (provide 'init-vars)
 
