@@ -69,6 +69,9 @@
 
 ;; common modules
 (with-temp-message ""
+  ;; all file under `lib' directory
+  (require 'lib-0)
+
   ;; all files under `init' directory
   (require 'init-vars)
   (require 'init-advice)
@@ -78,10 +81,7 @@
   (require 'init-key-transient)
   (require 'init-ui)
   
-  (require 'my-private-configs)
-
-  ;; all file under `lib' directory
-  (require 'lib-0))
+  (require 'my-private-configs))
 
 ;; NOTE: module name should be unique(also to the built-in module)
 (if (getenv "EMACS-TERM")

@@ -49,6 +49,9 @@
     (when min-indent
       (indent-rigidly (point-min) (point-max) (- min-indent)))))
 
+(defun mk/batch-add-hook (hooks fn)
+	(dolist (hook hooks)
+		(add-hook hook fn)))
 
 (provide 'lib-0)
 

@@ -2,8 +2,16 @@
 ;;; Commentary:
 ;; NOTE: global key bindings will be shadowed by local keybindings
 ;; TIPS:
+
+
 ;; meow-cheatsheet  (I've customed this command to also display my own notes)
+;; also note that C-, is left for my local mode bindings in editing (like web-mode)
+
 ;;; Code:
+
+;; NOTE don't define same key since local keybinding will override global keybinding
+(defconst MK/LOCAL_KEY_MAP "C-c _")
+(defconst MK/LOCAL_KEY_MAP_GLOBAL_KEYBINDING "C-c .")
 
 (defmacro mk/define&set-keymap (prefix keymap-name definition)
   "Macro for defining a keymap.
@@ -466,49 +474,98 @@ Example:
 (with-eval-after-load 'emacs
   (mk/keyBindingSetup))
 
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (keymap-global-set MK/LOCAL_KEY_MAP_GLOBAL_KEYBINDING #'mk/invoke-local-keymap)))
+
 ;; for tapping key which begins with a character other than SPC
 ;; so `meow-keypad' won't appear
-(with-eval-after-load 'which-key
+(use-package which-key
+  :ensure nil
+  :config
   (setq which-key-idle-delay 0.5
         which-key-side-window-max-height 0.3)
   (which-key-mode))
 
-(defun mk/set-shared-local-keymap()
+;; Local Key Maps ==============================================================
+
+(defun mk/invoke-local-keymap()
+  "Used in global keymap for keybinding."
   (interactive)
-  (let ((key "C-c SPC"))
+  (when-let* ((ret (local-key-binding (kbd MK/LOCAL_KEY_MAP))))
     (cond
-     ((derived-mode-p 'emacs-lisp-mode)
-      (mk/define&set-keymap
-       key keymap/local/elisp
-       '(("d" . others/byte-compile-and-load-directory)
-         ("e" . others/eval-buffer))))
+     ((commandp ret)
+      (call-interactively ret))
 
-     ((derived-mode-p 'c-ts-base-mode)
-      (mk/define&set-keymap
-       key keymap/local/cc
-       '(("o" . ff-find-other-file))))
-     
-     ((derived-mode-p 'dired-mode)
-      (keymap-global-set key #'casual-dired-tmenu))
-     
-     ((derived-mode-p 'calc-mode)
-      (keymap-global-set key #'casual-calc-tmenu))
+     ((keymapp ret)
+      (meow-keypad-start-with MK/LOCAL_KEY_MAP)))))
 
-     ((derived-mode-p 'Info-mode)
-      (keymap-global-set key #'casual-info-tmenu))
+(defvar-keymap keymap/local/elisp
+  "d" #'others/byte-compile-and-load-directory
+  "e" #'others/eval-buffer)
 
-     ((derived-mode-p 'ibuffer-mode)
-      (keymap-global-set key #'casual-ibuffer-tmenu))
-     
-     ((derived-mode-p 'eat-mode)
-      (mk/define&set-keymap
-       key keymap/local/eat
-       '(("c" . eat-semi-char-mode)
-         ("C" . eat-char-mode)
-         ("l" . eat-line-mode)
-         ("e" . eat-emacs-mode)))))))
+(defvar-keymap keymap/local/cc
+  "o" #'ff-find-other-file)
 
-(add-hook 'after-change-major-mode-hook #'mk/set-shared-local-keymap)
+(defvar-keymap keymap/local/web
+  "S" #'mk/live-web-start
+  "T" #'mk/live-web-toggle
+  "K" #'mk/live-web-kill
+  "c" #'twind-insert-css-from-cheatsheet
+  "t" #'twind-insert-class-from-cheatsheet)
+
+(defvar-keymap keymap/local/eat
+  "c" #'eat-semi-char-mode
+  "C" #'eat-char-mode
+  "l" #'eat-line-mode
+  "e" #'eat-emacs-mode)
+
+(defun mk/setup-local-keymap ()
+  (add-hook
+   'emacs-lisp-mode-hook
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP keymap/local/elisp)))
+
+  (mk/batch-add-hook
+   '(c-mode-hook c++-mode-hook)
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP keymap/local/cc)))
+
+  (add-hook
+   'dired-mode-hook
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP #'casual-dired-tmenu)))
+
+  (add-hook
+   'calc-mode-hook
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP #'casual-calc-tmenu)))
+
+  (add-hook
+   'Info-mode-hook
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP #'casual-info-tmenu)))
+
+  (add-hook
+   'ibuffer-mode-hook
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP #'casual-ibuffer-tmenu)))
+
+  (mk/batch-add-hook
+   '(js-mode-hook
+     js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook
+     typescript-mode-hook web-mode-hook html-mode-hook mhtml-mode-hook
+     vue-mode-hook css-mode-hook css-ts-mode)
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP keymap/local/web)))
+
+  (add-hook
+   'eat-mode-hook
+   (lambda ()
+     (keymap-local-set MK/LOCAL_KEY_MAP keymap/local/eat))))
+
+(mk/setup-local-keymap)
 
 (provide 'init-key)
 

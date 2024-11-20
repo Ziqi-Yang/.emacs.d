@@ -15,6 +15,7 @@
 ;; (use-package jinja2-mode)
 
 (use-package web-mode
+  :bind (("C-," . twind-insert-class-from-cheatsheet))
   :custom
   (web-mode-markup-indentation 2)
   (web-mode-css-indent-offset 2)
@@ -51,6 +52,9 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 (add-hook 'after-init-hook #'mk/setup-web-mode-for-emacs-client)
 (add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client)
 
+(use-package twind
+  :ensure (:host github :repo "akirak/twind.el"))
+
 ;;; Trivial =================================================
 (defun mk/live-web-start()
   "Start live web server process using browser-sync."
@@ -79,19 +83,6 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
   (if (get-process "live-web")
       (mk/live-web-kill)
     (mk/live-web-start)))
-
-(defun mk/web-local-keybinding-setup()
-  (keymap-local-set "C-c C-c s" #'mk/live-web-start)
-  (keymap-local-set "C-c C-c t" #'mk/live-web-toggle)
-  (keymap-local-set "C-c C-c k" #'mk/live-web-kill))
-
-(defun mk/add-web-local-map-hook (hook-list)
-	(dolist (mode hook-list)
-		(add-hook mode #'mk/web-local-keybinding-setup)))
-
-(mk/add-web-local-map-hook '(js-mode-hook js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook typescript-mode-hook))
-
-(mk/add-web-local-map-hook '(web-mode-hook html-mode-hook mhtml-mode-hook vue-mode-hook css-mode-hook css-ts-mode)) ;; web, vue(defined in l-web.el) and css
 
 
 (provide 'l-web)
