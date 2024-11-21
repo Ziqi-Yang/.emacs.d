@@ -15,7 +15,12 @@
 ;; (use-package jinja2-mode)
 
 (use-package web-mode
-  :bind (("C-," . twind-insert-class-from-cheatsheet))
+  ;; must be explicit or that mode loading will be depend on binding
+  ;; so config won't be loaded
+  :defer 2
+  :bind (;; keybindings
+         :map web-mode-map
+         ("C-," . twind-insert-class-from-cheatsheet))
   :custom
   (web-mode-markup-indentation 2)
   (web-mode-css-indent-offset 2)
@@ -37,6 +42,7 @@
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+
 
 (defun mk/setup-web-mode-for-emacs-client ()
   "Setup some values of web mode for emacs cliet.
