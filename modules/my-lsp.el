@@ -17,6 +17,10 @@
 
 ;;; Commentary:
 
+;; start lsp: mk/code/lsp/start
+;; stop lsp: mk/code/lsp/stop
+;; stop all lsp: mk/code/lsp/stop-all
+
 ;; Eglot  ===================
 
 ;; check eglot-server-programs to know the language programs that corresponding
@@ -29,6 +33,14 @@
 ;; manually do `eglot' for every workspace is easy, so we dont' use `eglot-ensure'
 
 ;;; Code:
+
+;; lsp-copilot: need refinement
+
+;; (use-package flycheck)
+;; (use-package lsp-copilot
+;;   :ensure (:host github :repo "Ziqi-Yang/lsp-copilot"
+;;                  :files (:defaults "lsp-copilot")
+;;                  :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./"))))
 
 ;;; Eglot ======================================================================
 
@@ -81,9 +93,9 @@
   :config
   (yas-global-mode 1))
 
-;; global (only enable disable hooks)
-;; activate: (global-lsp-bridge-mode)
-;; de-activate: mk/disable-global-lsp-bridge-mode
+;; activate: mk/lsp-bridge
+;; de-activate: mk/lsp-bridge
+;; kill the whole lsp-bridge process: mk/lsp-bridge-shutdown-all
 ;; single buffer
 ;; lsp-bridge-mode
 (use-package lsp-bridge
@@ -92,8 +104,9 @@
             :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
             :build (:not elpaca--byte-compile))
   :custom
-  (lsp-bridge-code-action-enable-popup-menu t)  ; FIXME quit popup menu will cause weird problem
+  (lsp-bridge-code-action-enable-popup-menu nil)  ; FIXME quit popup menu will cause weird problem
   (lsp-bridge-enable-hover-diagnostic t)
+  ;; (lsp-bridge-signature-show-function #'lsp-bridge-signature-show-with-frame)
   (lsp-bridge-complete-manually t)
   (acm-candidate-match-function 'orderless-regexp)
   (lsp-bridge-python-lsp-server "basedpyright")
@@ -102,7 +115,8 @@
   ;; pyrightconfig.json
   ;; {
   ;; "venvPath": ".",
-  ;; "venv": ".venv"
+  ;; "venv": ".venv",
+  ;; "typeCheckingMode": "standard",
   ;; }
   (lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
   (lsp-bridge-multi-lang-server-mode-list
@@ -112,7 +126,7 @@
      ((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
      ((qml-mode qml-ts-mode) . "qmlls_javascript")))
   ;; use my `eldoc-headline' to display signature information
-  (lsp-bridge-signature-show-function '(lambda (str) (setq-local eldoc-headline-string str)))
+  ;; (lsp-bridge-signature-show-function '(lambda (str) (setq-local eldoc-headline-string str)))
   (lsp-bridge-user-langserver-dir (expand-file-name "lsp-bridge-config/langserver" user-emacs-directory))
   (lsp-bridge-user-multiserver-dir (expand-file-name "lsp-bridge-config/multiserver" user-emacs-directory))
   :config
@@ -122,20 +136,55 @@
     (setq lsp-bridge-default-mode-hooks (remove hook lsp-bridge-default-mode-hooks)))
   
   (setq lsp-bridge-enable-with-tramp nil)  ; goto local sudo bookmark will cause error
-
   (add-hook 'web-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
-  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t))))
+  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string
+                                                  t)))
+  (mk/global-lsp-bridge))
 
-(defun mk/disable-global-lsp-bridge-mode ()
+
+(defvar mk/lsp-bridge--managed-projects (make-hash-table :test #'equal))
+
+(defun mk/lsp-bridge--in-managed-projects-p ()
+  (gethash (project-current) mk/lsp-bridge--managed-projects))
+
+(defun mk/lsp-bridge--may-activate ()
+  (when (mk/lsp-bridge--in-managed-projects-p)
+    (lsp-bridge-mode 1)))
+
+(defun mk/lsp-bridge ()
+  "Enable lsp-bridge per project width.
+Needs to run `mk/global-lsp-bridge' first."
   (interactive)
-  (dolist (hook lsp-bridge-default-mode-hooks)
-    (remove-hook hook (lambda ()
-                        (when (and (lsp-bridge--not-mind-wave-chat-buffer)
-                                   (lsp-bridge--not-acm-doc-markdown-buffer))
-                          (lsp-bridge-mode 1)))))
-  (dolist (buf (buffer-list))
-    (when lsp-bridge-mode
-      (lsp-bridge-mode -1))))
+  (let ((p (project-current)))
+    (if (mk/lsp-bridge--in-managed-projects-p)
+        (progn
+          (remhash p mk/lsp-bridge--managed-projects)
+          ;; deactivate lsp-bridge modes on all buffers in this project
+          (dolist (buf (project-buffers p))
+            (with-current-buffer buf
+              (when lsp-bridge-mode
+                (lsp-bridge-mode -1)))))
+      (puthash p t mk/lsp-bridge--managed-projects)
+      ;; for current buffer
+      (lsp-bridge-mode 1))))
+
+(defun mk/lsp-bridge-shutdown-all()
+  (interactive)
+  (lsp-bridge-kill-process)
+  (clrhash mk/lsp-bridge--managed-projects))
+
+(defun mk/global-lsp-bridge ()
+  "Slightly modified from `global-lsp-bridge-mode'."
+  (interactive)
+  (dolist (hook (append
+                 lsp-bridge-default-mode-hooks
+                 acm-backend-capf-mode-hooks))
+    (add-hook hook (lambda ()
+                     (when (cl-every (lambda (pred)
+                                       (lsp-bridge-check-predicate pred "global-lsp-bridge-mode"))
+                                     lsp-bridge-enable-predicates)
+                       (mk/lsp-bridge--may-activate))
+                     ))))
 
 ;;; citre ===================================================
 
@@ -208,12 +257,35 @@ Though citre(ctag) is not a lsp client implementation XD."
 (defconst mk/code/lsp-backend-not-match-error
   "`mk/code/current-lsp-backend' doesn't match the required values!")
 
-(defun mk/code/set-current-lsp-backend ()
+(defun mk/code/lsp/set-backend ()
   (interactive)
   (setq mk/code/current-lsp-backend
         (intern (completing-read
                  (format "Choose an backend(current: %s): " mk/code/current-lsp-backend)
                  '(eglot lsp-bridge citre)))))
+
+(defun mk/code/lsp/start ()
+  (interactive)
+  (unless mk/code/current-lsp-backend (call-interactively #'mk/code/set-current-lsp-backend))
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'mk/lsp-bridge))
+    ('eglot (call-interactively #'eglot))
+    (_ (user-error "Todo or not implemented!"))))
+
+(defun mk/code/lsp/stop ()
+  "NOTE only stop language servers for a single project (or even some language)."
+  (interactive)
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'mk/lsp-bridge))
+    ('eglot (call-interactively #'eglot-shutdown))
+    (_ (user-error "Todo or not implemented!"))))
+
+(defun mk/code/lsp/stop-all ()
+  (interactive)
+  (pcase mk/code/current-lsp-backend
+    ('lsp-bridge (call-interactively #'mk/lsp-bridge-shutdown-all))
+    ('eglot (call-interactively #'eglot-shutdown-all))
+    (_ (user-error "Todo or not implemented!"))))
 
 (with-eval-after-load 'lsp-bridge
   (add-hook 'lsp-bridge-mode-hook (lambda () (setq mk/code/current-lsp-backend 'lsp-bridge))))
@@ -221,15 +293,16 @@ Though citre(ctag) is not a lsp client implementation XD."
 (with-eval-after-load 'eglot
   (add-hook 'eglot-managed-mode-hook (lambda () (setq mk/code/current-lsp-backend 'eglot))))
 
+
 (defun mk/code/find-definition ()
   (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-find-def))
-    ('eglot
-     (let ((this-command 'xref-find-definitions))
-       (call-interactively #'xref-find-definitions)))
-    ('citre (call-interactively #'citre-jump))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+  (cond
+   ((and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode)
+    (call-interactively #'lsp-bridge-find-def))
+   ((equal mk/code/current-lsp-backend 'citre)
+    (call-interactively #'citre-jump))
+   (t (let ((this-command 'xref-find-definitions))
+        (call-interactively #'xref-find-definitions)))))
 
 (defun mk/code/query-find-definition ()
   (interactive)
@@ -239,23 +312,21 @@ Though citre(ctag) is not a lsp client implementation XD."
 
 (defun mk/code/find-definition-other-window ()
   (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-find-def-other-window))
-    ('eglot
-     (let ((this-command 'xref-find-definitions-other-window))
-       (call-interactively #'xref-find-definitions-other-window)))
-    ('citre (user-error "Not implemented for back end 'citre"))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+  (cond
+   ((and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode)
+    (call-interactively #'lsp-bridge-find-def-other-window))
+   (t (let ((this-command 'xref-find-definitions-other-window))
+        (call-interactively #'xref-find-definitions-other-window)))))
 
 (defun mk/code/find-references ()
   (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-find-references))
-    ('eglot
-     (let ((this-command 'xref-find-references))
-       (call-interactively #'xref-find-references)))
-    ('citre (call-interactively #'citre-jump-to-reference))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+  (cond
+   ((and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode)
+    (call-interactively #'lsp-bridge-find-references))
+   ((equal mk/code/current-lsp-backend 'citre)
+    (call-interactively #'citre-jump-to-reference))
+   (t (let ((this-command 'citre-jump-to-reference))
+        (call-interactively #'citre-jump-to-reference)))))
 
 (defun mk/code/query-find-references ()
   (interactive)

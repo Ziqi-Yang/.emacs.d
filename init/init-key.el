@@ -206,6 +206,12 @@ Example:
      ("H" . mk/code/toggle-inlay-hint)
      ;; ("i" . eglot-code-action-organize-imports)
      ("i" . mk/code/find-implementation)
+     ("l" . ,(mk/define&set-keymap
+              "C-c c l" keymap/code-lsp
+              '(("b" . mk/code/lsp/set-backend)
+                ("s" . mk/code/lsp/start)
+                ("k" . mk/code/lsp/stop)
+                ("K" . mk/code/lsp/stop-all))))
      ("o" . ,(mk/define&set-keymap
               "C-c c o" keymap/code-other
               '(("c" . citre-create-tags-file)
