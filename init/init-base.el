@@ -60,12 +60,7 @@
   (tab-bar-format '(tab-bar-format-menu-bar tab-bar-format-tabs tab-bar-separator))
   ;; don't use :custom-face
   :config
-  (tab-bar-mode 1)                           ;; enable tab bar
-  (custom-set-faces
-   '(tab-bar ((t (:inherit mode-line :box nil))))
-   '(tab-bar-tab ((t (:inherit mode-line :foreground "black" :box nil))))
-   '(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :foreground "dimGray" :box
-                                        nil))))))
+  (tab-bar-mode 1))
 
 ;;; Project Utilities =======================================
 (use-package project
@@ -194,7 +189,14 @@
   (mk/push-point-to-xref-marker-stack))
 
 (defun mk/funcs-go-back-setup ()
-  (dolist (func '(find-function
+  (dolist (func '(mk/code/find-definition
+                  mk/code/query-find-definition
+                  mk/code/find-definition-other-window
+                  mk/code/find-references
+                  mk/code/query-find-references
+                  mk/code/find-implementation
+                  
+                  find-function
                   query-replace-regexp
                   mk/better-query-replace
                   meow-search

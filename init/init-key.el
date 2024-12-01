@@ -226,7 +226,7 @@ Example:
                 ("P" . mk/code/query-peek-reference))))
      ("r" . mk/code/find-references)
      ("s" . mk/xref-stack-current-position)
-     ("R" . eglot-rename)
+     ("R" . mk/code/rename)
      ("u" . citre-update-this-tags-file)
      ("U" . mk/update-all-tags)))
 

@@ -33,6 +33,8 @@
 ;;   ;; (load-theme 'almost-mono-white t)
 ;;   )
 
+(use-package apropospriate-theme)
+
 (defun mk/setup-theme()
   "Load theme."
   (require-theme 'modus-themes)

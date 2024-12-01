@@ -57,9 +57,12 @@
 (with-eval-after-load 'eglot
 	;; NOTE
 	;; install markdown-mode to rich the doc
-  ;; performance improvemence: https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
+  ;; performance improvemence:
+  ;; https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
+  
   (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess
-	(setq-default eglot-events-buffer-size 0) ;; disable log, improve performance
+  (setq-default eglot-events-buffer-config '(:size 0 :format full))
+  
   ;; list of things that eglot won't change
 	;; (customize-set-variable 'eglot-stay-out-of '(imenu))
   (customize-set-variable 'eglot-extend-to-xref t)
@@ -254,8 +257,8 @@ Though citre(ctag) is not a lsp client implementation XD."
                  (const :tag "Lsp Bridge" lsp-bridge)
                  (const :tag "citre" citre)))
 
-(defconst mk/code/lsp-backend-not-match-error
-  "`mk/code/current-lsp-backend' doesn't match the required values!")
+(defconst mk/code/error/todo-or-not-implemented
+  "Todo or not implemented!")
 
 (defun mk/code/lsp/set-backend ()
   (interactive)
@@ -270,7 +273,7 @@ Though citre(ctag) is not a lsp client implementation XD."
   (pcase mk/code/current-lsp-backend
     ('lsp-bridge (call-interactively #'mk/lsp-bridge))
     ('eglot (call-interactively #'eglot))
-    (_ (user-error "Todo or not implemented!"))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
 
 (defun mk/code/lsp/stop ()
   "NOTE only stop language servers for a single project (or even some language)."
@@ -278,14 +281,14 @@ Though citre(ctag) is not a lsp client implementation XD."
   (pcase mk/code/current-lsp-backend
     ('lsp-bridge (call-interactively #'mk/lsp-bridge))
     ('eglot (call-interactively #'eglot-shutdown))
-    (_ (user-error "Todo or not implemented!"))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
 
 (defun mk/code/lsp/stop-all ()
   (interactive)
   (pcase mk/code/current-lsp-backend
     ('lsp-bridge (call-interactively #'mk/lsp-bridge-shutdown-all))
     ('eglot (call-interactively #'eglot-shutdown-all))
-    (_ (user-error "Todo or not implemented!"))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
 
 (with-eval-after-load 'lsp-bridge
   (add-hook 'lsp-bridge-mode-hook (lambda () (setq mk/code/current-lsp-backend 'lsp-bridge))))
@@ -294,10 +297,25 @@ Though citre(ctag) is not a lsp client implementation XD."
   (add-hook 'eglot-managed-mode-hook (lambda () (setq mk/code/current-lsp-backend 'eglot))))
 
 
+(defun mk/code//is-lsp-bridge-active ()
+  (and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode))
+
+(defun mk/code//is-eglot-active ()
+  (and (equal mk/code/current-lsp-backend 'eglot) eglot--managed-mode))
+
+(defun mk/code/rename ()
+  (interactive)
+  (cond
+   ((mk/code//is-lsp-bridge-active)
+    (call-interactively #'lsp-bridge-rename))
+   ((mk/code//is-eglot-active)
+    (call-interactively #'eglot-rename))
+   (t (user-error mk/code/error/todo-or-not-implemented))))
+
 (defun mk/code/find-definition ()
   (interactive)
   (cond
-   ((and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode)
+   ((mk/code//is-lsp-bridge-active)
     (call-interactively #'lsp-bridge-find-def))
    ((equal mk/code/current-lsp-backend 'citre)
     (call-interactively #'citre-jump))
@@ -313,34 +331,43 @@ Though citre(ctag) is not a lsp client implementation XD."
 (defun mk/code/find-definition-other-window ()
   (interactive)
   (cond
-   ((and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode)
+   ((mk/code//is-lsp-bridge-active)
     (call-interactively #'lsp-bridge-find-def-other-window))
    (t (let ((this-command 'xref-find-definitions-other-window))
         (call-interactively #'xref-find-definitions-other-window)))))
 
+
+
 (defun mk/code/find-references ()
   (interactive)
   (cond
-   ((and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode)
+   ((mk/code//is-lsp-bridge-active)
     (call-interactively #'lsp-bridge-find-references))
    ((equal mk/code/current-lsp-backend 'citre)
     (call-interactively #'citre-jump-to-reference))
-   (t (let ((this-command 'citre-jump-to-reference))
-        (call-interactively #'citre-jump-to-reference)))))
+   (t (let ((this-command 'xref-find-references))
+        (call-interactively #'xref-find-references)))))
 
 (defun mk/code/query-find-references ()
   (interactive)
   (pcase mk/code/current-lsp-backend
     ('citre (call-interactively #'citre-query-jump-to-reference))
-    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
+
+
+
 
 (defun mk/code/find-implementation ()
   (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-find-impl))
-    ('eglot (call-interactively #'eglot-find-implementation))
-    ('citre (call-interactively #'citre-jump-to-reference))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+  (cond
+   ((mk/code//is-lsp-bridge-active)
+    (call-interactively #'lsp-bridge-find-impl))
+   ((equal mk/code/current-lsp-backend 'citre)
+    (call-interactively #'citre-jump-to-reference))
+   ((mk/code//is-eglot-active)
+    (call-interactively #'eglot-find-implementation))
+   (t
+    (user-error mk/code/error/todo-or-not-implemented))))
 
 (defun mk/code/toggle-inlay-hint ()
   (interactive)
@@ -352,7 +379,7 @@ Though citre(ctag) is not a lsp client implementation XD."
        (lsp-bridge-inlay-hint-hide-overlays)))
     ('eglot (call-interactively #'eglot-inlay-hints-mode))
     ('citre (user-error "Not implemented for back end 'citre"))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
 
 (defun mk/code/error-list (&optional arg)
   (interactive "P")
@@ -366,7 +393,7 @@ Though citre(ctag) is not a lsp client implementation XD."
     ('lsp-bridge (call-interactively #'lsp-bridge-code-action))
     ('eglot (call-interactively #'eglot-code-actions))
     ('citre (user-error "Not implemented for back end 'citre"))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
 
 (defun mk/code/documentation()
   (interactive)
@@ -380,7 +407,7 @@ Though citre(ctag) is not a lsp client implementation XD."
     ('lsp-bridge (call-interactively #'lsp-bridge-peek))
     ('eglot (user-error "Not implemented for back end 'eglot"))
     ('citre (call-interactively #'citre-peek))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
 
 (defun mk/code/query-peek-definition ()
   (interactive)
@@ -394,7 +421,7 @@ Though citre(ctag) is not a lsp client implementation XD."
     ('lsp-bridge (user-error "Not implemented for back end 'lsp-bridge"))
     ('eglot (user-error "Not implemented for back end 'eglot"))
     ('citre (call-interactively #'citre-peek-reference))
-    (_ (user-error mk/code/lsp-backend-not-match-error))))
+    (_ (user-error mk/code/error/todo-or-not-implemented))))
 
 (defun mk/code/query-peek-reference ()
   (interactive)
