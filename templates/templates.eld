@@ -59,6 +59,12 @@ zig-ts-mode
 (pt "std.debug.print(\"{}\", .{@TypeOf(" q ")});")
 (test_eq "try std.testing.expectEqual(" q ")")
 (test_eq_str "try std.testing.expectEqualStrings(" q ")")
+(gpa "var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+const allocator = gpa.allocator();
+defer {
+    const deinit_status = gpa.deinit();
+    if (deinit_status == .leak) @panic(\"Memory Leak!\");
+}")
 
 js-ts-mode
 

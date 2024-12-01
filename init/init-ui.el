@@ -145,7 +145,7 @@
 ;; font faces only works in emacs GUI, terminal emcas should change terminal font instead
 (defun mk/setup-font-faces ()
   "Setup Fonts."
-  (let ((default-font "Iosevka")  ; , IBM Plex Mono, Cascadia Code
+  (let ((default-font "Iosevka")  ; Iosevka, IBM Plex Mono, Cascadia Code
         (CJK-font "LXGW Neo XiHei")
         (font-size 18))
     (when (display-graphic-p)

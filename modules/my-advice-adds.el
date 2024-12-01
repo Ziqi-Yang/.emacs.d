@@ -49,7 +49,7 @@ OLDFUN COMMAND R."
             (setq command (concat "source " python-venv "/bin/activate; " command)))))
         (when (and mk/vars/in-nixos (file-exists-p (concat pt "/flake.nix")))
           (setq command (format "nix develop -c bash -c \"%s\"" (mk/util/quote-string command))))))
-    (funcall (apply oldfun command r))))
+    (apply oldfun command r)))
 
 (defun mk/my-advice-add-initialize()
   "Add all my custom advices.

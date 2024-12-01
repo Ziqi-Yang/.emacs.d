@@ -72,6 +72,9 @@
    consult-info
    consult-recent-file :preview-key nil))
 
+(use-package consult-todo
+  :ensure (:type git :host github :repo "liuyinz/consult-todo"))
+
 ;; collaborate with `consult' and `embark'
 ;; command line tool `repgrep' is also awesome, but not as this good
 (use-package wgrep

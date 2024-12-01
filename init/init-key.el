@@ -392,7 +392,6 @@ Example:
               "C-c s t" keymap/search-todo
               '(("t" . consult-todo)
                 ("T" . consult-todo-all)
-                ("p" . consult-todo-project)
                 ("d" . consult-todo-dir)
                 ("T" . hl-todo-rgrep))))
      ("y" . consult-yank-from-kill-ring)))

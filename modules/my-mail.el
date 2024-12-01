@@ -26,6 +26,7 @@
 ;; after updating mu, you may need to manually initailize again if you encounter an error
 ;; do 'mu init --my-address mr.meowking@anche.no -m ~/Maildir/'
 (use-package mu4e
+  :disabled t
   :ensure nil
   :config
   (setq mu4e-mu-binary (executable-find "mu")

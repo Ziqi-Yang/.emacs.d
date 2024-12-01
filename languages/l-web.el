@@ -7,8 +7,12 @@
 ;; (use-package emmet-mode
 ;; 	:hook ((web-mode . emmet-mode)))
 
-(use-package rainbow-mode
-	:hook ( ((mhtml-mode html-mode html-ts-mode css-mode web-mode) . rainbow-mode)))
+;; (use-package rainbow-mode
+;; 	:hook ( ((mhtml-mode html-mode html-ts-mode css-mode web-mode) . rainbow-mode)))
+
+(use-package colorful-mode
+  :ensure (:type git :host github :repo "DevelopmentCool2449/colorful-mode")
+  :hook (mhtml-mode html-mode html-ts-mode css-mode css-ts-mode web-mode))
 
 ;; put this line into .dir-locals
 ;; ((auto-mode-alist . (("\\.html\\'" . jinja2-mode))))
