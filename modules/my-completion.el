@@ -184,14 +184,27 @@ FRAME: nil for current selected frame."
   (corfu-popupinfo-mode)
   (setq corfu-popupinfo-delay (cons 0.7 0.7)))
 
+;; TODO emacs-pgtk has memory leak issue on childframe: https://github.com/hyprwm/Hyprland/issues/7038
+(use-package corfu-terminal
+  :after corfu
+  :custom
+  (corfu-terminal-disable-on-gui nil)
+  :ensure (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
+  :config
+  ;; modus theme changes faces, leading to unequal width
+  (face-spec-set
+   'corfu-current
+   '((t :inherit (modus-themes-completion-selected fixed-pitch))))
+  (corfu-terminal-mode +1))
+
 (defun corfu-enable-always-in-minibuffer ()
   "Enable Corfu in the minibuffer if Vertico/Mct are not active."
   (unless (or (bound-and-true-p mct--active)
-            (bound-and-true-p vertico--input)
-            (eq (current-local-map) read-passwd-map))
+              (bound-and-true-p vertico--input)
+              (eq (current-local-map) read-passwd-map))
     ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-      corfu-popupinfo-delay nil)
+                corfu-popupinfo-delay nil)
     (corfu-mode 1)))
 
 (defun mk/setup-completion-at-point-func()

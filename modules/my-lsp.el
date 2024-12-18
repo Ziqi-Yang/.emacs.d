@@ -232,11 +232,12 @@ Needs to run `mk/global-lsp-bridge' first."
   (eldoc-documentation-strategy #'eldoc-documentation-compose)
   (eldoc-echo-area-prefer-doc-buffer t))
 
-(use-package eldoc-box
-  :custom
-  (eldoc-box-lighter nil)
-  :config
-  (add-hook 'prog-mode-hook #'eldoc-box-hover-mode))
+;; FIXME emacs childframe memory leak: https://github.com/hyprwm/Hyprland/issues/7038
+;; (use-package eldoc-box
+;;   :custom
+;;   (eldoc-box-lighter nil)
+;;   :config
+;;   (add-hook 'prog-mode-hook #'eldoc-box-hover-mode))
 
 (with-eval-after-load 'flymake
   (add-hook 'emacs-lisp-mode-hook #'flymake-mode))
