@@ -77,15 +77,18 @@ FRAME: nil for current selected frame."
 
 (defun mk/vertico/sort-project-file (files)
   "Same directory first."
-  (let* ((files (vertico-sort-history-alpha files))
-         (p (project-current))
-         (pt (expand-file-name (project-root p)))
-         (cur-buf-dir (file-name-directory
-                       (buffer-file-name (window-buffer
-                                          (minibuffer-selected-window)))))
-         (cur-project-dir (string-remove-prefix pt cur-buf-dir)))
-    (nconc (seq-filter (lambda (x) (string-prefix-p cur-project-dir x)) files)
-           (seq-remove (lambda (x) (string-suffix-p cur-project-dir x)) files))))
+  (setq files (vertico-sort-history-alpha files))
+  (when-let* ((p (project-current))
+              (pt (expand-file-name (project-root p)))
+              ;; can be nil (when from project-switch-project)
+              (cur-buf-file (buffer-file-name (window-buffer
+                                               (minibuffer-selected-window))))
+              (cur-buf-dir (file-name-directory cur-buf-file))
+              (cur-project-dir (string-remove-prefix pt cur-buf-dir)))
+    (setq files
+          (nconc (seq-filter (lambda (x) (string-prefix-p cur-project-dir x)) files)
+                 (seq-remove (lambda (x) (string-suffix-p cur-project-dir x)) files))))
+  files)
 
 (use-package vertico
   :ensure (:host github :repo "minad/vertico"
