@@ -237,7 +237,8 @@
 
 ;;; Display Buffer Alist ========================================================
 (setq display-buffer-alist
-      '(("\\*Embark Collect" (display-buffer-in-side-window) (side . bottom)
+      '(("\\*eldoc\\*" (display-buffer-in-side-window) (side . right) (window-width . 0.3))
+        ("\\*Embark Collect" (display-buffer-in-side-window) (side . bottom)
          (height . 0.4))
         ("\\*Typst-Watch\\*" display-buffer-at-bottom (window-height . fit-window-to-buffer))
         ("\\*Embark Actions\\*" (display-buffer-in-tab) (side . right)

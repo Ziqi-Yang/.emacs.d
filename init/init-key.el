@@ -243,7 +243,6 @@ Example:
      ("f" . mk/smart-find-file)
      ("F" . mk/find-file-other-window)
      ("p" . project-find-file)
-     ("P" . mk/project-find-file-current-dir)
      ("r" . recentf-open)
      ("R" . rename-visited-file)
      ("s" . ,(mk/define&set-keymap

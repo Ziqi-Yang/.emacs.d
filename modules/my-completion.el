@@ -2,6 +2,22 @@
 ;;; Commentary:
 ;;; Code:
 
+;; see https://protesilaos.com/emacs/dotemacs
+;; 5.4.1. The prot-emacs-completion.el settings for completion styles
+(use-package minibuffer
+  :ensure nil
+  :custom
+  (minibuffer-visible-completions t)
+  
+  (completion-pcm-leading-wildcard t)
+  (completions-sort 'historical)
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides  ;; see also vertico
+   '((file (styles . (basic partial-completion orderless)))
+     (eglot (styles . (basic substring orderless)))
+     (citre (styles . (basic substring orderless))))))
+
 ;;; Vertico ====================================================================
 (defvar mk/v/vertico-last-layout nil)
 (defun mk/create-vertico-multiform-commands (commands common-properties)
@@ -37,7 +53,11 @@ FRAME: nil for current selected frame."
               '(grid))
              ;; display buffer according to layout
              (mk/create-vertico-multiform-commands
-              '(mk/better-consult-git-grep mk/better-consult-line mk/better-consult-imenu consult-line consult-line-multi consult-outline consult-ripgrep consult-imenu consult-imenu-multi xref-find-references consult-info mk/better-consult-line-multi mk/consult-ripgrep-file-type)
+              '(mk/better-consult-git-grep
+                mk/better-consult-line mk/better-consult-imenu
+                consult-line consult-line-multi consult-outline consult-ripgrep consult-imenu
+                consult-imenu-multi xref-find-references consult-info mk/better-consult-line-multi
+                mk/consult-ripgrep-file-type)
               `(buffer
                 (vertico-buffer-display-action . ,display-buffer-actions))))))))
 
@@ -50,9 +70,22 @@ FRAME: nil for current selected frame."
 
 ;; Sort directories before files
 (defun vertico/sort-directories-first (files)
-  (setq files (vertico-sort-history-length-alpha files))
+  (setq files (vertico-sort-history-alpha files))
   (nconc (seq-filter (lambda (x) (string-suffix-p "/" x)) files)
-    (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
+         (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
+
+
+(defun mk/vertico/sort-project-file (files)
+  "Same directory first."
+  (let* ((files (vertico-sort-history-alpha files))
+         (p (project-current))
+         (pt (expand-file-name (project-root p)))
+         (cur-buf-dir (file-name-directory
+                       (buffer-file-name (window-buffer
+                                          (minibuffer-selected-window)))))
+         (cur-project-dir (string-remove-prefix pt cur-buf-dir)))
+    (nconc (seq-filter (lambda (x) (string-prefix-p cur-project-dir x)) files)
+           (seq-remove (lambda (x) (string-suffix-p cur-project-dir x)) files))))
 
 (use-package vertico
   :ensure (:host github :repo "minad/vertico"
@@ -80,8 +113,10 @@ FRAME: nil for current selected frame."
   (vertico-multiform-mode)
 
   (setq vertico-multiform-categories
-        '((symbol (vertico-sort-function . vertico-sort-alpha))
-          (file (vertico-sort-function . vertico/sort-directories-first))))
+        '((symbol (vertico-sort-function . vertico-sort-history-alpha))
+          (file (vertico-sort-function . vertico/sort-directories-first))
+          (project-file (vertico-sort-function . mk/vertico/sort-project-file))
+          ))
 
   (mk/vertico-setup-multiform-commands)
   (add-function :after after-focus-change-function #'mk/vertico-setup-multiform-commands-focus-change-function))
@@ -139,19 +174,9 @@ FRAME: nil for current selected frame."
 
 ;;; Orderless completion =======================================================
 (use-package orderless
-  :init
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides nil
-        orderless-component-separator #'orderless-escapable-split-on-space)
-  :config
-  (with-eval-after-load 'eglot
-    (add-to-list 'completion-category-overrides
-                 '(eglot (styles orderless basic))))
-
-  (with-eval-after-load 'citre
-    (add-to-list 'completion-category-overrides
-                 '(citre (styles orderless basic)))))
+  :after minibuffer
+  :custom
+  (orderless-component-separator #'orderless-escapable-split-on-space))
 
 ;; NOTE: disable these to using lsp-bridge
 ;;; In Region Completion  ===============================================
