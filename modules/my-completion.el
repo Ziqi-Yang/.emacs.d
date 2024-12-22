@@ -15,8 +15,8 @@
   (completion-category-defaults nil)
   (completion-category-overrides  ;; see also vertico
    '((file (styles . (basic partial-completion orderless)))
-     (eglot (styles . (basic substring orderless)))
-     (citre (styles . (basic substring orderless))))))
+     (eglot (styles . (orderless basic)))
+     (citre (styles . (orderless basic))))))
 
 ;;; Vertico ====================================================================
 (defvar mk/v/vertico-last-layout nil)
@@ -212,18 +212,17 @@ FRAME: nil for current selected frame."
   (corfu-popupinfo-mode)
   (setq corfu-popupinfo-delay (cons 0.7 0.7)))
 
-;; TODO emacs-pgtk has memory leak issue on childframe: https://github.com/hyprwm/Hyprland/issues/7038
-(use-package corfu-terminal
-  :after corfu
-  :custom
-  (corfu-terminal-disable-on-gui nil)
-  :ensure (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
-  :config
-  ;; modus theme changes faces, leading to unequal width
-  (face-spec-set
-   'corfu-current
-   '((t :inherit (modus-themes-completion-selected fixed-pitch))))
-  (corfu-terminal-mode +1))
+;; (use-package corfu-terminal
+;;   :after corfu
+;;   :custom
+;;   (corfu-terminal-disable-on-gui nil)
+;;   :ensure (:type git :host codeberg :repo "akib/emacs-corfu-terminal")
+;;   :config
+;;   ;; modus theme changes faces, leading to unequal width
+;;   (face-spec-set
+;;    'corfu-current
+;;    '((t :inherit (modus-themes-completion-selected fixed-pitch))))
+;;   (corfu-terminal-mode +1))
 
 (defun corfu-enable-always-in-minibuffer ()
   "Enable Corfu in the minibuffer if Vertico/Mct are not active."

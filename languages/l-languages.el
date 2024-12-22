@@ -50,8 +50,13 @@
 
 ;; Nix =========================================================================
 (use-package nix-ts-mode
+  :after eglot
   :mode "\\.nix\\'"
-  :ensure (:type git :host github :repo "nix-community/nix-ts-mode"))
+  :ensure (:type git :host github :repo "nix-community/nix-ts-mode")
+  :config
+  (add-to-list 'eglot-server-programs
+               `(nix-ts-mode . ,(eglot-alternatives
+                                 '("nil" "nixd")))))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
@@ -189,6 +194,7 @@
 ;;   :hook (typst-ts-mode))
 
 (use-package typst-ts-mode
+  :after eglot
   :ensure (:type git :host codeberg :repo "meow_king/typst-ts-mode" :branch "develop"
                  :files (:defaults "*.el"))
   :custom
@@ -198,15 +204,12 @@
   (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
   (typst-ts-mode-enable-raw-blocks-highlight t)
   :config
-  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
-
-(with-eval-after-load 'eglot
-  (with-eval-after-load 'typst-ts-mode
-    (add-to-list 'eglot-server-programs
-                 `((typst-ts-mode) .
-                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
-                                          "tinymist"
-                                          "typst-lsp"))))))
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)
+  (add-to-list 'eglot-server-programs
+               `((typst-ts-mode) .
+                 ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                        "tinymist"
+                                        "typst-lsp")))))
 
 
 ;;; Zig ========================================================================
@@ -225,7 +228,10 @@
   (keymap-set zig-mode-map "C-c C-c f" #'zig-format-buffer))
 
 (use-package zig-ts-mode
-  :ensure (:type git :host codeberg :branch "develop" :repo "meow_king/zig-ts-mode"))
+  :after eglot
+  :ensure (:type git :host codeberg :branch "develop" :repo "meow_king/zig-ts-mode")
+  :config
+  (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls"))))
 
 
 ;;; Go =========================================================================

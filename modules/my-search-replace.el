@@ -86,8 +86,8 @@
 (defvar mk/v/prog-filter-regexp
   `(("java" . (:method
                ,(rx (1+ word) "(" (*? nonl) (? ")" (*? nonl) "{") (*? nonl))))
-    ("python" . (:method
-                 ,(rx "def" (*? nonl) ":")))
+    ;; ("python" . (:method
+    ;;              ,(rx "def" (*? nonl) ":")))
     ("rust" . (:method "fn"))
     ("zig" . (:method "fn"))))
 

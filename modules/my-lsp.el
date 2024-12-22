@@ -84,7 +84,6 @@
   ;; pylsp's configuration docs: `pylsp.configurationSources'
   ;; tinymist's configuration dosc: `:exportPdf'
 
-  (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls")))
   )
 
 (use-package eglot-hierarchy
@@ -232,12 +231,11 @@ Needs to run `mk/global-lsp-bridge' first."
   (eldoc-documentation-strategy #'eldoc-documentation-compose)
   (eldoc-echo-area-prefer-doc-buffer t))
 
-;; FIXME emacs childframe memory leak: https://github.com/hyprwm/Hyprland/issues/7038
-;; (use-package eldoc-box
-;;   :custom
-;;   (eldoc-box-lighter nil)
-;;   :config
-;;   (add-hook 'prog-mode-hook #'eldoc-box-hover-mode))
+(use-package eldoc-box
+  :custom
+  (eldoc-box-lighter nil)
+  :config
+  (add-hook 'prog-mode-hook #'eldoc-box-hover-mode))
 
 (with-eval-after-load 'flymake
   (add-hook 'emacs-lisp-mode-hook #'flymake-mode))
