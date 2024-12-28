@@ -83,14 +83,31 @@
   
   (require 'my-private-configs))
 
-;; NOTE: module name should be unique(also to the built-in module)
-(if (getenv "EMACS-TERM")
+(if (not (display-graphic-p))
     (with-temp-message ""
-      (require 'my-edit)
-      (require 'my-utils)
+      (require 'my-advice-adds)
+      ;; (require 'my-ai)
+      (require 'my-auto-insert)
       (require 'my-completion)
-      (require 'my-search-replace)
+      ;; (require 'my-debug)
       (require 'my-dired)
+      (require 'my-edit)
+      ;; (require 'my-emacs-pkg-dev)
+      ;; (require 'my-lsp)
+      ;; (require 'my-mail)
+      (require 'my-minibuffer)
+      (require 'my-misc)
+      ;; (require 'my-note)
+      (require 'my-search-replace)
+      (require 'my-spellcheck)
+      (require 'my-utils)
+      ;; (require 'my-vc)
+
+
+      ;; (require 'l-org)
+      (require 'l-web)
+      (require 'l-treesit)
+      (require 'l-languages)
 
       ;; Kitty Keyboard protocol support (so I can use Ctrl + Return in Kitty)
       (use-package kkp

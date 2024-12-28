@@ -39,7 +39,7 @@ Example:
      ',keymap-name))
 
 (progn
-  (keymap-global-set "C-w" #'mk/backward-delete-word)
+  (keymap-global-set "C-w" #'backward-kill-word)
   (keymap-global-set "C-M-#" #'kill-region)
   (setq meow--kbd-kill-region "C-M-#")
 

@@ -126,12 +126,6 @@
         (delete-region (car symbol-bounds) (cdr symbol-bounds))
       (message "No symbol at point."))))
 
-(defun mk/backward-delete-word (&optional arg)
-  "Like `backward-kill-word', but don't modify kill-ring.
-ARG: number of words to kill"
-  (interactive "p")
-  (delete-region (point) (progn (backward-word arg) (point))))
-
 (defun mk/better-clipboard-kill-ring-save ()
   "Copy region content or kill ring content to clipboard."
   (interactive)

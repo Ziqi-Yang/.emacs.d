@@ -65,6 +65,13 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 (use-package twind
   :ensure (:host github :repo "akirak/twind.el"))
 
+(use-package typescript-ts-mode
+  :ensure nil
+  :bind (;; keybindings
+         :map typescript-ts-mode-map
+         ("C-," . twind-insert-class-from-cheatsheet)))
+
+
 ;;; Trivial =================================================
 (defun mk/live-web-start()
   "Start live web server process using browser-sync."

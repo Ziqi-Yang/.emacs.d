@@ -56,7 +56,7 @@
   :config
   (add-to-list 'eglot-server-programs
                `(nix-ts-mode . ,(eglot-alternatives
-                                 '("nil" "nixd")))))
+                                 '("nixd" "nil")))))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
