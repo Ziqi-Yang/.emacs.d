@@ -38,11 +38,20 @@ Example:
      (global-set-key (kbd ,prefix) ',keymap-name)
      ',keymap-name))
 
+(defun mk/key-changed-placeholder ()
+  (interactive)
+  (message-box "use M-<backspace> instead"))
+
 (progn
-  (keymap-global-set "C-w" #'backward-kill-word)
+  ;; common behavior for terminal applications
+  (keymap-global-set "C-w" #'mk/backward-delete-word)
   (keymap-global-set "C-M-#" #'kill-region)
   (setq meow--kbd-kill-region "C-M-#")
 
+  ;; to familiar with nano editor
+  (keymap-global-set "M-<backspace>" #'mk/backward-delete-word)
+  (keymap-global-set "M-S-<backspace>" #'backward-kill-sexp)
+  
   (keymap-global-set "C-u" #'scroll-down-command)
   (keymap-global-set "C-d" #'scroll-up-command)
   (keymap-global-set "C-M-!" #'delete-char)
@@ -52,6 +61,8 @@ Example:
   (keymap-global-set "C-M-u" #'universal-argument))
 
 (progn
+  (keymap-global-set "C-S-<mouse-1>" #'mc/add-cursor-on-click)
+  
   (keymap-global-set "C--" #'global-text-scale-adjust)
   (keymap-global-set "C-=" #'global-text-scale-adjust)
   (keymap-global-set "M-h" #'windmove-left)
@@ -79,7 +90,6 @@ Example:
   (keymap-global-set "C-M-$" #'kill-line)
   (setq meow--kbd-kill-line "C-M-$")
 
-  (keymap-global-set "M-<backspace>" #'mk/delete-symbol-at-point)
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
   ;; cape-dabbrev has been integrated into completion-at-point function already
