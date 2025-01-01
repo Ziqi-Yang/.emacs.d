@@ -34,6 +34,7 @@
         (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.23.0"))
         (java "https://github.com/tree-sitter/tree-sitter-java")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (jsdoc "https://github.com/tree-sitter/tree-sitter-jsdoc")
         (json "https://github.com/tree-sitter/tree-sitter-json")
         (kotlin "https://github.com/fwcd/tree-sitter-kotlin")
         (python . ("https://github.com/tree-sitter/tree-sitter-python"))
