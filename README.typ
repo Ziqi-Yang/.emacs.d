@@ -1,6 +1,7 @@
 = Meow Emacs
 _Note: the configuration is meant to be used for myself, you'd better only copy/paste the only part you want._
 
+
 == Requirement
 + Basic
   ```bash
