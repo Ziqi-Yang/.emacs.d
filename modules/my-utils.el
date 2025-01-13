@@ -73,25 +73,6 @@ ARG: prefix argument."
   (delete-file (byte-compile-dest-file buffer-file-name)))
 
 ;;; Buffer =====================================================================
-(defun mk/smart-buffer-switch-no-hidden (&optional arg)
-  "Buffer switch according to project existence without showing hidden buffers.
-ARG: prefix argument.  When ARG is non-nil, then force use
-`mk/consult-buffer-no-hidden' command instead."
-  (interactive "P")
-  (if (and (not arg) (project-current))
-      (mk/consult-project-buffer-no-hidden)
-    (mk/consult-buffer-no-hidden)))
-
-(defun mk/smart-buffer-switch (&optional arg)
-  "Smart buffer switch according to project existence.
-ARG: prefix argument.  When ARG is non-nil, then force use
-`consult-buffer' command instead."
-  (interactive "P")
-  (if (and (not arg) (project-current))
-      (consult-project-buffer)
-    (consult-buffer)))
-
-
 (defun mk/switch-to-compilation-buffer()
   "Switch to compilation buffer"
   (interactive)

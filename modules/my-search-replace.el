@@ -136,20 +136,6 @@ When ARG is non-nil, then search all buffer."
   (other-window 1)
   (delete-other-windows))
 
-(defun mk/consult-buffer-no-hidden()
-  "Consult buffer without displaying hidden buffers."
-  (interactive)
-  (let* ((filters consult-buffer-filter)
-         (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
-    (consult-buffer)))
-
-(defun mk/consult-project-buffer-no-hidden()
-  "Consult project buffer without displaying hidden buffers."
-  (interactive)
-  (let* ((filters consult-buffer-filter)
-         (consult-buffer-filter (push "\\`\\*.*\\*\\'" filters))) ;; local consult-buffer-filter
-    (consult-project-buffer)))
-
 (defun mk/get-rg-types ()
   ;; https://github.com/manateelazycat/color-rg/blob/65818c493f100a78bf55f5a0fe83f29521621b15/color-rg.el#L697
   "Invokes rg --type-list and puts the result in an alist."

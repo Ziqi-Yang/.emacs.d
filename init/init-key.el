@@ -162,8 +162,7 @@ Example:
   ;; buffer(b)
   (mk/define&set-keymap
    "C-c b" keymap/buffer
-   '(("b" . mk/smart-buffer-switch-no-hidden)
-     ("B" . mk/smart-buffer-switch) ;; use SPC to filter hidden buffer 
+   '(("b" . consult-buffer)
      ("o" . switch-to-buffer-other-window)
      ("c" . mk/switch-to-compilation-buffer)
      ("e" . mk/switch-to-eww-buffer)
