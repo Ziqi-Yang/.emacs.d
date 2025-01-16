@@ -125,7 +125,16 @@
    '("C-." . embark-act)
    '("C-S-v" . clipboard-yank)
    '("C-S-c" . mk/better-clipboard-kill-ring-save)
-   '("!" . hs-toggle-hiding)))
+   '("!" . hs-toggle-hiding)
+
+   ;; window/tab management
+   '("C-S-l" . tab-bar-duplicate-tab)
+   '("C-S-h" . tab-bar-close-tab)
+   '("C-S-j" . tab-bar-switch-to-next-tab)
+   '("C-S-k" . tab-bar-switch-to-prev-tab)
+   '("C-S-n" . rotate-windows)
+   '("C-S-p" . rotate-windows-back)
+   '("C-w" . tab-bar-close-tab)))
 
 (use-package meow
   :config

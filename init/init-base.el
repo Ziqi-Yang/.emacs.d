@@ -52,10 +52,9 @@
   :ensure nil
   :custom
   (tab-bar-select-tab-modifiers '(meta))
-  (tab-bar-new-tab-to 'rightmost)
+  (tab-bar-new-tab-to 'right)
   (tab-bar-show 1)  ; hide bar if <= 1 tabs open
   (tab-bar-close-button-show nil)  ; hide tab close / X button
-  (tab-bar-new-tab-choice "*dashboard*")  ; buffer to show in new tabs
   (tab-bar-tab-hints t)  ; show tab numbers
   (tab-bar-format '(tab-bar-format-menu-bar tab-bar-format-tabs tab-bar-separator))
   ;; don't use :custom-face
