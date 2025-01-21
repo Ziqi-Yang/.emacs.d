@@ -55,10 +55,27 @@ OLDFUN COMMAND R."
   "Add all my custom advices.
 This function should be called after init, so that other initialization can work properly."
   (advice-add #'clipboard-yank :after #'mk/advice/clipboard-yank)
-  (advice-add #'compile :around #'mk/advice/compile))
+  (advice-add #'compile :around #'mk/advice/compile)
+
+  (with-eval-after-load 'typescript-ts-mode
+    (advice-add #'typescript-ts-mode--indent-rules :filter-return #'mk/typescript-ts-mode--indent-rules)))
+
 
 ;; indent region being yanked
 (add-hook 'after-init-hook #'mk/my-advice-add-initialize)
+
+
+
+(defun mk/typescript-ts-mode--indent-rules (rules)
+  (let ((ts-rules (car rules)))
+    (nbutlast ts-rules 1)
+    (nconc
+     ts-rules
+     '(((lambda (_node parent _bol)
+          (treesit-parent-until parent "\\`template_string\\'" t))
+        no-indent)
+       (no-node parent-bol 0))))
+  rules)
 
 (provide 'my-advice-adds)
 
