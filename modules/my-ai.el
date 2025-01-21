@@ -1,6 +1,7 @@
 ;;; my-ai.el --- AI-powered features for Emacs -*- lexical-binding: t -*-
 
 (use-package aider
+  :disabled
   :ensure (:host github :repo "tninja/aider.el")
   :custom
   (aider-args '("--no-auto-commits" "--model" "openrouter/anthropic/claude-3.5-sonnet"))
@@ -9,6 +10,7 @@
   (setenv "OPENROUTER_API_KEY" mk/private-vars/gptel-openrouter-key))
 
 (use-package gptel
+  :disabled
   :config
   (setq gptel-model 'anthropic/claude-3.5-sonnet)
   (setq gptel-backend

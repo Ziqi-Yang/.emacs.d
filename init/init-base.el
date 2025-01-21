@@ -268,15 +268,24 @@
 
 (use-package pixel-scroll
   :ensure nil
-  :bind
-  ([remap scroll-up-command]   . pixel-scroll-interpolate-down)
-  ([remap scroll-down-command] . pixel-scroll-interpolate-up)
+  ;; uncomment this to enable pixel scroll for scroll-up/down-command
+  ;; :bind
+  ;; ([remap scroll-up-command]   . pixel-scroll-interpolate-down)
+  ;; ([remap scroll-down-command] . pixel-scroll-interpolate-up)
   :custom
   (pixel-scroll-precision-interpolate-page t)
   :init
   ;; scrolling with an ordinary mouse to be almost as smooth as scrolling with a touchpad, on systems other than X:
   ;; (setq pixel-scroll-precision-large-scroll-height 40.0)
   (pixel-scroll-precision-mode 1))
+
+(use-package ultra-scroll
+  :ensure (:host github :repo "jdtsmith/ultra-scroll")
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0) 
+  :config
+  (ultra-scroll-mode 1))
 
 (use-package eee
   :ensure (:type git :host github :repo "eval-exec/eee.el"

@@ -147,7 +147,7 @@
   "Setup Fonts."
   (let ((default-font "Iosevka")  ; Iosevka, IBM Plex Mono, Cascadia Code
         (CJK-font "LXGW Neo XiHei")
-        (font-size 20))
+        (font-size 22))
     (when (display-graphic-p)
       (when (member default-font (font-family-list))
         ;; @ default font

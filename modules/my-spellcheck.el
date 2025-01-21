@@ -30,7 +30,6 @@
 
 ;; @ jinx
 (use-package jinx
-  :disabled t
   :ensure (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
   :delight
   :init
