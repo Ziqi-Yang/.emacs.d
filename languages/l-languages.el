@@ -146,6 +146,7 @@
           python-shell-interpreter-args "-i"))
 
 (with-eval-after-load 'python
+  (setq python-indent-def-block-scale 1)
   (keymap-unset python-mode-map "C-c C-c")
   (keymap-set python-mode-map "C-c C-c o" #'python-fix-imports)
 
