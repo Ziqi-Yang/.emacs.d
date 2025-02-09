@@ -34,5 +34,6 @@
 
 *.elc
 *.eld
+!/elpaca-package-lock.eld
 .aider*
 .env

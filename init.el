@@ -54,6 +54,13 @@
 ;; Block until current queue processed.
 (elpaca-wait)
 
+
+;; use this function to write package version lock file
+;; set `elpaca-lock-file' to this file to keep emacs in sync with the lock
+(defun mk/elpaca-write-lock-file ()
+  (interactive)
+  (elpaca-write-lock-file (expand-file-name "elpaca-package-lock.eld" user-emacs-directory)))
+
 ;; (use-package benchmark-init ;; when needed, enable it
 ;;   :config
 ;;   ;; To disable collection of benchmark data after init is done.
