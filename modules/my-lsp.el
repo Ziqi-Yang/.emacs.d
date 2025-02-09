@@ -235,7 +235,9 @@ Needs to run `mk/global-lsp-bridge' first."
   :custom
   (eldoc-box-lighter nil)
   :config
-  (add-hook 'prog-mode-hook #'eldoc-box-hover-mode))
+  (add-hook 'prog-mode-hook #'eldoc-box-hover-mode)
+  (with-eval-after-load 'eglot
+    (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)))
 
 (with-eval-after-load 'flymake
   (add-hook 'emacs-lisp-mode-hook #'flymake-mode))
