@@ -21,10 +21,11 @@
 (use-package web-mode
   ;; must be explicit or that mode loading will be depend on binding
   ;; so config won't be loaded
-  :defer 2
+  :after eglot
   :bind (;; keybindings
          :map web-mode-map
          ("C-," . twind-insert-class-from-cheatsheet))
+  :mode ("\\.html\\'" "\\.djhtml\\'" "\\.svelte\\'")
   :custom
   (web-mode-markup-indentation 2)
   (web-mode-css-indent-offset 2)
@@ -35,17 +36,8 @@
   (web-mode-enable-current-element-highlight t)
   (web-mode-enable-current-column-highlight t)
   (web-mode-enable-engine-detection t)
-
   :config
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.j2\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+  (add-to-list 'eglot-server-programs '(web-mode . ("svelteserver" "--stdio"))))
 
 
 (defun mk/setup-web-mode-for-emacs-client ()

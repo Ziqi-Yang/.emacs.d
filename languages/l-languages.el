@@ -234,7 +234,6 @@
   :config
   (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls"))))
 
-
 ;;; Go =========================================================================
 (with-eval-after-load 'go-ts-mode
   (setq-default go-ts-mode-indent-offset 4))

@@ -50,6 +50,7 @@
         (vue "https://github.com/ikatyang/tree-sitter-vue")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (toml "https://github.com/ikatyang/tree-sitter-toml")
+        (svelte "https://github.com/Himujjal/tree-sitter-svelte.git")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
                   "split_parser" "tree-sitter-markdown/src")
