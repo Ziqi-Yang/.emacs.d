@@ -287,16 +287,6 @@ Example:
                 ("s" . epa-sign-file)
                 ("v" . epa-verify-file))))))
 
-  ;; Hugo(H)
-  (mk/define&set-keymap
-   "C-c H" keymap/hugo
-   '(("h" . mk/hugo/cd-project)
-     ("p" . mk/hugo/toggle-preview)
-     ("t" . mk/hugo/find-blog-using-tag-search)
-     ("d" . mk/hugo/goto-draft)
-     ("b" . mk/hugo/build)
-     ("f" . mk/hugo/edit-or-create)))
-
   ;; narrow(n)
   (mk/define&set-keymap
    "C-c n" keymap/narrow
@@ -375,8 +365,9 @@ Example:
                 ("f" . apropos-function)
                 ("l" . apropos-library)
                 ("I" . info-apropos))))
-     ("s" . mk/better-consult-line)
-     ("S" . mk/consult-line-other-window-no-jump)
+     ("s" . isearch-forward-thing-at-point)
+     ("l" . mk/better-consult-line)
+     ("L" . mk/consult-line-other-window-no-jump)
      ;; ("S" . mk/better-consult-line-multi)
      ("f" . consult-focus-lines)
      ("h" . isearch-highlight-regexp)

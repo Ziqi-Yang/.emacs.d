@@ -170,7 +170,6 @@
   (keymap-local-set "C-c M-c c" #'org-toggle-checkbox)
   (keymap-local-set "C-c M-c i" #'org-toggle-inline-images)
   
-  (keymap-local-set "C-c M-c h" #'mk/hugo/complete-tag-at-point)
   (keymap-local-set "C-c M-c b" #'org-babel-tangle)
   (keymap-local-set "C-c M-c e" #'org-export-dispatch)
   (keymap-local-set "C-c M-c p" #'org-priority))
