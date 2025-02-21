@@ -30,7 +30,7 @@
   (web-mode-markup-indentation 2)
   (web-mode-css-indent-offset 2)
   (web-mode-code-indent-offset 2)
-  (web-mode-enable-part-face t)
+  (web-mode-enable-part-face nil)
   (web-mode-enable-comment-interpolation t)
   (web-mode-enable-heredoc-fontification t)
   (web-mode-enable-current-element-highlight t)

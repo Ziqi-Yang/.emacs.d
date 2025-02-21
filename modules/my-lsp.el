@@ -121,16 +121,18 @@
   ;; "typeCheckingMode": "standard",
   ;; }
   (lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
+  (lsp-bridge-single-lang-server-extension-list
+   '((("svelte") . "svelteserver")))
+  (lsp-bridge-multi-lang-server-extension-list
+   '((("html") . "html_emmet_tailwindcss")))
   (lsp-bridge-multi-lang-server-mode-list
-   '(((web-mode) . "html_emmet_tailwindcss")
-     ;; ((typescript-ts-mode) . "typescript_eslint") ;; eslint part seems does nothing at
-     ;; all?
-     ((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)
-     ((qml-mode qml-ts-mode) . "qmlls_javascript")))
+   '(((python-mode python-ts-mode) . lsp-bridge-python-multi-lsp-server)))
   ;; use my `eldoc-headline' to display signature information
   ;; (lsp-bridge-signature-show-function '(lambda (str) (setq-local eldoc-headline-string str)))
   (lsp-bridge-user-langserver-dir (expand-file-name "lsp-bridge-config/langserver" user-emacs-directory))
-  (lsp-bridge-user-multiserver-dir (expand-file-name "lsp-bridge-config/multiserver" user-emacs-directory))
+  (lsp-bridge-user-multiserver-dir (expand-file-name "lsp-bridge-config/multiserver"
+                                                     user-emacs-directory))
+  
   :config
   ;; lsp-bridge doesn't work well on *scratch* buffer
   ;; typst-ts-mode: editing in docs will leads to error messaging/buffer constantly popping up
@@ -139,8 +141,8 @@
   
   (setq lsp-bridge-enable-with-tramp nil)  ; goto local sudo bookmark will cause error
   (add-hook 'web-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
-  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string
-                                                  t)))
+  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
+  
   (mk/global-lsp-bridge))
 
 
