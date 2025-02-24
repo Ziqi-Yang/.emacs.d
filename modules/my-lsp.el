@@ -64,7 +64,7 @@
   (setq-default eglot-events-buffer-config '(:size 0 :format full))
   
   ;; list of things that eglot won't change
-	;; (customize-set-variable 'eglot-stay-out-of '(imenu))
+	(customize-set-variable 'eglot-stay-out-of '(imenu))
   (customize-set-variable 'eglot-extend-to-xref t)
 	(customize-set-variable 'eglot-autoshutdown t) ;; automatically shutdown
   (add-hook 'eglot-managed-mode-hook
