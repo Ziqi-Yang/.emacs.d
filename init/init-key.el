@@ -455,7 +455,7 @@ Example:
   (mk/define&set-keymap
    "C-c z" keymap/trivial
    `(("0".  mk/share-0x0)
-     ("a" . aider-transient-menu)
+     ("a" . aidermacs-transient-menu)
      ("g" . mk/better-gptel)
      ("A" . mk/better-align-regexp)
      ("c" . jinx-correct)

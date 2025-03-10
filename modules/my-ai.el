@@ -9,19 +9,37 @@
   (setenv "OPENAI_API_KEY" mk/private-vars/gptel-openrouter-key)
   (setenv "OPENROUTER_API_KEY" mk/private-vars/gptel-openrouter-key))
 
+
+;; For better aidermacs experience. Aidermacs hasn't supported `eat' yet.
+(use-package vterm
+  ;; installed via Nix
+  :ensure nil)
+
+(use-package aidermacs
+  :ensure (:host github :repo "MatthewZMD/aidermacs")
+  :bind (("C-c a" . aidermacs-transient-menu))
+  :custom
+  (aidermacs-use-architect-mode t)
+  (aidermacs-backend 'vterm)
+  (aidermacs-default-model "openrouter/anthropic/claude-3.7-sonnet")
+  (aidermacs-architect-model "openrouter:anthropic/claude-3.7-sonnet:thinking")
+  :config
+  (aidermacs-setup-minor-mode))
+
 (use-package gptel
   :disabled
   :config
   (setq gptel-model 'anthropic/claude-3.5-sonnet)
   (setq gptel-backend
-        (gptel-make-openai "OpenRouter"
-          :host "openrouter.ai"
-          :endpoint "/api/v1/chat/completions"
-          :stream t
-          :key 'mk/private-vars/gptel-openrouter-key
-          :models '(deepseek/deepseek-chat
-                    anthropic/claude-3.5-sonnet
-                    openai/chatgpt-4o-latest))))
+        (gptel-make-openai
+         "OpenRouter"
+         :host "openrouter.ai"
+         :endpoint "/api/v1/chat/completions"
+         :stream t
+         :key 'mk/private-vars/gptel-openrouter-key
+         :models '(deepseek/deepseek-chat
+                   anthropic/claude-3.5-sonnet
+                   openai/chatgpt-4o-latest))))
 
 (defun mk/better-gptel (&optional arg)
   "Enhanced GPTel interaction command.

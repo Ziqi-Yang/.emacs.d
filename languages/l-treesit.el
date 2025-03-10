@@ -52,10 +52,10 @@
         (toml "https://github.com/ikatyang/tree-sitter-toml")
         (svelte "https://github.com/Himujjal/tree-sitter-svelte.git")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
-        (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-                  "split_parser" "tree-sitter-markdown/src")
-        (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-                         "split_parser" "tree-sitter-markdown-inline/src")
+        (markdown . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                     "split_parser" "tree-sitter-markdown/src"))
+        (markdown-inline . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                            "split_parser" "tree-sitter-markdown-inline/src"))
         (nix "https://github.com/nix-community/tree-sitter-nix")
         (just "https://github.com/IndianBoy42/tree-sitter-just")
         (zig "https://github.com/maxxnino/tree-sitter-zig")

@@ -120,7 +120,7 @@
   ;; "venv": ".venv",
   ;; "typeCheckingMode": "standard",
   ;; }
-  (lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
+  (lsp-bridge-python-multi-lsp-server "my_basedpyright_ruff")
   (lsp-bridge-single-lang-server-extension-list
    '((("svelte") . "svelteserver")))
   (lsp-bridge-multi-lang-server-extension-list

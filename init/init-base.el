@@ -215,7 +215,7 @@
                   citre-jump))
     (advice-add func :before 'mk/push-point-to-xref-marker-stack)))
 
-;;; Shell ======================================================================
+;;; Terminal ======================================================================
 (use-package eat
   :ensure
   (:url "https://codeberg.org/akib/emacs-eat"

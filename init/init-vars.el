@@ -34,7 +34,8 @@
       shell-file-name (if mk/vars/in-nixos
                           "/run/current-system/sw/bin/bash"
                         "/bin/bash")
-      find-function-C-source-directory "~/proj/probe/emacs/src")
+      ;; find-function-C-source-directory "~/proj/probe/emacs/src"
+      )
 
 (let ((zvm (file-name-concat (getenv "HOME") ".zvm/bin")))
   (setenv "PATH" (concat (getenv "PATH") ":" zvm))
