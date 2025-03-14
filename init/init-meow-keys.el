@@ -133,8 +133,7 @@
    '("C-S-j" . tab-bar-switch-to-next-tab)
    '("C-S-k" . tab-bar-switch-to-prev-tab)
    '("C-S-n" . rotate-windows)
-   '("C-S-p" . rotate-windows-back)
-   '("C-w" . tab-bar-close-tab)))
+   '("C-S-p" . rotate-windows-back)))
 
 (use-package meow
   :config
