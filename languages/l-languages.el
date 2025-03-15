@@ -39,7 +39,7 @@
 ;;; CC =========================================================================
 
 (with-eval-after-load 'c-ts-mode
-  (setq c-ts-mode-indent-style 'gnu)
+  (setq c-ts-mode-indent-style #'linux)
   (keymap-unset c-ts-base-mode-map "C-c C-c")
   (keymap-set c-ts-base-mode-map "C-c C-c m" #'mk/better-consult-man)
   (keymap-set c-ts-base-mode-map "C-c C-c f" #'ff-find-other-file)
