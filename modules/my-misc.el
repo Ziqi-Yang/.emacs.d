@@ -95,7 +95,8 @@ configuration (like Makefile)."
          (concat "g++ -Wall -std=c++17 " relative-file-name " -o " relative-bare-file-name " && ./" relative-bare-file-name))
         ;; c
         ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
-         (concat "make " relative-bare-file-name " && ./" relative-bare-file-name))
+         ;; (concat "make " relative-bare-file-name " && ./" relative-bare-file-name)
+         (concat "gcc -Wall -Wpedantic " relative-file-name " -o " relative-bare-file-name " && ./" relative-bare-file-name))
         ;; java
         ((or (eq major-mode 'java-mode) (eq major-mode 'java-ts-mode))
          (concat "./gradlew run"))

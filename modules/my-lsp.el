@@ -60,6 +60,9 @@
   ;; performance improvemence:
   ;; https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
   
+  (add-to-list 'eglot-server-programs '((markdown-mode markdown-ts-mode md-ts-mode) . ("harper-ls" "--stdio")))
+  (add-to-list 'eglot-server-programs '(text-mode . ("harper-ls" "--stdio")))
+  
   (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess
   (setq-default eglot-events-buffer-config '(:size 0 :format full))
   

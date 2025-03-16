@@ -21,11 +21,13 @@
 (use-package web-mode
   ;; must be explicit or that mode loading will be depend on binding
   ;; so config won't be loaded
+  :disabled
   :after eglot
   :bind (;; keybindings
          :map web-mode-map
-         ("C-," . twind-insert-class-from-cheatsheet))
-  :mode ("\\.html\\'" "\\.djhtml\\'" "\\.svelte\\'")
+         ;; ("C-," . twind-insert-class-from-cheatsheet)
+         )
+  ;; :mode ("\\.html\\'" "\\.djhtml\\'" "\\.svelte\\'")
   :custom
   (web-mode-markup-indentation 2)
   (web-mode-css-indent-offset 2)
@@ -54,14 +56,26 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 (add-hook 'after-init-hook #'mk/setup-web-mode-for-emacs-client)
 (add-hook 'server-after-make-frame-hook #'mk/setup-web-mode-for-emacs-client)
 
-(use-package twind
-  :ensure (:host github :repo "akirak/twind.el"))
+;; (use-package twind
+;;   :ensure (:host github :repo "akirak/twind.el"))
 
 (use-package typescript-ts-mode
   :ensure nil
   :bind (;; keybindings
          :map typescript-ts-mode-map
-         ("C-," . twind-insert-class-from-cheatsheet)))
+         ;; ("C-," . twind-insert-class-from-cheatsheet)
+         ))
+
+(use-package svelte-ts-mode
+  :after eglot
+  :ensure (:host codeberg :repo "meow_king/svelte-ts-mode")
+  :mode ("\\.svelte\\'")
+  :config
+  (add-to-list 'eglot-server-programs '(svelte-ts-mode . ("svelteserver" "--stdio"))))
+
+(use-package htmljinja2-ts-mode
+  :mode ("\\.j2\\'")
+  :ensure (:host codeberg :repo "meow_king/htmljinja2-ts-mode"))
 
 
 ;;; Trivial =================================================
