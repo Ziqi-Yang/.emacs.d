@@ -222,23 +222,24 @@
   :ensure (:host github :repo "spotify/dockerfile-mode"))
 
 ;;; Zig ========================================================================
-(use-package zig-mode
-  :ensure (:type git :host github :repo "ziglang/zig-mode")
-  :disabled
-  :config
-  (setq zig-format-on-save nil)
-  
-  (keymap-set zig-mode-map "C-c C-c c" #'zig-compile)
-  (keymap-set zig-mode-map "C-c C-c C-b" #'zig-build-exe)
-  (keymap-set zig-mode-map "C-c C-c C-l" #'zig-build-lib)
-  (keymap-set zig-mode-map "C-c C-c C-o" #'zig-build-obj)
-  (keymap-set zig-mode-map "C-c C-c t" #'zig-test-buffer)
-  (keymap-set zig-mode-map "C-c C-c r" #'zig-run)
-  (keymap-set zig-mode-map "C-c C-c f" #'zig-format-buffer))
+;; (use-package zig-mode
+;;   :ensure (:type git :host github :repo "ziglang/zig-mode")
+;;   :disabled
+;;   :config
+;;   (setq zig-format-on-save nil)
+
+;;   (keymap-set zig-mode-map "C-c C-c c" #'zig-compile)
+;;   (keymap-set zig-mode-map "C-c C-c C-b" #'zig-build-exe)
+;;   (keymap-set zig-mode-map "C-c C-c C-l" #'zig-build-lib)
+;;   (keymap-set zig-mode-map "C-c C-c C-o" #'zig-build-obj)
+;;   (keymap-set zig-mode-map "C-c C-c t" #'zig-test-buffer)
+;;   (keymap-set zig-mode-map "C-c C-c r" #'zig-run)
+;;   (keymap-set zig-mode-map "C-c C-c f" #'zig-format-buffer))
 
 (use-package zig-ts-mode
   :after eglot
-  :ensure (:type git :host codeberg :branch "develop" :repo "meow_king/zig-ts-mode")
+  :ensure (:host codeberg :branch "develop" :repo "meow_king/zig-ts-mode")
+  :mode  ("\\.\\(?:z\\(?:ig\\|on\\)\\)\\'") ; `(,(rx "." (or "zig" "zon") eos))
   :config
   (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls"))))
 

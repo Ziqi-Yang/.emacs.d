@@ -66,6 +66,9 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
          ;; ("C-," . twind-insert-class-from-cheatsheet)
          ))
 
+(use-package mhtml-ts-mode
+  :ensure nil)
+
 (use-package svelte-ts-mode
   :after eglot
   :ensure (:host codeberg :repo "meow_king/svelte-ts-mode")
