@@ -21,6 +21,7 @@
   (add-hook 'web-mode-hook (lambda () (auto-fill-mode -1)))
   (add-hook 'web-ts-mode-hook (lambda () (auto-fill-mode -1)))
   (add-hook 'bash-ts-mode-hook (lambda () (auto-fill-mode -1)))
+  (add-hook 'json-ts-mode-hook (lambda () (auto-fill-mode -1)))
   
   (add-hook 'markdown-ts-mode-hook 'auto-fill-mode)
   (add-hook 'text-mode-hook 'auto-fill-mode))

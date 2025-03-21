@@ -71,8 +71,7 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 
 (use-package svelte-ts-mode
   :after eglot
-  :ensure (:host codeberg :repo "meow_king/svelte-ts-mode")
-  :mode ("\\.svelte\\'")
+  :ensure (:host github :repo "leafOfTree/svelte-ts-mode")
   :config
   (add-to-list 'eglot-server-programs '(svelte-ts-mode . ("svelteserver" "--stdio"))))
 
