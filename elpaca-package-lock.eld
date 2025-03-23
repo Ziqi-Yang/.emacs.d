@@ -84,14 +84,25 @@
                          "docs/*.info" "docs/*.texi" "docs/*.texinfo"
                          (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                    "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
-                        :source "MELPA" :protocol https :inherit t :depth treeless :type
-                        git :host codeberg :branch "develop" :ref
+                        :source "MELPA" :protocol https :inherit t :depth treeless :host
+                        codeberg :branch "develop" :ref
                         "020500ac3c9ac2cadedccb5cd6c506eb38327443"))
+ (dockerfile-mode :source #1# :recipe
+                  (:package "dockerfile-mode" :fetcher github :repo
+                            "spotify/dockerfile-mode" :files
+                            ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo"
+                             "doc/dir" "doc/*.info" "doc/*.texi" "doc/*.texinfo"
+                             "lisp/*.el" "docs/dir" "docs/*.info" "docs/*.texi"
+                             "docs/*.texinfo"
+                             (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
+                                       "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
+                            :source "MELPA" :protocol https :inherit t :depth treeless
+                            :host github :ref "8135740bfc6ad96ab82d39d9fe68dbce56180f4c"))
  (typst-ts-mode :source #1# :recipe
                 (:source nil :protocol https :inherit t :depth treeless :type git :host
                          codeberg :repo "meow_king/typst-ts-mode" :branch "develop"
                          :package "typst-ts-mode" :ref
-                         "34d522c0a0d8eec9a8b3a6855cf394e7d5c8fb84"))
+                         "e0542e3e42c55983282115a97c13c023a464ff00"))
  (cargo :source #1# :recipe
         (:package "cargo" :repo "kwrooijen/cargo.el" :fetcher github :files
                   ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -101,10 +112,6 @@
                              "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                   :source "MELPA" :protocol https :inherit t :depth treeless :host github
                   :ref "7f8466063381eed05d4e222ce822b1dd44e3bf17"))
- (md-ts-mode :source #1# :recipe
-             (:source nil :protocol https :inherit t :depth treeless :host github :repo
-                      "eki3z/md" :package "md-ts-mode" :ref
-                      "cd1586e7f00a42e4657876f610db14ef869b8a02"))
  (markdown-ts-mode :source #1# :recipe
                    (:package "markdown-ts-mode" :repo "LionyxML/markdown-ts-mode" :fetcher
                              github :files
@@ -166,19 +173,15 @@
             (:source nil :protocol https :inherit t :depth treeless :host github :repo
                      "nverno/llvm-mode" :package "llvm-mode" :ref
                      "9741e5391ea711474474d8d4aacd5abaae2ba501"))
- (twind :source #1# :recipe
-        (:source nil :protocol https :inherit t :depth treeless :host github :repo
-                 "akirak/twind.el" :package "twind" :ref
-                 "da29a5f560438e886525f07059938724c5473c2a"))
- (web-mode :source #1# :recipe
-           (:package "web-mode" :repo "fxbois/web-mode" :fetcher github :files
-                     ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
-                      "doc/*.info" "doc/*.texi" "doc/*.texinfo" "lisp/*.el" "docs/dir"
-                      "docs/*.info" "docs/*.texi" "docs/*.texinfo"
-                      (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
-                                "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
-                     :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                     "be2d59c8fa02b1a45ae54ce4079e502e659cefe6"))
+ (htmljinja2-ts-mode :source #1# :recipe
+                     (:source nil :protocol https :inherit t :depth treeless :host
+                              codeberg :repo "meow_king/htmljinja2-ts-mode" :package
+                              "htmljinja2-ts-mode" :ref
+                              "c88c29c6c8b53c73b43713310d6c6a028e801a0a"))
+ (svelte-ts-mode :source #1# :recipe
+                 (:source nil :protocol https :inherit t :depth treeless :host github
+                          :repo "leafOfTree/svelte-ts-mode" :package "svelte-ts-mode" :ref
+                          "ef0a534da884f6ca8950d0910a8d3408b98fb945"))
  (colorful-mode :source #1# :recipe
                 (:package "colorful-mode" :repo "DevelopmentCool2449/colorful-mode" :files
                           ("*" (:exclude ".git")) :source "GNU ELPA" :protocol https
@@ -460,7 +463,7 @@
  (aidermacs :source #1# :recipe
             (:source nil :protocol https :inherit t :depth treeless :host github :repo
                      "MatthewZMD/aidermacs" :package "aidermacs" :ref
-                     "96e732d770b9dd5f109aa606a72c1d62ebad6fc5"))
+                     "3cda7ffd4fb7a0292b57574913eb8c6f6fb84ac8"))
  (breadcrumb :source #1# :recipe
              (:package "breadcrumb" :repo "joaotavora/breadcrumb" :files
                        ("*" (:exclude ".git")) :source "GNU ELPA" :protocol https :inherit

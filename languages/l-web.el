@@ -109,6 +109,79 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
       (mk/live-web-kill)
     (mk/live-web-start)))
 
+(defun mk/treesit-choose-parser (parser)
+  (interactive
+   (list (let* ((parser-alist
+                 (treesit--explorer-generate-parser-alist))
+                (parser-name (if (length= parser-alist 1)
+                                 (caar parser-alist)
+                               (completing-read
+                                "Parser: " (mapcar #'car parser-alist)))))
+           (alist-get parser-name parser-alist
+                      nil nil #'equal))))
+  parser)
+
+
+(defun mk/tailwind-class-name-prefix-operation (prefix operation)
+  "Append/Remove/Toggle tailwind class name prefix.
+You should only use it with tailwindcss 4.
+PREFIX: prefix string.
+OPERATION: one of toggle/append/all-append/remove."
+  (interactive
+   (list (read-string "Prefix: ")
+         (completing-read
+          "Choose a Prefix Operation: "
+          '("toggle" "append" "all-append" "remove"))))
+  (save-excursion
+    (let ((parser (call-interactively #'mk/treesit-choose-parser))
+          (offset 0)
+          beg end)
+      (when (region-active-p)
+        (setq beg (region-beginning)
+              end (region-end)))
+      (dolist (match-group
+               (treesit-query-capture
+                parser
+                '(((attribute (attribute_name) @name
+                              (quoted_attribute_value (attribute_value "text" @value)))
+                   (:equal @name "class")))
+                beg end nil t))
+        ;; (message (treesit-node-text (cdadr match-group)))
+        (let* ((node (cdadr match-group))
+               (node-start (+ (treesit-node-start node) offset))
+               (node-end (+ (treesit-node-end node) offset))
+               (node-length (- node-end node-start))
+               (new-str
+                (concat
+                 (when (= (char-before (+ node-start 1)) ?\s)
+                   " ")
+                 (mapconcat
+                  #'(lambda (class-name)
+                      (pcase operation
+                        ("toggle"
+                         (if (string-prefix-p prefix class-name)
+                             (string-remove-prefix prefix class-name)
+                           (concat prefix class-name)))
+                        ("append"
+                         (unless (string-prefix-p prefix class-name)
+                           (concat prefix class-name)))
+                        ("all-append"
+                         (concat prefix class-name))
+                        ("remove"
+                         (when (string-prefix-p prefix class-name)
+                           (string-remove-prefix prefix class-name)))))
+                  (split-string
+                   (buffer-substring node-start node-end)
+                   " " t)
+                  " ")
+                 (when (= (char-after (- node-end 1)) ?\s)
+                   " "))))
+          (delete-region node-start node-end)
+          (goto-char node-start)
+          (insert new-str)
+          (setq offset (- (+ offset (length new-str)) node-length)))
+        ))))
+
 
 (provide 'l-web)
 
