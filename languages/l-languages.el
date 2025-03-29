@@ -205,7 +205,7 @@
   :custom
   ;; (typst-ts-markup-header-same-height nil)  ; it will leads to height change
   ;; when error occurs (so that the header faces changes into error faces)
-  (typst-ts-watch-options "--open")
+  (typst-ts-watch-options '("--open"))
   (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
   (typst-ts-mode-enable-raw-blocks-highlight t)
   (typst-ts-mode-preview-function #'browse-url-xdg-open)

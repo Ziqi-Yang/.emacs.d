@@ -126,12 +126,12 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
   "Append/Remove/Toggle tailwind class name prefix.
 You should only use it with tailwindcss 4.
 PREFIX: prefix string.
-OPERATION: one of toggle/append/all-append/remove."
+OPERATION: one of toggle/add-missing/add-all/remove."
   (interactive
    (list (read-string "Prefix: ")
          (completing-read
           "Choose a Prefix Operation: "
-          '("toggle" "append" "all-append" "remove"))))
+          '("toggle" "add-missing" "add-all" "remove"))))
   (save-excursion
     (let ((parser (call-interactively #'mk/treesit-choose-parser))
           (offset 0)
@@ -162,10 +162,10 @@ OPERATION: one of toggle/append/all-append/remove."
                          (if (string-prefix-p prefix class-name)
                              (string-remove-prefix prefix class-name)
                            (concat prefix class-name)))
-                        ("append"
+                        ("add-missing"
                          (unless (string-prefix-p prefix class-name)
                            (concat prefix class-name)))
-                        ("all-append"
+                        ("add-all"
                          (concat prefix class-name))
                         ("remove"
                          (when (string-prefix-p prefix class-name)
