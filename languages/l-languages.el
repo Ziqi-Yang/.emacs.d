@@ -137,13 +137,13 @@
 (use-package edit-indirect
   :ensure (:host github :repo "Fanael/edit-indirect"))
 
-(use-package markdown-ts-mode
-  :mode ("\\.md\\'" . markdown-ts-mode))
+;; (use-package markdown-ts-mode
+;;   :mode ("\\.md\\'" . markdown-ts-mode))
 
-;; (use-package md-ts-mode
-;;   :ensure (:host github :repo "eki3z/md")
-;;   :mode ("\\.md\\'" . md-ts-mode)
-;;   :hook ((md-ts-mode . md-toc-mode)))
+(use-package md-ts-mode
+  :ensure (:host github :repo "eki3z/md")
+  :mode ("\\.md\\'" . md-ts-mode)
+  :hook ((md-ts-mode . md-toc-mode)))
 
 ;;; Python =====================================================================
 (with-eval-after-load
