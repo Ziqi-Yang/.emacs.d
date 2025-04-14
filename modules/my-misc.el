@@ -96,7 +96,9 @@ configuration (like Makefile)."
         ;; c
         ((or (eq major-mode 'c-mode) (eq major-mode 'c-ts-mode))
          ;; (concat "make " relative-bare-file-name " && ./" relative-bare-file-name)
-         (concat "gcc -Wall -Wpedantic " relative-file-name " -o " relative-bare-file-name " && ./" relative-bare-file-name))
+         ;; https://nrk.neocities.org/articles/c-static-analyzers
+         ;; https://nullprogram.com/blog/2023/04/29/
+         (concat "cc -g3 -Wall -Wextra -Wconversion -Wdouble-promotion -Wno-unused-parameter -Wno-unused-function -Wno-sign-conversion -fsanitize=undefined -fsanitize-trap " relative-file-name " -o " relative-bare-file-name " && ./" relative-bare-file-name))
         ;; java
         ((or (eq major-mode 'java-mode) (eq major-mode 'java-ts-mode))
          (concat "./gradlew run"))

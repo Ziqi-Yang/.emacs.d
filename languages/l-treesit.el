@@ -42,6 +42,7 @@
         (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
         (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil
                        "typescript/src"))
+        (mermaid "https://github.com/monaqa/tree-sitter-mermaid")
         ;; remember to update my forked repo:
         ;; https://github.com/Ziqi-Yang/tree-sitter-typst, which is used for
         ;; typst-ts-mode
@@ -75,10 +76,10 @@
 
 (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
 
 ;; (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
-;; (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
-;; (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
 ;; (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
 ;; (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))  ; `rust-ts-mode' has't autoload this line ...
