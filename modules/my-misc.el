@@ -89,7 +89,7 @@ configuration (like Makefile)."
          "./gradlew run")
         ;; rust
         ((or (eq major-mode 'rust-mode) (eq major-mode 'rustic-mode) (eq major-mode 'rust-ts-mode)) 
-         "cargo run")
+         "cargo check")
         ;; cpp
         ((or (eq major-mode 'c++-mode) (eq major-mode 'c++-ts-mode))
          (concat "g++ -Wall -std=c++17 " relative-file-name " -o " relative-bare-file-name " && ./" relative-bare-file-name))
