@@ -446,6 +446,7 @@ Example:
                 ("F" . elpaca-fetch-all)
                 ("v" . elpaca-visit)
                 ("l" . elpaca-log)
+                ("L" . mk/elpaca-write-lock-file)
                 ("t" . elpaca-try)
                 ("s" . elpaca-status)
                 ("u" . mk/elpaca-update)
