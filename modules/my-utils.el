@@ -160,6 +160,13 @@ ARG: prefix argument."
     (call-interactively #'find-file)))
 
 ;;; Window =====================================================================
+(defun mk/quit-other-window (&optional kill)
+  "Quit other window.
+KILL buffer when prefix-argument is not nil."
+  (interactive "P")
+  (require 'ace-window)
+  (quit-window kill (aw-select "Quit window")))
+
 (defun mk/ace-window-balance-window ()
   "Balance window after `ace-window`"
   (interactive)

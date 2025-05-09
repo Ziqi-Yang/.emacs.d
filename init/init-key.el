@@ -410,7 +410,8 @@ Example:
   ;; window(w)
   (mk/define&set-keymap
    "C-c w" keymap/window
-   '(("c" . mk/ace-copy-window)
+   '(("b" . mk/quit-other-window)
+     ("c" . mk/ace-copy-window)
      ("f" . other-frame)
      ("w" . ace-window)
      ("W" . mk/ace-window-balance-window)
@@ -423,7 +424,7 @@ Example:
      ("m" . maximize-window)
      ("M" . minimize-window)
      ("s" . ace-swap-window)
-     ("b" . balance-windows)
+     ("B" . balance-windows)
      ("+" . maximize-window)
      ("-" . minimize-window)
      ("=" . balance-windows)

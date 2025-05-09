@@ -230,17 +230,22 @@ Needs to run `mk/global-lsp-bridge' first."
 ;; @ eldoc
 (use-package eldoc
   :ensure nil
+  :hook
+  ;; global-eldoc-mode is t by default, which enables eldoc when
+  ;; `eldoc-documentation-strategy' is not nil
+  ;; The following line makes sure that the content in eldoc buffer won't be erased when cursor is in eldoc buffer
+  (special-mode . (lambda () (setq eldoc-documentation-strategy nil)))
   :custom
   (eldoc-minor-mode-string nil)
   (eldoc-echo-area-use-multiline-p nil)
-  (eldoc-documentation-strategy #'eldoc-documentation-compose)
+  (eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
   (eldoc-echo-area-prefer-doc-buffer t))
 
 (use-package eldoc-box
   :custom
   (eldoc-box-lighter nil)
   :config
-  (add-hook 'prog-mode-hook #'eldoc-box-hover-mode)
+  (add-hook 'emacs-lisp-mode-hook #'eldoc-box-hover-mode)
   (with-eval-after-load 'eglot
     (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)))
 
