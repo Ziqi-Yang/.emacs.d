@@ -244,6 +244,7 @@ Needs to run `mk/global-lsp-bridge' first."
 (use-package eldoc-box
   :custom
   (eldoc-box-lighter nil)
+  (eldoc-box-only-multi-line t)
   :config
   (add-hook 'emacs-lisp-mode-hook #'eldoc-box-hover-mode)
   (with-eval-after-load 'eglot

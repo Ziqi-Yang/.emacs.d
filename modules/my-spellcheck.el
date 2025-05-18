@@ -30,8 +30,8 @@
 
 ;; @ jinx
 (use-package jinx
-  :disabled ; TODO
-  :ensure (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
+  ;; :ensure (:host github :repo "minad/jinx" :files ("*.el" "*.h" "*.c"))
+  :ensure nil  ; use system(NixOS) installed version
   :delight
   :init
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
@@ -44,7 +44,7 @@
   ;; to view a characters' specific syntax category (from major mode syntax table).
   ;; Emacs 29 supports Unicode 15, the code charts of which can be found at
   ;; http://www.unicode.org/charts/ (use mouse hover to show the specific range)
-  (let ((st jinx--base-syntax-table))  ; this code block actually adds 0.14s to my Emacs startup time...
+  (let ((st jinx--syntax-table))  ; this code block actually adds 0.14s to my Emacs startup time...
     (modify-syntax-entry '(#x4E00 . #x9FFF) "_" st)   ; CJK Unified Ideographs
     (modify-syntax-entry '(#x3400 . #x4DBF) "_" st)   ; CJK Unified Ideographs Extension A
     (modify-syntax-entry '(#x20000 . #x2A6DF) "_" st) ; CJK Unified Ideographs Extension B
