@@ -72,7 +72,7 @@ Example:
 
   (keymap-global-set "<backtab>" #'outline-cycle)
   
-  (keymap-global-set "M-SPC" #'meow-last-buffer)
+  (keymap-global-set "M-<tab>" #'meow-last-buffer)
 
   (keymap-global-set "M-?" #'mk/toggle-documentation-buffer-display)
 
