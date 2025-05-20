@@ -62,6 +62,11 @@
   
   (add-to-list 'eglot-server-programs '((markdown-mode markdown-ts-mode md-ts-mode) . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs '(text-mode . ("harper-ls" "--stdio")))
+  (add-to-list 'eglot-server-programs `((python-mode python-ts-mode)
+                                        . ,(eglot-alternatives
+                                            '(("basedpyright-langserver" "--stdio")
+                                              ("pyrefly" "lsp")
+                                              ("ruff" "server")))))
   
   (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess
   (setq-default eglot-events-buffer-config '(:size 0 :format full))
