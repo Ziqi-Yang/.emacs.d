@@ -323,6 +323,8 @@ Example:
      ("v" . project-vc-dir)
      ("s" . project-eshell)
      ("S" . project-async-shell-command)
+     ("t" . tasks-project-run-last-cmd)
+     ("T" . tasks-project-run)
      ("k" . project-kill-buffers)
      ("y" . ee-yazi-project)))
 
@@ -395,7 +397,7 @@ Example:
                 ("T" . hl-todo-rgrep))))
      ("y" . consult-yank-from-kill-ring)))
 
-  ;; toggle (t)
+  ;; toggle & tasks (t)
   (mk/define&set-keymap
    "C-c t" keymap/toggle
    '(("f" . mk/toggle-follow-mode)
@@ -405,7 +407,8 @@ Example:
      ("v" . view-mode)
      ("m" . meow-temp-normal)
      ("c" . rainbow-mode)
-     ("t" . consult-theme)))
+     ("e" . consult-theme)
+     ("t" . tasks-run)))
 
   ;; window(w)
   (mk/define&set-keymap
