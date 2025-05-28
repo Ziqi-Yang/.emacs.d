@@ -51,7 +51,7 @@
   (add-to-list 'eglot-server-programs `((python-mode python-ts-mode)
                                         . ,(eglot-alternatives
                                             '(("basedpyright-langserver" "--stdio")
-                                              ("/home/meowking/proj/probe/pyrefly/target/release/pyrefly" "lsp")
+                                              ("pyrefly" "lsp")
                                               ("ruff" "server")))))
   
   (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess

@@ -16,10 +16,10 @@
     ["Options"
      ("-p" "package" mk/tasks-infix/rust/package)]
     [["Cargo"
-      ("pc" "check" (concat "cargo clippy " (tasks-transient-get-arg "--package=")))
-      ("pC" "clippy" (concat "cargo clippy" (tasks-transient-get-arg "--package=")))
-      ("pf" "clippy fix" (concat "cargo clippy fix" (tasks-transient-get-arg "--package=")))
-      ("pr" "run" (concat "cargo run" (tasks-transient-get-arg "--package=")))]])
+      ("pc" "check" (concat "cargo check " (tasks-transient-get-arg "--package=")))
+      ("pC" "clippy" (concat "cargo clippy " (tasks-transient-get-arg "--package=")))
+      ("pf" "clippy fix" (concat "cargo clippy fix " (tasks-transient-get-arg "--package=")))
+      ("pr" "run" (concat "cargo run " (tasks-transient-get-arg "--package=")))]])
   
   (tasks-transient-define-prefix mk/tasks/python ()
     "Tasks for Python language."
