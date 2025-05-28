@@ -22,8 +22,7 @@
     [["check"
       ("c" "check" (concat "cargo check " (tasks-transient-get-arg "--package=")))
       ("C" "clippy" (concat "cargo clippy " (tasks-transient-get-arg "--package=")))
-      ("f" "clippy fix" (concat "cargo clippy fix " (tasks-transient-get-arg "--package=")))
-      ("r" "run" (concat "cargo run " (tasks-transient-get-arg "--package=")))]
+      ("f" "clippy fix" (concat "cargo clippy fix " (tasks-transient-get-arg "--package=")))]
      ["Compile"
       ("bb" "build" (concat "cargo build " (tasks-transient-get-arg "--package=")))
       ("r" "run" (concat "cargo run" (tasks-transient-get-arg "--package=")))]
