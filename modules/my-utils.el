@@ -241,31 +241,6 @@ CONFIRM: universal argument. Whether a confirm is needed."
     (let ((compilation-read-command nil))
       (project-compile))))
 
-(defvar-local mk/search-engines
-    '(("direct" . "%s")
-      ("github" . "https://github.com/search?q=%s")
-      ("google" . "https://www.google.com/search?q=%s")
-      ("bing" . "https://www.bing.com/search?q=%s"))
-  "Search engines used for function mk/search-online.")
-
-(defun mk/search-online()
-  "Search online, using word at point as default."
-  (interactive)
-  (let* ((word (current-word))
-         (word (read-string "Search: " word))
-         (engine-names (mapcar #'car mk/search-engines))
-         (engine (completing-read "Choose a search engine:" engine-names))
-         (search-url (cdr (assoc engine mk/search-engines)))
-         (url (format search-url word)))
-    (if url
-        (progn
-          ;; directly call Firefox instead of using browse-url to make parameters("?a=b") can be passed to local url
-          ;; (browse-url url)
-          (call-process "firefox-developer-edition" nil 0 nil url)
-          (call-process "swaymsg" nil 0 nil "workspace" "3")
-          (message "open url: %s" url))
-      (message "Invalid search engine!"))))
-
 (defun mk/copy-path-smart()
   "Copy current path/project path into clipboard."
   (interactive)

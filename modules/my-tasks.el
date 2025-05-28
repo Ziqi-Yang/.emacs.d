@@ -8,18 +8,32 @@
   :class 'transient-option
   :argument "--package=")
 
+(use-package cargo-mode
+  :ensure (:host github :repo "ayrat555/cargo-mode"))
+
 (use-package tasks
   :ensure (:host codeberg :repo "meow_king/tasks")
+  :after cargo-mode
   :config
   (tasks-transient-define-prefix mk/tasks/rust ()
     "Tasks for Rust language."
     ["Options"
      ("-p" "package" mk/tasks-infix/rust/package)]
-    [["Cargo"
-      ("pc" "check" (concat "cargo check " (tasks-transient-get-arg "--package=")))
-      ("pC" "clippy" (concat "cargo clippy " (tasks-transient-get-arg "--package=")))
-      ("pf" "clippy fix" (concat "cargo clippy fix " (tasks-transient-get-arg "--package=")))
-      ("pr" "run" (concat "cargo run " (tasks-transient-get-arg "--package=")))]])
+    [["check"
+      ("c" "check" (concat "cargo check " (tasks-transient-get-arg "--package=")))
+      ("C" "clippy" (concat "cargo clippy " (tasks-transient-get-arg "--package=")))
+      ("f" "clippy fix" (concat "cargo clippy fix " (tasks-transient-get-arg "--package=")))
+      ("r" "run" (concat "cargo run " (tasks-transient-get-arg "--package=")))]
+     ["Compile"
+      ("bb" "build" (concat "cargo build " (tasks-transient-get-arg "--package=")))
+      ("r" "run" (concat "cargo run" (tasks-transient-get-arg "--package=")))]
+     ["Test"
+      ("ta" "all" (concat "cargo test " (tasks-transient-get-arg "--package=")))
+      ("tb" "cur buf" cargo-mode-test-current-buffer)
+      ("tc" "cur test" cargo-mode-test-current-test)]
+     ["Misc"
+      ("be" "benchmark" (concat "cargo bench " (tasks-transient-get-arg "--package=")))
+      ("d" "doc" (concat "cargo doc " (tasks-transient-get-arg "--package=")))]])
   
   (tasks-transient-define-prefix mk/tasks/python ()
     "Tasks for Python language."

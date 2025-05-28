@@ -386,7 +386,6 @@ Example:
      ("b" . bookmark-jump)
      ("d" . dictionary-search)
      ("o" . consult-outline)
-     ("O" . mk/search-online)
      ("r" . consult-register)
      ("R" . consult-register-store)
      ("t" . ,(mk/define&set-keymap

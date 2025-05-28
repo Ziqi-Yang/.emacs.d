@@ -159,40 +159,11 @@
   (keymap-set python-ts-mode-map "C-c C-c o" #'python-fix-imports))
 
 ;;; Rust =======================================================================
-(use-package cargo
-  :ensure (:host github :repo "kwrooijen/cargo.el")
-  :custom
-  (cargo-process--command-search "search --registry crates-io")
-  :config
-  (add-hook 'cargo-process-mode-hook #'(lambda () (setq-local truncate-lines nil))))
-
-;; (defun mk/cargo-crate-info (crate-name)
-;;   "Get the basic information of a crate. The underlying command is =cargo add --dry-run crate="
-;;   (interactive (list (read-string "crate name: " (thing-at-point 'symbol))))
-;;   (async-shell-command (concat "cargo add --dry-run " crate-name)))
-
-(with-eval-after-load 'rust-ts-mode
-  
-  (keymap-set rust-ts-mode-map "C-c C-c" #'mk/trans-map/cargo))
-
-(with-eval-after-load 'toml-ts-mode
-  (keymap-set toml-ts-mode-map "C-c C-c" #'mk/trans-map/cargo))
-
 (defun mk/rust/setup ()
   (setq-local electric-pair-pairs
-    (add-to-list 'electric-pair-pairs '(?| . ?|))))
+              (add-to-list 'electric-pair-pairs '(?| . ?|))))
 
 (add-hook 'rust-ts-mode-hook #'mk/rust/setup)
-
-(defun mk/add-rust-search-engine()
-  "Add search engine in addition to mk/search-engines when in rust."
-  (push '("crate.io" . "https://crates.io/crates/%s") mk/search-engines)
-  (push '("docs.rs" . "https://docs.rs/%s/") mk/search-engines)
-  (push '("rust-std" . "file:///home/zarkli/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/share/doc/rust/html/std/index.html?search=%s") mk/search-engines))
-
-(add-hook 'toml-ts-mode-hook 'mk/add-rust-search-engine)
-(add-hook 'rust-ts-mode-hook 'mk/add-rust-search-engine)
-;; (add-hook 'rust-mode-hook 'mk/add-rust-search-engine)
 
 ;;; Typst ======================================================================
 ;; (use-package outline-indent-mode
