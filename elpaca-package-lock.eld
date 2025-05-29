@@ -103,15 +103,6 @@
                          codeberg :repo "meow_king/typst-ts-mode" :branch "develop"
                          :package "typst-ts-mode" :ref
                          "d25e8c2883444d2499fe15909adfa5ee249e791e"))
- (cargo :source #1# :recipe
-        (:package "cargo" :repo "kwrooijen/cargo.el" :fetcher github :files
-                  ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
-                   "doc/*.info" "doc/*.texi" "doc/*.texinfo" "lisp/*.el" "docs/dir"
-                   "docs/*.info" "docs/*.texi" "docs/*.texinfo"
-                   (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
-                             "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
-                  :source "MELPA" :protocol https :inherit t :depth treeless :host github
-                  :ref "7f8466063381eed05d4e222ce822b1dd44e3bf17"))
  (md-ts-mode :source #1# :recipe
              (:source nil :protocol https :inherit t :depth treeless :host github :repo
                       "eki3z/md" :package "md-ts-mode" :ref
@@ -266,6 +257,19 @@
                            "LICENSE" "README*" "*-pkg.el"))
                 :source "MELPA" :protocol https :inherit t :depth treeless :ref
                 "3000fa56aa97fffa42b203037e2db6f4fe56bb7d"))
+ (tasks :source #1# :recipe
+        (:source nil :protocol https :inherit t :depth treeless :host codeberg :repo
+                 "meow_king/tasks" :package "tasks" :ref
+                 "a0a7a274c0e5cbcc14c53b101c7c1d0e32317d9f"))
+ (cargo-mode :source #1# :recipe
+             (:package "cargo-mode" :fetcher github :repo "ayrat555/cargo-mode" :files
+                       ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
+                        "doc/*.info" "doc/*.texi" "doc/*.texinfo" "lisp/*.el" "docs/dir"
+                        "docs/*.info" "docs/*.texi" "docs/*.texinfo"
+                        (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
+                                  "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
+                       :source "MELPA" :protocol https :inherit t :depth treeless :host
+                       github :ref "b1fb87c17fcd22d798bb04115e65ecf83e8c929a"))
  (lice :source #1# :recipe
        (:package "lice" :fetcher github :repo "buzztaiki/lice-el" :files
                  ("*.el" "template") :source "MELPA" :protocol https :inherit t :depth
@@ -435,7 +439,7 @@
  (corfu :source #1# :recipe
         (:package "corfu" :repo "minad/corfu" :files ("*.el" "extensions/*.el") :fetcher
                   github :source "MELPA" :protocol https :inherit t :depth treeless :host
-                  github :ref "2e05fe8244fff22c3c3d2af4334b1850250212a9"))
+                  github :ref "10e24c8bdbdd4e6d3145878f3ce4357c3753b0a1"))
  (orderless :source #1# :recipe
             (:package "orderless" :repo "oantolin/orderless" :fetcher github :files
                       ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
