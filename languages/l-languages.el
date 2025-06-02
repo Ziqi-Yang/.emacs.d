@@ -163,7 +163,24 @@
   (setq-local electric-pair-pairs
               (add-to-list 'electric-pair-pairs '(?| . ?|))))
 
-(add-hook 'rust-ts-mode-hook #'mk/rust/setup)
+(use-package rust-ts-mode
+  :ensure nil
+  :hook (rust-ts-mode . mk/rust/setup)
+  :config
+  (defun mk/treesit/rust/simple-indent-rules/field_expression/offset (node parent bol)
+    (save-excursion
+      (goto-char bol)
+      (beginning-of-line-text 0)
+      (if (string-match-p "\\`[\]\)\}]+\\'" (buffer-substring (point) (line-end-position)))
+          0
+        rust-ts-mode-indent-offset)))
+
+  (setq rust-ts-mode--indent-rules
+        (treesit-simple-indent-modify-rules
+         'rust
+         '((rust ((parent-is "field_expression") parent-bol mk/treesit/rust/simple-indent-rules/field_expression/offset)))
+         rust-ts-mode--indent-rules
+         :replace)))
 
 ;;; Typst ======================================================================
 ;; (use-package outline-indent-mode
