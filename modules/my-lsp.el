@@ -80,9 +80,6 @@
 
   )
 
-(use-package eglot-hierarchy
-  :ensure (:host github :repo "dolmens/eglot-hierarchy"))
-
 ;;; @ lsp-bridge ============================================
 (use-package yasnippet
   :delight yas-minor-mode
@@ -326,6 +323,13 @@ Though citre(ctag) is not a lsp client implementation XD."
     (call-interactively #'citre-jump))
    (t (let ((this-command 'xref-find-definitions))
         (call-interactively #'xref-find-definitions)))))
+
+(defun mk/code/find-type-definition ()
+  (interactive)
+  (cond
+   ((mk/code//is-eglot-active)
+    (eglot-find-typeDefinition))
+   (t (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
 
 (defun mk/code/query-find-definition ()
   (interactive)

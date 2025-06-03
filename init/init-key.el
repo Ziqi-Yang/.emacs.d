@@ -207,10 +207,6 @@ Example:
                 ("e" . eglot-format)
                 ("F" . apheleia-format-buffer))))
      ("F" . eglot-code-action-quickfix)
-     ("h" . ,(mk/define&set-keymap
-              "C-c c h" keymap/code-hierarchy
-              '(("t" . eglot-hierarchy-type-hierarchy)
-                ("c" . eglot-hierarchy-call-hierarchy))))
      ("H" . mk/code/toggle-inlay-hint)
      ;; ("i" . eglot-code-action-organize-imports)
      ("i" . mk/code/find-implementation)
@@ -233,8 +229,9 @@ Example:
                 ("p" . mk/code/query-peek-definition)
                 ("P" . mk/code/query-peek-reference))))
      ("r" . mk/code/find-references)
-     ("s" . mk/xref-stack-current-position)
      ("R" . mk/code/rename)
+     ("s" . mk/xref-stack-current-position)
+     ("t" . mk/code/find-type-definition)
      ("u" . citre-update-this-tags-file)
      ("U" . mk/update-all-tags)))
 
