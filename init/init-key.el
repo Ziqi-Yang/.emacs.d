@@ -232,6 +232,7 @@ Example:
      ("R" . mk/code/rename)
      ("s" . mk/xref-stack-current-position)
      ("t" . mk/code/find-type-definition)
+     ("T" . mk/code/find-type-definition-other-window)
      ("u" . citre-update-this-tags-file)
      ("U" . mk/update-all-tags)))
 

@@ -329,7 +329,17 @@ Though citre(ctag) is not a lsp client implementation XD."
   (cond
    ((mk/code//is-eglot-active)
     (eglot-find-typeDefinition))
-   (t (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
+   (t (user-error (format "Not implemented for back end %s"
+                          mk/code/current-lsp-backend)))))
+
+(defun mk/code/find-type-definition-other-window ()
+  (interactive)
+  (let (target-window)
+    (mk/code/find-type-definition)
+    (setq target-window (mk/lib/display-buffer-in-other-window))
+    (previous-buffer)
+    (select-window target-window)))
+
 
 (defun mk/code/query-find-definition ()
   (interactive)

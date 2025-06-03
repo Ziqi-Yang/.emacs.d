@@ -27,6 +27,17 @@
    (lambda (match) (concat "\\\\" match))
    (string-replace "\\" "\\\\" s)))
 
+(defun mk/lib/display-buffer-in-other-window ()
+  "Display current buffer in the other window."
+  (let ((buf (current-buffer))
+        (window (selected-window)))
+    (with-selected-window
+        (display-buffer
+         buf
+         `((xref--display-buffer-in-other-window)
+           (window . ,window)))
+      (selected-window))))
+
 (defun mk/lib/copy-string-to-clipboard (str)
   ;; note this function only works in GUI version emacs
   (with-temp-buffer
