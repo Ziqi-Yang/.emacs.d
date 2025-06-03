@@ -171,6 +171,8 @@
     (save-excursion
       (goto-char bol)
       (beginning-of-line-text 0)
+      (while (and (looking-at-p "\\.") (not (bobp)))
+        (beginning-of-line-text 0))
       (if (string-match-p "\\`[\]\)\}]+\\'" (buffer-substring (point) (line-end-position)))
           0
         rust-ts-mode-indent-offset)))

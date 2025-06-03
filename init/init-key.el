@@ -3,7 +3,6 @@
 ;; NOTE: global key bindings will be shadowed by local keybindings
 ;; TIPS:
 
-
 ;; meow-cheatsheet  (I've customed this command to also display my own notes)
 ;; also note that C-, is left for my local mode bindings in editing (like web-mode)
 
