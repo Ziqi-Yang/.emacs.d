@@ -51,8 +51,8 @@
 ;; Nix =========================================================================
 (use-package nix-ts-mode
   :after eglot
-  :mode "\\.nix\\'"
   :ensure (:type git :host github :repo "nix-community/nix-ts-mode")
+  :mode ("\\.nix\\'" . nix-ts-mode)
   :config
   (add-to-list 'eglot-server-programs
                `(nix-ts-mode . ,(eglot-alternatives

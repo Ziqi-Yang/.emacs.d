@@ -40,8 +40,10 @@
 	(dolist (mode hook-list)
 		(add-hook mode #'eglot-ensure)))
 
-(with-eval-after-load 'eglot
-	;; NOTE
+(use-package eglot
+  :ensure nil
+  :config
+  ;; NOTE
 	;; install markdown-mode to rich the doc
   ;; performance improvemence:
   ;; https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
@@ -77,7 +79,6 @@
   ;; the langauge server
   ;; pylsp's configuration docs: `pylsp.configurationSources'
   ;; tinymist's configuration dosc: `:exportPdf'
-
   )
 
 ;;; @ lsp-bridge ============================================
