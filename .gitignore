@@ -1,4 +1,5 @@
 /init/my-private-configs.el
+/.lsp-session-*
 
 !/.local
 /.local/*

@@ -190,51 +190,34 @@ Example:
    `(;; note: you can select a region and then use this command, which prevents
      ;; you from executing code actions for flymake errors (which often results
      ;; in no actions)
-     ("a" . mk/code/action)
+     ("a" . lspx-execute-code-action)
      ("B" . ,(mk/define&set-keymap
               "C-c c D" keymap/code-debug
               '(("d" . mk/gf-debug)
                 ("D" . mk/gdb-smart)
                 ("v" . mk/debug-with-valgrind))))
-     ("c" . mk/code/set-current-lsp-backend)
-     ("d" . mk/code/find-definition)
-     ("D" . mk/code/find-definition-other-window)
+     ("d" . lspx-find-definition-xref)
+     ("D" . lspx-find-definition-other-window-xref)
      ;; eldoc: use ? (binding in meow.el)
      ("e" . mk/code/error-list)
      ("f" . ,(mk/define&set-keymap
               "C-c c f" keymap/code-format
               '(("f" . mk/refresh-file)
-                ("e" . eglot-format)
+                ("b" . lspx-format-buffer)
+                ("r" . lspx-format-region)
                 ("F" . apheleia-format-buffer))))
-     ("F" . eglot-code-action-quickfix)
-     ("H" . mk/code/toggle-inlay-hint)
+     ("H" . lspx-toggle-inlay-hint)
      ;; ("i" . eglot-code-action-organize-imports)
-     ("i" . mk/code/find-implementation)
+     ("i" . lspx-find-implementation)
      ("l" . ,(mk/define&set-keymap
               "C-c c l" keymap/code-lsp
-              '(("b" . mk/code/lsp/set-backend)
-                ("s" . mk/code/lsp/start)
-                ("k" . mk/code/lsp/stop)
-                ("K" . mk/code/lsp/stop-all))))
-     ("o" . ,(mk/define&set-keymap
-              "C-c c o" keymap/code-other
-              '(("c" . citre-create-tags-file)
-                ("e" . citre-edit-tags-file-recipe))))
-     ("p" . mk/code/peek)
-     ("P" . mk/code/peek-reference)
-     ("q" . ,(mk/define&set-keymap
-              "C-c c q" keymap/code-query
-              '(("d" . mk/code/query-find-definition)
-                ("r" . mk/code/query-find-references)
-                ("p" . mk/code/query-peek-definition)
-                ("P" . mk/code/query-peek-reference))))
-     ("r" . mk/code/find-references)
-     ("R" . mk/code/rename)
+              '(("s" . lspx)
+                ("k" . lspx-shutdown))))
+     ("r" . lspx-find-references-xref)
+     ("R" . lspx-rename)
      ("s" . mk/xref-stack-current-position)
-     ("t" . mk/code/find-type-definition)
-     ("T" . mk/code/find-type-definition-other-window)
-     ("u" . citre-update-this-tags-file)
-     ("U" . mk/update-all-tags)))
+     ("t" . lspx-find-type-definition)
+     ("T" . lspx-find-type-definition-other-window)))
 
   ;; emoji(e)
   (mk/define&set-keymap

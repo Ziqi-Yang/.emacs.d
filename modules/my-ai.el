@@ -1,13 +1,13 @@
 ;;; my-ai.el --- AI-powered features for Emacs -*- lexical-binding: t -*-
 
-(use-package aider
-  :disabled
-  :ensure (:host github :repo "tninja/aider.el")
-  :custom
-  (aider-args '("--no-auto-commits" "--model" "openrouter/anthropic/claude-3.5-sonnet"))
-  :config
-  (setenv "OPENAI_API_KEY" mk/private-vars/gptel-openrouter-key)
-  (setenv "OPENROUTER_API_KEY" mk/private-vars/gptel-openrouter-key))
+;; (use-package aider
+;;   :disabled
+;;   :ensure (:host github :repo "tninja/aider.el")
+;;   :custom
+;;   (aider-args '("--no-auto-commits" "--model" "openrouter/anthropic/claude-3.5-sonnet"))
+;;   :config
+;;   (setenv "OPENAI_API_KEY" mk/private-vars/gptel-openrouter-key)
+;;   (setenv "OPENROUTER_API_KEY" mk/private-vars/gptel-openrouter-key))
 
 
 ;; For better aidermacs experience. Aidermacs hasn't supported `eat' yet.
@@ -15,16 +15,16 @@
   ;; installed via Nix
   :ensure nil)
 
-(use-package aidermacs
-  :ensure (:host github :repo "MatthewZMD/aidermacs")
-  :bind (("C-c a" . aidermacs-transient-menu))
-  :custom
-  (aidermacs-use-architect-mode t)
-  (aidermacs-backend 'vterm)
-  (aidermacs-default-model "openrouter/anthropic/claude-3.7-sonnet")
-  (aidermacs-architect-model "openrouter:anthropic/claude-3.7-sonnet:thinking")
-  :config
-  (aidermacs-setup-minor-mode))
+;; (use-package aidermacs
+;;   :ensure (:host github :repo "MatthewZMD/aidermacs")
+;;   :bind (("C-c a" . aidermacs-transient-menu))
+;;   :custom
+;;   (aidermacs-use-architect-mode t)
+;;   (aidermacs-backend 'vterm)
+;;   (aidermacs-default-model "openrouter/anthropic/claude-3.7-sonnet")
+;;   (aidermacs-architect-model "openrouter:anthropic/claude-3.7-sonnet:thinking")
+;;   :config
+;;   (aidermacs-setup-minor-mode))
 
 (use-package gptel
   :disabled

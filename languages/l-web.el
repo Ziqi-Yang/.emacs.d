@@ -66,14 +66,18 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
          ;; ("C-," . twind-insert-class-from-cheatsheet)
          ))
 
-(use-package mhtml-ts-mode
-  :ensure nil)
-
 (use-package svelte-ts-mode
   :after eglot
   :ensure (:host github :repo "leafOfTree/svelte-ts-mode")
   :config
   (add-to-list 'eglot-server-programs '(svelte-ts-mode . ("svelteserver" "--stdio"))))
+
+
+(use-package mhtml-ts-mode
+  :ensure nil
+  ;; NOTE temporarily use mhtml mode for Vue document
+  :mode ("\\.vue\\'" "\\.html'"))
+
 
 (use-package htmljinja2-ts-mode
   :mode ("\\.j2\\'")

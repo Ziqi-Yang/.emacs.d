@@ -4,6 +4,11 @@
 
 (set-default-coding-systems 'utf-8)
 
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
+;; NOTE for using emacs-lsp-booster, plists based lsp-mode is required
+;; use lsp-diagnose to check enable status
+(setenv "LSP_USE_PLISTS" "true")
+
 ;;; Disable package.el ======================================
 (setq package-enable-at-startup nil ;; disable package.el at startup
       package-quickstart nil) ;; don't load from package cache

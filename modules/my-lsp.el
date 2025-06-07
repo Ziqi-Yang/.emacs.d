@@ -7,7 +7,49 @@
 ;; stop lsp: mk/code/lsp/stop
 ;; stop all lsp: mk/code/lsp/stop-all
 
-;; Eglot  ===================
+;;; @ Lsp Mode =================================================================
+
+(defun lsp-booster--advice-json-parse (old-fn &rest args)
+  "Try to parse bytecode instead of json."
+  (or
+   (when (equal (following-char) ?#)
+     (let ((bytecode (read (current-buffer))))
+       (when (byte-code-function-p bytecode)
+         (funcall bytecode))))
+   (apply old-fn args)))
+
+(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+  "Prepend emacs-lsp-booster command to lsp CMD."
+  (let ((orig-result (funcall old-fn cmd test?)))
+    (if (and (not test?)                             ;; for check lsp-server-present?
+             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+             lsp-use-plists
+             (not (functionp 'json-rpc-connection))  ;; native json-rpc
+             (executable-find "emacs-lsp-booster"))
+        (progn
+          (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
+            (setcar orig-result command-from-exec-path))
+          (message "Using emacs-lsp-booster for %s!" orig-result)
+          (cons "emacs-lsp-booster" orig-result))
+      orig-result)))
+
+
+(use-package lsp-mode
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :custom ((lsp-headerline-breadcrumb-enable nil))
+  :config
+  ;; Lsp Booster: https://github.com/blahgeek/emacs-lsp-booster
+  (advice-add (if (progn (require 'json)
+                         (fboundp 'json-parse-buffer))
+                  'json-parse-buffer
+                'json-read)
+              :around
+              #'lsp-booster--advice-json-parse)
+  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+
+
+;;; @ Eglot  ===================================================================
+
 
 ;; check eglot-server-programs to know the language programs that corresponding
 ;; to a certain language.
@@ -27,6 +69,34 @@
 ;;   :ensure (:host github :repo "Ziqi-Yang/lsp-copilot"
 ;;                  :files (:defaults "lsp-copilot")
 ;;                  :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./"))))
+
+
+(defun vue-eglot-init-options (_args)
+  (let* ((no-warnings "NODE_NO_WARNINGS=1 ")
+         (filter "| head -n1")
+         (base "npm list --parseable typescript ")
+         (tsdk-base-path (string-trim-right (shell-command-to-string (concat no-warnings base filter))))
+         (tsdk-path (expand-file-name "lib" (if (string-empty-p tsdk-base-path)
+                                                (tsdk-global-path
+                                                 (string-trim-right
+                                                  (shell-command-to-string
+                                                   (concat no-warnings (global "npm list --global --parseable typescript ") filter))))
+                                              tsdk-base-path))))
+    `(
+      :typescript (:tsdk ,tsdk-path)
+      :vue (:hybridMode :json-false)
+      :languageFeatures (:completion
+                         (:defaultTagNameCase "both"
+                                              :defaultAttrNameCase "kebabCase"
+                                              :getDocumentNameCasesRequest nil
+                                              :getDocumentSelectionRequest nil)
+                         :diagnostics
+                         (:getDocumentVersionRequest nil))
+      :documentFeatures (:documentFormatting
+                         (:defaultPrintWidth 100
+                                             :getDocumentPrintWidthRequest nil)
+                         :documentSymbol t
+                         :documentColor t))))
 
 ;;; Eglot ======================================================================
 
@@ -50,6 +120,10 @@
   
   (add-to-list 'eglot-server-programs '((markdown-mode markdown-ts-mode md-ts-mode) . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs '(text-mode . ("harper-ls" "--stdio")))
+  (add-to-list 'eglot-server-programs '((mhtml-ts-mode :LANGUAGE-ID "vue")
+                                        . ("vue-language-server" "--stdio"
+                                           :initializationOptions
+                                           vue-eglot-init-options)))
   (add-to-list 'eglot-server-programs '((rust-ts-mode rust-mode) . ("run-in-nix" "rust-analyzer")))
   (add-to-list 'eglot-server-programs `((python-mode python-ts-mode)
                                         . ,(eglot-alternatives
@@ -215,7 +289,14 @@ Needs to run `mk/global-lsp-bridge' first."
   (citre-update-this-tags-file)
   (citre-global-update-database))
 
-;;; Other ======================================================================
+;;; Misc ======================================================================
+
+
+(use-package lspx
+  :ensure (:host codeberg :repo "meow_king/lspx")
+  :config
+  (lspx-setup-lspx))
+
 
 ;; @ eldoc
 (use-package eldoc
@@ -240,7 +321,9 @@ Needs to run `mk/global-lsp-bridge' first."
   :config
   (add-hook 'emacs-lisp-mode-hook #'eldoc-box-hover-mode)
   (with-eval-after-load 'eglot
-    (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)))
+    (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
+  (with-eval-after-load 'lsp-mode
+    (add-hook 'lsp-managed-mode-hook #'eldoc-box-hover-mode t)))
 
 (with-eval-after-load 'flymake
   (add-hook 'emacs-lisp-mode-hook #'flymake-mode))
@@ -251,204 +334,6 @@ Needs to run `mk/global-lsp-bridge' first."
 
 ;; format file
 (use-package apheleia)
-
-;;; Custom glue functions ======================================================
-
-(defcustom mk/code/current-lsp-backend 'eglot
-  "Current lsp backend.
-Though citre(ctag) is not a lsp client implementation XD."
-  :type '(choice (const :tag "Eglot" eglot)
-                 (const :tag "Lsp Bridge" lsp-bridge)
-                 (const :tag "citre" citre)))
-
-(defconst mk/code/error/todo-or-not-implemented
-  "Todo or not implemented!")
-
-(defun mk/code/lsp/set-backend ()
-  (interactive)
-  (setq mk/code/current-lsp-backend
-        (intern (completing-read
-                 (format "Choose an backend(current: %s): " mk/code/current-lsp-backend)
-                 '(eglot lsp-bridge citre)))))
-
-(defun mk/code/lsp/start ()
-  (interactive)
-  (unless mk/code/current-lsp-backend (call-interactively #'mk/code/set-current-lsp-backend))
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'mk/lsp-bridge))
-    ('eglot (call-interactively #'eglot))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/lsp/stop ()
-  "NOTE only stop language servers for a single project (or even some language)."
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'mk/lsp-bridge))
-    ('eglot (call-interactively #'eglot-shutdown))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/lsp/stop-all ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'mk/lsp-bridge-shutdown-all))
-    ('eglot (call-interactively #'eglot-shutdown-all))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-(with-eval-after-load 'lsp-bridge
-  (add-hook 'lsp-bridge-mode-hook (lambda () (setq mk/code/current-lsp-backend 'lsp-bridge))))
-
-(with-eval-after-load 'eglot
-  (add-hook 'eglot-managed-mode-hook (lambda () (setq mk/code/current-lsp-backend 'eglot))))
-
-
-(defun mk/code//is-lsp-bridge-active ()
-  (and (equal mk/code/current-lsp-backend 'lsp-bridge) lsp-bridge-mode))
-
-(defun mk/code//is-eglot-active ()
-  (and (equal mk/code/current-lsp-backend 'eglot) eglot--managed-mode))
-
-(defun mk/code/rename ()
-  (interactive)
-  (cond
-   ((mk/code//is-lsp-bridge-active)
-    (call-interactively #'lsp-bridge-rename))
-   ((mk/code//is-eglot-active)
-    (call-interactively #'eglot-rename))
-   (t (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/find-definition ()
-  (interactive)
-  (cond
-   ((mk/code//is-lsp-bridge-active)
-    (call-interactively #'lsp-bridge-find-def))
-   ((equal mk/code/current-lsp-backend 'citre)
-    (call-interactively #'citre-jump))
-   (t (let ((this-command 'xref-find-definitions))
-        (call-interactively #'xref-find-definitions)))))
-
-(defun mk/code/find-type-definition ()
-  (interactive)
-  (cond
-   ((mk/code//is-eglot-active)
-    (eglot-find-typeDefinition))
-   (t (user-error (format "Not implemented for back end %s"
-                          mk/code/current-lsp-backend)))))
-
-(defun mk/code/find-type-definition-other-window ()
-  (interactive)
-  (let (target-window)
-    (mk/code/find-type-definition)
-    (setq target-window (mk/lib/display-buffer-in-other-window))
-    (previous-buffer)
-    (select-window target-window)))
-
-
-(defun mk/code/query-find-definition ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('citre (call-interactively #'citre-query-jump))
-    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
-
-(defun mk/code/find-definition-other-window ()
-  (interactive)
-  (cond
-   ((mk/code//is-lsp-bridge-active)
-    (call-interactively #'lsp-bridge-find-def-other-window))
-   (t (let ((this-command 'xref-find-definitions-other-window))
-        (call-interactively #'xref-find-definitions-other-window)))))
-
-
-
-(defun mk/code/find-references ()
-  (interactive)
-  (cond
-   ((mk/code//is-lsp-bridge-active)
-    (call-interactively #'lsp-bridge-find-references))
-   ((equal mk/code/current-lsp-backend 'citre)
-    (call-interactively #'citre-jump-to-reference))
-   (t (let ((this-command 'xref-find-references))
-        (call-interactively #'xref-find-references)))))
-
-(defun mk/code/query-find-references ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('citre (call-interactively #'citre-query-jump-to-reference))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-
-
-
-(defun mk/code/find-implementation ()
-  (interactive)
-  (cond
-   ((mk/code//is-lsp-bridge-active)
-    (call-interactively #'lsp-bridge-find-impl))
-   ((equal mk/code/current-lsp-backend 'citre)
-    (call-interactively #'citre-jump-to-reference))
-   ((mk/code//is-eglot-active)
-    (call-interactively #'eglot-find-implementation))
-   (t
-    (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/toggle-inlay-hint ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge
-     (setq-local lsp-bridge-enable-inlay-hint (not lsp-bridge-enable-inlay-hint))
-     (if lsp-bridge-enable-inlay-hint
-         (lsp-bridge-inlay-hint)
-       (lsp-bridge-inlay-hint-hide-overlays)))
-    ('eglot (call-interactively #'eglot-inlay-hints-mode))
-    ('citre (user-error "Not implemented for back end 'citre"))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/error-list (&optional arg)
-  (interactive "P")
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (lsp-bridge-diagnostic-list))
-    (_ (call-interactively #'flymake-show-buffer-diagnostics))))
-
-(defun mk/code/action ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-code-action))
-    ('eglot (call-interactively #'eglot-code-actions))
-    ('citre (user-error "Not implemented for back end 'citre"))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/documentation()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-popup-documentation))
-    (_ (call-interactively #'eldoc))))
-
-(defun mk/code/peek (&optional arg)
-  (interactive "P")
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (call-interactively #'lsp-bridge-peek))
-    ('eglot (user-error "Not implemented for back end 'eglot"))
-    ('citre (call-interactively #'citre-peek))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/query-peek-definition ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('citre (call-interactively #'citre-query-peek))
-    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
-
-(defun mk/code/peek-reference (&optional arg)
-  (interactive "P")
-  (pcase mk/code/current-lsp-backend
-    ('lsp-bridge (user-error "Not implemented for back end 'lsp-bridge"))
-    ('eglot (user-error "Not implemented for back end 'eglot"))
-    ('citre (call-interactively #'citre-peek-reference))
-    (_ (user-error mk/code/error/todo-or-not-implemented))))
-
-(defun mk/code/query-peek-reference ()
-  (interactive)
-  (pcase mk/code/current-lsp-backend
-    ('citre (call-interactively #'citre-query-peek-reference))
-    (_ (user-error (format "Not implemented for back end %s" mk/code/current-lsp-backend)))))
 
 (provide 'my-lsp)
 
