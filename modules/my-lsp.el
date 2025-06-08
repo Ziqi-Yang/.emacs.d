@@ -71,33 +71,6 @@
 ;;                  :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./"))))
 
 
-(defun vue-eglot-init-options (_args)
-  (let* ((no-warnings "NODE_NO_WARNINGS=1 ")
-         (filter "| head -n1")
-         (base "npm list --parseable typescript ")
-         (tsdk-base-path (string-trim-right (shell-command-to-string (concat no-warnings base filter))))
-         (tsdk-path (expand-file-name "lib" (if (string-empty-p tsdk-base-path)
-                                                (tsdk-global-path
-                                                 (string-trim-right
-                                                  (shell-command-to-string
-                                                   (concat no-warnings (global "npm list --global --parseable typescript ") filter))))
-                                              tsdk-base-path))))
-    `(
-      :typescript (:tsdk ,tsdk-path)
-      :vue (:hybridMode :json-false)
-      :languageFeatures (:completion
-                         (:defaultTagNameCase "both"
-                                              :defaultAttrNameCase "kebabCase"
-                                              :getDocumentNameCasesRequest nil
-                                              :getDocumentSelectionRequest nil)
-                         :diagnostics
-                         (:getDocumentVersionRequest nil))
-      :documentFeatures (:documentFormatting
-                         (:defaultPrintWidth 100
-                                             :getDocumentPrintWidthRequest nil)
-                         :documentSymbol t
-                         :documentColor t))))
-
 ;;; Eglot ======================================================================
 
 ;; need https://aur.archlinux.org/packages/emacs-lsp-booster-git
@@ -118,12 +91,9 @@
   ;; performance improvemence:
   ;; https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
   
+  ;; For Vue, use lsp-mode is the best choice. Vue language server is shit
   (add-to-list 'eglot-server-programs '((markdown-mode markdown-ts-mode md-ts-mode) . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs '(text-mode . ("harper-ls" "--stdio")))
-  (add-to-list 'eglot-server-programs '((mhtml-ts-mode :LANGUAGE-ID "vue")
-                                        . ("vue-language-server" "--stdio"
-                                           :initializationOptions
-                                           vue-eglot-init-options)))
   (add-to-list 'eglot-server-programs '((rust-ts-mode rust-mode) . ("run-in-nix" "rust-analyzer")))
   (add-to-list 'eglot-server-programs `((python-mode python-ts-mode)
                                         . ,(eglot-alternatives
