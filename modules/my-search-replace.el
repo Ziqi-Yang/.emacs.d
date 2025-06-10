@@ -83,14 +83,6 @@
 
 ;;; Functions ==================================================================
 
-(defvar mk/v/prog-filter-regexp
-  `(("java" . (:method
-               ,(rx (1+ word) "(" (*? nonl) (? ")" (*? nonl) "{") (*? nonl))))
-    ;; ("python" . (:method
-    ;;              ,(rx "def" (*? nonl) ":")))
-    ("rust" . (:method "fn"))
-    ("zig" . (:method "fn"))))
-
 (defvar mk/v/consult-line-persistent-prefix "")
 
 (defun mk/better-consult-line (arg)
@@ -155,7 +147,7 @@ When ARG is non-nil, then search all buffer."
                          " "))))
      type-list)))
 
-(defun mk/completing-rg-types()
+(defun mk/completing-read-rg-types()
   "Completing rg types."
   (let* ((types (mk/get-rg-types))
          (completion-extra-properties
@@ -165,36 +157,33 @@ When ARG is non-nil, then search all buffer."
                      (alist-get
                       type minibuffer-completion-table
                       nil nil #'string=)))
-                (format "\t%s" desc))))))
-    (completing-read
-     "File type[empty: all]: "
-     types nil nil
-     (let ((type
-            (nth 0
-                 (split-string
-                  (symbol-name major-mode) "-"))))
-       (pcase type
-         ("emacs" "elisp")
-         ("web" "html")
-         (_ type))))))
+                (format "\t%s" desc)))))
+         (file-extension (downcase (file-name-extension buffer-file-name)))
+         type)
+    (setq
+     type
+     (cond
+      ((and (derived-mode-p '(html-ts-mode))
+            (equal file-extension "vue"))
+       "vue")
+      ((derived-mode-p '(emacs-lisp-mode)) "elisp")
+      (t (car (split-string (symbol-name major-mode) "-")))
+      ))
+    (completing-read "File type[empty: all]: " types nil nil type)))
 
 (defun mk/consult-ripgrep-file-type (&optional arg)
   "Consult-ripgrep with file type support.
 NOTE you can also use prefix argument to specify directory.
 ARG: prefix argument.  If ARG is not nil, then prompt for the search directory."
   (interactive "P")
-  (let* ((type (mk/completing-rg-types))
-         (consult-ripgrep-args (concat consult-ripgrep-args
-                                       (when (and type (not (string-empty-p type)))
-                                         (concat " -t " type))))
-         (initial (plist-get (cdr (assoc type mk/v/prog-filter-regexp)) :method))
+  (let* ((type (mk/completing-read-rg-types))
+         (consult-ripgrep-args
+          (concat consult-ripgrep-args
+                  (when (and type (not (string-empty-p type)))
+                    (concat " -t " type))))
          (this-command #'consult-ripgrep))
     (consult-ripgrep
-     arg
-     (if initial
-         (concat (thing-at-point 'symbol)
-                 " " initial)
-       (thing-at-point 'symbol)))))
+     arg (thing-at-point 'symbol))))
 
 (defun mk/consult-fd-current-directory ()
   "`Consult-fd' at current directory.

@@ -110,7 +110,7 @@
 
    '("<" . indent-rigidly-left)
    '(">" . indent-rigidly-right)
-   '("?" . mk/code/documentation)
+   '("?" . lspx-show-documentation-eldoc)
    '("~" . upcase-dwim)
    ;; M-; comment-dwim (toggle comment)
    ;; '("C-i" . pop-global-mark)

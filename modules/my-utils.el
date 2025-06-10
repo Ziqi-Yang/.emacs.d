@@ -82,16 +82,6 @@ ARG: prefix argument."
   (interactive)
   (switch-to-buffer "*eww*"))
 
-(defun mk/toggle-documentation-buffer-display ()
-  (interactive)
-  (let ((buf (if lsp-bridge-mode
-                 lsp-bridge-buffer-documentation-buffer
-               eldoc--doc-buffer)))
-    (let ((window (get-buffer-window buf)))
-      (if window
-          (quit-window nil window)
-        (display-buffer buf)))))
-
 (defun mk/better-kill-buffer (&optional arg)
   (interactive "P")
   (if arg

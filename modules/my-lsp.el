@@ -159,7 +159,8 @@
   ;; }
   (lsp-bridge-python-multi-lsp-server "my_basedpyright_ruff")
   (lsp-bridge-single-lang-server-extension-list
-   '((("svelte") . "svelteserver")))
+   '((("svelte") . "svelteserver")
+     (("vue") . "volar")))
   (lsp-bridge-multi-lang-server-extension-list
    '((("html") . "html_emmet_tailwindcss")))
   (lsp-bridge-multi-lang-server-mode-list
@@ -177,55 +178,18 @@
     (setq lsp-bridge-default-mode-hooks (remove hook lsp-bridge-default-mode-hooks)))
   
   (setq lsp-bridge-enable-with-tramp nil)  ; goto local sudo bookmark will cause error
-  (add-hook 'web-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
-  (add-hook 'vue-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
+  (add-hook 'html-ts-mode-hook (lambda () (setq-local lsp-bridge-enable-completion-in-string t)))
   
-  (mk/global-lsp-bridge))
-
-
-(defvar mk/lsp-bridge--managed-projects (make-hash-table :test #'equal))
-
-(defun mk/lsp-bridge--in-managed-projects-p ()
-  (gethash (project-current) mk/lsp-bridge--managed-projects))
-
-(defun mk/lsp-bridge--may-activate ()
-  (when (mk/lsp-bridge--in-managed-projects-p)
-    (lsp-bridge-mode 1)))
-
-(defun mk/lsp-bridge ()
-  "Enable lsp-bridge per project width.
-Needs to run `mk/global-lsp-bridge' first."
-  (interactive)
-  (let ((p (project-current)))
-    (if (mk/lsp-bridge--in-managed-projects-p)
-        (progn
-          (remhash p mk/lsp-bridge--managed-projects)
-          ;; deactivate lsp-bridge modes on all buffers in this project
-          (dolist (buf (project-buffers p))
-            (with-current-buffer buf
-              (when lsp-bridge-mode
-                (lsp-bridge-mode -1)))))
-      (puthash p t mk/lsp-bridge--managed-projects)
-      ;; for current buffer
-      (lsp-bridge-mode 1))))
-
-(defun mk/lsp-bridge-shutdown-all()
-  (interactive)
-  (lsp-bridge-kill-process)
-  (clrhash mk/lsp-bridge--managed-projects))
-
-(defun mk/global-lsp-bridge ()
-  "Slightly modified from `global-lsp-bridge-mode'."
-  (interactive)
-  (dolist (hook (append
-                 lsp-bridge-default-mode-hooks
-                 acm-backend-capf-mode-hooks))
-    (add-hook hook (lambda ()
-                     (when (cl-every (lambda (pred)
-                                       (lsp-bridge-check-predicate pred "global-lsp-bridge-mode"))
-                                     lsp-bridge-enable-predicates)
-                       (mk/lsp-bridge--may-activate))
-                     ))))
+  ;; NOTE Don't use advice-add override here, it doesn't work. Simply re-evaluate it
+  (defun lsp-bridge--user-tsdk-path-func ()
+    "Get tsserver lib*.d.ts directory path."
+    (when-let* (((null lsp-bridge-tsdk-path))
+                (bin (executable-find "tsc"))
+                ;; NOTE I only use NixOS, so hard-code NixOS path here
+                (tsdk (expand-file-name "../../lib/node_modules/typescript/lib/" (file-truename bin)))
+                ((file-exists-p tsdk)))
+      (setq lsp-bridge-tsdk-path tsdk))
+    (or lsp-bridge-tsdk-path "")))
 
 ;;; citre ===================================================
 
