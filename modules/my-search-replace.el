@@ -163,12 +163,9 @@ When ARG is non-nil, then search all buffer."
     (setq
      type
      (cond
-      ((and (derived-mode-p '(html-ts-mode))
-            (equal file-extension "vue"))
-       "vue")
+      ((equal file-extension "vue") "vue")
       ((derived-mode-p '(emacs-lisp-mode)) "elisp")
-      (t (car (split-string (symbol-name major-mode) "-")))
-      ))
+      (t (car (split-string (symbol-name major-mode) "-")))))
     (completing-read "File type[empty: all]: " types nil nil type)))
 
 (defun mk/consult-ripgrep-file-type (&optional arg)
