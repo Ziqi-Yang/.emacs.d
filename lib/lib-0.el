@@ -60,9 +60,15 @@
     (when min-indent
       (indent-rigidly (point-min) (point-max) (- min-indent)))))
 
-(defun mk/batch-add-hook (hooks fn)
+(defun mk/lib/batch-add-hook (hooks fn)
 	(dolist (hook hooks)
 		(add-hook hook fn)))
+
+(defun mk/lib/column-at-pos (point)
+  (save-excursion
+    (goto-char point)
+    (current-column)))
+
 
 (provide 'lib-0)
 

@@ -515,7 +515,7 @@ Example:
    (lambda ()
      (keymap-local-set MK/LOCAL_KEY_MAP keymap/local/elisp)))
 
-  (mk/batch-add-hook
+  (mk/lib/batch-add-hook
    '(c-mode-hook c++-mode-hook)
    (lambda ()
      (keymap-local-set MK/LOCAL_KEY_MAP keymap/local/cc)))
@@ -540,7 +540,7 @@ Example:
    (lambda ()
      (keymap-local-set MK/LOCAL_KEY_MAP #'casual-ibuffer-tmenu)))
 
-  (mk/batch-add-hook
+  (mk/lib/batch-add-hook
    '(js-mode-hook
      js-ts-mode-hook tsx-ts-mode-hook typescript-ts-mode-hook
      typescript-mode-hook web-mode-hook html-mode-hook mhtml-mode-hook

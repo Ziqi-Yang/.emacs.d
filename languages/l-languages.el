@@ -174,7 +174,11 @@
       (while (and (looking-at-p "\\.") (not (bobp)))
         (beginning-of-line-text 0))
       (if (string-match-p "\\`[\]\)\}]+\\'" (buffer-substring (point) (line-end-position)))
-          0
+          (- (mk/lib/column-at-pos (point))
+             (save-excursion
+               (goto-char (treesit-node-start parent))
+               (beginning-of-line-text)
+               (current-column)))
         rust-ts-mode-indent-offset)))
 
   (setq rust-ts-mode--indent-rules
