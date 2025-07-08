@@ -200,6 +200,7 @@ Example:
      ("D" . lspx-find-definition-other-window-xref)
      ;; eldoc: use ? (binding in meow.el)
      ("e" . lspx-show-buffer-errors)
+     ("E" . lspx-show-project-errors)
      ("f" . ,(mk/define&set-keymap
               "C-c c f" keymap/code-format
               '(("f" . mk/refresh-file)

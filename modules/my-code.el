@@ -259,8 +259,10 @@
   (with-eval-after-load 'lsp-mode
     (add-hook 'lsp-managed-mode-hook #'eldoc-box-hover-mode t)))
 
-(with-eval-after-load 'flymake
-  (add-hook 'emacs-lisp-mode-hook #'flymake-mode))
+(use-package flymake
+  :ensure nil
+  :hook ((emacs-lisp-mode) . flymake-mode))
+
 
 (use-package dape
   ;; Currently only on github
