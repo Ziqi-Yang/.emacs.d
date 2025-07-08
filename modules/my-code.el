@@ -1,4 +1,4 @@
-;;; my-eglot.el --- eglot configuration -*- lexical-binding: t; -*-
+;;; my-code.el --- eglot configuration -*- lexical-binding: t; -*-
 ;; Copyright (C) 2023 Meow King <mr.meowking@anche.no>
 
 ;;; Commentary:
@@ -269,6 +269,6 @@
 ;; format file
 (use-package apheleia)
 
-(provide 'my-lsp)
+(provide 'my-code)
 
-;;; my-lsp.el ends here
+;;; my-code.el ends here
