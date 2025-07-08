@@ -22,7 +22,7 @@
            (:package "apheleia" :fetcher github :repo "radian-software/apheleia" :files
                      (:defaults ("scripts" "scripts/formatters")) :source "MELPA"
                      :protocol https :inherit t :depth treeless :ref
-                     "7eaaf3f45703d49e494f6dd0555633cf6b355817"))
+                     "f3308f53d3fd15b808abc583fa4c50a197f0d1e9"))
  (avy :source "elpaca-menu-lock-file" :recipe
       (:package "avy" :repo "abo-abo/avy" :fetcher github :files
                 ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -49,7 +49,7 @@
                   (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el" "*-tests.el"
                             "LICENSE" "README*" "*-pkg.el"))
                  :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                 "c9191ee9e13e86a7b40c3d25c8bf7907c085a1cf"))
+                 "f925182957ea11119e27c2ac7200cc1fbba5612a"))
  (cargo-mode :source "elpaca-menu-lock-file" :recipe
              (:package "cargo-mode" :fetcher github :repo "ayrat555/cargo-mode" :files
                        ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -71,7 +71,7 @@
                     (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                               "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                    :source "MELPA" :protocol https :inherit t :depth treeless :host github
-                   :ref "471d730634f8fc735de03ed9d4edd7fbc659475e"))
+                   :ref "c7866a70b3e0689d58990b6903abaca2891e195c"))
  (citre :source "elpaca-menu-lock-file" :recipe
         (:package "citre" :repo "universal-ctags/citre" :fetcher github :files
                   ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -89,7 +89,7 @@
                 (:package "colorful-mode" :repo "DevelopmentCool2449/colorful-mode" :files
                           ("*" (:exclude ".git")) :source "GNU ELPA" :protocol https
                           :inherit t :depth treeless :type git :host github :ref
-                          "25ad453e4d4e6d9d9e9adf6ccc510231a6059483"))
+                          "7c2f58d606120b6432806f53322c6b624c6438dd"))
  (consult :source "elpaca-menu-lock-file" :recipe
           (:package "consult" :repo "minad/consult" :fetcher github :files
                     ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -98,7 +98,7 @@
                      (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                     :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                    "b6fd7feda74267a53f9f1cf1bd122e519a308132"))
+                    "d32cccdcb5559b503306291fa9f52df19594d687"))
  (consult-todo :source "elpaca-menu-lock-file" :recipe
                (:package "consult-todo" :fetcher github :repo "liuyinz/consult-todo"
                          :files
@@ -112,11 +112,11 @@
  (corfu :source "elpaca-menu-lock-file" :recipe
         (:package "corfu" :repo "minad/corfu" :files ("*.el" "extensions/*.el") :fetcher
                   github :source "MELPA" :protocol https :inherit t :depth treeless :host
-                  github :ref "e032f32c7ff24f5aaa44946551920aa94cd2a7f9"))
+                  github :ref "5e9a2229322541c1ee28b72128cf7c097b32dd5d"))
  (dape :source "elpaca-menu-lock-file" :recipe
        (:package "dape" :repo "svaante/dape" :files ("*" (:exclude ".git")) :source
                  "GNU ELPA" :protocol https :inherit t :depth treeless :type git :host
-                 github :ref "acf4e276393c19a91d2e5a8a7e9a3284faf77aaf"))
+                 github :ref "a0ae5d6a445c119caeb3da930effece839109bf0"))
  (dash :source "elpaca-menu-lock-file" :recipe
        (:package "dash" :fetcher github :repo "magnars/dash.el" :files
                  ("dash.el" "dash.texi") :source "MELPA" :protocol https :inherit t :depth
@@ -134,7 +134,7 @@
                      (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                     :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                    "9b032018fda8eb6c241bba1ec0e5c354ad523b2c"))
+                    "f1228602bfaac831e65394967ed70bd3c4264b24"))
  (dired-hacks-utils :source "elpaca-menu-lock-file" :recipe
                     (:package "dired-hacks-utils" :fetcher github :repo
                               "Fuco1/dired-hacks" :files ("dired-hacks-utils.el") :source
@@ -199,7 +199,7 @@
    "elpaca-menu-lock-file" :recipe
    (:source nil :protocol https :inherit ignore :depth 1 :repo
             "https://github.com/progfolio/elpaca.git" :ref
-            "45c56a968fd5903bbcbb1fafbf3b6e50e64c4393" :files
+            "271f73cc7f40883ffe073e3b956483d1a568d00a" :files
             (:defaults "elpaca-test.el" (:exclude "extensions")) :build
             (:not elpaca--activate-package) :package "elpaca"))
  (elpaca-use-package :source "elpaca-menu-lock-file" :recipe
@@ -209,12 +209,12 @@
                                "extensions/elpaca-use-package.el" :build
                                (:not elpaca--compile-info) :source "Elpaca extensions"
                                :protocol https :inherit t :depth treeless :ref
-                               "45c56a968fd5903bbcbb1fafbf3b6e50e64c4393"))
+                               "271f73cc7f40883ffe073e3b956483d1a568d00a"))
  (embark :source "elpaca-menu-lock-file" :recipe
          (:package "embark" :repo "oantolin/embark" :fetcher github :files
                    ("embark.el" "embark-org.el" "embark.texi") :source "MELPA" :protocol
                    https :inherit t :depth treeless :ref
-                   "2941f2ea36d61c1a84c3f79ebe47d604c9a92b5d"))
+                   "89c7610fa7988b6c93029f87afa4ba6b7768bf81"))
  (embark-collection :source "elpaca-menu-lock-file" :recipe
                     (:source nil :protocol https :inherit t :depth treeless :type git
                              :host sourcehut :repo "meow_king/embark-collection" :package
@@ -224,11 +224,11 @@
                  (:package "embark-consult" :repo "oantolin/embark" :fetcher github :files
                            ("embark-consult.el") :source "MELPA" :protocol https :inherit
                            t :depth treeless :ref
-                           "2941f2ea36d61c1a84c3f79ebe47d604c9a92b5d"))
+                           "89c7610fa7988b6c93029f87afa4ba6b7768bf81"))
  (expreg :source "elpaca-menu-lock-file" :recipe
          (:package "expreg" :repo "casouri/expreg" :files ("*" (:exclude ".git")) :source
                    "GNU ELPA" :protocol https :inherit t :depth treeless :type git :host
-                   github :ref "b1dc64aef8ed8498a6d21e5e78ce7e0bda8407e0"))
+                   github :ref "27d0d8a5c46657f2c83aca658c0a15a4ccc935a0"))
  (f :source "elpaca-menu-lock-file" :recipe
     (:package "f" :fetcher github :repo "rejeep/f.el" :files
               ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir" "doc/*.info"
@@ -246,7 +246,7 @@
                       (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                 "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                      :source "MELPA" :protocol https :inherit t :depth treeless :host
-                     github :ref "8d0f98cf36f6b9c31285329b054ae77f9a3d9b33"))
+                     github :ref "7a9d0cf138e9e7c60e01418bfe3f8c3a9e621ad8"))
  (helpful :source "elpaca-menu-lock-file" :recipe
           (:package "helpful" :repo "Wilfred/helpful" :fetcher github :files
                     ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -309,7 +309,7 @@
                             (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                       "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                            :source "MELPA" :protocol https :inherit t :depth treeless
-                           :host gitlab :ref "a25d56cecac9160ba7c140f982ec16ca7b2fe97f"))
+                           :host gitlab :ref "051c9ef534956c235343fb41546623ff87a1695b"))
  (lice :source "elpaca-menu-lock-file" :recipe
        (:package "lice" :fetcher github :repo "buzztaiki/lice-el" :files
                  ("*.el" "template") :source "MELPA" :protocol https :inherit t :depth
@@ -325,11 +325,11 @@
                       (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver"
                                  "resources")
                       :build (:not elpaca--byte-compile) :package "lsp-bridge" :ref
-                      "1cf76d6506f48a3b78f5383a3816f3bf5c0d88f6"))
+                      "3b37a04bd1b6bbcdc2b0ad7a5c388ad027eb7a25"))
  (lsp-mode :source "elpaca-menu-lock-file" :recipe
            (:package "lsp-mode" :repo "emacs-lsp/lsp-mode" :fetcher github :files
                      (:defaults "clients/*.*") :source "MELPA" :protocol https :inherit t
-                     :depth treeless :ref "f426c2942ebb84aac12cf37ea520973e681c595d"))
+                     :depth treeless :ref "147233313576c844e2bf56640827b0d0e5c2ee6c"))
  (lspx :source "elpaca-menu-lock-file" :recipe
        (:source nil :protocol https :inherit t :depth treeless :host codeberg :repo
                 "meow_king/lspx" :package "lspx" :ref
@@ -346,7 +346,7 @@
                         (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                   "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                        :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                       "0e7097051cbcedcc4da9b633406291d4052ec0e4"))
+                       "aa8e48b86f66739a86fb2e180103f8f9682004be"))
  (markdown-mode :source "elpaca-menu-lock-file" :recipe
                 (:package "markdown-mode" :fetcher github :repo "jrblevin/markdown-mode"
                           :files
@@ -356,7 +356,7 @@
                            (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                      "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                           :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                          "7c20685df615469132763add897c1ca37cbe07e4"))
+                          "7c51a2167c5a1330e0ab52fe5b2d03c1ead122ca"))
  (md-ts-mode :source "elpaca-menu-lock-file" :recipe
              (:source nil :protocol https :inherit t :depth treeless :host github :repo
                       "eki3z/md" :package "md-ts-mode" :ref
@@ -402,7 +402,7 @@
  (nerd-icons :source "elpaca-menu-lock-file" :recipe
              (:package "nerd-icons" :repo "rainstormstudio/nerd-icons.el" :fetcher github
                        :files (:defaults "data") :source "MELPA" :protocol https :inherit
-                       t :depth treeless :ref "d972dee349395ffae8fceae790d22fedc8fe08e8"))
+                       t :depth treeless :ref "4476b4cabe63f5efafa3c0a8b370db4f6a92e90c"))
  (nerd-icons-dired :source "elpaca-menu-lock-file" :recipe
                    (:package "nerd-icons-dired" :repo "rainstormstudio/nerd-icons-dired"
                              :fetcher github :files
@@ -432,7 +432,7 @@
                        (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                                  "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                       :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                      "254f2412489bbbf62700f9d3d5f18e537841dcc3"))
+                      "082a487f79ca5e960046a31599a5f97dac79a858"))
  (org-appear :source "elpaca-menu-lock-file" :recipe
              (:package "org-appear" :fetcher github :repo "awth13/org-appear" :files
                        ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -446,7 +446,7 @@
                (:package "package-lint" :fetcher github :repo "purcell/package-lint"
                          :files (:defaults "data" (:exclude "*flymake.el")) :source
                          "MELPA" :protocol https :inherit t :depth treeless :ref
-                         "29ccfea319ee6bac4b80045aa473b3aa2b77d074"))
+                         "4484da08c9f6117920c5697bf51cd85b4fa8234d"))
  (request :source "elpaca-menu-lock-file"
    :recipe
    (:package "request" :repo "tkf/emacs-request" :fetcher github :files ("request.el")
@@ -477,7 +477,7 @@
                                          "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                               :source "MELPA" :protocol https :inherit t :depth treeless
                               :type git :host github :ref
-                              "617df25e91351feffe6aff4d9e4724733449d608"))
+                              "02ab7b2ea8530c63c20556c1afb795924e08dfca"))
  (substitute :source "elpaca-menu-lock-file" :recipe
              (:package "substitute" :repo "protesilaos/substitute" :files
                        ("*" (:exclude ".git" "COPYING" "doclicense.texi")) :source
@@ -508,7 +508,7 @@
                     (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
                               "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
                    :source "MELPA" :protocol https :inherit t :depth treeless :ref
-                   "04bd2e418d7002e740814671a98cbbbed84032c0"))
+                   "9fa2c59660fe9473429a51872d3c00e1b95cab86"))
  (ts-query-highlight :source "elpaca-menu-lock-file" :recipe
                      (:source nil :protocol https :inherit t :depth treeless :type git
                               :host sourcehut :repo "meow_king/ts-query-highlight"
@@ -518,20 +518,20 @@
                 (:package "typst-ts-mode" :repo "meow_king/typst-ts-mode" :files
                           ("*" (:exclude ".git")) :source "NonGNU ELPA" :protocol https
                           :inherit t :depth treeless :type git :host codeberg :branch
-                          "develop" :ref "0019b56a28505685a7fa998b7accd027ef19e728"))
+                          "develop" :ref "c3c78a9a2c57e85fb042ad0495584bf3ebcd1422"))
  (ultra-scroll :source "elpaca-menu-lock-file" :recipe
                (:source nil :protocol https :inherit t :depth treeless :host github :repo
                         "jdtsmith/ultra-scroll" :package "ultra-scroll" :ref
-                        "489adeda7380b97d8f5d61d43082cd2d96b55b58"))
+                        "3dd35e9a2aa327ddf889bd0f3341a81d3215862b"))
  (vertico :source "elpaca-menu-lock-file" :recipe
           (:package "vertico" :repo "minad/vertico" :files ("*.el" "extensions/*.el")
                     :fetcher github :source "MELPA" :protocol https :inherit t :depth
-                    treeless :host github :ref "751c9ad527f14750ef10543fa64b39cf778d6206"))
+                    treeless :host github :ref "d8dc49a3520ab908c2b0f62a4a8ae32ca23f2726"))
  (vundo :source "elpaca-menu-lock-file" :recipe
         (:package "vundo" :repo ("https://github.com/casouri/vundo" . "vundo") :files
                   ("*" (:exclude ".git" "test")) :source "GNU ELPA" :protocol https
                   :inherit t :depth treeless :ref
-                  "d09448aa537a63e35a4bc6b38ceb2c168e891342"))
+                  "30f85b4ae1f2a7189d44bb738b49559928d046cb"))
  (wgrep :source "elpaca-menu-lock-file" :recipe
         (:package "wgrep" :fetcher github :repo "mhayashi1120/Emacs-wgrep" :files
                   ("wgrep.el") :source "MELPA" :protocol https :inherit t :depth treeless
