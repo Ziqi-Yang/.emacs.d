@@ -251,7 +251,9 @@
 
 (use-package flymake
   :ensure nil
-  :hook ((emacs-lisp-mode) . flymake-mode))
+  :hook ((emacs-lisp-mode) . flymake-mode)
+  :custom
+  (flymake-show-diagnostics-at-end-of-line t))
 
 
 (use-package dape
