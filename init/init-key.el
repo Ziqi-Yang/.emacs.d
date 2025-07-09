@@ -71,7 +71,7 @@ Example:
 
   (keymap-global-set "<backtab>" #'outline-cycle)
   
-  (keymap-global-set "M-<tab>" #'meow-last-buffer)
+  (keymap-global-set "M-<tab>" #'tab-bar-switch-to-recent-tab)
 
   (keymap-global-set "M-?" #'lspx-show-documentation-eldoc)
 

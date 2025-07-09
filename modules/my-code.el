@@ -111,20 +111,10 @@
   (add-hook 'eglot-managed-mode-hook
             (lambda () (eglot-inlay-hints-mode -1)))
   (setq-default eglot-send-changes-idle-time 0.25)
-  ;; see outer files(like header files) as in project temporarily
 
-  ;; NOTE: pyright is better for handling virtual environment with a configuration flie per project
-  ;; how to configure eglot-workspace-configuration:
-  ;; https://paste.sr.ht/~meow_king/df83c4dd8541e54befe511ddaf0eeee7cb59eaba
-  ;; Examples:
-  ;; (setq-default eglot-workspace-configuration
-  ;;               '(:pylsp (:plugins (:ruff (:enabled t)))  ; pylsp
-  ;;                        :exportPdf "onSave"))  ; tinymist
-  ;; The whole value of eglot-workspace-configuration is directly passed into
-  ;; the langauge server
-  ;; pylsp's configuration docs: `pylsp.configurationSources'
-  ;; tinymist's configuration dosc: `:exportPdf'
-  )
+  (setq-default eglot-workspace-configuration
+                ;; use different target directory for rust-analyzer so it won't block other cargo instance
+                '(:rust-analyzer (:cargo (:targetDir t)))))
 
 ;;; @ lsp-bridge ============================================
 (use-package yasnippet
