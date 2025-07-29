@@ -253,7 +253,7 @@
   :ensure nil
   :hook ((emacs-lisp-mode) . flymake-mode)
   :custom
-  (flymake-show-diagnostics-at-end-of-line 'short))
+  (flymake-show-diagnostics-at-end-of-line nil))
 
 
 (use-package dape

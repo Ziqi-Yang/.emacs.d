@@ -233,6 +233,7 @@ Example:
      ("f" . mk/smart-find-file)
      ("F" . mk/find-file-other-window)
      ("p" . project-find-file)
+     ("P" . project-root-find-file)
      ("r" . recentf-open)
      ("R" . rename-visited-file)
      ("s" . ,(mk/define&set-keymap
@@ -387,7 +388,7 @@ Example:
      ("v" . view-mode)
      ("m" . meow-temp-normal)
      ("c" . rainbow-mode)
-     ("e" . consult-theme)
+     ("s" . consult-theme)
      ("t" . tasks-run)))
 
   ;; window(w)
