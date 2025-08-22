@@ -94,7 +94,7 @@
   ;; For Vue, use lsp-mode is the best choice. Vue language server is shit
   (add-to-list 'eglot-server-programs '((markdown-mode markdown-ts-mode md-ts-mode) . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs '(text-mode . ("harper-ls" "--stdio")))
-  (add-to-list 'eglot-server-programs '((rust-ts-mode rust-mode) . ("run-in-nix" "rust-analyzer")))
+  (add-to-list 'eglot-server-programs '((rust-ts-mode rust-mode) . ("with-project-env" "rust-analyzer")))
   (add-to-list 'eglot-server-programs `((python-mode python-ts-mode)
                                         . ,(eglot-alternatives
                                             '(("basedpyright-langserver" "--stdio")
