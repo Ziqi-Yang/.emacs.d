@@ -3,6 +3,17 @@
 ;; auto insert content to new files
 ;;; Code:
 
+(require 'json)
+
+(defun my-insert-pyright-config ()
+  "Create and insert a default pyrightconfig.json."
+  (interactive) ; Makes the function callable via M-x
+  (let ((config-data
+         '(:venvPath "." :venv ".venv" :typeCheckingMode "standard"
+                     :extraPaths [])))
+    (insert (json-serialize config-data))))
+
+
 (auto-insert-mode t)
 ;; 3 minutes video: https://www.youtube.com/watch?v=wZYiaIvix34
 
@@ -122,15 +133,8 @@ indent_size = 2
 indent_size = 2
 "))
 
-  (define-auto-insert
-    "pyrightconfig\\.json"
-    '(insert
-      "{
-    \"venvPath\": \".\",
-    \"venv\": \".venv\",
-    \"typeCheckingMode\": \"standard\"
-}"))
-
+  (define-auto-insert "pyrightconfig\\.json" 'my-insert-pyright-config)
+  
   (define-auto-insert
     "flake\\.nix"
     '(insert
