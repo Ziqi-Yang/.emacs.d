@@ -24,6 +24,7 @@
 
 (use-package diff-hl
   :config
+  (diff-hl-flydiff-mode)
   (global-diff-hl-mode)
   ;; When Emacs runs in terminal, show the indicators in margin instead.
   

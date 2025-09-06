@@ -97,7 +97,7 @@
   (add-to-list 'eglot-server-programs '((rust-ts-mode rust-mode) . ("with-project-env" "rust-analyzer")))
   (add-to-list 'eglot-server-programs `((python-mode python-ts-mode)
                                         . ,(eglot-alternatives
-                                            '(("basedpyright-langserver" "--stdio")
+                                            '(("with-project-env" "basedpyright-langserver" "--stdio")
                                               ("pyrefly" "lsp")
                                               ("ruff" "server")))))
   

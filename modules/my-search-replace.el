@@ -158,7 +158,7 @@ When ARG is non-nil, then search all buffer."
                       type minibuffer-completion-table
                       nil nil #'string=)))
                 (format "\t%s" desc)))))
-         (file-extension (downcase (file-name-extension buffer-file-name)))
+         (file-extension (downcase (or (file-name-extension buffer-file-name) "")))
          type)
     (setq
      type
