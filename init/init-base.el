@@ -287,11 +287,13 @@
   :config
   (ultra-scroll-mode 1))
 
+(use-package async)  ; fix eee issue
 (use-package eee
   :ensure (:type git :host github :repo "eval-exec/eee.el"
                  :files (:defaults "*.el" "*.sh"))
   :custom
-  (ee-terminal-command "footclient -a floating_noanim"))
+  (ee-terminal-command "footclient")
+  (ee-terminal-options '(("footclient" .  "-a floating_noanim"))))
 
 (provide 'init-base)
 

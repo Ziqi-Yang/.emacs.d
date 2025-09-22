@@ -174,9 +174,9 @@
                           :source "MELPA" :protocol https :inherit t :depth treeless :host
                           github :ref "82a28d8a85277cfe453af464603ea330eae41c05"))
  (eee :source "elpaca-menu-lock-file" :recipe
-      (:source nil :protocol https :inherit t :depth treeless :type git :host github :repo
-               "eval-exec/eee.el" :files (:defaults "*.el" "*.sh") :package "eee" :ref
-               "b77ec32271804b102dd67709a7038e0c814ca906"))
+      (:source "Init file" :protocol https :inherit t :depth treeless :type git :host
+               github :repo "eval-exec/eee.el" :files (:defaults "*.el" "*.sh") :package
+               "eee" :ref "b77ec32271804b102dd67709a7038e0c814ca906"))
  (eglot-booster :source "elpaca-menu-lock-file" :recipe
                 (:source nil :protocol https :inherit t :depth treeless :host github :repo
                          "jdtsmith/eglot-booster" :package "eglot-booster" :ref
