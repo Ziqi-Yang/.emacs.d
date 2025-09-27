@@ -241,6 +241,15 @@
 (with-eval-after-load 'go-ts-mode
   (setq-default go-ts-mode-indent-offset 4))
 
+;;; OCaml ======================================================================
+(use-package neocaml
+  :ensure (:host github :repo "bbatsov/neocaml")
+  :custom
+  (neocaml-repl-program-name "utop")
+  (neocaml-repl-program-args '("-emacs"))
+  :config
+  (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp"))))
+
 
 ;;; micc =======================================================================
 ;; (use-package crystal-mode)

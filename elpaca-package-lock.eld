@@ -23,6 +23,15 @@
                      (:defaults ("scripts" "scripts/formatters")) :source "MELPA"
                      :protocol https :inherit t :depth treeless :ref
                      "f1d36031fc162f541f77d4f6c6c0fd6197aba077"))
+ (async :source "elpaca-menu-lock-file" :recipe
+        (:package "async" :repo "jwiegley/emacs-async" :fetcher github :files
+                  ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
+                   "doc/*.info" "doc/*.texi" "doc/*.texinfo" "lisp/*.el" "docs/dir"
+                   "docs/*.info" "docs/*.texi" "docs/*.texinfo"
+                   (:exclude ".dir-locals.el" "test.el" "tests.el" "*-test.el"
+                             "*-tests.el" "LICENSE" "README*" "*-pkg.el"))
+                  :source "MELPA" :protocol https :inherit t :depth treeless :ref
+                  "ca7f126d41d47b853839c964d248cd258cbfb63b"))
  (avy :source "elpaca-menu-lock-file" :recipe
       (:package "avy" :repo "abo-abo/avy" :fetcher github :files
                 ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo" "doc/dir"
@@ -174,9 +183,9 @@
                           :source "MELPA" :protocol https :inherit t :depth treeless :host
                           github :ref "82a28d8a85277cfe453af464603ea330eae41c05"))
  (eee :source "elpaca-menu-lock-file" :recipe
-      (:source "Init file" :protocol https :inherit t :depth treeless :type git :host
-               github :repo "eval-exec/eee.el" :files (:defaults "*.el" "*.sh") :package
-               "eee" :ref "b77ec32271804b102dd67709a7038e0c814ca906"))
+      (:source nil :protocol https :inherit t :depth treeless :type git :host github :repo
+               "eval-exec/eee.el" :files (:defaults "*.el" "*.sh") :package "eee" :ref
+               "b77ec32271804b102dd67709a7038e0c814ca906"))
  (eglot-booster :source "elpaca-menu-lock-file" :recipe
                 (:source nil :protocol https :inherit t :depth treeless :host github :repo
                          "jdtsmith/eglot-booster" :package "eglot-booster" :ref
@@ -399,6 +408,10 @@
                              :source "MELPA" :protocol https :inherit t :depth treeless
                              :type git :host github :ref
                              "89f1a8df9b1fc721b1672b4c7b6d3ab451e7e3ef"))
+ (neocaml :source "elpaca-menu-lock-file" :recipe
+          (:source "Init file" :protocol https :inherit t :depth treeless :host github
+                   :repo "bbatsov/neocaml" :package "neocaml" :ref
+                   "930e4aa9ad50977eefe296f35d0c5c1e6e112398"))
  (nerd-icons :source "elpaca-menu-lock-file" :recipe
              (:package "nerd-icons" :repo "rainstormstudio/nerd-icons.el" :fetcher github
                        :files (:defaults "data") :source "MELPA" :protocol https :inherit

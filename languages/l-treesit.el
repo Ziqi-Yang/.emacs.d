@@ -54,16 +54,20 @@
         (svelte "https://github.com/Himujjal/tree-sitter-svelte.git")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (markdown . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-                     "split_parser" "tree-sitter-markdown/src"))
+                     nil "tree-sitter-markdown/src"))
         (markdown-inline . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-                            "split_parser" "tree-sitter-markdown-inline/src"))
+                            nil "tree-sitter-markdown-inline/src"))
         (nix "https://github.com/nix-community/tree-sitter-nix")
         (just "https://github.com/IndianBoy42/tree-sitter-just")
         (zig "https://github.com/maxxnino/tree-sitter-zig")
         (htmldjango . ("https://github.com/interdependence/tree-sitter-htmldjango.git"
                        "v1.0.0"))
         (htmljinja2 . ("https://codeberg.org/meow_king/tree-sitter-htmljinja2"))
-        (svelte . ("https://github.com/Himujjal/tree-sitter-svelte"))))
+        (svelte . ("https://github.com/Himujjal/tree-sitter-svelte"))
+        (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml"
+                  nil "grammars/ocaml/src"))
+        (ocaml-interface  . ("https://github.com/tree-sitter/tree-sitter-ocaml"
+                             nil "grammars/interface/src"))))
 
 (defun nf/treesit-install-all-languages ()
   "Install all languages specified by `treesit-language-source-alist'."
