@@ -39,13 +39,14 @@
   :custom ((lsp-headerline-breadcrumb-enable nil))
   :config
   ;; Lsp Booster: https://github.com/blahgeek/emacs-lsp-booster
-  (advice-add (if (progn (require 'json)
-                         (fboundp 'json-parse-buffer))
-                  'json-parse-buffer
-                'json-read)
-              :around
-              #'lsp-booster--advice-json-parse)
-  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+  ;; (advice-add (if (progn (require 'json)
+  ;;                        (fboundp 'json-parse-buffer))
+  ;;                 'json-parse-buffer
+  ;;               'json-read)
+  ;;             :around
+  ;;             #'lsp-booster--advice-json-parse)
+  ;; (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+  )
 
 
 ;;; @ Eglot  ===================================================================
@@ -74,10 +75,11 @@
 ;;; Eglot ======================================================================
 
 ;; need https://aur.archlinux.org/packages/emacs-lsp-booster-git
-(use-package eglot-booster
-  :ensure (:host github :repo "jdtsmith/eglot-booster")
-	:after eglot
-	:config	(eglot-booster-mode))
+
+;; (use-package eglot-booster
+;;   :ensure (:host github :repo "jdtsmith/eglot-booster")
+;; 	:after eglot
+;; 	:config	(eglot-booster-mode))
 
 (defun mk/add-eglot-ensure (hook-list)
 	(dolist (mode hook-list)
