@@ -26,7 +26,7 @@
 (use-package llvm-mode
   :ensure (:host github :repo "nverno/llvm-mode"))
 
-;;; Scheme =====================================================================
+;;; Lisp Family ================================================================
 ;; (use-package geiser-guile)
 
 ;; gerbil
@@ -35,6 +35,9 @@
 
 ;; (use-package gerbil-mode
 ;;   :ensure (:host github :repo "mighty-gerbils/gerbil" :files ("etc/gerbil-mode.el")))
+
+(use-package janet-ts-mode
+  :ensure (:host github :repo "sogaiu/janet-ts-mode"))
 
 ;;; CC =========================================================================
 
@@ -47,6 +50,8 @@
 
 (use-package c-ts-prototype
   :ensure (:type git :host sourcehut :repo "meow_king/c-ts-protoype"))
+
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-ts-mode))
 
 ;; Nix =========================================================================
 (use-package nix-ts-mode

@@ -63,6 +63,7 @@
         (htmldjango . ("https://github.com/interdependence/tree-sitter-htmldjango.git"
                        "v1.0.0"))
         (htmljinja2 . ("https://codeberg.org/meow_king/tree-sitter-htmljinja2"))
+        (janet-simple . ("https://github.com/sogaiu/tree-sitter-janet-simple"))
         (svelte . ("https://github.com/Himujjal/tree-sitter-svelte"))
         (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml"
                   nil "grammars/ocaml/src"))
