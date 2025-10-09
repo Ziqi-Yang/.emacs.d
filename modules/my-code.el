@@ -198,7 +198,7 @@
   (setq-default
    citre-enable-capf-integration t  ; completion-at-point integration
    citre-enable-imenu-integration nil
-   citre-enable-xref-integration nil)
+   citre-enable-xref-integration t)
   (setq
    citre-default-create-tags-file-location 'global-cache
    citre-use-project-root-when-creating-tags t
@@ -214,6 +214,13 @@
   (interactive)
   (citre-update-this-tags-file)
   (citre-global-update-database))
+
+(defun mk/toggle-auto-citre()
+  "Toggle citre's find-file-hook"
+  (interactive)
+  (if (member 'citre-auto-enable-citre-mode (default-value 'find-file-hook))
+      (remove-hook 'find-file-hook #'citre-auto-enable-citre-mode nil)
+    (add-hook 'find-file-hook #'citre-auto-enable-citre-mode nil)))
 
 ;;; Misc ======================================================================
 
