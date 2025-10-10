@@ -37,9 +37,7 @@
   (web-mode-enable-heredoc-fontification t)
   (web-mode-enable-current-element-highlight t)
   (web-mode-enable-current-column-highlight t)
-  (web-mode-enable-engine-detection t)
-  :config
-  (add-to-list 'eglot-server-programs '(web-mode . ("svelteserver" "--stdio"))))
+  (web-mode-enable-engine-detection t))
 
 
 (defun mk/setup-web-mode-for-emacs-client ()
@@ -68,9 +66,7 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 
 (use-package svelte-ts-mode
   :after eglot
-  :ensure (:host github :repo "leafOfTree/svelte-ts-mode")
-  :config
-  (add-to-list 'eglot-server-programs '(svelte-ts-mode . ("svelteserver" "--stdio"))))
+  :ensure (:host github :repo "leafOfTree/svelte-ts-mode"))
 
 
 (use-package mhtml-ts-mode

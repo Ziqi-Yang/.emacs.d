@@ -57,14 +57,7 @@
 (use-package nix-ts-mode
   :after eglot
   :ensure (:type git :host github :repo "nix-community/nix-ts-mode")
-  :mode ("\\.nix\\'" . nix-ts-mode)
-  :config
-  (add-to-list 'eglot-server-programs
-               `(nix-ts-mode . ,(eglot-alternatives
-                                 '("nixd" "nil")))))
-
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
+  :mode ("\\.nix\\'" . nix-ts-mode))
 
 ;;; Draw =======================================================================
 ;; (use-package plantuml-mode
@@ -112,10 +105,6 @@
   :ensure (:host gitlab :repo "bricka/emacs-kotlin-ts-mode")
   :mode "\\.kt\\'")
 
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               `(kotlin-ts-mode . ("kotlin-language-server"))))
-
 ;;; Lisp =======================================================================
 
 (with-eval-after-load 'elisp-mode
@@ -151,17 +140,9 @@
   :hook ((md-ts-mode . md-toc-mode)))
 
 ;;; Python =====================================================================
-(with-eval-after-load
-    (setq python-shell-interpreter "python"
-          python-shell-interpreter-args "-i"))
-
 (with-eval-after-load 'python
-  (setq python-indent-def-block-scale 1)
-  (keymap-unset python-mode-map "C-c C-c")
-  (keymap-set python-mode-map "C-c C-c o" #'python-fix-imports)
-
-  (keymap-unset python-ts-mode-map "C-c C-c")
-  (keymap-set python-ts-mode-map "C-c C-c o" #'python-fix-imports))
+  (setq python-shell-interpreter "python"
+        python-shell-interpreter-args "-i"))
 
 ;;; Rust =======================================================================
 (defun mk/rust/setup ()
@@ -209,12 +190,7 @@
   (typst-ts-enable-raw-blocks-highlight t)
   (typst-ts-preview-function #'browse-url-xdg-open)
   :config
-  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)
-  (add-to-list 'eglot-server-programs
-               `((typst-ts-mode) .
-                 ,(eglot-alternatives `(,typst-ts-lsp-download-path
-                                        "tinymist"
-                                        "typst-lsp")))))
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
 
 ;;; Dockerfile =================================================================
 (use-package dockerfile-mode
@@ -238,9 +214,8 @@
 (use-package zig-ts-mode
   :after eglot
   :ensure (:host codeberg :branch "develop" :repo "meow_king/zig-ts-mode")
-  :mode  ("\\.\\(?:z\\(?:ig\\|on\\)\\)\\'") ; `(,(rx "." (or "zig" "zon") eos))
-  :config
-  (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls"))))
+  ;; `(,(rx "." (or "zig" "zon") eos))
+  :mode  ("\\.\\(?:z\\(?:ig\\|on\\)\\)\\'"))
 
 ;;; Go =========================================================================
 (with-eval-after-load 'go-ts-mode
@@ -251,9 +226,7 @@
   :ensure (:host github :repo "bbatsov/neocaml")
   :custom
   (neocaml-repl-program-name "utop")
-  (neocaml-repl-program-args '("-emacs"))
-  :config
-  (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp"))))
+  (neocaml-repl-program-args '("-emacs")))
 
 
 ;;; micc =======================================================================

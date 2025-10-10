@@ -48,30 +48,6 @@
   ;; (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
   )
 
-
-;;; @ Eglot  ===================================================================
-
-
-;; check eglot-server-programs to know the language programs that corresponding
-;; to a certain language.
-;; 
-;; Note that a language server can also execute other *optional package command*
-;; like bash-language-server can execute shellcheck, you should check the optional
-;; package required by the main pakcage is also installed(pacman -Qi to view)
-
-;; manually do `eglot' for every workspace is easy, so we dont' use `eglot-ensure'
-
-;;; Code:
-
-;; lsp-copilot: need refinement
-
-;; (use-package flycheck)
-;; (use-package lsp-copilot
-;;   :ensure (:host github :repo "Ziqi-Yang/lsp-copilot"
-;;                  :files (:defaults "lsp-copilot")
-;;                  :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./"))))
-
-
 ;;; Eglot ======================================================================
 
 ;; need https://aur.archlinux.org/packages/emacs-lsp-booster-git
@@ -81,9 +57,33 @@
 ;; 	:after eglot
 ;; 	:config	(eglot-booster-mode))
 
-(defun mk/add-eglot-ensure (hook-list)
-	(dolist (mode hook-list)
-		(add-hook mode #'eglot-ensure)))
+
+;; https://github.com/jdtsmith/eglot-booster/blob/cab7803c4f0adc7fff9da6680f90110674bb7a22/eglot-booster.el#L57
+(defun mk/eglot-plain-command-p (com)
+  "Test if command COM is a plain eglot server command."
+  (and (consp com)
+       (not (integerp (cadr com)))
+       (not (keywordp (car com)))
+       (not (memq :autoport com))))
+
+
+;; reference: https://github.com/jdtsmith/eglot-booster/blob/cab7803c4f0adc7fff9da6680f90110674bb7a22/eglot-booster.el#L95
+(defun mk/advice/eglot/wrap-contact (args)
+  "Wrap eglot server commands with `with-project-env' command.  ARGS."
+  (let ((contact (nth 3 args))
+        (def-args '("with-project-env")))
+    (cond
+     ((functionp contact)
+      (setf (nth 3 args)
+            (lambda (&optional interactive)
+	            (let ((res (funcall contact interactive)))
+		            (if (mk/eglot-plain-command-p res)
+		                (append def-args res)
+		              res)))))
+     ((mk/eglot-plain-command-p contact)
+      (setf (nth 3 args) (append def-args contact))))
+    args))
+
 
 (use-package eglot
   :ensure nil
@@ -92,16 +92,7 @@
 	;; install markdown-mode to rich the doc
   ;; performance improvemence:
   ;; https://www.reddit.com/r/emacs/comments/16vixg6/how_to_make_lsp_and_eglot_way_faster_like_neovim/
-  
-  ;; For Vue, use lsp-mode is the best choice. Vue language server is shit
-  (add-to-list 'eglot-server-programs '((markdown-mode markdown-ts-mode md-ts-mode) . ("harper-ls" "--stdio")))
-  (add-to-list 'eglot-server-programs '(text-mode . ("harper-ls" "--stdio")))
-  (add-to-list 'eglot-server-programs '((rust-ts-mode rust-mode) . ("with-project-env" "rust-analyzer")))
-  (add-to-list 'eglot-server-programs `((python-mode python-ts-mode)
-                                        . ,(eglot-alternatives
-                                            '(("with-project-env" "basedpyright-langserver" "--stdio")
-                                              ("pyrefly" "lsp")
-                                              ("ruff" "server")))))
+
   
   (fset #'jsonrpc--log-event #'ignore) ;; remove laggy typing it probably reduces chatty json from lsp to eglot i guess
   (setq-default eglot-events-buffer-config '(:size 0 :format full))
@@ -114,9 +105,27 @@
             (lambda () (eglot-inlay-hints-mode -1)))
   (setq-default eglot-send-changes-idle-time 0.25)
 
+
+  (advice-add 'eglot--connect :filter-args #'mk/advice/eglot/wrap-contact)
+  
   (setq-default eglot-workspace-configuration
                 ;; use different target directory for rust-analyzer so it won't block other cargo instance
-                '(:rust-analyzer (:cargo (:targetDir t)))))
+                '(:rust-analyzer (:cargo (:targetDir t))))
+
+  ;; For Vue, use lsp-bridge is the best choice. Vue language server is shit
+  (setq eglot-server-programs
+        `(((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))
+          ((markdown-mode markdown-ts-mode md-ts-mode text-mode) . ("harper-ls" "--stdio"))
+          (rust-ts-mode . ("rust-analyzer"))
+          ((nix-mode nix-ts-mode) . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd")))
+          (svelte-ts-mode . ("svelteserver" "--stdio"))))
+
+  (with-eval-after-load 'typst-ts-mode
+    (add-to-list 'eglot-server-programs
+                 `(typst-ts-mode .
+                                 ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                                        "tinymist"
+                                                        "typst-lsp"))))))
 
 ;;; @ lsp-bridge ============================================
 (use-package yasnippet
