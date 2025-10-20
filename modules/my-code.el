@@ -118,7 +118,7 @@
           ((markdown-mode markdown-ts-mode md-ts-mode text-mode) . ("harper-ls" "--stdio"))
           (rust-ts-mode . ("rust-analyzer"))
           ((c-mode c-ts-mode c++-mode c++-ts-mode objc-mode) . ,(eglot-alternatives
-                                                                 '("clangd" "ccls")))
+                                                                 '("clangd")))
           ((nix-mode nix-ts-mode) . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd")))
           (svelte-ts-mode . ("svelteserver" "--stdio"))))
 
