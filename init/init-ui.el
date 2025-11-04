@@ -53,8 +53,9 @@
       (load-theme 'modus-operandi-tinted t)
     (load-theme 'modus-vivendi t)))
 
-(add-hook 'after-init-hook #'mk/setup-theme)
-(add-hook 'server-after-make-frame-hook #'mk/setup-theme)
+;; TODO wait for the BUG to be fixed https://lists.gnu.org/archive/html/bug-gnu-emacs/2025-10/msg01447.html
+;;(add-hook 'after-init-hook #'mk/setup-theme)
+;;(add-hook 'server-after-make-frame-hook #'mk/setup-theme)
 
 (use-package delight)
 
