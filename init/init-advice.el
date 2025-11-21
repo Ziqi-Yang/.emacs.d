@@ -23,20 +23,6 @@
 
 ;;; Code:
 
-;; modern looking https://emacsconf.org/2023/talks/flat/
-(defun flat-style(theme &rest args)
-  (custom-set-faces
-   '(header-line
-     ((t (:inherit mode-line
-                   :box (:style flat-button)))) t)
-   '(mode-line
-     ((t (:inherit mode-line
-                   :box (:style flat-button)))) t)
-   '(mode-line-inactive
-     ((t (:inherit mode-line-inactive
-                   :box (:style flat-button)))) t)))
-(advice-add 'load-theme :after #'flat-style)
-
 (provide 'init-advice)
 
 ;;; init-advice.el ends here
