@@ -66,7 +66,7 @@ Due to web-mode bug for emacs client, some customizable values need to be set af
 
 (use-package svelte-ts-mode
   :after eglot
-  :ensure (:host github :repo "leafOfTree/svelte-ts-mode"))
+  :ensure (:host github :repo "leafOfTree/svelte-ts-mode" :branch "emacs-master"))
 
 
 (use-package mhtml-ts-mode
