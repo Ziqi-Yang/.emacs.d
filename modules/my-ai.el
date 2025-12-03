@@ -29,17 +29,16 @@
 (use-package gptel
   :disabled
   :config
-  (setq gptel-model 'anthropic/claude-3.5-sonnet)
+  (setq gptel-model 'google/gemini-3-pro-preview)
   (setq gptel-backend
         (gptel-make-openai
-         "OpenRouter"
-         :host "openrouter.ai"
-         :endpoint "/api/v1/chat/completions"
-         :stream t
-         :key 'mk/private-vars/gptel-openrouter-key
-         :models '(deepseek/deepseek-chat
-                   anthropic/claude-3.5-sonnet
-                   openai/chatgpt-4o-latest))))
+            "OpenRouter"
+          :host "openrouter.ai"
+          :endpoint "/api/v1/chat/completions"
+          :stream t
+          :key 'mk/private-vars/gptel-openrouter-key
+          :models '(google/gemini-3-pro-preview
+                    anthropic/claude-sonnet-4.5))))
 
 (defun mk/better-gptel (&optional arg)
   "Enhanced GPTel interaction command.
