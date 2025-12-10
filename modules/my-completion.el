@@ -299,8 +299,14 @@ FRAME: nil for current selected frame."
   (tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
   (tempel-trigger-prefix "#")
   :init
-  (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
-  (add-hook 'text-mode-hook #'tempel-abbrev-mode))
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons (cape-capf-trigger #'tempel-complete ?#)
+                      completion-at-point-functions)))
+
+  (add-hook 'conf-mode-hook 'tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf))
 
 ;; (use-package tempel-collection
 ;;   :after tempel)
@@ -310,22 +316,9 @@ FRAME: nil for current selected frame."
   "`Completion-at-point' function with tempel support.
 When tempel-trigger-prefix is before the point, then use temple, else `completion-at-point'."
   (interactive)
-  (if tempel--active
-      (call-interactively 'tempel-next)
-    (if (and tempel-trigger-prefix
-             (length> tempel-trigger-prefix 0)
-             (looking-back
-              (rx-to-string `(seq ,tempel-trigger-prefix (* (not (or space punct)))))
-              nil))
-        (condition-case nil
-            (call-interactively 'tempel-complete)
-          (user-error
-           (if lsp-bridge-mode
-               (lsp-bridge-popup-complete-menu)
-             (completion-at-point))))
-      (if lsp-bridge-mode
-          (lsp-bridge-popup-complete-menu)
-        (completion-at-point)))))
+  (if lsp-bridge-mode
+      (lsp-bridge-popup-complete-menu)
+    (completion-at-point)))
 
 
 (provide 'my-completion)
