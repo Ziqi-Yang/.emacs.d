@@ -91,6 +91,7 @@ Example:
 
   (keymap-global-set "C-S-v" #'clipboard-yank)
   (keymap-global-set "C-<return>" #'mk/completion-at-point-with-tempel)
+  (keymap-global-set "M-<return>" #'eldoc-box-help-at-point)
   ;; cape-dabbrev has been integrated into completion-at-point function already
   (keymap-global-set "M-/" #'dabbrev-completion)
   (keymap-global-set "C-S-f" #'cape-file))

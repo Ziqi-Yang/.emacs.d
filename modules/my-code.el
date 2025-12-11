@@ -263,11 +263,12 @@
   (eldoc-box-lighter nil)
   (eldoc-box-only-multi-line t)
   :config
-  (add-hook 'emacs-lisp-mode-hook #'eldoc-box-hover-mode)
-  (with-eval-after-load 'eglot
-    (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
-  (with-eval-after-load 'lsp-mode
-    (add-hook 'lsp-managed-mode-hook #'eldoc-box-hover-mode t)))
+  ;; (add-hook 'emacs-lisp-mode-hook #'eldoc-box-hover-mode)
+  ;; (with-eval-after-load 'eglot
+  ;;   (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
+  ;; (with-eval-after-load 'lsp-mode
+  ;;   (add-hook 'lsp-managed-mode-hook #'eldoc-box-hover-mode t))
+  )
 
 (use-package flymake
   :ensure nil
