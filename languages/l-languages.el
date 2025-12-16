@@ -183,8 +183,6 @@
   :after eglot
   :ensure (:type git :host codeberg :repo "meow_king/typst-ts-mode" :branch "develop")
   :custom
-  ;; (typst-ts-markup-header-same-height nil)  ; it will leads to height change
-  ;; when error occurs (so that the header faces changes into error faces)
   (typst-ts-watch-options '("--open"))
   (typst-ts-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
   (typst-ts-enable-raw-blocks-highlight t)

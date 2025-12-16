@@ -146,14 +146,18 @@ indent_size = 2
   
   outputs = { flakelight, ... }@inputs:
     flakelight ./. {
-      inherit inputs;
-      
-      devShell = pkgs: {
-        packages = with pkgs; [
-          (python312.withPackages (ppkgs: with ppkgs; [
-            pip
-          ]))
-        ];
+      devShell = pkgs: let
+        myPython = pkgs.python3.withPackages (ppkgs: with ppkgs; [
+          pip pjsua2 websocket-client pydub
+        ]);
+      in {
+        env = {
+          PYTHONPATH = pkgs.lib.makeSearchPath \"lib/python3.13/site-packages\" [
+            \"${myPython}\"
+            \".venv\"
+          ];
+        };
+        packages = [ myPython ];
       };
     };
 }")))
