@@ -114,7 +114,8 @@
 
   ;; For Vue, use lsp-bridge is the best choice. Vue language server is shit
   (setq eglot-server-programs
-        `(((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))
+        `(((python-mode python-ts-mode) . ,(eglot-alternatives
+                                            '(("ty" "server") ("basedpyright-langserver" "--stdio"))))
           ((markdown-mode markdown-ts-mode md-ts-mode text-mode) . ("harper-ls" "--stdio"))
           (rust-ts-mode . ("rust-analyzer"))
           ((c-mode c-ts-mode c++-mode c++-ts-mode objc-mode) . ,(eglot-alternatives
