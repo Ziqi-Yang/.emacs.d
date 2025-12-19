@@ -49,7 +49,7 @@ FRAME: nil for current selected frame."
       (setq vertico-multiform-commands
             (append
              (mk/create-vertico-multiform-commands
-              '(mk/completion-at-point-with-tempel cape-dabbrev cape-file cape-line mk/cape-line-previous-buffer)
+              '(mk/completion-at-point cape-dabbrev cape-file cape-line mk/cape-line-previous-buffer)
               '(grid))
              ;; display buffer according to layout
              (mk/create-vertico-multiform-commands
@@ -69,26 +69,29 @@ FRAME: nil for current selected frame."
     (mk/vertico-setup-multiform-commands current-focused-frame)))
 
 ;; Sort directories before files
-(defun vertico/sort-directories-first (files)
+(defun mk/vertico/sort-directories-first (files)
   (setq files (vertico-sort-history-alpha files))
   (nconc (seq-filter (lambda (x) (string-suffix-p "/" x)) files)
          (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
 
 
 (defun mk/vertico/sort-project-file (files)
-  "Same directory first."
-  (setq files (vertico-sort-history-alpha files))
-  (when-let* ((p (project-current))
-              (pt (expand-file-name (project-root p)))
-              ;; can be nil (when from project-switch-project)
-              (cur-buf-file (buffer-file-name (window-buffer
-                                               (minibuffer-selected-window))))
-              (cur-buf-dir (file-name-directory cur-buf-file))
-              (cur-project-dir (string-remove-prefix pt cur-buf-dir)))
-    (setq files
-          (nconc (seq-filter (lambda (x) (string-prefix-p cur-project-dir x)) files)
-                 (seq-remove (lambda (x) (string-suffix-p cur-project-dir x)) files))))
-  files)
+  "Sort files by longest common prefix with the current buffer file."
+  (let* ((p (project-current))
+         (root (and p (expand-file-name (project-root p))))
+         (cur-file (and root (buffer-file-name (window-buffer (minibuffer-selected-window)))))
+         (cur-rel (and cur-file (string-remove-prefix root cur-file))))
+    (if (not cur-rel)
+        ;; Fallback: If we aren't in a file buffer or project, just sort alphabetically/history
+        (vertico-sort-history-alpha files)
+      (sort files
+            (lambda (a b)
+              (let ((len-a (length (try-completion "" (list a cur-rel))))
+                    (len-b (length (try-completion "" (list b cur-rel)))))
+                (if (= len-a len-b)
+                    (string< a b)
+                  (> len-a len-b))))))))
+
 
 (use-package vertico
   :ensure (:host github :repo "minad/vertico"
@@ -117,7 +120,7 @@ FRAME: nil for current selected frame."
 
   (setq vertico-multiform-categories
         '((symbol (vertico-sort-function . vertico-sort-history-alpha))
-          (file (vertico-sort-function . vertico/sort-directories-first))
+          (file (vertico-sort-function . mk/vertico/sort-directories-first))
           (project-file (vertico-sort-function . mk/vertico/sort-project-file))
           ))
 
@@ -312,7 +315,7 @@ FRAME: nil for current selected frame."
 ;;   :after tempel)
 
 ;;; Custom Functions ======================================================
-(defun mk/completion-at-point-with-tempel ()
+(defun mk/completion-at-point ()
   "`Completion-at-point' function with tempel support.
 When tempel-trigger-prefix is before the point, then use temple, else `completion-at-point'."
   (interactive)
