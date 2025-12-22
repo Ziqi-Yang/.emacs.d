@@ -59,7 +59,7 @@
                             nil "tree-sitter-markdown-inline/src"))
         (nix "https://github.com/nix-community/tree-sitter-nix")
         (just "https://github.com/IndianBoy42/tree-sitter-just")
-        (zig "https://github.com/maxxnino/tree-sitter-zig")
+        (zig "https://github.com/tree-sitter-grammars/tree-sitter-zig")
         (htmldjango . ("https://github.com/interdependence/tree-sitter-htmldjango.git"
                        "v1.0.0"))
         (htmljinja2 . ("https://codeberg.org/meow_king/tree-sitter-htmljinja2"))

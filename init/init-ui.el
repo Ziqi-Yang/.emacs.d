@@ -131,7 +131,8 @@
 
 (defun mk/setup-modeline ()
   (setq-default mode-line-buffer-identification
-                '((:eval (mk/mode-line/abbreviate-file-name)))))
+                '((:eval (mk/mode-line/abbreviate-file-name))))
+  (customize-set-value 'mode-line-collapse-minor-modes t))
 
 (add-hook 'prog-mode-hook 'which-function-mode)
 
