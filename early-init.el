@@ -10,8 +10,8 @@
 (setenv "LSP_USE_PLISTS" "true")
 
 ;;; Disable package.el ======================================
-(setq package-enable-at-startup nil ;; disable package.el at startup
-      package-quickstart nil) ;; don't load from package cache
+(setq package-enable-at-startup nil)
+;; (setq package-quickstart nil)
 
 ;;; Performance =============================================
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -74,6 +74,7 @@
 (setq display-line-numbers-type 'absolute)
 
 (setq
+ inhibit-splash-screen t
  inhibit-startup-message t
  visible-bell t)
 
