@@ -130,7 +130,7 @@
   (custom-set-variables
    '(auto-save-no-message t)
    '(auto-save-visited-mode t)
-   '(auto-save-visited-interval 1)
+   '(auto-save-visited-interval 0.5)
    '(auto-save-visited-predicate #'mk/auto-save-visited-predicate)))
 
 ;;; Todo highlight ==========================================
