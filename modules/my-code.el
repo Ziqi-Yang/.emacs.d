@@ -108,7 +108,7 @@
 
   ;; TODO remove the following line after eglot can handle `:diagnosticProvider' probably
   ;; see https://github.com/joaotavora/eglot/discussions/1562#discussioncomment-15361383
-  (setq eglot-ignored-server-capabilities '(:diagnosticProvider))
+  ;; (setq eglot-ignored-server-capabilities '(:diagnosticProvider))
 
   (advice-add 'eglot--connect :filter-args #'mk/advice/eglot/wrap-contact)
   
