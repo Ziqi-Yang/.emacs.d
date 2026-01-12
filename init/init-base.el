@@ -134,6 +134,12 @@
    '(auto-save-visited-predicate #'mk/auto-save-visited-predicate)))
 
 ;;; Todo highlight ==========================================
+(defun mk/fix-hl-todo-in-eglot-semantic-mode ()
+  "Restart hl-todo-mode to ensure it runs after eglot semantic tokens."
+  (when (and eglot-semantic-tokens-mode (bound-and-true-p hl-todo-mode))
+    (hl-todo-mode -1)
+    (hl-todo-mode 1)))
+
 (use-package hl-todo
   :init
   (setq hl-todo-keyword-faces
@@ -144,7 +150,10 @@
 	        ("NOTE" . "#3498db")
 	        ("STUB"   . "#f39c12")))
   :config
-  (global-hl-todo-mode))
+  (global-hl-todo-mode)
+
+  (with-eval-after-load 'eglot
+    (add-hook 'eglot-semantic-tokens-mode-hook #'mk/fix-hl-todo-in-eglot-semantic-mode)))
 
 ;;; undo
 (use-package vundo

@@ -302,14 +302,14 @@ FRAME: nil for current selected frame."
   (tempel-path (expand-file-name "templates/*.eld" user-emacs-directory))
   (tempel-trigger-prefix "#")
   :init
-  (defun tempel-setup-capf ()
+  (defun mk/tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons (cape-capf-trigger #'tempel-complete ?#)
                       completion-at-point-functions)))
 
-  (add-hook 'conf-mode-hook 'tempel-setup-capf)
-  (add-hook 'prog-mode-hook 'tempel-setup-capf)
-  (add-hook 'text-mode-hook 'tempel-setup-capf))
+  (add-hook 'conf-mode-hook 'mk/tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'mk/tempel-setup-capf)
+  (add-hook 'text-mode-hook 'mk/tempel-setup-capf))
 
 ;; (use-package tempel-collection
 ;;   :after tempel)
