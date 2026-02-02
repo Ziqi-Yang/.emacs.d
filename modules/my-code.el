@@ -125,6 +125,8 @@
           ((c-mode c-ts-mode c++-mode c++-ts-mode objc-mode) . ,(eglot-alternatives
                                                                  '("clangd")))
           ((nix-mode nix-ts-mode) . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd")))
+          ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode go-work-ts-mode)
+           . ("gopls"))
           (svelte-ts-mode . ("svelteserver" "--stdio"))))
 
   (with-eval-after-load 'typst-ts-mode

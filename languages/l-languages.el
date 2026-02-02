@@ -211,7 +211,7 @@
 
 (use-package zig-ts-mode
   :after eglot
-  :ensure (:host codeberg :branch "develop" :repo "meow_king/zig-ts-mode")
+  :ensure (:host codeberg :branch "main" :repo "meow_king/zig-ts-mode")
   ;; `(,(rx "." (or "zig" "zon") eos))
   :mode  ("\\.\\(?:z\\(?:ig\\|on\\)\\)\\'"))
 
